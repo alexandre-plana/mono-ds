@@ -111,6 +111,7 @@
   /* Plan de travail : ce qui entoure la page, uni. --hatch ne sert qu'au fond des modales. */
   --desk: var(--tone-0);
   --hatch: var(--tone-4);
+  --media-blend: screen; --media-opacity: 0.72; /* image brute : éclaircit le fond sombre, blancs rabattus */
   --mark: var(--tone-7);
   --mark-2: var(--tone-9);
   --mark-3: var(--tone-6);
@@ -138,6 +139,7 @@
   --selected-line: #57585a;
   --desk: #cbcbc7;
   --hatch: #b3b4b0;
+  --media-blend: multiply; --media-opacity: 0.7; /* image brute : encre le fond clair, noirs relevés */
   --mark: #6f7072;
   --mark-2: var(--tone-4);
   --mark-3: #77787a;

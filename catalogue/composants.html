@@ -156,19 +156,19 @@
                   <div class="c-card__head"><span>Modèle</span><span>01</span></div>
                   <h4 class="c-card__title c-card__title--label">Synthèse</h4>
                   <div class="c-card__body">Une page, les chiffres clés et un graphique.</div>
-                  <div class="c-card__foot"><span>Sélectionné</span><i class="c-icon i-arrow-right" aria-hidden="true"></i></div>
+                  <div class="c-card__foot"><span>Sélectionné</span><i class="c-icon i-arrow-right c-cue" aria-hidden="true"></i></div>
                 </a>
                 <a class="c-card c-card--boxed" href="#c-card">
                   <div class="c-card__head"><span>Modèle</span><span>02</span></div>
                   <h4 class="c-card__title c-card__title--label">Rapport détaillé</h4>
                   <div class="c-card__body">Toutes les branches, tableaux complets.</div>
-                  <div class="c-card__foot"><span>Choisir</span><i class="c-icon i-arrow-right" aria-hidden="true"></i></div>
+                  <div class="c-card__foot"><span>Choisir</span><i class="c-icon i-arrow-right c-cue" aria-hidden="true"></i></div>
                 </a>
                 <a class="c-card c-card--boxed c-card--dashed" href="#c-card">
                   <div class="c-card__head"><span>Modèle</span><span>—</span></div>
                   <h4 class="c-card__title c-card__title--label">Nouveau modèle</h4>
                   <div class="c-card__body">Partir d'une page blanche.</div>
-                  <div class="c-card__foot"><span>Créer</span><i class="c-icon i-plus" aria-hidden="true"></i></div>
+                  <div class="c-card__foot"><span>Créer</span><i class="c-icon i-plus c-cue" aria-hidden="true"></i></div>
                 </a>
               </div>
             </div>
@@ -177,8 +177,70 @@
               <div><dt>Employer</dt><dd>Une collection d'objets de même nature, que l'on compare ou parmi lesquels on choisit : agences, rapports, modèles.</dd></div>
               <div><dt>Éviter</dt><dd>Pour habiller un contenu unique (un filet suffit), pour des données tabulaires (préférer <code>.c-table</code>), et toute fiche dans une fiche. Pas de bouton primaire dans une fiche : une action au plus, en pied.</dd></div>
               <div><dt>Variantes</dt><dd><code>--boxed</code> cadre · <code>--surface</code> fond détaché · <code>--dashed</code> emplacement vide · <code>--signal</code> une seule par vue · <code>__title--label</code> titre en capitales.</dd></div>
-              <div><dt>États</dt><dd>Survol : filet supérieur au ton fort, le temps du survol. Sélection (<code>aria-current</code>, <code>aria-selected</code>) : contour de 2 px en gris moyen ; le fond ne change pas. Ni élévation ni déplacement.</dd></div>
+              <div><dt>États</dt><dd>Survol : filet supérieur au ton fort, terminé par une pointe de flèche si la fiche est cliquable. Sélection (<code>aria-current</code>, <code>aria-selected</code>) : contour de 2 px en gris moyen ; le fond ne change pas. Ni élévation ni déplacement.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;article&gt;</code> avec un titre <code>h3</code>/<code>h4</code> ; cliquable : un seul <code>&lt;a&gt;</code> englobant, sans autre contrôle à l'intérieur.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-media" data-search="composant">
+            <h3>Image — .c-media</h3>
+            <p>Deux natures d'image. Un <strong>dessin du système</strong> — trait d'un pixel, tons du système — entre tel quel. Une <strong>image brute</strong> — photo, capture, visuel fourni — est <em>encrée</em> : ramenée au gris, fondue dans le ton de la page, ses extrêmes rabattus pour ne toucher ni le noir ni le blanc. Elle devient une masse tonale moyenne, comme un aplat.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-cards" style="--card-min: 13rem">
+                <figure class="c-media"><svg viewBox="0 0 300 200" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M40.5 160.5h220M70.5 160.5v-90h80v90M150.5 100.5h70v60M90.5 90.5h16v16h-16zM116.5 90.5h16v16h-16zM90.5 120.5h16v16h-16zM116.5 130.5h16v30M166.5 116.5h38v20h-38z"/><path d="M70.5 70.5l40-24l40 24" stroke-dasharray="3 3"/><path d="M240.5 160.5v-50M232.5 118.5l8-8l8 8"/></svg></figure>
+                <figure class="c-media c-media--raw"><img src="assets/img/coffee.jpg" alt="Tasse de café sur une table en bois" loading="lazy"></figure>
+                <figure class="c-media c-media--raster"><img src="assets/img/coffee.jpg" alt="Tasse de café sur une table en bois" loading="lazy"></figure>
+                <figure class="c-media c-media--threshold"><img src="assets/img/coffee.jpg" alt="Tasse de café sur une table en bois" loading="lazy"></figure>
+              </div>
+            </div>
+            <p>Dans une fiche, l'image vient après l'en-tête et le titre : toutes les fiches d'une rangée s'ouvrent ainsi par le même filet et le même style de texte. La fiche cliquable annonce son clic par la pointe de flèche au bout du filet.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-cards" style="--card-min: 15rem">
+                <a class="c-card" href="#c-media">
+                  <div class="c-card__head"><span>Agence</span><span>N-014</span></div>
+                  <h4 class="c-card__title">Grenoble Centre</h4>
+                  <figure class="c-card__media c-media"><svg viewBox="0 0 300 200" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M40.5 160.5h220M70.5 160.5v-90h80v90M150.5 100.5h70v60M90.5 90.5h16v16h-16zM116.5 90.5h16v16h-16zM90.5 120.5h16v16h-16zM116.5 130.5h16v30M166.5 116.5h38v20h-38z"/><path d="M70.5 70.5l40-24l40 24" stroke-dasharray="3 3"/><path d="M240.5 160.5v-50M232.5 118.5l8-8l8 8"/></svg></figure>
+                  <div class="c-card__foot"><span>Plan de façade</span><span>2011</span></div>
+                </a>
+                <a class="c-card" href="#c-media">
+                  <div class="c-card__head"><span>Reportage</span><span>R-207</span></div>
+                  <h4 class="c-card__title">Équipage du vol 93</h4>
+                  <figure class="c-card__media c-media c-media--raw"><img src="assets/img/astronaut.jpg" alt="Portrait d'une astronaute en combinaison" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Photo fournie</span><span>NASA</span></div>
+                </a>
+                <a class="c-card" href="#c-media">
+                  <div class="c-card__head"><span>Reportage</span><span>R-208</span></div>
+                  <h4 class="c-card__title">Veille de lancement</h4>
+                  <figure class="c-card__media c-media c-media--raster"><img src="assets/img/rocket.jpg" alt="Fusée sur son pas de tir, de nuit" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Photo fournie</span><span>SpaceX</span></div>
+                </a>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Variantes</dt><dd><code>--raw</code> encrée : le traitement par défaut de toute image brute · <code>--raster</code> encrée et tramée, une ligne sur trois rendue à la page : pour une grande image ou une image sombre · <code>--threshold</code> seuillée en deux tons : petites vignettes, logos, signatures · <code>--square</code>, <code>--wide</code> pour le format (3:2 par défaut).</dd></div>
+              <div><dt>Employer</dt><dd>Quand l'image est l'information : un lieu, un objet, une personne, un document. Le dessin du système en priorité ; l'image brute quand on n'a pas le choix.</dd></div>
+              <div><dt>Éviter</dt><dd>L'image d'ambiance, qui ne dit rien. Une image brute non traitée. Du texte posé sur l'image. Plus d'un tiers de la vue en images : elles comptent dans les masses tonales. Rendre la couleur au survol : la seule couleur reste le signal.</dd></div>
+              <div><dt>Dessin du système</dt><dd>SVG en <code>currentColor</code>, traits d'un pixel posés sur la grille, angles vifs, aucun aplat ; tireté pour ce qui est caché ou projeté. Ce n'est pas une icône : il dessine un objet précis, pas une action.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>alt</code> qui décrit le sujet ; vide si l'image répète le titre. La légende (<code>.c-media__caption</code>) porte la source.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-cue" data-search="composant">
+            <h3>Indice de survol — .c-cue</h3>
+            <p>Le survol annonce : avant le clic, l'élément dit ce qui va se passer. Jamais par un fond ; par un trait ou par un signe. Un filet qui se termine en pointe de flèche : le clic mène quelque part. Une icône qui glisse en place : le clic fait ce que l'icône dessine. Le texte, lui, ne bouge pas.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-stack" style="--gap: var(--space-4); max-width: 26rem">
+                <a class="c-button c-button--quiet" href="#c-cue">Ouvrir le rapport <i class="c-icon i-arrow-right c-cue" aria-hidden="true"></i></a>
+                <a class="c-button c-button--quiet" href="#c-cue">Documentation <i class="c-icon i-external c-cue" aria-hidden="true"></i></a>
+                <button class="c-button c-button--quiet" type="button">Exporter en CSV <i class="c-icon i-download c-cue" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Vocabulaire</dt><dd>Pointe au bout du filet, ou <code>i-arrow-right</code> : ouvre, mène au détail · <code>i-external</code> : sort de l'application · <code>i-chevron-down</code> : déplie sur place · <code>i-edit</code> : rend modifiable · <code>i-plus</code> : crée · <code>i-download</code> : télécharge. Un signe, un sens.</dd></div>
+              <div><dt>Automatique</dt><dd>Ligne de tableau cliquable (<code>tr[tabindex]</code>) et fiche cliquable (<code>a.c-card</code>) : la pointe vient seule au bout du filet de survol. Une ligne qu'on ne peut que lire garde un filet nu : la différence est le message.</dd></div>
+              <div><dt>À la main</dt><dd><code>.c-cue</code> sur une icône placée en fin d'élément interactif ; <code>.c-cue-host</code> sur un conteneur qui n'est ni lien ni bouton.</dd></div>
+              <div><dt>Éviter</dt><dd>Sur un bouton à contour ou un contrôle de formulaire : leur forme annonce déjà. Deux indices sur le même élément. Un indice qui porte seul une information : sans pointeur, il n'y a pas de survol — l'indice reste alors affiché, en ton éteint.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>aria-hidden="true"</code> : l'intitulé dit déjà l'action. L'indice apparaît aussi au focus clavier.</dd></div>
             </dl>
           </div>
 
@@ -409,7 +471,7 @@
             <dl class="cat-spec">
               <div><dt>Tri</dt><dd><code>aria-sort</code> sur le <code>th</code>, bouton <code>.c-table__sort</code>. Chevron haut : croissant ; chevron bas : décroissant. Les autres colonnes triables ne montrent leur icône qu'au survol. Une seule colonne triée à la fois ; un clic inverse le sens.</dd></div>
               <div><dt>En-tête figé</dt><dd><code>.c-table--sticky</code>, dans une zone qui défile. À partir d'une quinzaine de lignes. Fond plein, pas de filet.</dd></div>
-              <div><dt>Filets</dt><dd>Aucun entre les lignes : l'interligne et les axes de colonnes suffisent. Au survol, un filet se pose sous la ligne pointée, comme une règle. Sans pointeur (écran tactile), les filets discrets reviennent d'eux-mêmes ; <code>.c-table--ruled</code> les impose pour un tableau large, dense ou destiné à l'impression. Le trait de somme reste.</dd></div>
+              <div><dt>Filets</dt><dd>Aucun entre les lignes : l'interligne et les axes de colonnes suffisent. Au survol, un filet se pose sous la ligne pointée, comme une règle ; si la ligne est cliquable, il se termine en pointe de flèche. Sans pointeur (écran tactile), les filets discrets reviennent d'eux-mêmes ; <code>.c-table--ruled</code> les impose pour un tableau large, dense ou destiné à l'impression. Le trait de somme reste.</dd></div>
               <div><dt>Sélection multiple</dt><dd>Colonne <code>.c-table__check</code>. Une ligne cochée ne change pas d'aspect : la case suffit. Ce qui se voit, c'est la barre <code>.c-bulkbar</code> et son décompte, qui remplacent la barre d'outils.</dd></div>
               <div><dt>Ligne dépliable</dt><dd>Bouton <code>.c-table__expand</code> avec <code>aria-expanded</code>, suivi d'une ligne <code>tr.c-table__detail</code>. Le détail s'aligne sur la colonne de titre : <code>--controls</code> donne le nombre de colonnes de contrôle qui la précèdent.</dd></div>
               <div><dt>Éviter</dt><dd>Cocher et inspecter avec le même geste : cocher prépare une action groupée, cliquer la ligne l'ouvre dans l'inspecteur. Ligne dépliable et inspecteur sur le même écran : choisir l'un. Plus de deux actions dans la barre groupée.</dd></div>

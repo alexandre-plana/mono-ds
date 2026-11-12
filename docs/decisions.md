@@ -64,6 +64,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-041 | Les hachures quittent le plan de travail pour le fond des modales | en vigueur |
 | D-042 | L'écran ne défile jamais ; barre de défilement d'un trait | en vigueur |
 | D-043 | Tableau sans filets ; un filet sous la ligne survolée | en vigueur |
+| D-044 | Le survol annonce ce que fera le clic | en vigueur |
+| D-045 | Images : dessin du système, ou image brute encrée | en vigueur |
 
 ---
 
@@ -387,3 +389,24 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Raison** : suite de D-040. Avec un interligne constant et des colonnes ferrées, les filets de rang ne servaient qu'à suivre une ligne de l'œil ; ce service n'est utile que pour la ligne qu'on lit. Le survol par un fond contredisait aussi l'esprit de D-012 (un état ne change pas de fond).
 - **Garde-fous** (proposés par Claude) : sans pointeur (`hover: none`, écrans tactiles), les filets discrets reviennent d'eux-mêmes, faute de quoi rien n'aide à suivre une rangée. `.c-table--ruled` les impose pour un tableau large, dense ou imprimé.
 - **Ce qui reste** : le trait de somme avant le pied, les deux filets de 2 px de la ligne sélectionnée, le contour de focus.
+
+## D-044 — Le survol annonce ce que fera le clic
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : au survol (et au focus), un élément interactif dit ce que fera le clic, par un trait ou un signe, jamais par un fond. Deux formes. La pointe de flèche au bout du filet de survol : automatique sur une ligne de tableau cliquable et sur une fiche cliquable. L'icône `.c-cue`, invisible au repos, qui glisse de 4 px en place : pour les autres actions (sortir, déplier, modifier, créer, télécharger).
+- **Raison** : généralise D-043. Le filet nu dit « je te suis » ; le filet en flèche dit « et le clic t'emmène ». La différence entre une ligne lisible et une ligne cliquable devient visible sans rien ajouter au repos.
+- **Choix de Claude** : la flèche de la ligne de tableau est la pointe du filet lui-même, pas une icône posée dans la marge. Une icône dans la marge débordait dès que la marge du volet se réduit, ou obligeait à décaler l'axe de droite des chiffres.
+- **Limites posées** : le texte ne se décale jamais (seul l'indice bouge) ; un seul indice par élément ; pas d'indice sur un bouton à contour ni un contrôle de formulaire ; l'indice ne porte jamais seul une information, puisqu'un écran tactile n'a pas de survol — il y reste affiché en ton éteint.
+- **Non traité** : les fonds de survol existants des menus, de la palette et des boutons à contour restent ; ce sont des contrôles dont la forme annonce déjà l'action. À revoir si l'on veut une règle sans exception.
+- **Technique** : `build-icons.mjs` expose chaque icône en variable (`--i-nom`) pour qu'un pseudo-élément puisse en porter une.
+
+## D-045 — Images : dessin du système, ou image brute encrée
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : `.c-media`. Un dessin conforme au système (SVG au trait d'un pixel, `currentColor`) entre tel quel. Toute image brute reçoit un traitement, en trois degrés : `--raw` encrée (gris, fondue dans le ton de la page, extrêmes rabattus) ; `--raster` encrée et tramée de lignes horizontales ; `--threshold` seuillée en deux tons.
+- **Comment** : niveaux de gris, puis fusion avec le fond de la page — `screen` en encre (les noirs de l'image deviennent le fond), `multiply` en papier (ses blancs deviennent le fond) — et opacité de 70 % environ pour rabattre l'autre extrême. L'image ne touche ainsi ni le noir ni le blanc, dans les deux thèmes, sans réglage par image.
+- **Raison** : une photo en couleur est la masse la plus forte de n'importe quel écran et ruine la règle du signal. Encrée, elle se comporte comme un aplat moyen.
+- **Trame** : des lignes horizontales, pas des hachures (réservées au fond des modales, D-041) ni des points (réservés au canevas).
+- **Règles** : dans une fiche, l'image vient après l'en-tête et le titre ; jamais de texte sur l'image ; les images comptent dans les masses tonales, un tiers de la vue au plus ; la couleur ne revient pas au survol.
+- **Écarté** : une teinte monochrome (duotone signal) — la couleur deviendrait décorative ; un flou — c'est un effet.
+- **Démonstration** : trois photographies libres de droits dans `catalogue/assets/img/` (sources dans `SOURCES.md`).

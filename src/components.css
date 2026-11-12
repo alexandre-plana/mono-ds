@@ -192,6 +192,11 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 /* Ligne sélectionnable : toute la ligne répond. Sélection = deux filets de 2 px, dessus et dessous ;
    le contour reste ouvert sur les côtés pour que le texte garde son axe. */
 .c-table tr[tabindex] { cursor: pointer; }
+/* Le survol annonce : sous une ligne qui mène quelque part, le filet se termine en flèche.
+   Une ligne qu'on ne peut que lire garde un filet nu. */
+.c-table tr[tabindex] > :last-child { position: relative; }
+.c-table tr[tabindex]:not([aria-selected="true"]) > :last-child::after { content: ''; position: absolute; right: 1px; bottom: -4px; width: 6px; height: 6px; border-top: var(--hairline) solid var(--line-strong); border-right: var(--hairline) solid var(--line-strong); transform: rotate(45deg); opacity: 0; }
+.c-table tr[tabindex]:not([aria-selected="true"]):hover > :last-child::after { opacity: 1; }
 .c-table tr[tabindex]:focus-visible { outline-offset: -2px; }
 .c-table tr[aria-selected="true"] > * { border-top: var(--stroke) solid var(--selected-line); border-bottom: var(--stroke) solid var(--selected-line); padding-block: calc(var(--space-2) - 1px); color: var(--fg); }
 .c-table tr[aria-selected="true"] > th { font-weight: var(--weight-medium); }
@@ -316,7 +321,29 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-card__title { font-size: var(--text-large); line-height: var(--leading-large); color: var(--fg-strong); font-weight: var(--weight-regular); }
 .c-card__title--label { font-size: var(--text-base); line-height: var(--leading-base); text-transform: uppercase; letter-spacing: var(--track-label); font-weight: var(--weight-bold); }
 .c-card__body { color: var(--fg-soft); display: flex; flex-direction: column; gap: var(--space-3); }
-.c-card__media { background: var(--bg-sunken); aspect-ratio: 16 / 9; display: grid; place-items: center; color: var(--fg-muted); overflow: hidden; }
+.c-card__media { background: var(--bg-sunken); aspect-ratio: 3 / 2; display: grid; place-items: center; color: var(--fg-muted); overflow: hidden; margin: 0; }
+/* Indice de survol : une icône qui dit ce que fera le clic. Invisible au repos, elle glisse
+   en place au survol ou au focus de l'élément interactif qui la contient. Sans pointeur,
+   elle reste visible, en ton éteint. Le texte, lui, ne bouge jamais. */
+.c-cue { opacity: 0; transform: translateX(-4px); color: var(--fg-soft); transition: opacity var(--duration), transform var(--duration); }
+:is(a, button, summary, label, [tabindex], .c-cue-host):is(:hover, :focus-visible) .c-cue { opacity: 1; transform: none; }
+@media (hover: none) { .c-cue { opacity: 1; transform: none; color: var(--fg-muted); } }
+
+/* Image. Deux natures.
+   Dessin du système (trait d'un pixel, tons du système) : .c-media seul, rien à corriger.
+   Image brute (photo, capture, visuel fourni) : elle est « encrée » — ramenée au gris, fondue
+   dans le ton de la page, ses extrêmes rabattus pour ne toucher ni le noir ni le blanc.
+     --raw        encrée : le traitement par défaut de toute image brute
+     --raster     encrée et tramée : une ligne sur trois est rendue à la page (grandes images)
+     --threshold  encrée et seuillée : deux tons, comme un tampon (petites vignettes) */
+.c-media { position: relative; display: block; margin: 0; aspect-ratio: var(--ratio, 3 / 2); overflow: hidden; isolation: isolate; background: var(--bg-sunken); color: var(--mark); }
+.c-media > img, .c-media > svg, .c-media > video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.c-media--square { --ratio: 1; }
+.c-media--wide { --ratio: 16 / 9; }
+.c-media--raw > :is(img, video), .c-media--raster > :is(img, video), .c-media--threshold > :is(img, video) { filter: grayscale(1) contrast(var(--media-contrast, 0.95)); mix-blend-mode: var(--media-blend); opacity: var(--media-opacity); }
+.c-media--threshold { --media-contrast: 3.2; }
+.c-media--raster::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, var(--bg-sunken) 2px, var(--bg-sunken) 3px); }
+.c-media__caption { display: flex; justify-content: space-between; gap: var(--space-3); padding-top: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
 .c-card__foot { margin-top: auto; padding-top: var(--space-3); display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-soft); }
 .c-card--boxed { padding: var(--space-4) var(--space-5) var(--space-5); border: var(--hairline) solid var(--line); }
 .c-card--surface { padding: var(--space-4) var(--space-5) var(--space-5); background: var(--surface); border-top-color: var(--line-strong); }
@@ -325,6 +352,9 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 /* Fiche cliquable : toute la fiche est le lien, le filet supérieur répond au survol. */
 a.c-card, .c-card--action { cursor: pointer; transition: border-color var(--duration), background var(--duration); }
 a.c-card:hover, .c-card--action:hover { border-top-color: var(--fg-strong); color: var(--fg); }
+a.c-card:not(.c-card--boxed), .c-card--action:not(.c-card--boxed) { position: relative; }
+a.c-card:not(.c-card--boxed)::after, .c-card--action:not(.c-card--boxed)::after { content: ''; position: absolute; right: 1px; top: -4px; width: 6px; height: 6px; border-top: var(--hairline) solid var(--fg-strong); border-right: var(--hairline) solid var(--fg-strong); transform: rotate(45deg); opacity: 0; transition: opacity var(--duration); }
+a.c-card:not(.c-card--boxed):hover::after, .c-card--action:not(.c-card--boxed):hover::after { opacity: 1; }
 a.c-card:hover .c-card__foot, .c-card--action:hover .c-card__foot { color: var(--fg-strong); }
 a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color: var(--fg-soft); border-top-color: var(--fg-strong); background: var(--surface); }
 /* Sélection : le filet passe à 2 px, en gris moyen. Le fond ne change pas. */

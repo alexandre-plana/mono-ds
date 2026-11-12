@@ -49,6 +49,11 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
   défile (corps du volet dans une application, la page dans un document). Une seule
   zone défilante par page et par axe, jamais imbriquée. Téléphone et impression :
   défilement naturel. La barre de défilement est celle du système (4 px, carrée).
+- Le survol annonce ce que fera le clic, jamais par un fond : un filet terminé en
+  pointe de flèche (ligne ou fiche cliquable) ou une icône `.c-cue`. Le texte ne bouge pas.
+- Image : un dessin du système entre tel quel (`.c-media`) ; toute image brute est
+  encrée (`.c-media--raw`, ou `--raster` / `--threshold`). Jamais de photo en couleur,
+  jamais de texte sur une image, un tiers de la vue au plus.
 - Tableau : aucun filet entre les lignes ; un filet sous la ligne survolée ;
   `.c-table--ruled` seulement pour un tableau large, dense ou imprimé.
 - Dans un graphique : marques en `--mark` (gris moyen), valeurs en `--fg-strong`,

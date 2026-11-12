@@ -25,7 +25,11 @@ let css = `/* ==================================================================
 .c-icon--large { --icon: 2rem; }
 
 `;
-for (const [name, body] of Object.entries(icons)) css += `.i-${name} { --i: url("${uri(body)}"); }\n`;
+// Chaque dessin est aussi une variable (--i-nom) : un pseudo-élément peut ainsi porter une icône.
+css += ':root {\n';
+for (const [name, body] of Object.entries(icons)) css += `  --i-${name}: url("${uri(body)}");\n`;
+css += '}\n';
+for (const name of Object.keys(icons)) css += `.i-${name} { --i: var(--i-${name}); }\n`;
 
 const target = root('src/icons.css');
 if (process.argv.includes('--check')) {
