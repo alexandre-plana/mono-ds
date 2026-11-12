@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/captures/logo-encre.gif">
+  <img src="docs/captures/logo-papier.gif" alt="MONO — le logo s'écrit lettre par lettre, puis le curseur devient un point rouge" width="760">
+</picture>
+
 # MONO
 
 Design system monochrome, sobre et technique, pour les interfaces de données,
@@ -137,7 +142,7 @@ de deux mots et porte un seul accent de couleur.
 
 ![Planche Arbre](docs/captures/planche-arbre.gif)
 
-**Console** — des commandes s'écrivent, un volume se découpe : une carte proportionnelle en perspective isométrique, dont certains blocs sont détaillés jusqu'au grain — des parts de la taille d'une icône, dont l'état évolue. Graine « sel du nord ».
+**Console** — des commandes s'écrivent, un volume se découpe : une carte proportionnelle en perspective isométrique, dont certains blocs sont détaillés jusqu'au grain — des parts de la taille d'une icône, dont l'état évolue. Puis le volume défile : les blocs rétrécissent et disparaissent au bord. Graine « sel du nord ».
 
 ![Planche Console](docs/captures/planche-console.gif)
 

@@ -86,9 +86,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-063 | Variante d'accent : fort et flash | en vigueur |
 | D-064 | Tableau de cartes (kanban) | en vigueur |
 | D-065 | Planches : accent de couleur sur Crêtes, quatrième planche Console | en vigueur, Console revue en D-067 |
-| D-066 | Logo : cinq propositions discrètes | proposée, choix à faire |
+| D-066 | Logo : cinq propositions discrètes | tranchée par D-069 |
 | D-067 | Planche Console : un volume isométrique à blocs subdivisés | en vigueur |
 | D-068 | Console : découpage jusqu'au grain, états qui évoluent | en vigueur |
+| D-069 | Logo : le mot et le point, et son animation | en vigueur |
+| D-070 | Console : le volume défile, les blocs s'effacent au bord | en vigueur |
 
 ---
 
@@ -640,3 +642,18 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **États** : une commande `surveiller`. Chaque grain porte une valeur lente qui lui est propre ; au-dessus d'un seuil il passe en alerte (arête du dessus en signal), plus haut il devient critique (dessus en aplat de signal), puis retombe. Le compte s'écrit en direct dans la console.
 - **Une seule couleur, un seul sens** : le signal ne dit plus que l'état. Le sommet désigné par `mesurer` passe au ton clair, sans rouge. Seuls les grains changent d'état : même en aplat, le rouge reste une très petite part de la planche.
 - **Colonne de commandes** : elle ne garde que les neuf dernières lignes.
+
+## D-069 — Logo : le mot et le point, et son animation
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Choisie par** : le commanditaire (proposition A de D-066)
+- **Le logo** : le nom en IBM Plex Mono, graisse normale, capitales, espacement de 0,42 em ; puis un carré de 4 px en `--signal`, sur la ligne de base, à 0,48 em. Composant `.c-logo` ; `.c-logo--plain` sans le point, pour un écran qui emploie déjà le signal. De 13 à 24 px. Le point ne grandit jamais.
+- **L'animation** (`catalogue/assets/logo-anim.js`, huit secondes en boucle) : le logo s'écrit comme une commande ; le curseur, au lieu de disparaître, se retire d'un pas, rétrécit et devient le point ; des traits de construction passent (ligne de base, hauteur de capitale, espacement) puis s'effacent en descendant les tons.
+- **Raison de l'animation** : elle raconte d'où vient le point — c'est le curseur — et montre la construction sans la laisser à demeure. Elle relève de l'exception de D-062 : un écran à regarder, pas une interface.
+- **README** : l'animation en tête, en GIF, dans la variante du thème du lecteur (encre ou papier).
+- **Écartées** : B la référence, C le filet, D le cadre, E un pour cent.
+
+## D-070 — Console : le volume défile, les blocs s'effacent au bord
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Complète** : D-068
+- **Décision** : une commande `défiler`. Le volume glisse le long de la dalle ; à l'approche du bord, chaque bloc réduit son emprise et sa hauteur pour ne jamais dépasser, disparaît au bord, et renaît de l'autre côté en grandissant. Le défilement continue pendant `surveiller` et s'arrête en douceur avec `aplanir`.
+- **Détail** : hauteurs plafonnées et point de vue abaissé pour que les grains les plus hauts restent dans la planche ; le rappel du sommet s'efface quand le défilement commence.

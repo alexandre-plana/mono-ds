@@ -317,6 +317,14 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-notifs__item.is-unread .c-notifs__text { color: var(--fg-strong); font-weight: var(--weight-medium); }
 .c-notifs__item.is-unread .c-notifs__meta::before { content: ''; align-self: center; width: 6px; height: 6px; border-radius: 50%; background: var(--fg-strong); }
 .c-notifs__empty { margin: 0; padding: var(--space-3) var(--space-5); color: var(--fg-muted); }
+/* Logo : le nom, composé comme un titre courant, suivi d'un point de signal de quatre pixels.
+   <span class="c-logo">Mono</span> — rien d'autre. Le point est le seul signal que le logo s'autorise ;
+   sur un écran qui emploie déjà le signal, préférer .c-logo--plain (sans point). */
+.c-logo { display: inline-flex; align-items: baseline; gap: 0.48em; font-family: var(--font-mono); font-weight: var(--weight-regular); text-transform: uppercase; letter-spacing: 0.42em; line-height: 1; color: var(--fg-strong); white-space: nowrap; }
+.c-logo::after { content: ''; flex: none; width: 4px; height: 4px; background: var(--signal); }
+.c-logo--plain::after { content: none; }
+.c-logo--plain { letter-spacing: 0.42em; margin-right: -0.42em; }
+
 /* Modale : une feuille large (32 rem) posée au centre, sur la page hachurée mais lisible. Même fond et
    même contour que la page, aucun bandeau, aucun filet intérieur. Trois choses au plus : un
    titre, une phrase ou quelques champs, les actions à droite. Sa hauteur est celle de son

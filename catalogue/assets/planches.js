@@ -139,12 +139,12 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
     const grid = (r, node, cols, rows) => {
       const cut = (n) => { const ws = Array.from({ length: n }, () => 0.6 + r()), sum = ws.reduce((a, b) => a + b, 0); let at = 0; return ws.map((v) => { const o = [at, v / sum]; at += v / sum; return o; }); };
       const cx = cut(cols), cy = cut(rows); node.kids = [];
-      cy.forEach(([y0, fy], j) => cx.forEach(([x0, fx], i) => node.kids.push({ id: `${node.id}.${j * cols + i + 1}`, level: node.level + 1, x: node.x + x0 * node.w, y: node.y + y0 * node.d, w: node.w * fx, d: node.d * fy, h: Math.max(0.04, node.h * (0.35 + r() * 1.2)), from: node.h, kids: null })));
+      cy.forEach(([y0, fy], j) => cx.forEach(([x0, fx], i) => node.kids.push({ id: `${node.id}.${j * cols + i + 1}`, level: node.level + 1, x: node.x + x0 * node.w, y: node.y + y0 * node.d, w: node.w * fx, d: node.d * fy, h: Math.min(0.78, Math.max(0.04, node.h * (0.35 + r() * 1.2))), from: node.h, kids: null })));
       return node.kids;
     };
     const split = (r, node, n) => {            // découpe un bloc en n parts inégales, en alternant l'axe
       const along = node.level % 2 === 0 ? 'x' : 'y', ws = Array.from({ length: n }, () => 0.5 + r()), sum = ws.reduce((a, b) => a + b, 0); let at = 0;
-      node.kids = ws.map((wt, k) => { const f = wt / sum, kid = { id: (node.id ? node.id + '.' : 'B-') + (k + 1), level: node.level + 1, x: along === 'x' ? node.x + at * node.w : node.x, y: along === 'y' ? node.y + at * node.d : node.y, w: along === 'x' ? node.w * f : node.w, d: along === 'y' ? node.d * f : node.d, h: Math.max(0.06, (node.h || 0.42) * (0.45 + r() * 1.05)), from: node.h || 0, kids: null }; at += f; return kid; });
+      node.kids = ws.map((wt, k) => { const f = wt / sum, kid = { id: (node.id ? node.id + '.' : 'B-') + (k + 1), level: node.level + 1, x: along === 'x' ? node.x + at * node.w : node.x, y: along === 'y' ? node.y + at * node.d : node.y, w: along === 'x' ? node.w * f : node.w, d: along === 'y' ? node.d * f : node.d, h: Math.min(0.72, Math.max(0.06, (node.h || 0.42) * (0.45 + r() * 1.05))), from: node.h || 0, kids: null }; at += f; return kid; });
       return node.kids;
     };
     const build = (c) => {
@@ -163,6 +163,8 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
       const peak = leaves.reduce((a, b) => (b.h > a.h ? b : a));
       leaves.forEach((l, k) => { l.i = k; });
       ops.push({ cmd: 'mesurer', out: () => `${leaves.length} blocs · ${Math.max(...leaves.map((l) => l.level))} niveaux · sommet ${peak.id}`, run: 3.5, kind: 'measure' });
+      // défiler : le volume glisse le long de la dalle ; chaque bloc rétrécit à l'approche du bord, y disparaît, et renaît de l'autre côté
+      ops.push({ cmd: 'défiler', out: () => 'vers l\'est, sans fin', run: 5, kind: 'scroll' });
       // surveiller : l'état des grains évolue — veille, alerte (contour), critique (aplat) — et retombe
       const watch = { cmd: 'surveiller', run: 14, kind: 'watch', alerts: 0, crit: 0 }; watch.out = () => `${watch.alerts} en alerte · ${watch.crit} critique${watch.crit > 1 ? 's' : ''}`; ops.push(watch);
       ops.push({ cmd: 'aplanir', out: () => 'dalle nue', run: 2.4, kind: 'flat' });
@@ -183,8 +185,10 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
       });
       if (u > S.ops.at(-1).t2 + 0.2) { text('>', m, y, C.muted, 'left', false); sq(m + 22, y - 4, 7, C.max); }
       // ---- le volume, en perspective isométrique
-      const op = (k) => S.ops.find((o) => o.kind === k), raise = ease((u - op('raise').t1) / op('raise').run), flat = 1 - ease((u - op('flat').t1) / op('flat').run), measured = u >= op('measure').t1 && u < op('watch').t1, W8 = op('watch'), watching = u >= W8.t1 && u < W8.t2; let alerts = 0, crit = 0;
-      const ax = m + colW + m, aw = W - ax - m, ah = H * 0.72, sc = Math.min(aw / 1.75, ah / 1.25), cx = ax + aw / 2, cy = top + ah * 0.5, zs = sc * 0.62;
+      const op = (k) => S.ops.find((o) => o.kind === k), raise = ease((u - op('raise').t1) / op('raise').run), flat = 1 - ease((u - op('flat').t1) / op('flat').run), measured = u >= op('measure').t1 && u < op('scroll').t1, W8 = op('watch'), watching = u >= W8.t1 && u < W8.t2; let alerts = 0, crit = 0;
+      // le défilement démarre en douceur à « défiler » et s'arrête en douceur pendant « aplanir »
+      const sc0 = op('scroll').t1, sc1 = op('flat').t1, vel = 0.045, ramp = 2.5, travelled = (x) => (x <= 0 ? 0 : x < ramp ? (vel * x * x) / (2 * ramp) : vel * (x - ramp / 2)), slide = travelled(Math.min(u, sc1) - sc0) + (u > sc1 ? vel * (u - sc1) * flat : 0);
+      const ax = m + colW + m, aw = W - ax - m, ah = H * 0.72, sc = Math.min(aw / 1.75, ah / 1.25), cx = ax + aw / 2, cy = top + ah * 0.58, zs = sc * 0.5;
       const P = (X, Y, Z) => [cx + (X - Y) * sc * 0.866, cy + (X + Y - 1) * sc * 0.5 - Z * zs];
       const poly = (pts, fill, stroke, lw = 1) => { ctx.beginPath(); pts.forEach(([x, yy], k) => (k ? ctx.lineTo(x, yy) : ctx.moveTo(x, yy))); ctx.closePath(); if (fill) { ctx.fillStyle = fill; ctx.fill(); } if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.setLineDash([]); ctx.stroke(); } };
       // la dalle : son contour en pointillé, et deux bords cotés
@@ -198,11 +202,13 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
         else if (nd.level > 0) shown.push(nd);
       })(S.root);
       const edge = [null, C.soft, C.mark, C.strong, C.strong];
+      // géométrie de l'instant : la position glisse, et l'emprise se réduit pour ne jamais dépasser le bord
+      shown.forEach((b) => { const mx = (((b.x + b.w / 2 + slide) % 1) + 1) % 1, f = slide ? Math.min(1, Math.min(mx, 1 - mx) / (b.w / 2)) : 1; b.f = f; b.rx = mx - (b.w / 2) * f; b.rw = b.w * f; b.ry = b.y + (b.d / 2) * (1 - f); b.rd = b.d * f; });
       // ordre de tracé : un bloc passe avant tous ceux qu'il ne peut pas cacher (il est derrière eux sur un axe)
-      const order = [], rest = [...shown], behind = (a, b) => a.x + a.w <= b.x + 1e-6 || a.y + a.d <= b.y + 1e-6;
+      const order = [], rest = shown.filter((b) => b.f > 0.02), behind = (a, b) => a.rx + a.rw <= b.rx + 1e-6 || a.ry + a.rd <= b.ry + 1e-6;
       while (rest.length) { let k = rest.findIndex((a) => !rest.some((b) => b !== a && behind(b, a) && !behind(a, b))); if (k < 0) k = 0; order.push(rest.splice(k, 1)[0]); }
       order.forEach((b) => {
-        const g = 0.007, x0 = b.x + g, x1 = b.x + b.w - g, y0 = b.y + g, y1 = b.y + b.d - g, hz = (b.cur ?? b.h) * (b.level === 1 ? raise : 1) * (b.level > 1 || raise >= 1 ? 1 : 1) * flat * (b.level > 1 && raise < 1 ? raise : 1), st = edge[Math.min(4, b.level)], hot = measured && b === S.peak;
+        const g = Math.min(0.007, b.rw / 4, b.rd / 4), x0 = b.rx + g, x1 = b.rx + b.rw - g, y0 = b.ry + g, y1 = b.ry + b.rd - g, hz = b.f * (b.cur ?? b.h) * (b.level === 1 ? raise : 1) * (b.level > 1 || raise >= 1 ? 1 : 1) * flat * (b.level > 1 && raise < 1 ? raise : 1), st = edge[Math.min(4, b.level)], hot = measured && b === S.peak;
         // l'état d'un grain : une valeur lente, propre à chacun ; au-dessus d'un seuil il alerte, plus haut il est critique
         const small = b.w * b.d < 0.012, sv = watching && small ? noise(seed & 0xfff, b.i * 3.7 + 0.5, (u - W8.t1) * 0.3 + b.i * 0.61) * Math.min(1, (u - W8.t1) / 1.5, (W8.t2 - u) / 1.5) : 0, state = sv > 0.76 ? 2 : sv > 0.66 ? 1 : 0; if (state === 2) crit++; else if (state === 1) alerts++;
         if (hz > 0.002) { poly([P(x0, y1, 0), P(x1, y1, 0), P(x1, y1, hz), P(x0, y1, hz)], C.bg, st); poly([P(x1, y0, 0), P(x1, y1, 0), P(x1, y1, hz), P(x1, y0, hz)], C.surface, st); }
@@ -210,9 +216,9 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
         b.top = P((x0 + x1) / 2, (y0 + y1) / 2, hz);
       });
       // les noms : seulement les blocs assez larges pour les porter
-      shown.forEach((b) => { if (b.w * b.d > 0.045 && (b.w - b.d) > -0.5 && Math.min(b.w, b.d) * sc > 44) text(b.id, b.top[0], b.top[1] + 4, measured && b === S.peak ? C.max : C.muted, 'center', false); });
+      order.forEach((b) => { if (b.f > 0.98 && b.w * b.d > 0.045 && (b.w - b.d) > -0.5 && Math.min(b.w, b.d) * sc > 44) text(b.id, b.top[0], b.top[1] + 4, measured && b === S.peak ? C.max : C.muted, 'center', false); });
       W8.alerts = alerts; W8.crit = crit;
-      if (measured && S.peak.top) { const [hx, hy] = S.peak.top, lx = Math.min(W - m - 6, hx + 150), ly = Math.max(top - 6, hy - 70); ctx.strokeStyle = C.soft; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(hx + 4, hy - 6); ctx.lineTo(hx + 26, ly); ctx.lineTo(lx, ly); ctx.stroke(); text(`Sommet ${S.peak.id}`, lx, ly - 8, C.max, 'right', true, true); text(`hauteur ${fr(S.peak.h * 240)} · niveau ${S.peak.level}`, lx, ly + 16, C.soft, 'right', true, true); }
+      if (measured && S.peak.top && S.peak.f > 0.98) { const [hx, hy] = S.peak.top, lx = Math.min(W - m - 6, hx + 150), ly = Math.max(top - 6, hy - 70); ctx.strokeStyle = C.soft; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(hx + 4, hy - 6); ctx.lineTo(hx + 26, ly); ctx.lineTo(lx, ly); ctx.stroke(); text(`Sommet ${S.peak.id}`, lx, ly - 8, C.max, 'right', true, true); text(`hauteur ${fr(S.peak.h * 240)} · niveau ${S.peak.level}`, lx, ly + 16, C.soft, 'right', true, true); }
       return [`${shown.length} blocs`, `${Math.max(0, ...shown.map((b) => b.level))} niveaux`, watching ? `${alerts + crit} en alerte` : `volume ${String(cycle + 1).padStart(3, '0')}`];
     };
   }
