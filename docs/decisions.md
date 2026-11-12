@@ -79,6 +79,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-056 | Graphiques : le trait avant le ton, les signes annotent | en vigueur |
 | D-057 | Annuler plutôt que confirmer | en vigueur |
 | D-058 | Notifications : un journal, trois échelles | en vigueur |
+| D-059 | Touche Z, saisie et archives : précisions | en vigueur |
 
 ---
 
@@ -542,3 +543,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
   - l'écran complet réutilise le tableau avancé, les filtres et la barre d'actions existants : aucun composant nouveau.
 - **Remplace** : « une notification à la fois » (trois au plus désormais).
 - **Démonstration** : `catalogue/assets/notifs.js`, dans `exemples/application-modules.html` (suppression et changement de responsable depuis l'inspecteur).
+
+## D-059 — Touche Z, saisie et archives : précisions
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Questions du commanditaire** · **Précise** : D-057, D-058
+- **Plusieurs toasts** : Z ne vise que le toast le plus récent encore affiché, le seul à montrer la touche. Un nouvel appui vise le suivant. Sans toast visible, Z ne fait rien. La première version annulait le dernier événement annulable du journal, même invisible : écarté, on n'annule jamais à l'aveugle.
+- **En cours de saisie** : dans un champ, Z écrit un z et Ctrl+Z reste l'annulation de frappe du navigateur. Tous les raccourcis d'une lettre (G, N, C, Z, /) sont inactifs tant que le focus est dans un champ.
+- **Archives** : archiver range sans détruire. L'événement quitte le centre et la liste courante, ne compte plus comme non lu, et se retrouve sous le filtre « Archivés » du journal ; on peut l'y désarchiver ou le supprimer, et son annulation y fonctionne toujours. Archiver s'annule depuis son toast.
+- **Correction** : la touche était dans le bouton d'action et son cadre chevauchait le soulignement ; elle en sort et le suit.

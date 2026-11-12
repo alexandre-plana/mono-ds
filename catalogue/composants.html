@@ -1164,8 +1164,8 @@
             <div class="cat-demo" data-code>
               <div class="l-cluster" style="--gap: var(--space-7); align-items: flex-start">
                 <div class="l-stack" style="--gap: var(--space-2); align-items: flex-start">
-                  <div class="c-toast" role="status"><span>Vizille : responsable L. Brun → C. Morel</span><button class="c-toast__action" type="button">Annuler <kbd class="c-kbd">Z</kbd></button></div>
-                  <div class="c-toast" role="status"><span>Vizille supprimée</span><button class="c-toast__action" type="button">Rétablir <kbd class="c-kbd">Z</kbd></button></div>
+                  <div class="c-toast" role="status"><span>Vizille : responsable L. Brun → C. Morel</span><button class="c-toast__action" type="button">Annuler</button></div>
+                  <div class="c-toast" role="status"><span>Vizille supprimée</span><button class="c-toast__action" type="button">Rétablir</button><kbd class="c-kbd" aria-hidden="true">Z</kbd></div>
                 </div>
                 <div class="c-menu__list c-notifs" style="position: static" aria-label="Notifications">
                   <div class="c-notifs__head"><span>Notifications</span><span>2 non lues</span></div>
@@ -1183,7 +1183,9 @@
             <dl class="cat-spec">
               <div><dt>Annuler plutôt que confirmer</dt><dd>Toute action réversible s'exécute sans question et laisse une annulation : dans le toast pendant 8 s, puis au centre et au journal sans limite de durée. La modale de confirmation est réservée à ce que rien ne peut défaire — un envoi, un paiement, une purge.</dd></div>
               <div><dt>Mots</dt><dd>« Annuler » défait une modification, « Rétablir » ramène ce qui a été supprimé. Une fois fait : « Annulé », « Rétabli », en ton éteint. L'événement dit ce qui a changé, avec l'ancienne et la nouvelle valeur.</dd></div>
-              <div><dt>Toast</dt><dd><code>.c-toasts</code> : trois au plus, en bas à gauche. Une action au plus, <code>.c-toast__action</code>, et sa touche.</dd></div>
+              <div><dt>Toast</dt><dd><code>.c-toasts</code> : trois au plus, en bas à gauche. Une action au plus, <code>.c-toast__action</code>.</dd></div>
+              <div><dt>Touche Z</dt><dd>Elle ne vise que le toast le plus récent encore à l'écran — le seul qui affiche la touche. Appuyer de nouveau vise le suivant. Sans toast visible, Z ne fait rien : on n'annule jamais à l'aveugle. Dans un champ de saisie, Z écrit un z ; les raccourcis d'une lettre sont inactifs tant qu'on écrit.</dd></div>
+              <div><dt>Archiver</dt><dd>Un événement archivé quitte le centre et la liste courante, et ne compte plus comme non lu. Il reste au journal sous le filtre « Archivés », où l'on peut le désarchiver, le supprimer — et où son annulation fonctionne toujours. Archiver s'annule aussi.</dd></div>
               <div><dt>Centre</dt><dd><code>.c-notifs</code> dans un <code>.c-menu</code> de l'en-tête : les six derniers événements, le compte des non lus entre crochets sur le bouton, « Tout marquer lu », « Tout voir ». Il ne se substitue pas au journal : pas de filtre, pas de sélection.</dd></div>
               <div><dt>Écran</dt><dd>Un <code>.c-table</code> à cases : filtres <code>.c-chip</code> (tous, non lus, suppressions, archivés), puis <code>.c-bulkbar</code> dès qu'une ligne est cochée — marquer lu, archiver, supprimer. Retirer des événements du journal est lui-même un événement annulable.</dd></div>
               <div><dt>Non lu</dt><dd>Un point plein et la graisse. Jamais le signal : il reste au fait unique de l'écran, pas au compteur.</dd></div>

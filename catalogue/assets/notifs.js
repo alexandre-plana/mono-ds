@@ -50,28 +50,47 @@ window.MonoNotifs = ({ toasts, center, badge, onShowAll, seed = [] }) => {
   function undo(id) {
     const e = events.find((x) => x.id === +id); if (!e || e.undone || !e.undo) return;
     e.undo(); e.undone = true; e.read = true;
-    toasts?.querySelector(`[data-toast="${e.id}"]`)?.remove();
+    toasts?.querySelector(`[data-toast="${e.id}"]`)?.remove(); markZ();
     toast(`${done(e)} : ${e.text}`);
     render();
   }
-  function toast(text, e) {
+  // Un toast porte au plus une action. La touche Z ne vise que le toast le plus récent encore à
+  // l'écran — celui qui affiche la touche. Sans toast visible, Z ne fait rien : on n'annule jamais
+  // à l'aveugle un événement que l'on ne voit pas.
+  const runs = new Map(); let runSeq = 0;
+  const markZ = () => {
+    if (!toasts) return;
+    toasts.querySelectorAll('.c-kbd').forEach((k) => k.remove());
+    const last = [...toasts.querySelectorAll('.c-toast__action')].pop();
+    if (last) last.insertAdjacentHTML('afterend', '<kbd class="c-kbd" aria-hidden="true">Z</kbd>');
+  };
+  function toast(text, e, extra) {
     if (!toasts) return;
     const t = document.createElement('div'); t.className = 'c-toast'; t.setAttribute('role', 'status'); if (e) t.dataset.toast = e.id;
-    t.innerHTML = `<span>${esc(text)}</span>` + (e?.undo ? `<button class="c-toast__action" type="button" data-undo="${e.id}">${verb(e)} <kbd class="c-kbd">Z</kbd></button>` : '');
+    let act = '';
+    if (e?.undo) act = `<button class="c-toast__action" type="button" data-undo="${e.id}">${verb(e)}</button>`;
+    else if (extra) { const k = ++runSeq; runs.set(k, extra.run); act = `<button class="c-toast__action" type="button" data-run="${k}">${extra.label}</button>`; }
+    t.innerHTML = `<span>${esc(text)}</span>` + act;
     toasts.append(t); while (toasts.children.length > 3) toasts.firstChild.remove();
-    setTimeout(() => t.remove(), e?.undo ? 8000 : 3000);
+    markZ();
+    setTimeout(() => { t.remove(); markZ(); }, act ? 8000 : 3000);
   }
 
   document.addEventListener('click', (ev) => {
-    const t = ev.target.closest('[data-undo], [data-read-all], [data-show-all], [data-filter], [data-bulk]'); if (!t) return;
-    if (t.dataset.undo) undo(t.dataset.undo);
+    const t = ev.target.closest('[data-run], [data-undo], [data-read-all], [data-show-all], [data-filter], [data-bulk]'); if (!t) return;
+    if (t.dataset.run) { runs.get(+t.dataset.run)?.(); runs.delete(+t.dataset.run); t.closest('.c-toast')?.remove(); markZ(); render(); }
+    else if (t.dataset.undo) undo(t.dataset.undo);
     else if (t.dataset.readAll !== undefined) { events.forEach((e) => { e.read = true; }); render(); }
     else if (t.dataset.showAll !== undefined) onShowAll?.();
     else if (t.dataset.filter) { filter = t.dataset.filter; picked.clear(); renderFull(); }
     else if (t.dataset.bulk) {
       const sel = events.filter((e) => picked.has(e.id)), n = sel.length;
       if (t.dataset.bulk === 'read') sel.forEach((e) => { e.read = true; });
-      else if (t.dataset.bulk === 'archive') { const to = filter !== 'archives'; sel.forEach((e) => { e.archived = to; e.read = true; }); toast(`${n} événement${n > 1 ? 's' : ''} ${to ? 'archivé' : 'désarchivé'}${n > 1 ? 's' : ''}`); }
+      else if (t.dataset.bulk === 'archive') {
+        // Archiver range l'événement : il quitte le centre et la liste courante, et se retrouve sous le filtre « Archivés ».
+        const to = filter !== 'archives', was = sel.map((e) => [e, e.archived, e.read]); sel.forEach((e) => { e.archived = to; e.read = true; });
+        toast(`${n} événement${n > 1 ? 's' : ''} ${to ? 'archivé' : 'désarchivé'}${n > 1 ? 's' : ''}${to ? ' — à retrouver sous « Archivés »' : ''}`, null, { label: 'Annuler', run: () => was.forEach(([e, a, r]) => { e.archived = a; e.read = r; }) });
+      }
       else {
         // Supprimer du journal est lui-même annulable : les événements reviennent à leur place.
         const kept = sel.map((e) => [events.indexOf(e), e]).sort((a, b) => b[0] - a[0]); kept.forEach(([i]) => events.splice(i, 1));
@@ -90,7 +109,8 @@ window.MonoNotifs = ({ toasts, center, badge, onShowAll, seed = [] }) => {
   render();
   return {
     push(e) { const ev = add(e); toast(ev.text, ev); render(); return ev; },
-    undoLast() { const e = events.find((x) => x.undo && !x.undone); if (e) undo(e.id); return !!e; },
+    // Touche Z : l'action du toast le plus récent encore affiché, et rien d'autre.
+    undoLast() { const b = toasts && [...toasts.querySelectorAll('.c-toast__action')].pop(); if (b) b.click(); return !!b; },
     mount(el) { full = el; renderFull(); },
     render,
   };
