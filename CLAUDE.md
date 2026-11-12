@@ -26,6 +26,11 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
   `--inverse-bg`. Le clair va au résultat de l'action, pas au contrôle.
 - Toute page est une `.l-shell` (contour d'un pixel) posée sur `<body class="l-desk">`
   (plan de travail hachuré). Les hachures ne s'emploient nulle part ailleurs.
+- Icônes : uniquement `<i class="c-icon i-nom">` du jeu maison (`src/icons.json`),
+  à 16 ou 32 px. Aucune autre bibliothèque, aucun SVG d'icône en ligne.
+- Signes (`.g-`) : chacun a un sens unique ; deux signes différents par vue au plus.
+- Une valeur modifiable en place (`.c-editable`) se présente comme un texte sur une
+  ligne pointillée ; l'enregistrement en cours se dit par `.c-spinner`, jamais un cercle.
 - Alignements au cordeau : les blocs d'une rangée vivent dans la même rangée de
   grille et s'ouvrent par le même style de texte ; sur un axe, c'est le texte qui
   s'aligne, pas le bord d'un cadre.
@@ -42,6 +47,7 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
 node scripts/contrast.mjs
 node scripts/tonal-audit.mjs <page.html ou url>   # nécessite Playwright
 node scripts/build-search-index.mjs --check       # index de recherche à jour ?
+node scripts/build-icons.mjs --check              # icônes à jour ?
 ```
 
 Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du catalogue).
@@ -54,6 +60,7 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   `<div class="cat-sub" id="c-nom" data-search="composant">` avec un `<h3>`, une
   démonstration `<div class="cat-demo" data-code>` et sa fiche `<dl class="cat-spec">`
   (Employer / Éviter / États / Accessibilité). Ajouter une ligne à `docs/composants.md`.
+- Nouvelle icône : l'ajouter à `src/icons.json`, puis `node scripts/build-icons.mjs`.
 - Après toute modification du catalogue ou des tokens : `node scripts/build-search-index.mjs`.
   Tout élément `data-search` doit porter un `id` et contenir un titre.
 - Nouvelle paire texte/fond : l'ajouter à `scripts/contrast.mjs`.

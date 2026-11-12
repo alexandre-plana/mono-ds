@@ -1,0 +1,48 @@
+/* ==========================================================================
+   MONO — Signes (.g-)
+   Les marques graphiques du système, empruntées à l'imprimé technique.
+   Un signe n'entre ici que s'il a UN sens, le même partout. Aucun n'est décoratif.
+
+     repères d'angle   une zone délimitée sans être enfermée
+     règle graduée     une mesure : ce qui est dessous se lit à l'échelle
+     barre d'échelle   la valeur d'une longueur
+     crochets          une position dans une suite : [ 3 / 12 ]
+     ligne de rappel   une annotation qui désigne un point
+     hachures          ce qui n'est pas la page (voir .l-desk)
+   ========================================================================== */
+
+/* Repères d'angle : quatre équerres. Les dégradés ne servent qu'à tracer des traits nets. */
+.g-corners { --g-len: 0.5rem; --g-tone: var(--fg-muted); padding: var(--space-4); background:
+  linear-gradient(var(--g-tone), var(--g-tone)) left top / var(--g-len) 1px no-repeat,
+  linear-gradient(var(--g-tone), var(--g-tone)) left top / 1px var(--g-len) no-repeat,
+  linear-gradient(var(--g-tone), var(--g-tone)) right top / var(--g-len) 1px no-repeat,
+  linear-gradient(var(--g-tone), var(--g-tone)) right top / 1px var(--g-len) no-repeat,
+  linear-gradient(var(--g-tone), var(--g-tone)) left bottom / var(--g-len) 1px no-repeat,
+  linear-gradient(var(--g-tone), var(--g-tone)) left bottom / 1px var(--g-len) no-repeat,
+  linear-gradient(var(--g-tone), var(--g-tone)) right bottom / var(--g-len) 1px no-repeat,
+  linear-gradient(var(--g-tone), var(--g-tone)) right bottom / 1px var(--g-len) no-repeat; }
+
+/* Règle graduée : une graduation tous les --g-step, une longue toutes les cinq. */
+.g-ruler { --g-step: 0.5rem; display: block; height: 0.5rem; width: 100%; border-top: var(--hairline) solid var(--line-strong); background:
+  repeating-linear-gradient(90deg, var(--line-strong) 0, var(--line-strong) 1px, transparent 1px, transparent calc(var(--g-step) * 5)) left top / 100% 100% no-repeat,
+  repeating-linear-gradient(90deg, var(--line-strong) 0, var(--line-strong) 1px, transparent 1px, transparent var(--g-step)) left top / 100% 50% no-repeat; }
+.g-ruler__labels { display: flex; justify-content: space-between; margin-top: var(--space-1); font-size: var(--text-micro); line-height: var(--leading-micro); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-muted); }
+
+/* Barre d'échelle : un segment borné par deux taquets, sa valeur dessus. */
+.g-scale { display: inline-flex; flex-direction: column; gap: var(--space-1); width: var(--g-width, 6rem); font-size: var(--text-micro); line-height: var(--leading-micro); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-soft); }
+.g-scale::after { content: ''; height: 0.375rem; border: var(--hairline) solid var(--fg-soft); border-top: 0; }
+.g-scale > span { display: flex; justify-content: space-between; }
+
+/* Crochets : une position dans une suite. Les parenthèses (.c-ref) restent aux références. */
+.g-bracket { white-space: nowrap; font-size: var(--text-micro); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-soft); }
+.g-bracket::before { content: '[ '; color: var(--fg-muted); }
+.g-bracket::after { content: ' ]'; color: var(--fg-muted); }
+
+/* Ligne de rappel : libellé, trait, point. Le point se pose sur ce que l'on désigne. */
+.g-callout { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-micro); line-height: var(--leading-micro); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-soft); white-space: nowrap; }
+.g-callout::after { content: ''; width: var(--g-len, 2.5rem); height: 0.3125rem; background:
+  linear-gradient(var(--fg-soft), var(--fg-soft)) left center / calc(100% - 0.3125rem) 1px no-repeat,
+  linear-gradient(var(--fg-strong), var(--fg-strong)) right center / 0.3125rem 0.3125rem no-repeat; }
+.g-callout--signal::after { background:
+  linear-gradient(var(--fg-soft), var(--fg-soft)) left center / calc(100% - 0.3125rem) 1px no-repeat,
+  linear-gradient(var(--signal), var(--signal)) right center / 0.3125rem 0.3125rem no-repeat; }

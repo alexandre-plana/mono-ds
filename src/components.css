@@ -68,7 +68,6 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-button--signal:hover { background: var(--signal); border-color: var(--signal); color: var(--on-signal); }
 .c-button--large { min-height: var(--control-height-large); padding-inline: var(--space-5); }
 .c-button:disabled, .c-button[aria-disabled="true"] { border-style: dashed; border-color: var(--line); background: transparent; color: var(--fg-muted); cursor: not-allowed; }
-.c-button svg { width: 1rem; height: 1rem; }
 
 /* --- Champs ---------------------------------------------------------------- */
 .c-field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
@@ -166,7 +165,15 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-table td { color: var(--fg); }
 .c-table .is-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .c-table tbody tr:hover > * { background: var(--surface); }
-.c-table tr[aria-selected="true"] > * { border-bottom: var(--stroke) solid var(--selected-line); padding-bottom: calc(var(--space-2) - 1px); }
+/* Ligne sélectionnable : toute la ligne répond. Sélection = deux filets de 2 px, dessus et dessous ;
+   le contour reste ouvert sur les côtés pour que le texte garde son axe. */
+.c-table tr[tabindex] { cursor: pointer; }
+.c-table tr[tabindex]:focus-visible { outline-offset: -2px; }
+.c-table tr[aria-selected="true"] > * { border-top: var(--stroke) solid var(--selected-line); border-bottom: var(--stroke) solid var(--selected-line); padding-block: calc(var(--space-2) - 1px); color: var(--fg); }
+.c-table tr[aria-selected="true"] > th { font-weight: var(--weight-medium); }
+/* En-tête triable : un bouton sans habillage, l'icône dit le sens. */
+.c-table__sort { appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: var(--space-1); }
+.c-table__sort:hover, th[aria-sort] .c-table__sort { color: var(--fg); }
 .c-table tr.is-key > * { color: var(--fg-strong); font-weight: var(--weight-bold); }
 .c-table tr.is-muted > * { color: var(--fg-muted); }
 .c-table tfoot th, .c-table tfoot td { border-top: var(--hairline) solid var(--fg-soft); border-bottom: 0; color: var(--fg-strong); font-weight: var(--weight-bold); }
@@ -358,6 +365,38 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 code { font-family: var(--font-mono); }
 :not(pre) > code { color: var(--fg-strong); padding: 1px 4px; background: var(--surface-2); font-size: 0.92em; }
 
-/* --- Icône : trait 1.25, extrémités rondes, grille 24 ---------------------------- */
-.c-icon { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-.c-icon--small { width: 1rem; height: 1rem; stroke-width: 1.5; }
+/* --- Indicateur d'opération : | / - \ ---------------------------------------------
+   Un caractère qui tourne, pas un cercle. Il dit « cette valeur est en cours
+   d'enregistrement » et se place à côté d'elle. Pour un contenu qui charge,
+   préférer .c-loader, .c-progress ou .c-skeleton. */
+.c-spinner { display: inline-block; width: 1ch; overflow: hidden; white-space: nowrap; vertical-align: bottom; color: var(--fg-soft); font-family: var(--font-mono); letter-spacing: 0; text-transform: none; }
+.c-spinner::before { content: '|/-\\'; display: block; width: 4ch; animation: c-spinner 0.6s steps(4, jump-none) infinite; }
+@keyframes c-spinner { to { transform: translateX(-3ch); } }
+@media (prefers-reduced-motion: reduce) { .c-spinner::before { animation: none; content: '…'; width: 1ch; } }
+
+/* --- Édition en place -----------------------------------------------------------------
+   La valeur se présente comme un texte. Une ligne pointillée — celle des formulaires
+   papier — dit qu'on peut écrire dessus ; elle devient pleine pendant la saisie.
+   Entrée ou sortie du champ enregistre, Échap annule. Aucun cadre, aucun décalage :
+   la valeur ne bouge pas d'un pixel entre la lecture et l'écriture.
+   États (data-state sur .c-editable) : idle · saving · saved · error. */
+.c-editable { display: flex; align-items: baseline; gap: var(--space-3); min-width: 0; }
+.c-editable__input { appearance: none; flex: 1; min-width: 0; width: 100%; margin: 0 0 -1px; padding: 0; background: none; border: 0; border-bottom: var(--hairline) dotted var(--line-strong); border-radius: 0; outline: 0; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; line-height: inherit; text-overflow: ellipsis; cursor: text; resize: none; transition: border-color var(--duration), color var(--duration); }
+textarea.c-editable__input { field-sizing: content; min-height: var(--leading-base); overflow: hidden; }
+.c-editable__input:hover { border-bottom-color: var(--fg-soft); }
+.c-editable__input:focus { border-bottom: var(--hairline) solid var(--fg-soft); color: var(--fg-strong); }
+.c-editable__input::placeholder { color: var(--fg-muted); opacity: 1; }
+.c-editable__status { flex: none; align-self: center; height: 1rem; display: inline-flex; align-items: center; gap: var(--space-1); min-width: 1ch; font-size: var(--text-micro); line-height: var(--leading-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); white-space: nowrap; }
+.c-editable[data-state="saving"] .c-editable__input { color: var(--fg-muted); border-bottom-style: dashed; }
+.c-editable[data-state="saved"] .c-editable__input { color: var(--fg-strong); }
+.c-editable[data-state="error"] .c-editable__input { border-bottom: var(--hairline) solid var(--signal); }
+.c-editable[data-state="error"] .c-editable__status { color: var(--fg-strong); }
+
+/* --- Barre d'état : pied d'un volet ------------------------------------------------------ */
+.c-statusbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-2) var(--space-5); min-height: 2.5rem; padding-block: var(--space-2); border-top: var(--hairline) solid var(--line); font-size: var(--text-micro); line-height: var(--leading-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); }
+.c-statusbar__group { display: inline-flex; align-items: center; gap: var(--space-2); white-space: nowrap; }
+.c-statusbar__group + .c-statusbar__group { margin-left: var(--space-2); }
+.c-statusbar strong { font-weight: var(--weight-medium); color: var(--fg); }
+
+/* Valeur qui vient de changer : c'est elle, le résultat de l'action, qui porte le clair. */
+.is-fresh { color: var(--fg-strong) !important; font-weight: var(--weight-medium); }

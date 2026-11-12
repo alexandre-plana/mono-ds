@@ -26,6 +26,7 @@ h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd, ol, ul { margin: 0; paddi
 h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
 ol, ul { list-style: none; }
 img, svg { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
 button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; border-radius: 0; }
 a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.3em; text-decoration-color: var(--line-strong); transition: text-decoration-color var(--duration); }
 a:hover { text-decoration-color: var(--fg-strong); color: var(--fg-strong); }
@@ -76,6 +77,27 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .l-desk { min-height: 100vh; min-height: 100dvh; padding: var(--shell-inset); display: grid; gap: var(--shell-inset); align-content: stretch; background-color: var(--desk); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px); background-attachment: fixed; }
 .l-shell { min-width: 0; background: var(--bg); border: var(--hairline) solid var(--line-strong); }
 .l-shell > .l-frame { min-height: calc(100vh - 2 * var(--shell-inset) - 2px); min-height: calc(100dvh - 2 * var(--shell-inset) - 2px); }
+/* Application : le plan occupe exactement l'écran, chaque page défile pour elle-même.
+   --split pose deux pages côte à côte : la collection, puis l'inspecteur. La bande
+   hachurée entre les deux est la gouttière de la grille. */
+.l-desk--app { height: 100vh; height: 100dvh; min-height: 0; }
+.l-desk--app > .l-shell { min-height: 0; overflow: hidden; display: grid; }
+.l-desk--split { grid-template-columns: minmax(0, 1fr) var(--inspector); }
+@media (max-width: 900px) {
+  .l-desk--app { height: auto; min-height: 100dvh; }
+  .l-desk--split { grid-template-columns: minmax(0, 1fr); }
+  .l-desk--app > .l-shell { overflow: visible; }
+}
+/* Volet : en-tête fixe, corps défilant, pied fixe. Les trois partagent la même marge. */
+.l-pane { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; min-width: 0; }
+.l-pane__head { padding: var(--space-4) var(--pane-pad) 0; display: flex; flex-direction: column; gap: var(--space-5); }
+/* Deux volets voisins ont des en-têtes de même hauteur : leurs filets tombent sur la même ligne. */
+.l-pane__head > .c-masthead { align-items: center; min-height: 3rem; padding-bottom: var(--space-3); }
+@media (max-width: 640px) { .l-pane__head > .c-masthead { align-items: flex-start; } }
+.l-pane__bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3) var(--space-4); min-height: var(--control-height); }
+.l-pane__body { padding: var(--space-6) var(--pane-pad); overflow-y: auto; min-height: 0; display: flex; flex-direction: column; gap: var(--space-7); }
+.l-pane__foot { padding: 0 var(--pane-pad); }
+
 
 .l-page { max-width: var(--page-max); margin-inline: auto; padding: var(--space-6) var(--page-margin) var(--space-7); }
 

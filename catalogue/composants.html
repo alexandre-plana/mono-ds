@@ -13,7 +13,7 @@
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
       <div class="c-masthead__meta">
-        <span>Composants</span><span>v0.2</span>
+        <span>Composants</span><span>v0.3</span>
         <span class="c-segmented" role="group" aria-label="Thème">
           <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
           <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
@@ -156,19 +156,19 @@
                   <div class="c-card__head"><span>Modèle</span><span>01</span></div>
                   <h4 class="c-card__title c-card__title--label">Synthèse</h4>
                   <div class="c-card__body">Une page, les chiffres clés et un graphique.</div>
-                  <div class="c-card__foot"><span>Sélectionné</span><span>→</span></div>
+                  <div class="c-card__foot"><span>Sélectionné</span><i class="c-icon i-arrow-right" aria-hidden="true"></i></div>
                 </a>
                 <a class="c-card c-card--boxed" href="#c-card">
                   <div class="c-card__head"><span>Modèle</span><span>02</span></div>
                   <h4 class="c-card__title c-card__title--label">Rapport détaillé</h4>
                   <div class="c-card__body">Toutes les branches, tableaux complets.</div>
-                  <div class="c-card__foot"><span>Choisir</span><span>→</span></div>
+                  <div class="c-card__foot"><span>Choisir</span><i class="c-icon i-arrow-right" aria-hidden="true"></i></div>
                 </a>
                 <a class="c-card c-card--boxed c-card--dashed" href="#c-card">
                   <div class="c-card__head"><span>Modèle</span><span>—</span></div>
                   <h4 class="c-card__title c-card__title--label">Nouveau modèle</h4>
                   <div class="c-card__body">Partir d'une page blanche.</div>
-                  <div class="c-card__foot"><span>Créer</span><span>+</span></div>
+                  <div class="c-card__foot"><span>Créer</span><i class="c-icon i-plus" aria-hidden="true"></i></div>
                 </a>
               </div>
             </div>
@@ -206,6 +206,21 @@
               <div><dt>Éviter</dt><dd>Pour cacher une information nécessaire à la décision, ou pour raccourcir une page qui devrait être réorganisée.</dd></div>
               <div><dt>États</dt><dd>Fermé : graisse 500. Ouvert : graisse 600 et signe −. Pas d'animation de hauteur.</dd></div>
               <div><dt>Accessibilité</dt><dd>Natif : clavier et lecteurs d'écran sans script. L'attribut <code>name</code> partagé rend l'accordéon exclusif.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-statusbar" data-search="composant">
+            <h3>Barre d'état — .c-statusbar</h3>
+            <p>Le pied d'un volet : ce qui se passe à gauche, ce que l'on peut faire au clavier à droite. Les touches s'écrivent dans leur petit cadre.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-statusbar">
+                <span class="c-statusbar__group"><span class="g-bracket">6 / 12</span></span>
+                <span class="c-statusbar__group"><span class="c-kbd">↑</span><span class="c-kbd">↓</span> ligne <span class="c-statusbar__group"><span class="c-kbd">E</span> modifier</span></span>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Dans une application : position dans une collection, état d'enregistrement, raccourcis du volet.</dd></div>
+              <div><dt>Éviter</dt><dd>Des actions, des liens, une alerte. Plus de trois raccourcis : au-delà, un panneau d'aide.</dd></div>
             </dl>
           </div>
         </section>
@@ -269,6 +284,7 @@
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Des données à comparer sur plusieurs colonnes. Les unités vont dans la légende ou l'en-tête, pas dans chaque cellule.</dd></div>
               <div><dt>Éviter</dt><dd>Filets verticaux, lignes zébrées, fond d'en-tête. Plus d'une cellule en signal. Du texte centré.</dd></div>
+              <div><dt>Sélection</dt><dd>Ligne sélectionnable : <code>&lt;tr tabindex="0" aria-selected&gt;</code>. Sélectionnée, elle prend deux filets de 2 px, dessus et dessous ; le contour reste ouvert sur les côtés pour que le texte garde son axe.</dd></div>
               <div><dt>États</dt><dd>Survol : la ligne passe sur <code>--surface</code>. <code>tr.is-key</code> ligne commentée · <code>tr.is-muted</code> ligne provisoire · <code>tfoot</code> total.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;caption&gt;</code>, <code>&lt;th&gt;</code> d'en-tête et de ligne. Envelopper dans <code>.c-table-wrap</code> pour le défilement horizontal en étroit.</dd></div>
             </dl>
@@ -341,7 +357,7 @@
               <div class="l-cluster">
                 <button class="c-button c-button--primary c-button--large" type="button">Grand — 40 px</button>
                 <button class="c-button" type="button">
-                  <svg class="c-icon c-icon--small" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg>
+                  <i class="c-icon i-plus" aria-hidden="true"></i>
                   Ajouter
                 </button>
               </div>
@@ -507,7 +523,7 @@
             <div class="cat-demo" data-code>
               <div class="l-stack" style="max-width: 32rem">
                 <label class="c-search c-search--large">
-                  <svg class="c-icon c-icon--small" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="m16 16 5 5"/></svg>
+                  <i class="c-icon i-search" aria-hidden="true"></i>
                   <input type="search" placeholder="Rechercher une agence" aria-label="Rechercher une agence">
                   <span class="c-kbd">/</span>
                 </label>
@@ -519,6 +535,27 @@
               <div><dt>Éviter</dt><dd>Un bouton « Rechercher » à côté : la saisie filtre à la frappe. Pas de champ de recherche pour moins de dix éléments.</dd></div>
               <div><dt>États</dt><dd>Focus : bordure au ton fort et surface d'un cran. Résultats nuls : dire ce qui a été cherché et proposer d'élargir.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;label&gt;</code> englobant, <code>aria-label</code> sur le champ, nombre de résultats annoncé par une zone <code>aria-live</code>.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-editable" data-search="composant">
+            <h3>Édition en place — .c-editable</h3>
+            <p>La valeur se présente comme un texte, pas comme un champ. Une ligne pointillée — celle des formulaires papier — dit qu'on peut écrire dessus ; elle devient pleine pendant la saisie. La valeur ne bouge pas d'un pixel entre la lecture et l'écriture.</p>
+            <div class="cat-demo" data-code>
+              <dl class="c-kv c-kv--plain" style="max-width: 26rem">
+                <div><dt>Responsable</dt><dd><div class="c-editable" data-state="idle"><input class="c-editable__input" type="text" value="M. Delorme" aria-label="Responsable"><span class="c-editable__status"></span></div></dd></div>
+                <div><dt>Ville</dt><dd><div class="c-editable" data-state="saving"><input class="c-editable__input" type="text" value="Grenoble" aria-label="Ville"><span class="c-editable__status"><span class="c-spinner" aria-hidden="true"></span></span></div></dd></div>
+                <div><dt>Téléphone</dt><dd><div class="c-editable" data-state="saved"><input class="c-editable__input" type="tel" value="04 76 55 01 14" aria-label="Téléphone"><span class="c-editable__status"><i class="c-icon i-check" aria-hidden="true"></i></span></div></dd></div>
+                <div><dt>Effectif</dt><dd><div class="c-editable" data-state="error"><input class="c-editable__input" type="text" value="vingt" aria-label="Effectif"><span class="c-editable__status"><span class="t-signal">▲</span> Nombre attendu</span></div></dd></div>
+              </dl>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Corriger une valeur là où on la lit : inspecteur, fiche, cellule. Chaque valeur s'enregistre seule, sans bouton.</dd></div>
+              <div><dt>Éviter</dt><dd>Une création (plusieurs champs liés : un formulaire), une valeur dont la modification est irréversible (une confirmation), plus d'une dizaine de valeurs modifiables à la suite.</dd></div>
+              <div><dt>États</dt><dd><code>idle</code> ligne pointillée · saisie : ligne pleine, <span class="c-kbd">↵</span> <span class="c-kbd">esc</span> à droite · <code>saving</code> valeur grisée, ligne tiretée, indicateur · <code>saved</code> valeur au ton fort et coche, deux secondes · <code>error</code> ligne signal et message.</dd></div>
+              <div><dt>Clavier</dt><dd>Entrée ou sortie du champ enregistre ; Échap rétablit la valeur. Une valeur invalide n'est pas enregistrée : elle reste en saisie avec son message.</dd></div>
+              <div><dt>Accessibilité</dt><dd>C'est un vrai <code>&lt;input&gt;</code>, habillé en texte : focus, lecteurs d'écran et saisie mobile fonctionnent sans script. Le statut est une zone <code>aria-live</code>.</dd></div>
+              <div><dt>Script</dt><dd>Le système fournit l'habillage et les états. Passer <code>data-state</code> de l'un à l'autre revient à l'application ; voir l'exemple « Collection ».</dd></div>
             </dl>
           </div>
         </section>
@@ -552,13 +589,13 @@
                   <span aria-current="page">Agences</span>
                 </nav>
                 <nav class="c-pagination" aria-label="Pages">
-                  <a href="#navigation" aria-label="Précédente">←</a>
+                  <a href="#navigation" aria-label="Précédente"><i class="c-icon i-arrow-left" aria-hidden="true"></i></a>
                   <a href="#navigation">1</a>
                   <a href="#navigation" aria-current="page">2</a>
                   <a href="#navigation">3</a>
                   <span>…</span>
                   <a href="#navigation">12</a>
-                  <a href="#navigation" aria-label="Suivante">→</a>
+                  <a href="#navigation" aria-label="Suivante"><i class="c-icon i-arrow-right" aria-hidden="true"></i></a>
                 </nav>
               </div>
             </div>
@@ -731,6 +768,22 @@
               <div><dt>Accessibilité</dt><dd><code>role="status"</code> sur le libellé ; gabarit en <code>aria-hidden</code>. Mouvement réduit : les animations s'arrêtent, le libellé reste.</dd></div>
             </dl>
           </div>
+
+          <div class="cat-sub" id="c-spinner" data-search="composant">
+            <h3>Indicateur d'opération — .c-spinner</h3>
+            <p>Un caractère qui tourne — <code>| / - \</code> — et non un cercle. Il dit qu'une valeur précise est en cours d'enregistrement et se place à côté d'elle.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-6)">
+                <span class="t-micro"><span class="c-spinner" aria-hidden="true"></span> Enregistrement</span>
+                <button class="c-button" type="button" disabled><span class="c-spinner" aria-hidden="true"></span> Envoi</button>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Une opération courte déclenchée par l'utilisateur sur un élément : enregistrer, envoyer, vérifier.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour un contenu qui se charge (préférer les points de suspension, le filet de progression ou le gabarit) ; seul, sans mot, hors d'une valeur en cours d'édition.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Décoratif (<code>aria-hidden</code>) : le mot à côté, ou un texte masqué, porte l'information. Mouvement réduit : il devient « … ».</dd></div>
+            </dl>
+          </div>
         </section>
 
         <section class="cat-section" id="superpositions" data-search="rubrique">
@@ -746,7 +799,7 @@
                 <div class="c-dialog__head">
                   <h3 class="c-dialog__title" id="demo-dialog-title">Modifier l'agence</h3>
                   <button class="c-button c-button--quiet" type="button" aria-label="Fermer" onclick="this.closest('dialog').close()">
-                    <svg class="c-icon c-icon--small" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+                    <i class="c-icon i-close" aria-hidden="true"></i>
                   </button>
                 </div>
                 <form method="dialog" style="display: contents">
@@ -814,7 +867,7 @@
                 <div class="c-dialog__head">
                   <h3 class="c-dialog__title" id="demo-drawer-title">Agence <span class="c-ref">N-014</span></h3>
                   <button class="c-button c-button--quiet" type="button" aria-label="Fermer" onclick="this.closest('dialog').close()">
-                    <svg class="c-icon c-icon--small" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+                    <i class="c-icon i-close" aria-hidden="true"></i>
                   </button>
                 </div>
                 <div class="c-dialog__body" style="gap: var(--space-6)">
@@ -847,32 +900,84 @@
         </section>
 
         <section class="cat-section" id="icones" data-search="rubrique">
-          <h2 class="c-section-head"><span class="c-section-head__num">08</span><span>Icônes</span><span class="c-section-head__aside">Grille 24 · trait 1,25</span></h2>
-          <p class="cat-note">Tracé linéaire, extrémités rondes, sans remplissage. Une icône accompagne un mot ou le remplace dans un contrôle étroit ; elle n'est jamais décorative. <code>.c-icon</code> hérite de la couleur du texte.</p>
+          <h2 class="c-section-head"><span class="c-section-head__num">08</span><span>Icônes</span><span class="c-section-head__aside">Grille 16 · trait 1 px</span></h2>
+          <p class="cat-note">Un jeu propre au système, 49 signes. Chaque icône est tracée sur une grille de 16 px, en traits d'un pixel posés sur la grille, extrémités carrées, angles vifs, sans aucune courbe : c'est le trait des filets, plié. Montrées ici à 32 px ; l'emploi courant est à 16 px.</p>
+          <div class="cat-demo" data-code>
+            <div class="l-cluster" style="--gap: var(--space-5)">
+              <button class="c-button" type="button"><i class="c-icon i-plus" aria-hidden="true"></i>Ajouter</button>
+              <button class="c-button c-button--quiet" type="button" aria-label="Supprimer"><i class="c-icon i-trash" aria-hidden="true"></i></button>
+              <span><i class="c-icon i-lock" aria-hidden="true"></i> Lecture seule</span>
+              <i class="c-icon c-icon--large i-save" aria-hidden="true"></i>
+            </div>
+          </div>
           <div class="cat-icons">
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg><figcaption>Ajouter</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/></svg><figcaption>Retirer</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg><figcaption>Fermer</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="m16 16 5 5"/></svg><figcaption>Chercher</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13v7H4V5h7M13 4h7v7M20 4 10 14"/></svg><figcaption>Ouvrir</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg><figcaption>Exporter</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><figcaption>Filtrer</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h3M10 6h11M3 12h11M18 12h3M3 18h5M12 18h9"/><circle cx="8" cy="6" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></svg><figcaption>Réglages</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M6 21v-7M11 21V8M16 21V11M21 21V4"/></svg><figcaption>Barres</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 18 7-8 5 4 6-9"/></svg><figcaption>Tendance</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5ZM3 13l9 5 9-5"/></svg><figcaption>Calques</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><figcaption>Données</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.2v.6"/></svg><figcaption>Information</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.5 20h19L12 3ZM12 10v5M12 17.4v.4"/></svg><figcaption>Attention</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><figcaption>Suivant</figcaption></figure>
-            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><figcaption>Déplier</figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-plus" aria-hidden="true"></i><figcaption>Ajouter<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-plus</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-minus" aria-hidden="true"></i><figcaption>Retirer<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-minus</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-close" aria-hidden="true"></i><figcaption>Fermer<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-close</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-check" aria-hidden="true"></i><figcaption>Valider<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-check</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-search" aria-hidden="true"></i><figcaption>Chercher<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-search</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-arrow-right" aria-hidden="true"></i><figcaption>Suivant<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-arrow-right</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-arrow-left" aria-hidden="true"></i><figcaption>Précédent<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-arrow-left</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-arrow-up" aria-hidden="true"></i><figcaption>Haut<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-arrow-up</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-arrow-down" aria-hidden="true"></i><figcaption>Bas<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-arrow-down</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-chevron-right" aria-hidden="true"></i><figcaption>Déplier à droite<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-chevron-right</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-chevron-left" aria-hidden="true"></i><figcaption>Replier<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-chevron-left</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-chevron-up" aria-hidden="true"></i><figcaption>Remonter<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-chevron-up</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-chevron-down" aria-hidden="true"></i><figcaption>Déplier<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-chevron-down</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-enter" aria-hidden="true"></i><figcaption>Entrée<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-enter</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-external" aria-hidden="true"></i><figcaption>Ouvrir ailleurs<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-external</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-download" aria-hidden="true"></i><figcaption>Télécharger<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-download</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-upload" aria-hidden="true"></i><figcaption>Envoyer<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-upload</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-save" aria-hidden="true"></i><figcaption>Enregistrer<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-save</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-edit" aria-hidden="true"></i><figcaption>Modifier<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-edit</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-trash" aria-hidden="true"></i><figcaption>Supprimer<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-trash</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-copy" aria-hidden="true"></i><figcaption>Copier<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-copy</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-undo" aria-hidden="true"></i><figcaption>Annuler<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-undo</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-refresh" aria-hidden="true"></i><figcaption>Actualiser<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-refresh</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-filter" aria-hidden="true"></i><figcaption>Filtrer<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-filter</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-sort" aria-hidden="true"></i><figcaption>Trier<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-sort</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-settings" aria-hidden="true"></i><figcaption>Réglages<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-settings</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-menu" aria-hidden="true"></i><figcaption>Menu<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-menu</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-more" aria-hidden="true"></i><figcaption>Plus<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-more</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-grip" aria-hidden="true"></i><figcaption>Déplacer<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-grip</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-list" aria-hidden="true"></i><figcaption>Liste<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-list</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-grid" aria-hidden="true"></i><figcaption>Grille<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-grid</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-table" aria-hidden="true"></i><figcaption>Tableau<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-table</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-panel" aria-hidden="true"></i><figcaption>Inspecteur<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-panel</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-window" aria-hidden="true"></i><figcaption>Fenêtre<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-window</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-bars" aria-hidden="true"></i><figcaption>Barres<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-bars</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-trend" aria-hidden="true"></i><figcaption>Tendance<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-trend</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-layers" aria-hidden="true"></i><figcaption>Calques<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-layers</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-database" aria-hidden="true"></i><figcaption>Données<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-database</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-file" aria-hidden="true"></i><figcaption>Fichier<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-file</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-folder" aria-hidden="true"></i><figcaption>Dossier<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-folder</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-calendar" aria-hidden="true"></i><figcaption>Date<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-calendar</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-clock" aria-hidden="true"></i><figcaption>Heure<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-clock</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-user" aria-hidden="true"></i><figcaption>Personne<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-user</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-lock" aria-hidden="true"></i><figcaption>Verrou<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-lock</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-eye" aria-hidden="true"></i><figcaption>Voir<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-eye</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-pin" aria-hidden="true"></i><figcaption>Épingler<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-pin</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-link" aria-hidden="true"></i><figcaption>Lien<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-link</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-info" aria-hidden="true"></i><figcaption>Information<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-info</span></figcaption></figure>
+            <figure><i class="c-icon c-icon--large i-warning" aria-hidden="true"></i><figcaption>Attention<br><span class="t-muted" style="text-transform:none;letter-spacing:0">i-warning</span></figcaption></figure>
+          </div>
+          <dl class="cat-spec">
+            <div><dt>Employer</dt><dd><code>&lt;i class="c-icon i-nom" aria-hidden="true"&gt;&lt;/i&gt;</code>. L'icône prend la couleur du texte. Elle accompagne un mot, ou le remplace dans un contrôle étroit qui porte alors un <code>aria-label</code>.</dd></div>
+            <div><dt>Éviter</dt><dd>Une icône d'ambiance devant un titre ou une entrée de menu. Une icône seule pour une action rare. Toute taille qui n'est pas un multiple de 16 px : les traits deviennent flous.</dd></div>
+            <div><dt>Tailles</dt><dd>16 px par défaut · <code>--large</code> 32 px. Jamais 20 ni 24.</dd></div>
+            <div><dt>Étendre</dt><dd>Ajouter le tracé à <code>src/icons.json</code> (traits sur les demi-pixels, de 1,5 à 13,5), puis <code>node scripts/build-icons.mjs</code>. Pas de courbe, pas de remplissage hormis un point de 2 px.</dd></div>
+          </dl>
+          <div class="cat-rules">
+            <div class="cat-rule" id="regle-i1" data-search="regle"><span class="cat-rule__num">I1</span><h3>Le mot d'abord</h3><p>Une icône ne remplace un libellé que si l'action est universelle (fermer, chercher, ajouter) et l'espace compté. Dans le doute, le mot.</p></div>
+            <div class="cat-rule" id="regle-i2" data-search="regle"><span class="cat-rule__num">I2</span><h3>Un jeu, une main</h3><p>Aucune icône venue d'une autre bibliothèque : deux dessins différents sur un écran se voient autant que deux polices.</p></div>
+            <div class="cat-rule" id="regle-i3" data-search="regle"><span class="cat-rule__num">I3</span><h3>Jamais le signal</h3><p>Une icône est au ton de son texte. Elle ne porte le signal que si le mot qu'elle accompagne le porte aussi.</p></div>
           </div>
         </section>
 
       </main>
     </div>
 
-    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.2</span></footer>
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.3</span></footer>
   </div>
   </div>
   <script src="assets/search-index.js"></script>

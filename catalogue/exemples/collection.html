@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agences — exemple MONO</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+</head>
+<!-- Collection + inspecteur.
+     Deux pages sur le plan de travail : la collection à gauche, l'inspecteur à droite,
+     séparés par la bande hachurée. La ligne sélectionnée ne change que de contour ;
+     ce qui porte le clair, c'est l'inspecteur — le résultat de la sélection — puis,
+     après une modification, la cellule du tableau qui vient de changer.
+     Aucune classe hors de src/ ; le script en bas de page n'est qu'une démonstration. -->
+<body class="l-desk l-desk--app l-desk--split">
+
+  <div class="l-shell">
+    <div class="l-pane">
+      <div class="l-pane__head">
+        <header class="c-masthead">
+          <div class="c-masthead__title">Réseau — Agences</div>
+          <div class="c-masthead__meta"><span>Exercice 2026</span><span>T3</span><a href="../index.html">Catalogue</a></div>
+        </header>
+        <div class="l-pane__bar">
+          <label class="c-search" style="flex: 1 1 16rem; max-width: 24rem">
+            <i class="c-icon i-search" aria-hidden="true"></i>
+            <input type="search" id="q" placeholder="Rechercher une agence" aria-label="Rechercher une agence" autocomplete="off">
+            <span class="c-kbd" aria-hidden="true">/</span>
+          </label>
+          <div class="l-cluster" style="--gap: var(--space-2)" role="group" aria-label="Filtrer par branche" id="chips">
+            <button class="c-chip" type="button" aria-pressed="false" data-branche="Nord">Nord</button>
+            <button class="c-chip" type="button" aria-pressed="false" data-branche="Centre">Centre</button>
+            <button class="c-chip" type="button" aria-pressed="false" data-branche="Sud">Sud</button>
+            <button class="c-chip" type="button" aria-pressed="false" data-branche="Ouest">Ouest</button>
+          </div>
+        </div>
+      </div>
+
+      <main class="l-pane__body" style="gap: var(--space-5)">
+        <p class="t-title" aria-live="polite"><span id="count">12</span> <span class="t-soft t-body" id="count-label">agences</span></p>
+        <div class="c-table-wrap">
+          <table class="c-table" id="table">
+            <thead>
+              <tr>
+                <th>Réf.</th>
+                <th aria-sort="ascending"><button class="c-table__sort" type="button">Agence <i class="c-icon i-chevron-down" aria-hidden="true"></i></button></th>
+                <th>Branche</th>
+                <th>État</th>
+                <th class="is-num">Effectif</th>
+                <th class="is-num">Primes (M)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="c-empty" id="empty" hidden>
+          <span class="c-empty__label">Aucun résultat</span>
+          <div class="c-empty__title">Aucune agence ne correspond</div>
+          <p class="c-empty__text">Vérifiez l'orthographe ou retirez un filtre de branche.</p>
+          <div class="c-empty__actions"><button class="c-button" type="button" id="reset">Retirer les filtres</button></div>
+        </div>
+      </main>
+
+      <div class="l-pane__foot">
+        <div class="c-statusbar">
+          <span class="c-statusbar__group"><span class="g-bracket" id="position">1 / 12</span></span>
+          <span class="c-statusbar__group"><span class="c-kbd">↑</span><span class="c-kbd">↓</span> ligne <span class="c-statusbar__group"><span class="c-kbd">/</span> chercher</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="l-shell" aria-label="Inspecteur">
+    <div class="l-pane">
+      <div class="l-pane__head">
+        <div class="c-masthead">
+          <div class="c-masthead__title">Inspecteur</div>
+          <div class="c-masthead__meta"><span>Agence</span></div>
+        </div>
+        <div class="l-pane__bar">
+          <span class="c-ref" id="i-ref">N-014</span>
+          <span class="l-cluster" style="--gap: var(--space-1)">
+            <button class="c-button c-button--quiet" type="button" id="prev" aria-label="Agence précédente"><i class="c-icon i-chevron-up" aria-hidden="true"></i></button>
+            <button class="c-button c-button--quiet" type="button" id="next" aria-label="Agence suivante"><i class="c-icon i-chevron-down" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </div>
+
+      <div class="l-pane__body" id="inspector">
+        <div class="l-stack" style="--gap: var(--space-3)">
+          <div class="c-editable t-title" data-field="nom">
+            <input class="c-editable__input" type="text" aria-label="Nom de l'agence">
+            <span class="c-editable__status" aria-live="polite"></span>
+          </div>
+          <span class="c-status" id="i-etat">Actif</span>
+        </div>
+
+        <div class="c-stat">
+          <span class="c-stat__label">Primes 2026</span>
+          <span class="c-stat__value"><span id="i-primes">12,4</span><small>M</small></span>
+          <span class="c-stat__note" id="i-evol">+6,1 % sur un an</span>
+        </div>
+
+        <section class="l-stack" style="--gap: var(--space-4)">
+          <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Identité</span><span class="c-section-head__aside">Modifiable</span></h2>
+          <dl class="c-kv c-kv--plain">
+            <div><dt>Responsable</dt><dd><div class="c-editable" data-field="resp"><input class="c-editable__input" type="text" aria-label="Responsable"><span class="c-editable__status" aria-live="polite"></span></div></dd></div>
+            <div><dt>Ville</dt><dd><div class="c-editable" data-field="ville"><input class="c-editable__input" type="text" aria-label="Ville"><span class="c-editable__status" aria-live="polite"></span></div></dd></div>
+            <div><dt>Téléphone</dt><dd><div class="c-editable" data-field="tel"><input class="c-editable__input" type="tel" aria-label="Téléphone"><span class="c-editable__status" aria-live="polite"></span></div></dd></div>
+            <div><dt>Effectif</dt><dd><div class="c-editable" data-field="effectif" data-type="entier"><input class="c-editable__input" type="text" inputmode="numeric" aria-label="Effectif"><span class="c-editable__status" aria-live="polite"></span></div></dd></div>
+            <div><dt>Branche</dt><dd id="i-branche">Nord</dd></div>
+            <div><dt>Ouverture</dt><dd id="i-ouverture">2011</dd></div>
+          </dl>
+        </section>
+
+        <section class="l-stack" style="--gap: var(--space-4)">
+          <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Activité</span><span class="c-section-head__aside">Primes mensuelles</span></h2>
+          <figure class="g-corners">
+            <svg class="v-chart" id="i-chart" viewBox="0 0 240 64" preserveAspectRatio="none" style="height: 4rem" role="img" aria-label="Primes mensuelles sur douze mois"></svg>
+            <span class="g-ruler" style="--g-step: calc(100% / 60)" aria-hidden="true"></span>
+            <span class="g-ruler__labels" aria-hidden="true"><span>Oct</span><span>Jan</span><span>Avr</span><span>Juil</span><span>Sept</span></span>
+          </figure>
+        </section>
+
+        <section class="l-stack" style="--gap: var(--space-4)">
+          <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Note</span><span class="c-section-head__aside">Modifiable</span></h2>
+          <div class="c-editable" data-field="note" style="align-items: flex-start">
+            <textarea class="c-editable__input" rows="2" aria-label="Note" placeholder="Ajouter une note"></textarea>
+            <span class="c-editable__status" aria-live="polite"></span>
+          </div>
+        </section>
+      </div>
+
+      <div class="l-pane__foot">
+        <div class="c-statusbar">
+          <span class="c-statusbar__group" id="save-state" role="status"><i class="c-icon i-check" aria-hidden="true"></i> Enregistré</span>
+          <span class="c-statusbar__group"><span class="c-kbd">E</span> modifier</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    // Démonstration : données fictives, enregistrement simulé (900 ms).
+    (() => {
+      'use strict';
+      const ETATS = { actif: ['c-status--on', 'Actif'], cours: ['c-status--progress', 'En cours'], attente: ['', 'En attente'], fermeture: ['c-status--critical', 'Fermeture'] };
+      const data = [
+        ['N-011', 'Chambéry', 'Nord', 'actif', 11, 7.9, 'A. Perrin', 'Chambéry', '04 79 55 01 11', 2009, 3.2],
+        ['N-014', 'Grenoble Centre', 'Nord', 'actif', 18, 12.4, 'M. Delorme', 'Grenoble', '04 76 55 01 14', 2011, 6.1],
+        ['N-015', 'Voiron', 'Nord', 'cours', 6, 4.1, 'S. Garcin', 'Voiron', '04 76 55 01 15', 2015, 1.4],
+        ['N-016', 'Vizille', 'Nord', 'fermeture', 2, 0.9, 'L. Brun', 'Vizille', '04 76 55 01 16', 2018, -21.0],
+        ['C-021', 'Clermont Jaude', 'Centre', 'actif', 14, 9.8, 'P. Vidal', 'Clermont-Ferrand', '04 73 55 01 21', 2007, 4.0],
+        ['C-024', 'Montluçon', 'Centre', 'actif', 5, 3.3, 'C. Roux', 'Montluçon', '04 70 55 01 24', 2013, 0.8],
+        ['C-027', 'Vichy', 'Centre', 'attente', 4, 2.6, 'É. Faure', 'Vichy', '04 70 55 01 27', 2020, 2.2],
+        ['S-031', 'Avignon', 'Sud', 'actif', 12, 8.7, 'J. Reynaud', 'Avignon', '04 90 55 01 31', 2006, 5.3],
+        ['S-034', 'Nîmes Arènes', 'Sud', 'actif', 9, 6.2, 'N. Blanc', 'Nîmes', '04 66 55 01 34', 2012, 2.9],
+        ['S-038', 'Arles', 'Sud', 'cours', 3, 1.8, 'T. Michel', 'Arles', '04 90 55 01 38', 2021, 7.5],
+        ['O-041', 'Limoges', 'Ouest', 'actif', 8, 5.4, 'H. Lacroix', 'Limoges', '05 55 55 01 41', 2010, 1.1],
+        ['O-045', 'Brive', 'Ouest', 'actif', 4, 2.2, 'R. Dumas', 'Brive-la-Gaillarde', '05 55 55 01 45', 2016, -0.6],
+      ].map(([ref, nom, branche, etat, effectif, primes, resp, ville, tel, ouverture, evol], i) => ({ ref, nom, branche, etat, effectif, primes, resp, ville, tel, ouverture, evol, note: i === 1 ? 'Agence pilote pour la nouvelle offre entreprises.' : '', mois: Array.from({ length: 12 }, (_, m) => 0.45 + 0.5 * Math.abs(Math.sin((i + 2) * (m + 1) * 0.37))) }));
+
+      const $ = (s, r = document) => r.querySelector(s);
+      const fr = (n, d = 1) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+      const norm = (v) => v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      const tbody = $('#table tbody');
+      const state = { selected: 'N-014', branches: new Set(), q: '', fresh: null };
+
+      const visible = () => data.filter((d) => (!state.branches.size || state.branches.has(d.branche)) && (!state.q || norm(d.nom + ' ' + d.ref + ' ' + d.ville + ' ' + d.resp).includes(norm(state.q)))).sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
+
+      function renderTable() {
+        const rows = visible();
+        if (rows.length && !rows.some((d) => d.ref === state.selected)) state.selected = rows[0].ref;
+        tbody.innerHTML = rows.map((d) => {
+          const fresh = (f) => (state.fresh && state.fresh.ref === d.ref && state.fresh.field === f ? ' class="is-fresh"' : '');
+          return `<tr tabindex="0" data-ref="${d.ref}" aria-selected="${d.ref === state.selected}">
+            <td class="t-muted u-nowrap">${d.ref}</td><th${fresh('nom')}>${d.nom}</th><td>${d.branche}</td>
+            <td><span class="c-status ${ETATS[d.etat][0]}">${ETATS[d.etat][1]}</span></td>
+            <td class="is-num${fresh('effectif') ? ' is-fresh' : ''}">${d.effectif}</td><td class="is-num">${fr(d.primes)}</td></tr>`;
+        }).join('');
+        $('#table').hidden = !rows.length; $('#empty').hidden = !!rows.length;
+        $('#count').textContent = rows.length; $('#count-label').textContent = rows.length > 1 ? 'agences' : 'agence';
+        const pos = rows.findIndex((d) => d.ref === state.selected);
+        $('#position').textContent = rows.length ? `${pos + 1} / ${rows.length}` : '0 / 0';
+      }
+
+      function renderInspector() {
+        const d = data.find((x) => x.ref === state.selected); if (!d) return;
+        $('#i-ref').textContent = d.ref;
+        document.querySelectorAll('.c-editable').forEach((ed) => { const input = $('.c-editable__input', ed); input.value = d[ed.dataset.field]; ed.dataset.state = 'idle'; $('.c-editable__status', ed).innerHTML = ''; });
+        const etat = $('#i-etat'); etat.className = 'c-status ' + ETATS[d.etat][0]; etat.textContent = ETATS[d.etat][1];
+        $('#i-primes').textContent = fr(d.primes);
+        $('#i-evol').textContent = `${d.evol > 0 ? '+' : '−'}${fr(Math.abs(d.evol))} % sur un an`;
+        $('#i-branche').textContent = d.branche; $('#i-ouverture').textContent = d.ouverture;
+        $('#i-chart').innerHTML = d.mois.map((v, i) => `<rect class="v-mark" x="${i * 20 + 4}" y="${64 - v * 60}" width="12" height="${v * 60}"/>`).join('');
+      }
+
+      function select(ref, focusRow) {
+        state.selected = ref; state.fresh = null; renderTable(); renderInspector();
+        if (focusRow) tbody.querySelector(`[data-ref="${ref}"]`)?.focus();
+      }
+      const step = (delta) => { const rows = visible(); if (!rows.length) return; const i = rows.findIndex((d) => d.ref === state.selected); select(rows[(i + delta + rows.length) % rows.length].ref, true); };
+
+      // Édition en place : Entrée ou sortie du champ enregistre, Échap annule.
+      const saveState = $('#save-state');
+      document.querySelectorAll('.c-editable').forEach((ed) => {
+        const input = $('.c-editable__input', ed), status = $('.c-editable__status', ed), field = ed.dataset.field;
+        const current = () => String(data.find((x) => x.ref === state.selected)[field]);
+        input.addEventListener('focus', () => { if (ed.dataset.state !== 'saving') status.innerHTML = '<span class="c-kbd">↵</span><span class="c-kbd">esc</span>'; });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') { input.value = current(); ed.dataset.state = 'idle'; status.innerHTML = ''; input.blur(); e.stopPropagation(); }
+          else if (e.key === 'Enter' && input.tagName === 'INPUT') { e.preventDefault(); input.blur(); }
+        });
+        input.addEventListener('blur', () => {
+          const value = input.value.trim(), ref = state.selected, d = data.find((x) => x.ref === ref);
+          if (value === current()) { if (ed.dataset.state !== 'saving') { ed.dataset.state = 'idle'; status.innerHTML = ''; } return; }
+          if (ed.dataset.type === 'entier' && !/^\d+$/.test(value)) { ed.dataset.state = 'error'; status.innerHTML = '<span class="t-signal">▲</span> Nombre entier attendu'; return; }
+          ed.dataset.state = 'saving'; status.innerHTML = '<span class="c-spinner" aria-hidden="true"></span><span class="u-hidden">Enregistrement</span>';
+          saveState.innerHTML = '<span class="c-spinner" aria-hidden="true"></span> Enregistrement';
+          setTimeout(() => {
+            d[field] = ed.dataset.type === 'entier' ? +value : value;
+            if (state.selected === ref) { ed.dataset.state = 'saved'; status.innerHTML = '<i class="c-icon i-check" aria-hidden="true"></i><span class="u-hidden">Enregistré</span>'; }
+            state.fresh = { ref, field }; renderTable();   // le résultat : la cellule modifiée porte le clair
+            saveState.innerHTML = `<i class="c-icon i-check" aria-hidden="true"></i> Enregistré à ${new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+            setTimeout(() => { if (ed.dataset.state === 'saved') { ed.dataset.state = 'idle'; status.innerHTML = ''; } }, 1800);
+          }, 900);
+        });
+      });
+
+      tbody.addEventListener('click', (e) => { const tr = e.target.closest('tr'); if (tr) select(tr.dataset.ref); });
+      tbody.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(e.target.closest('tr').dataset.ref, true); } });
+      $('#prev').addEventListener('click', () => step(-1)); $('#next').addEventListener('click', () => step(1));
+      $('#q').addEventListener('input', (e) => { state.q = e.target.value; renderTable(); renderInspector(); });
+      $('#chips').addEventListener('click', (e) => {
+        const chip = e.target.closest('.c-chip'); if (!chip) return;
+        const b = chip.dataset.branche; state.branches.has(b) ? state.branches.delete(b) : state.branches.add(b);
+        chip.setAttribute('aria-pressed', String(state.branches.has(b))); renderTable(); renderInspector();
+      });
+      $('#reset').addEventListener('click', () => { state.branches.clear(); state.q = ''; $('#q').value = ''; document.querySelectorAll('#chips .c-chip').forEach((c) => c.setAttribute('aria-pressed', 'false')); renderTable(); renderInspector(); });
+      document.addEventListener('keydown', (e) => {
+        if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
+        if (e.key === 'ArrowDown') { e.preventDefault(); step(1); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); step(-1); }
+        else if (e.key === '/') { e.preventDefault(); $('#q').focus(); }
+        else if (e.key.toLowerCase() === 'e') { e.preventDefault(); const i = $('.c-editable__input'); i.focus(); i.select(); }
+      });
+
+      renderTable(); renderInspector();
+    })();
+  </script>
+</body>
+</html>

@@ -111,6 +111,48 @@ Base 4 px : `--space-1` (4) · 2 (8) · 3 (12) · 4 (16) · 5 (24) · 6 (32) · 
 - **F2 — Filet conducteur** entre un label et sa valeur éloignée (`.c-kv`, `.c-index`).
 - **F3 — Pas de cadre par défaut** : un filet au-dessus et de l'espace.
 
+## Signes
+
+Source : `src/signs.css` (préfixe `.g-`). Six marques empruntées à l'imprimé
+technique. Un signe n'entre dans le système que s'il a un sens, le même partout.
+
+| Signe | Classe | Sens |
+|---|---|---|
+| Repères d'angle | `.g-corners` | Une zone délimitée sans être enfermée : figure, aperçu, zone de dépôt |
+| Règle graduée | `.g-ruler` (+ `.g-ruler__labels`, `--g-step`) | Une mesure : ce qui est dessus se lit à l'échelle |
+| Barre d'échelle | `.g-scale` (`--g-width`) | La valeur d'une longueur |
+| Crochets | `.g-bracket` | Une position dans une suite : `[ 6 / 12 ]` |
+| Ligne de rappel | `.g-callout` (`--signal`, `--g-len`) | Une annotation qui désigne un point |
+| Hachures | `.l-desk` | Ce qui n'est pas la page |
+
+- **G1 — Un signe, un sens.** Les parenthèses (`.c-ref`) restent aux références,
+  les crochets aux positions.
+- **G2 — Deux par écran**, au plus, hachures non comprises.
+- **G3 — Au ton des filets** : un pixel, gris moyen. Jamais le ton clair ; le
+  signal seulement sur le point d'une ligne de rappel qui désigne l'exception.
+- **G4 — Refusés** : croix de repérage, trame de points, code-barres, séparateur
+  en tirets ASCII. Envisagés puis écartés, faute d'un sens que le système
+  n'exprime pas déjà. Un nouveau signe se propose avec son sens, pas avec son dessin.
+
+## Icônes
+
+Source : `src/icons.json` → `src/icons.css` (`node scripts/build-icons.mjs`).
+Un jeu propre au système : grille de 16 px, traits d'un pixel posés sur la grille,
+extrémités carrées, angles vifs, aucune courbe. C'est le trait des filets, plié.
+
+```html
+<i class="c-icon i-plus" aria-hidden="true"></i>
+```
+
+L'icône est un masque CSS : elle prend la couleur du texte, ne demande ni script
+ni image. 16 px par défaut, 32 px avec `--large` ; jamais une taille qui n'est pas
+un multiple de 16.
+
+- **I1 — Le mot d'abord.** Une icône ne remplace un libellé que si l'action est
+  universelle et l'espace compté.
+- **I2 — Un jeu, une main.** Aucune icône d'une autre bibliothèque.
+- **I3 — Jamais le signal**, sauf si le mot qu'elle accompagne le porte.
+
 ## Formes
 
 Rayon 0 partout ; le cercle est réservé aux marques de données, aux radios et aux

@@ -20,6 +20,7 @@ const PAGES = [
 ];
 const EXAMPLES = [
   ['exemples/tableau-de-bord.html', 'Tableau de bord', 'Écran de pilotage en thème encre : chiffre héros, graphique en barres, tableau, statuts. Trois axes verticaux, un bouton primaire, un seul sens pour le signal.'],
+  ['exemples/collection.html', 'Collection et inspecteur', 'Application en deux pages séparées par la bande hachurée : une collection en tableau, une ligne sélectionnée, son détail dans un inspecteur. Édition en place, indicateur d\'enregistrement, barre d\'état, raccourcis clavier.'],
   ['exemples/rapport.html', 'Rapport', 'Page éditoriale en thème papier : titre, prose, clé-valeur, tableau, courbes, et une figure cartographique dans un bloc inversé encre.'],
 ];
 

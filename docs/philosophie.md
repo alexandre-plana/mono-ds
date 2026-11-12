@@ -113,6 +113,8 @@ Le système possède peu de formes et chacune ne dit qu'une chose, partout :
 | Filet plein | Structure |
 | Filet tireté | Relation, inactif, provisoire, à venir |
 | Filet pointillé | Repère : ce qui aide à lire sans être lu |
+| Ligne pointillée sous une valeur | On peut écrire ici — la ligne des formulaires papier |
+| Repères d'angle, règle, barre d'échelle, crochets, ligne de rappel | Une zone, une mesure, une longueur, une position, une annotation |
 | Épaisseur de 2 px et plus | L'actif, le sélectionné, la donnée |
 | Contour de 2 px en gris moyen, fond inchangé | Le sélectionné |
 | Hachures | Le plan de travail : ce qui n'est pas la page |
@@ -226,6 +228,9 @@ et le signal (2), on ne réduit pas le reste du tableau sous le plancher (1).
 | « Une animation à l'apparition » | Rien d'ornemental | Transitions de 120 ms sur la couleur et la bordure, rien d'autre |
 | « Centrer l'état vide, c'est plus équilibré » | Ferré à gauche, sans exception | `.c-empty` sur l'axe du contenu qu'il remplace |
 | « L'onglet actif en blanc, pour bien voir où l'on est » | Le clair irait au contrôle, pas au contenu qu'il vient d'ouvrir | Contour de 2 px en gris moyen, fond inchangé ; c'est le contenu de la vue qui porte le clair |
+| « Un spinner pendant l'enregistrement » | Le cercle tournant est une forme étrangère au système | `.c-spinner` : un caractère qui tourne, `\| / - \\`, à côté de la valeur concernée |
+| « Une bibliothèque d'icônes » | Une seconde main de dessin, arrondie ou trop grasse pour des filets d'un pixel | Un jeu propre de 49 signes, tracé comme les filets |
+| « D'autres éléments graphiques, pour enrichir » | Rien d'ornemental | Oui, s'ils ont un sens : six signes admis, quatre refusés (voir `fondations.md`) |
 | « Deux boutons pleins, les deux actions comptent » | Deux points focaux | Choisir ; l'autre est en contour |
 | « Un fond coloré pour l'alerte » | Le signal n'est jamais une surface | `.c-notice--signal` : un trait de 2 px et un mot |
 

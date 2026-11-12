@@ -81,6 +81,8 @@
   --page-max: 1440px;
   --page-margin: clamp(1.25rem, 4vw, 4rem);
   --gutter: var(--space-5);
+  --pane-pad: clamp(1.25rem, 2.2vw, 2rem);      /* marge intérieure d'un volet */
+  --inspector: 27rem;                           /* largeur de l'inspecteur */
   --shell-inset: clamp(0.5rem, 1.7vw, 1.5rem); /* 8 à 24 px entre le bord de l'écran et la page */
   --duration: 120ms;
 }

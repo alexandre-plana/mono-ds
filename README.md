@@ -39,6 +39,8 @@ src/
   base.css          reset, texte (.t-), mise en page (.l-), utilitaires (.u-)
   components.css    composants (.c-)
   viz.css           marques de données pour SVG (.v-)
+  signs.css         signes graphiques (.g-) : repères d'angle, règle, crochets…
+  icons.json/.css   jeu d'icônes maison, 16 px, en masques CSS (.c-icon .i-nom)
   fonts.css, fonts/ IBM Plex Mono et Sans (SIL OFL 1.1)
   mono.css          point d'entrée
 docs/               les règles
@@ -49,10 +51,11 @@ docs/               les règles
   composants.md     index des composants et de leurs variantes
   dataviz.md        règles et classes de visualisation
 catalogue/          le catalogue navigable (démonstrations + code)
-  exemples/         deux écrans composés avec le seul système
+  exemples/         trois écrans composés avec le seul système
 scripts/
   contrast.mjs      contrôle des contrastes des tokens
   build-search-index.mjs  index de la recherche du catalogue
+  build-icons.mjs   feuille d'icônes à partir de icons.json
   tonal-audit.mjs   mesure des masses tonales d'un écran
 reference/
   maquette-v1.html  la maquette d'origine, conservée pour mémoire

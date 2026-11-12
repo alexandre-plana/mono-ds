@@ -12,6 +12,7 @@
   const EXAMPLES = [
     ['exemples/tableau-de-bord.html', 'Tableau de bord'],
     ['exemples/rapport.html', 'Rapport'],
+    ['exemples/collection.html', 'Collection'],
   ];
   const here = location.pathname.replace(/\/$/, '/index.html');
   const isCurrent = (href) => here.endsWith('/catalogue/' + href) || here.endsWith('/' + href);
@@ -60,7 +61,7 @@
 
     host.innerHTML = `
       <label class="c-search c-search--large">
-        <svg class="c-icon c-icon--small" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="m16 16 5 5"/></svg>
+        <i class="c-icon i-search" aria-hidden="true"></i>
         <input type="search" id="cat-q" autocomplete="off" spellcheck="false" placeholder="Rechercher une règle, un composant, une classe, un token…" aria-label="Rechercher dans le catalogue" role="combobox" aria-expanded="false" aria-controls="cat-results" aria-autocomplete="list">
         <span class="c-kbd" aria-hidden="true">/</span>
       </label>

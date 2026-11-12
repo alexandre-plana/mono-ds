@@ -13,7 +13,7 @@
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
       <div class="c-masthead__meta">
-        <span>Fondations</span><span>v0.2</span>
+        <span>Fondations</span><span>v0.3</span>
         <span class="c-segmented" role="group" aria-label="Thème">
           <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
           <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
@@ -189,10 +189,59 @@
           </div>
         </section>
 
+        <section class="cat-section" id="signes" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Signes</span><span class="c-section-head__aside">Marques graphiques</span></h2>
+          <p class="cat-note">Six marques empruntées à l'imprimé technique : cartes, plans, épreuves. Un signe n'entre dans le système que s'il a un sens, le même partout. Aucun n'est décoratif — s'il ne dit rien, il sort.</p>
+
+          <div class="cat-sub" id="g-corners" data-search="rubrique">
+            <h3>Repères d'angle — .g-corners</h3>
+            <p>Quatre équerres délimitent une zone sans l'enfermer : une figure, un aperçu, une zone de dépôt. C'est le cadre quand on ne veut pas de cadre.</p>
+            <div class="cat-demo" data-code>
+              <figure class="g-corners" style="max-width: 22rem">
+                <div class="c-stat c-stat--compact">
+                  <span class="c-stat__label">Aperçu</span>
+                  <span class="c-stat__value">1 204</span>
+                </div>
+              </figure>
+            </div>
+          </div>
+
+          <div class="cat-sub" id="g-ruler" data-search="rubrique">
+            <h3>Règle graduée — .g-ruler</h3>
+            <p>Une mesure : ce qui est posé dessus se lit à l'échelle. Sous une série, une frise, une durée. Une graduation longue toutes les cinq.</p>
+            <div class="cat-demo" data-code>
+              <div style="max-width: 30rem">
+                <span class="g-ruler"></span>
+                <span class="g-ruler__labels"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub" id="g-scale" data-search="rubrique">
+            <h3>Barre d'échelle, crochets, ligne de rappel</h3>
+            <p>La barre d'échelle donne la valeur d'une longueur. Les crochets donnent une position dans une suite — les parenthèses restent aux références. La ligne de rappel relie une annotation au point qu'elle désigne.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-8); align-items: flex-end">
+                <span class="g-scale"><span><span>0</span><span>50 km</span></span></span>
+                <span class="g-bracket">6 / 12</span>
+                <span class="g-callout">Maximum</span>
+                <span class="g-callout g-callout--signal">Repli</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-rules">
+            <div class="cat-rule" id="regle-g1" data-search="regle"><span class="cat-rule__num">G1</span><h3>Un signe, un sens</h3><p>Repères d'angle : une zone. Règle : une mesure. Barre d'échelle : une longueur. Crochets : une position. Ligne de rappel : une annotation. Hachures : ce qui n'est pas la page.</p></div>
+            <div class="cat-rule" id="regle-g2" data-search="regle"><span class="cat-rule__num">G2</span><h3>Deux par écran</h3><p>Deux signes différents par vue, au plus, hachures non comprises. Au-delà la page devient un décor de plan technique et les signes ne disent plus rien.</p></div>
+            <div class="cat-rule" id="regle-g3" data-search="regle"><span class="cat-rule__num">G3</span><h3>Au ton des filets</h3><p>Un signe est tracé d'un pixel, dans un gris moyen. Jamais au ton clair, jamais en signal — sauf le point d'une ligne de rappel, quand il désigne l'exception.</p></div>
+            <div class="cat-rule" id="regle-g4" data-search="regle"><span class="cat-rule__num">G4</span><h3>Refusés</h3><p>Croix de repérage, trame de points, code-barres, séparateur en tirets ASCII : ils ont été envisagés et écartés, faute d'un sens que le système n'exprime pas déjà.</p></div>
+          </div>
+        </section>
+
       </main>
     </div>
 
-    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.2</span></footer>
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.3</span></footer>
   </div>
   </div>
   <script src="assets/search-index.js"></script>

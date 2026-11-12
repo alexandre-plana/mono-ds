@@ -15,6 +15,8 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|
 | `.l-desk` (sur `<body>`) | Plan de travail hachuré ; grille dont la gouttière sépare les pages |
 | `.l-shell` | La page : fond uni, contour d'un pixel, en retrait de `--shell-inset` |
+| `.l-desk--app`, `.l-desk--split` | Application : le plan occupe l'écran, chaque page défile seule ; deux pages côte à côte (collection + inspecteur, `--inspector`) |
+| `.l-pane` (`__head`, `__bar`, `__body`, `__foot`) | Volet d'application : en-tête fixe, barre d'outils, corps défilant, pied |
 | `.l-page` | Conteneur : largeur max. 1440 px, marges de page |
 | `.l-frame` | Pleine hauteur : en-tête / contenu / pied |
 | `.l-grid` + `.l-span-1…12`, `.l-start-2…10` | Grille de 12 colonnes (6 puis 1 en étroit) |
@@ -30,6 +32,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-masthead` | `__title`, `__meta` | Un par écran |
 | `.c-section-head` | `__num`, `__aside` | Ouvre chaque région |
 | `.c-colophon` | — | Pied d'écran : source, folio, référence |
+| `.c-statusbar` | `__group` | Pied d'un volet : position, état d'enregistrement, raccourcis (`.c-kbd`) |
 | `.c-panel` | `--surface`, `--sunken`, `--dashed`, `--flush`, `__head`, `[data-theme]` | Seulement pour détacher du flux. Un bloc inversé par vue |
 | `.c-card` (+ `.c-cards`) | `__head`, `__title` (`--label`), `__body`, `__media`, `__foot` ; `--boxed`, `--surface`, `--dashed`, `--signal` ; `aria-current` / `aria-selected` | Collection d'objets de même nature. Un filet, pas une boîte ; jamais de fiche dans une fiche |
 | `.c-disclosure` (+ `.c-accordion`) | `<details>` ; `__body` | Contenu secondaire que peu de lecteurs ouvriront |
@@ -41,7 +44,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|---|
 | `.c-kv` (`<dl>` de `<div><dt><dd>`) | `--plain` | Label gras, filet conducteur, valeur maigre |
 | `.c-index` | `__row`, `__title`, `__value` | Numérotation automatique ; sommaire, classement |
-| `.c-table` | `--caps`, `--dense`, `.is-num`, `tr.is-key`, `tr.is-muted`, `.is-signal`, `.c-table-wrap` | Filets horizontaux seuls ; une cellule signal au plus |
+| `.c-table` | `--caps`, `--dense`, `.is-num`, `tr.is-key`, `tr.is-muted`, `.is-signal`, `.c-table-wrap`, `tr[tabindex][aria-selected]`, `__sort` | Filets horizontaux seuls ; une cellule signal au plus |
 | `.c-stat` | `__label`, `__value` (+ `<small>` unité), `__note`, `--hero`, `--compact`, `--ruled` | Un seul `--hero` par écran |
 | `.c-key` | `__title`, `__item`, `__swatch` (`--2`, `--3`, `--line`, `--dashed`, `--dotted`, `--dot`, `--ring`, `--signal`) | Nomme les formes ; se loge dans un vide |
 | `.c-meter` | `--signal`, `style="--value: 42"` | Filet fin + segment épais |
@@ -67,6 +70,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-input`, `.c-select`, `.c-textarea` | `[aria-invalid="true"]`, `disabled` | Erreur = texte + glyphe ; le signal désigne |
 | `.c-check` (`<label><input><span>`) | checkbox ou radio | Carré = multiple, rond = unique |
 | `.c-switch` (`<label><input role="switch"><span>`) | — | Effet immédiat uniquement |
+| `.c-editable` | `__input` (`<input>` ou `<textarea>`), `__status` ; `data-state` : `idle`, `saving`, `saved`, `error` | Corriger une valeur là où on la lit. Ligne pointillée = modifiable ; Entrée enregistre, Échap annule |
 | `.c-search` (`<label>` + `<input type="search">`) | `--large` | Une par page ; filtre à la frappe, sans bouton |
 | `.c-kbd` | — | Nomme une touche ou un raccourci |
 
@@ -80,9 +84,10 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-notice` | `__label`, `--signal`, `--stacked`, `--hang` | Note en marge du flux |
 | `.c-tooltip`, `.c-toast` (`--signal`) | — | Une notification à la fois, en bas à gauche |
 | `.c-empty` | `__label`, `__title`, `__text`, `__actions` ; `--plain` | Nomme ce qui manque, propose une issue. Ferré à gauche, sans illustration |
+| `.c-spinner` | — | `\| / - \\` : une valeur en cours d'enregistrement. Toujours à côté d'elle, jamais seul |
 | `.c-loader`, `.c-progress`, `.c-skeleton` | `--title`, `--block` ; `--w`, `--h` | < 1 s : rien · quelques secondes : points ou filet · au-delà : gabarit |
 | `.c-code`, `code` | — | Bloc de code en creux |
-| `.c-icon` | `--small` | Trait 1,25, grille 24, hérite de la couleur du texte |
+| `.c-icon` + `.i-nom` | `--large` | Jeu propre, grille 16, trait 1 px ; voir `fondations.md` |
 
 ## Superpositions
 
@@ -102,6 +107,8 @@ ses actions sont ferrées à gauche, la principale en premier.
   ne change pas, le ton clair n'est jamais employé : onglet, segment, filtre,
   fiche, page courante, case cochée. Le contrôle s'efface ; c'est le résultat de
   l'action qui porte le clair.
+- **Modifiable = ligne pointillée sous la valeur**, pleine pendant la saisie.
+- **Ce qui vient de changer porte le clair** (`.is-fresh`), le temps de le voir.
 - **Inactif = tireté**, jamais une opacité réduite : le texte reste lisible.
 - **Survol = un cran de ton** ou une bordure qui s'éclaircit. Pas de déplacement.
 - **Focus clavier = contour de 2 px** en `--fg-strong`, décalé de 3 px. Jamais

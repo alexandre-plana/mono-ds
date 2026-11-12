@@ -13,7 +13,7 @@
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
       <div class="c-masthead__meta">
-        <span>Composition</span><span>v0.2</span>
+        <span>Composition</span><span>v0.3</span>
         <span class="c-segmented" role="group" aria-label="Thème">
           <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
           <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
@@ -272,10 +272,13 @@
               <p>Deux <code>.l-shell</code> côte à côte : la même bande hachurée les sépare. C'est la base d'un inspecteur latéral ou de fenêtres posées sur le plan de travail.</p>
             </div>
           </div>
+          <p class="cat-note">En application, le plan occupe exactement l'écran (<code>.l-desk--app</code>) et chaque page défile pour elle-même ; <code>.l-desk--split</code> pose la collection et l'inspecteur côte à côte. Une page est alors un volet (<code>.l-pane</code>) : en-tête fixe, corps défilant, barre d'état. Voir l'exemple <a href="exemples/collection.html">Collection et inspecteur</a>.</p>
           <div class="cat-rules">
             <div class="cat-rule" id="regle-k1" data-search="regle"><span class="cat-rule__num">K1</span><h3>Un contour, toujours</h3><p>Toute page a son contour d'un pixel. C'est le seul cadre systématique du système : à l'intérieur, la règle reste le filet avant la boîte.</p></div>
             <div class="cat-rule" id="regle-k2" data-search="regle"><span class="cat-rule__num">K2</span><h3>Retrait constant</h3><p><code>--shell-inset</code> : 24 px sur grand écran, 8 px sur téléphone, identique des quatre côtés et entre deux pages voisines.</p></div>
             <div class="cat-rule" id="regle-k3" data-search="regle"><span class="cat-rule__num">K3</span><h3>Hachures hors page seulement</h3><p>Le motif n'apparaît que sur le plan de travail. Jamais comme fond de composant, de carte ou de graphique : à l'intérieur de la page, un fond est uni.</p></div>
+            <div class="cat-rule" id="regle-k5" data-search="regle"><span class="cat-rule__num">K5</span><h3>Les pages se répondent</h3><p>Deux pages voisines ont des en-têtes de même hauteur et des barres d'état de même hauteur : leurs filets tombent sur les mêmes lignes de part et d'autre des hachures.</p></div>
+            <div class="cat-rule" id="regle-k6" data-search="regle"><span class="cat-rule__num">K6</span><h3>À gauche la collection, à droite le détail</h3><p>L'inspecteur est permanent et ne bloque rien : on change de ligne sans le fermer. Le tiroir, lui, est une modale — pour une tâche ponctuelle. Jamais les deux à la fois.</p></div>
             <div class="cat-rule" id="regle-k4" data-search="regle"><span class="cat-rule__num">K4</span><h3>Légères</h3><p>Traits d'un pixel à 135°, tous les 7 px, à peine plus clairs que le plan en thème encre, à peine plus sombres en thème papier. Elles ne doivent jamais attirer l'œil avant le contenu.</p></div>
           </div>
         </section>
@@ -283,7 +286,7 @@
       </main>
     </div>
 
-    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.2</span></footer>
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.3</span></footer>
   </div>
   </div>
   <script src="assets/search-index.js"></script>

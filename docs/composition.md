@@ -78,9 +78,38 @@ le plan : un fond hachuré, visible sur une bande de 24 px autour de la page.
 - **K4 — Légères.** Traits d'un pixel à 135°, tous les 7 px, à peine plus clairs
   que le plan en encre, à peine plus sombres en papier.
 
+- **K5 — Les pages se répondent.** Deux pages voisines ont des en-têtes et des
+  barres d'état de même hauteur : leurs filets tombent sur les mêmes lignes.
+- **K6 — À gauche la collection, à droite le détail.** L'inspecteur est permanent
+  et ne bloque rien ; le tiroir est une modale, pour une tâche ponctuelle. Jamais
+  les deux à la fois.
+
 `.l-desk` est une grille : plusieurs `.l-shell` côte à côte sont séparés par la
-même bande hachurée. C'est la base prévue pour un inspecteur latéral ou des
-fenêtres posées sur le plan de travail.
+même bande hachurée.
+
+### Application : collection et inspecteur
+
+```html
+<body class="l-desk l-desk--app l-desk--split">
+  <div class="l-shell">
+    <div class="l-pane">
+      <div class="l-pane__head">
+        <header class="c-masthead">…</header>
+        <div class="l-pane__bar">…recherche, filtres…</div>
+      </div>
+      <main class="l-pane__body">…tableau, lignes <tr tabindex="0" aria-selected>…</main>
+      <div class="l-pane__foot"><div class="c-statusbar">…</div></div>
+    </div>
+  </div>
+  <aside class="l-shell" aria-label="Inspecteur">
+    <div class="l-pane">…même structure : le détail de la ligne sélectionnée…</div>
+  </aside>
+</body>
+```
+
+La ligne sélectionnée ne change que de contour ; c'est l'inspecteur — le résultat
+de la sélection — qui porte le clair. Exemple complet :
+`catalogue/exemples/collection.html`.
 
 ## Méthode
 
