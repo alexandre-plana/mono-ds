@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="../src/mono.css">
   <link rel="stylesheet" href="assets/catalogue.css">
 </head>
-<body data-root="./">
+<body class="l-desk" data-root="./">
+  <div class="l-shell">
   <div class="l-page">
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
@@ -176,7 +177,7 @@
               <div><dt>Employer</dt><dd>Une collection d'objets de même nature, que l'on compare ou parmi lesquels on choisit : agences, rapports, modèles.</dd></div>
               <div><dt>Éviter</dt><dd>Pour habiller un contenu unique (un filet suffit), pour des données tabulaires (préférer <code>.c-table</code>), et toute fiche dans une fiche. Pas de bouton primaire dans une fiche : une action au plus, en pied.</dd></div>
               <div><dt>Variantes</dt><dd><code>--boxed</code> cadre · <code>--surface</code> fond détaché · <code>--dashed</code> emplacement vide · <code>--signal</code> une seule par vue · <code>__title--label</code> titre en capitales.</dd></div>
-              <div><dt>États</dt><dd>Survol : filet supérieur au ton fort, le temps du survol. Sélection (<code>aria-current</code>, <code>aria-selected</code>) : filet de 2 px en gris moyen et surface d'un cran — jamais le ton clair. Ni élévation ni déplacement.</dd></div>
+              <div><dt>États</dt><dd>Survol : filet supérieur au ton fort, le temps du survol. Sélection (<code>aria-current</code>, <code>aria-selected</code>) : contour de 2 px en gris moyen ; le fond ne change pas. Ni élévation ni déplacement.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;article&gt;</code> avec un titre <code>h3</code>/<code>h4</code> ; cliquable : un seul <code>&lt;a&gt;</code> englobant, sans autre contrôle à l'intérieur.</dd></div>
             </dl>
           </div>
@@ -379,7 +380,7 @@
 
           <div class="cat-sub" id="c-segmented" data-search="composant">
             <h3>Sélecteur segmenté — .c-segmented</h3>
-            <p>Deux à quatre options exclusives. L'option active est remplie d'un gris à peine plus clair que le fond : on la retrouve si on la cherche, elle ne retient pas l'œil.</p>
+            <p>Deux à quatre options exclusives. L'option active se reconnaît à son seul contour, épaissi à 2 px en gris moyen ; son fond ne change pas. On la retrouve si on la cherche, elle ne retient pas l'œil.</p>
             <div class="cat-demo" data-code>
               <div class="c-segmented" role="group" aria-label="Échelle">
                 <button class="c-segmented__item" type="button" aria-pressed="true">Jour</button>
@@ -420,7 +421,7 @@
 
           <div class="cat-sub" id="c-chip" data-search="composant">
             <h3>Filtre — .c-chip</h3>
-            <p>Un bouton bascule compact, pour filtrer une liste. Actif : rempli comme le segment actif, en retrait. Ce qui doit se voir après le clic, c'est la liste filtrée et son décompte, pas le filtre.</p>
+            <p>Un bouton bascule compact, pour filtrer une liste. Actif : contour de 2 px en gris moyen, fond inchangé. Ce qui doit se voir après le clic, c'est la liste filtrée et son décompte, pas le filtre.</p>
             <div class="cat-demo" data-code>
               <div class="l-cluster" style="--gap: var(--space-2)" role="group" aria-label="Branche">
                 <button class="c-chip" type="button" aria-pressed="true">Non-vie <span class="c-chip__count">812</span></button>
@@ -872,6 +873,7 @@
     </div>
 
     <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.2</span></footer>
+  </div>
   </div>
   <script src="assets/search-index.js"></script>
   <script src="assets/catalogue.js"></script>

@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="../src/mono.css">
   <link rel="stylesheet" href="assets/catalogue.css">
 </head>
-<body data-root="./">
+<body class="l-desk" data-root="./">
+  <div class="l-shell">
   <div class="l-page">
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
@@ -52,7 +53,7 @@
             <div class="cat-rule" id="regle-m3" data-search="regle"><span class="cat-rule__num">M3</span><h3>Un bloc inversé, un tiers au plus</h3><p>Un panneau du thème opposé peut porter une figure. Il est unique sur la vue et n'en couvre pas plus du tiers ; l'éclat mesuré monte alors jusqu'à 35 %.</p></div>
             <div class="cat-rule" id="regle-m4" data-search="regle"><span class="cat-rule__num">M4</span><h3>Répartir, ne pas empiler</h3><p>Les éléments clairs se répondent en diagonale ou en triangle. Jamais tous dans le même quart d'écran : la page pencherait.</p></div>
             <div class="cat-rule" id="regle-m5" data-search="regle"><span class="cat-rule__num">M5</span><h3>Plisser les yeux</h3><p>Écran flouté, on doit voir un seul point clair, deux ou trois nappes grises, et le reste uni. Si tout scintille, il y a trop de <code>--fg-strong</code>.</p></div>
-            <div class="cat-rule" id="regle-m7" data-search="regle"><span class="cat-rule__num">M7</span><h3>Le résultat, pas le contrôle</h3><p>Après une action, le clair va à ce qui a changé : le chiffre, la liste filtrée, la vue ouverte. L'onglet, le filtre ou la fiche choisis restent dans la trame, en gris moyen.</p></div>
+            <div class="cat-rule" id="regle-m7" data-search="regle"><span class="cat-rule__num">M7</span><h3>Le résultat, pas le contrôle</h3><p>Après une action, le clair va à ce qui a changé : le chiffre, la liste filtrée, la vue ouverte. L'onglet, le filtre ou la fiche choisis ne changent que de contour, en gris moyen.</p></div>
             <div class="cat-rule" id="regle-m6" data-search="regle"><span class="cat-rule__num">M6</span><h3>Mesurer</h3><p><code>scripts/tonal-audit.mjs</code> capture un écran et chiffre ces masses, le vide et la présence de noir ou de blanc purs.</p></div>
           </div>
           <pre class="c-code">node scripts/tonal-audit.mjs catalogue/exemples/tableau-de-bord.html
@@ -250,7 +251,32 @@
             <div class="cat-rule" id="regle-c7" data-search="regle"><span class="cat-rule__num">C7</span><h3>Ferré à gauche</h3><p>Texte et blocs s'alignent à gauche ; seuls les chiffres en colonne s'alignent à droite. Rien n'est centré, hormis un glyphe dans son contrôle.</p></div>
             <div class="cat-rule" id="regle-c8" data-search="regle"><span class="cat-rule__num">C8</span><h3>Cadre de page</h3><p>Un en-tête à titre espacé en haut, un colophon en bas, les mêmes marges des quatre côtés. Entre les deux, la page est libre.</p></div>
             <div class="cat-rule" id="regle-c9" data-search="regle"><span class="cat-rule__num">C9</span><h3>Marges généreuses</h3><p>La marge extérieure vaut au moins deux gouttières. Un contenu qui touche le bord de l'écran perd son statut de page.</p></div>
+            <div class="cat-rule" id="regle-c11" data-search="regle"><span class="cat-rule__num">C11</span><h3>Au cordeau</h3><p>Dans une rangée, toutes les colonnes partent de la même ligne et s'ouvrent par le même style de texte : la première ligne de base est commune. Aucun bloc ne flotte à quelques pixels de ses voisins.</p></div>
+            <div class="cat-rule" id="regle-c12" data-search="regle"><span class="cat-rule__num">C12</span><h3>Le texte tient l'axe</h3><p>Sur un axe vertical, c'est le premier caractère qui s'aligne, pas le bord d'un cadre. Un filet d'accompagnement sort dans la gouttière (<code>.c-notice--hang</code>) ; un titre revient à la ligne avant ses contrôles.</p></div>
             <div class="cat-rule" id="regle-c10" data-search="regle"><span class="cat-rule__num">C10</span><h3>Ligne courte</h3><p>68 caractères au plus pour la prose, 46 pour un chapeau. Une colonne de texte n'occupe jamais toute la largeur.</p></div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="cadre" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">04</span><span>Cadre</span><span class="c-section-head__aside">Page et plan de travail</span></h2>
+          <p class="cat-note">La page est une feuille posée sur un plan de travail. Elle porte un contour d'un pixel et se tient en retrait de 24 px du bord de l'écran ; le plan de travail, visible dans cette bande, est hachuré. Les hachures ne décorent pas : elles disent « ceci n'est pas la page ».</p>
+          <div class="cat-pair">
+            <div class="cat-verdict" id="cadre-page" data-search="regle">
+              <h3 class="cat-verdict__mark">Une page</h3>
+              <div class="l-desk" style="min-height: 0; height: 15rem" aria-hidden="true"><div class="l-shell"></div></div>
+              <p><code>&lt;body class="l-desk"&gt;</code> puis <code>&lt;div class="l-shell"&gt;</code>. Tout le contenu vit dans la page ; rien ne s'écrit sur le plan de travail.</p>
+            </div>
+            <div class="cat-verdict" id="cadre-inspecteur" data-search="regle">
+              <h3 class="cat-verdict__mark">Une page et un inspecteur</h3>
+              <div class="l-desk" style="min-height: 0; height: 15rem; grid-template-columns: minmax(0, 1fr) 30%" aria-hidden="true"><div class="l-shell"></div><div class="l-shell"></div></div>
+              <p>Deux <code>.l-shell</code> côte à côte : la même bande hachurée les sépare. C'est la base d'un inspecteur latéral ou de fenêtres posées sur le plan de travail.</p>
+            </div>
+          </div>
+          <div class="cat-rules">
+            <div class="cat-rule" id="regle-k1" data-search="regle"><span class="cat-rule__num">K1</span><h3>Un contour, toujours</h3><p>Toute page a son contour d'un pixel. C'est le seul cadre systématique du système : à l'intérieur, la règle reste le filet avant la boîte.</p></div>
+            <div class="cat-rule" id="regle-k2" data-search="regle"><span class="cat-rule__num">K2</span><h3>Retrait constant</h3><p><code>--shell-inset</code> : 24 px sur grand écran, 8 px sur téléphone, identique des quatre côtés et entre deux pages voisines.</p></div>
+            <div class="cat-rule" id="regle-k3" data-search="regle"><span class="cat-rule__num">K3</span><h3>Hachures hors page seulement</h3><p>Le motif n'apparaît que sur le plan de travail. Jamais comme fond de composant, de carte ou de graphique : à l'intérieur de la page, un fond est uni.</p></div>
+            <div class="cat-rule" id="regle-k4" data-search="regle"><span class="cat-rule__num">K4</span><h3>Légères</h3><p>Traits d'un pixel à 135°, tous les 7 px, à peine plus clairs que le plan en thème encre, à peine plus sombres en thème papier. Elles ne doivent jamais attirer l'œil avant le contenu.</p></div>
           </div>
         </section>
 
@@ -258,6 +284,7 @@
     </div>
 
     <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.2</span></footer>
+  </div>
   </div>
   <script src="assets/search-index.js"></script>
   <script src="assets/catalogue.js"></script>

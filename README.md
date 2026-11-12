@@ -7,6 +7,7 @@ composition — et un catalogue pour les réemployer.
 - **Ni noir ni blanc purs** : la gamme va de `#131415` à `#E9E9E5`.
 - **Une seule couleur**, le signal, sous 1 % de l'écran, pour ce qui ne doit pas être manqué.
 - **Monospace**, capitales espacées, filets d'un pixel, angles droits.
+- **Une page encadrée** posée sur un plan de travail hachuré, en retrait de 24 px.
 - **Deux thèmes** : `encre` (clair sur sombre) et `papier` (sombre sur clair).
 - **Lisibilité vérifiée** : 11 px au moins, contrastes WCAG contrôlés par script.
 - **Aucune dépendance**, aucune étape de construction. Polices embarquées.

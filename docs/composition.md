@@ -31,7 +31,7 @@ part de pixels de la vue (1440 × 900) par `scripts/tonal-audit.mjs`.
   grises, le reste uni.
 - **M7 — Le résultat, pas le contrôle.** Après une action, le clair va à ce qui
   a changé : le chiffre, la liste filtrée, la vue ouverte. L'onglet, le filtre ou
-  la fiche choisis restent dans la trame, en gris moyen.
+  la fiche choisis ne changent que de contour, en gris moyen.
 - **M6 — Mesurer.** `node scripts/tonal-audit.mjs <page>`.
 
 ## Équilibre
@@ -54,6 +54,33 @@ part de pixels de la vue (1440 × 900) par `scripts/tonal-audit.mjs`.
   marges des quatre côtés.
 - **C9 — Marges généreuses.** La marge extérieure vaut au moins deux gouttières.
 - **C10 — Ligne courte.** 68 caractères pour la prose, 46 pour un chapeau.
+- **C11 — Au cordeau.** Dans une rangée, toutes les colonnes partent de la même
+  ligne et s'ouvrent par le même style de texte : la première ligne de base est
+  commune. Poser les blocs dans des rangées de grille partagées plutôt que dans
+  des piles indépendantes, sinon les lignes dérivent.
+- **C12 — Le texte tient l'axe.** Sur un axe vertical, c'est le premier caractère
+  qui s'aligne, pas le bord d'un cadre. Un filet d'accompagnement sort dans la
+  gouttière (`.c-notice--hang`) ; un titre de groupe revient à la ligne avant ses
+  contrôles, qui repartent de l'axe.
+
+## Cadre : page et plan de travail
+
+La page est une feuille posée sur un plan de travail. `<body class="l-desk">` est
+le plan : un fond hachuré, visible sur une bande de 24 px autour de la page.
+`.l-shell` est la page : fond uni, contour d'un pixel.
+
+- **K1 — Un contour, toujours.** Toute page a son contour. C'est le seul cadre
+  systématique ; à l'intérieur, la règle reste le filet avant la boîte.
+- **K2 — Retrait constant.** `--shell-inset` : 24 px sur grand écran, 8 px sur
+  téléphone, identique des quatre côtés et entre deux pages voisines.
+- **K3 — Hachures hors page seulement.** Jamais comme fond de composant, de
+  fiche ou de graphique : à l'intérieur de la page, un fond est uni.
+- **K4 — Légères.** Traits d'un pixel à 135°, tous les 7 px, à peine plus clairs
+  que le plan en encre, à peine plus sombres en papier.
+
+`.l-desk` est une grille : plusieurs `.l-shell` côte à côte sont séparés par la
+même bande hachurée. C'est la base prévue pour un inspecteur latéral ou des
+fenêtres posées sur le plan de travail.
 
 ## Méthode
 
@@ -71,19 +98,21 @@ part de pixels de la vue (1440 × 900) par `scripts/tonal-audit.mjs`.
 ```html
 <html lang="fr" data-theme="encre">
 <link rel="stylesheet" href="src/mono.css">
-<body>
+<body class="l-desk">
+ <div class="l-shell">
   <div class="l-page l-frame">
     <header class="c-masthead">
       <div class="c-masthead__title">Titre de l'écran</div>
       <div class="c-masthead__meta"><span>Contexte</span><span>Date</span></div>
     </header>
-    <main class="l-grid" style="padding-block: var(--space-7); row-gap: var(--space-8); align-content: start">
+    <main class="l-grid" style="padding-block: var(--space-7); row-gap: var(--space-7); align-content: start; align-items: start">
       <section class="l-span-3 l-stack">…point focal…</section>
       <figure class="l-span-6 v-figure">…figure…</figure>
       <aside class="l-span-3 l-stack">…contexte…</aside>
     </main>
     <footer class="c-colophon"><span>Source</span><span class="c-ref">REF-001</span></footer>
   </div>
+ </div>
 </body>
 </html>
 ```

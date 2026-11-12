@@ -29,7 +29,7 @@ img, svg { display: block; max-width: 100%; }
 button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; border-radius: 0; }
 a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.3em; text-decoration-color: var(--line-strong); transition: text-decoration-color var(--duration); }
 a:hover { text-decoration-color: var(--fg-strong); color: var(--fg-strong); }
-::selection { background: var(--selected-bg); color: var(--fg-strong); }
+::selection { background: var(--line); color: var(--fg-strong); }
 :focus-visible { outline: var(--stroke) solid var(--fg-strong); outline-offset: 3px; }
 /* Surlignage : ton fort et filet, jamais un aplat de couleur. */
 mark { background: none; color: var(--fg-strong); font-weight: var(--weight-bold); border-bottom: var(--hairline) solid var(--fg-soft); }
@@ -66,19 +66,31 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .t-right   { text-align: right; }
 
 /* --- Mise en page --------------------------------------------------------- */
+/* Plan de travail et page.
+   <body class="l-desk"> est le plan de travail : un fond hachuré, visible sur
+   20 à 24 px autour de la page. .l-shell est la page : fond uni, contour d'un
+   pixel. Plusieurs .l-shell côte à côte (page + inspecteur) sont séparés par la
+   même bande hachurée, grâce à la gouttière de la grille.
+   Les hachures sont des traits nets d'un pixel : repeating-linear-gradient n'est
+   ici qu'un moyen de les tracer, il n'y a aucun dégradé visible. */
+.l-desk { min-height: 100vh; min-height: 100dvh; padding: var(--shell-inset); display: grid; gap: var(--shell-inset); align-content: stretch; background-color: var(--desk); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px); background-attachment: fixed; }
+.l-shell { min-width: 0; background: var(--bg); border: var(--hairline) solid var(--line-strong); }
+.l-shell > .l-frame { min-height: calc(100vh - 2 * var(--shell-inset) - 2px); min-height: calc(100dvh - 2 * var(--shell-inset) - 2px); }
+
 .l-page { max-width: var(--page-max); margin-inline: auto; padding: var(--space-6) var(--page-margin) var(--space-7); }
 
 /* Grille 12 colonnes. Poser les blocs sur peu d'axes verticaux (≤ 4). */
 .l-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--space-6); }
-.l-span-1 { grid-column: span 1; } .l-span-2 { grid-column: span 2; } .l-span-3 { grid-column: span 3; }
-.l-span-4 { grid-column: span 4; } .l-span-5 { grid-column: span 5; } .l-span-6 { grid-column: span 6; }
-.l-span-7 { grid-column: span 7; } .l-span-8 { grid-column: span 8; } .l-span-9 { grid-column: span 9; }
-.l-span-10 { grid-column: span 10; } .l-span-11 { grid-column: span 11; } .l-span-12 { grid-column: span 12; }
+/* Les largeurs fixent la fin, .l-start- fixe le début : les deux se combinent (.l-span-3.l-start-10). */
+.l-span-1 { grid-column-end: span 1; } .l-span-2 { grid-column-end: span 2; } .l-span-3 { grid-column-end: span 3; }
+.l-span-4 { grid-column-end: span 4; } .l-span-5 { grid-column-end: span 5; } .l-span-6 { grid-column-end: span 6; }
+.l-span-7 { grid-column-end: span 7; } .l-span-8 { grid-column-end: span 8; } .l-span-9 { grid-column-end: span 9; }
+.l-span-10 { grid-column-end: span 10; } .l-span-11 { grid-column-end: span 11; } .l-span-12 { grid-column-end: span 12; }
 .l-start-2 { grid-column-start: 2; } .l-start-3 { grid-column-start: 3; } .l-start-4 { grid-column-start: 4; }
 .l-start-5 { grid-column-start: 5; } .l-start-6 { grid-column-start: 6; } .l-start-7 { grid-column-start: 7; }
 .l-start-8 { grid-column-start: 8; } .l-start-9 { grid-column-start: 9; } .l-start-10 { grid-column-start: 10; }
 @media (max-width: 1000px) {
-  .l-grid > [class*="l-span-"] { grid-column: span 6; }
+  .l-grid > [class*="l-span-"] { grid-column: span 6; grid-row: auto !important; }
   .l-grid > .l-span-7, .l-grid > .l-span-8, .l-grid > .l-span-9, .l-grid > .l-span-10, .l-grid > .l-span-11, .l-grid > .l-span-12 { grid-column: span 12; }
 }
 @media (max-width: 640px) {
@@ -94,7 +106,7 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 /* Grappe horizontale qui passe à la ligne. */
 .l-cluster { --gap: var(--space-3); display: flex; flex-wrap: wrap; align-items: center; gap: var(--gap); }
 /* Deux extrémités d'une même ligne. */
-.l-split { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); }
+.l-split { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--space-3) var(--space-4); }
 /* Rail latéral + contenu. */
 .l-rail { display: grid; grid-template-columns: var(--rail, 14rem) minmax(0, 1fr); column-gap: var(--space-7); }
 @media (max-width: 900px) { .l-rail { grid-template-columns: 1fr; row-gap: var(--space-6); } }

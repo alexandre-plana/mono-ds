@@ -3,8 +3,9 @@
    Règles communes : angles droits, filets d'1px, aucun dégradé, aucune ombre.
    Plein = structure · tireté = relation, inactif · pointillé = repère.
    Le signal n'apparaît que dans les variantes explicitement nommées « signal ».
-   Sélectionné = gris moyen (--selected-bg, --selected-line), jamais le ton clair :
-   le contrôle s'efface, c'est le résultat de l'action qui doit se voir.
+   Sélectionné = le CONTOUR seul, 2 px en gris moyen (--selected-line). Jamais de
+   fond, jamais le ton clair : le contrôle s'efface, c'est le résultat de l'action
+   qui doit se voir.
    ========================================================================== */
 
 /* --- Filets ---------------------------------------------------------------- */
@@ -101,7 +102,7 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-switch { display: inline-flex; align-items: center; gap: var(--space-3); cursor: pointer; color: var(--fg); min-height: 1.5rem; }
 .c-switch input { appearance: none; flex: none; position: relative; width: 2rem; height: 1rem; margin: 0; border: var(--hairline) solid var(--line-strong); background: transparent; cursor: pointer; transition: border-color var(--duration), background var(--duration); }
 .c-switch input::before { content: ''; position: absolute; top: 2px; left: 2px; width: calc(1rem - 6px); height: calc(1rem - 6px); background: var(--fg-muted); transition: transform var(--duration), background var(--duration); }
-.c-switch input:checked { border-color: var(--selected-line); background: var(--selected-bg); }
+.c-switch input:checked { border-color: var(--selected-line); }
 .c-switch input:checked::before { background: var(--fg); transform: translateX(1rem); }
 .c-switch input:disabled { border-style: dashed; border-color: var(--line); cursor: not-allowed; }
 
@@ -111,11 +112,11 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-tabs__tab:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
 .c-tabs__tab[aria-selected="true"], .c-tabs__tab[aria-current="page"] { color: var(--fg); border-bottom-color: var(--selected-line); font-weight: var(--weight-medium); }
 
-.c-segmented { display: inline-flex; border: var(--hairline) solid var(--line-strong); }
-.c-segmented__item { appearance: none; background: none; border: 0; border-right: var(--hairline) solid var(--line-strong); min-height: calc(var(--control-height) - 2px); padding: 0 var(--space-3); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); cursor: pointer; transition: background var(--duration), color var(--duration); }
-.c-segmented__item:last-child { border-right: 0; }
+.c-segmented { display: inline-flex; }
+.c-segmented__item { appearance: none; position: relative; background: none; border: var(--hairline) solid var(--line-strong); margin-left: -1px; min-height: var(--control-height); padding: 0 var(--space-3); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); cursor: pointer; transition: background var(--duration), color var(--duration), border-color var(--duration); }
+.c-segmented__item:first-child { margin-left: 0; }
 .c-segmented__item:hover { color: var(--fg-strong); background: var(--surface-2); }
-.c-segmented__item[aria-pressed="true"], .c-segmented__item[aria-checked="true"] { background: var(--selected-bg); color: var(--fg); font-weight: var(--weight-medium); }
+.c-segmented__item[aria-pressed="true"], .c-segmented__item[aria-checked="true"] { z-index: 1; border: var(--stroke) solid var(--selected-line); padding-inline: calc(var(--space-3) - 1px); color: var(--fg); font-weight: var(--weight-medium); }
 
 /* --- Navigation ------------------------------------------------------------ */
 .c-nav { display: flex; flex-direction: column; }
@@ -136,7 +137,7 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-pagination { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-small); }
 .c-pagination a, .c-pagination span { min-width: 1.75rem; height: 1.75rem; display: grid; place-content: center; padding-inline: var(--space-1); text-decoration: none; color: var(--fg-soft); border: var(--hairline) solid transparent; }
 .c-pagination a:hover { border-color: var(--line-strong); color: var(--fg-strong); }
-.c-pagination [aria-current] { background: var(--selected-bg); color: var(--fg); font-weight: var(--weight-medium); }
+.c-pagination [aria-current] { border: var(--stroke) solid var(--selected-line); color: var(--fg); font-weight: var(--weight-medium); }
 
 /* --- Étiquette et statut -----------------------------------------------------
    Le statut se lit par la FORME du glyphe et par le mot, jamais par la teinte.
@@ -165,7 +166,7 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-table td { color: var(--fg); }
 .c-table .is-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .c-table tbody tr:hover > * { background: var(--surface); }
-.c-table tr[aria-selected="true"] > * { background: var(--surface-2); }
+.c-table tr[aria-selected="true"] > * { border-bottom: var(--stroke) solid var(--selected-line); padding-bottom: calc(var(--space-2) - 1px); }
 .c-table tr.is-key > * { color: var(--fg-strong); font-weight: var(--weight-bold); }
 .c-table tr.is-muted > * { color: var(--fg-muted); }
 .c-table tfoot th, .c-table tfoot td { border-top: var(--hairline) solid var(--fg-soft); border-bottom: 0; color: var(--fg-strong); font-weight: var(--weight-bold); }
@@ -177,7 +178,7 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 /* --- Chiffre clé ------------------------------------------------------------- */
 .c-stat { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
 .c-stat__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-soft); }
-.c-stat__value { font-size: var(--text-display); line-height: var(--leading-display); color: var(--fg-strong); letter-spacing: -0.02em; white-space: nowrap; }
+.c-stat__value { margin-left: -0.06em; font-size: var(--text-display); line-height: var(--leading-display); color: var(--fg-strong); letter-spacing: -0.02em; white-space: nowrap; }
 .c-stat__value small { font-size: var(--text-base); letter-spacing: 0; color: var(--fg-soft); margin-left: var(--space-1); }
 .c-stat__note { font-size: var(--text-small); line-height: var(--leading-small); color: var(--fg-muted); }
 .c-stat--hero .c-stat__value { font-size: var(--text-hero); line-height: var(--leading-hero); }
@@ -201,8 +202,13 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-panel__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); margin-bottom: var(--space-4); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
 
 /* --- Note et alerte ------------------------------------------------------------ */
-.c-notice { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--space-4); padding: var(--space-3) 0 var(--space-3) var(--space-4); border-left: var(--stroke) solid var(--fg-soft); color: var(--fg); }
+.c-notice { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--space-4); padding: 0 0 0 var(--space-4); border-left: var(--stroke) solid var(--fg-soft); color: var(--fg); }
 .c-notice__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-base); color: var(--fg-strong); font-weight: var(--weight-medium); }
+/* Empilée : le label au-dessus du texte, pour ouvrir une colonne sur la même ligne que ses voisines. */
+.c-notice--stacked { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-2); }
+.c-notice--stacked .c-notice__label { line-height: var(--leading-micro); }
+/* Suspendue : le filet sort dans la gouttière, le texte reste sur l'axe de la colonne. */
+.c-notice--hang { margin-left: calc(-1 * (var(--space-4) + var(--stroke))); }
 .c-notice--signal { border-left-color: var(--signal); }
 .c-notice--signal .c-notice__label { color: var(--signal); }
 
@@ -261,9 +267,9 @@ a.c-card, .c-card--action { cursor: pointer; transition: border-color var(--dura
 a.c-card:hover, .c-card--action:hover { border-top-color: var(--fg-strong); color: var(--fg); }
 a.c-card:hover .c-card__foot, .c-card--action:hover .c-card__foot { color: var(--fg-strong); }
 a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color: var(--fg-soft); border-top-color: var(--fg-strong); background: var(--surface); }
-/* Sélection : le filet passe à 2 px, en gris moyen (l'épaisseur dit l'actif, pas la clarté). */
+/* Sélection : le filet passe à 2 px, en gris moyen. Le fond ne change pas. */
 .c-card[aria-selected="true"], .c-card[aria-current], .c-card.is-selected { border-top: var(--stroke) solid var(--selected-line); padding-top: calc(var(--space-3) - 1px); }
-.c-card--boxed[aria-selected="true"], .c-card--boxed[aria-current], .c-card--boxed.is-selected { background: var(--surface); border-color: var(--line-strong); border-top-color: var(--selected-line); padding-top: calc(var(--space-4) - 1px); }
+.c-card--boxed[aria-selected="true"], .c-card--boxed[aria-current], .c-card--boxed.is-selected { border: var(--stroke) solid var(--selected-line); padding: calc(var(--space-4) - 1px) calc(var(--space-5) - 1px) calc(var(--space-5) - 1px); }
 .c-card--signal { border-top-color: var(--signal); }
 .c-card--signal .c-card__head > :first-child { color: var(--signal); font-weight: var(--weight-medium); }
 
@@ -277,7 +283,7 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 .c-menu__label { padding: var(--space-2) var(--space-3) var(--space-1); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
 .c-menu__item { appearance: none; display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-5); width: 100%; padding: 6px var(--space-3); background: none; border: 0; text-align: left; text-decoration: none; color: var(--fg); font-size: var(--text-small); line-height: var(--leading-base); white-space: nowrap; cursor: pointer; }
 .c-menu__item:hover, .c-menu__item:focus-visible { background: var(--line-faint); color: var(--fg-strong); outline-offset: -2px; }
-.c-menu__item[aria-checked="true"], .c-menu__item[aria-current] { background: var(--selected-bg); color: var(--fg); font-weight: var(--weight-medium); }
+.c-menu__item[aria-checked="true"], .c-menu__item[aria-current] { border-left: var(--stroke) solid var(--selected-line); padding-left: calc(var(--space-3) - 2px); color: var(--fg); font-weight: var(--weight-medium); }
 .c-menu__item:disabled, .c-menu__item[aria-disabled="true"] { color: var(--fg-muted); cursor: not-allowed; background: none; }
 .c-menu__item--signal { color: var(--signal); }
 .c-menu__item--signal:hover { color: var(--signal); }
@@ -335,7 +341,7 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 
 .c-chip { appearance: none; display: inline-flex; align-items: center; gap: var(--space-2); height: 1.5rem; padding: 0 var(--space-2); background: none; border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); font-size: var(--text-micro); line-height: 1; text-transform: uppercase; letter-spacing: var(--track-label); white-space: nowrap; cursor: pointer; transition: background var(--duration), color var(--duration), border-color var(--duration); }
 .c-chip:hover { border-color: var(--fg-strong); color: var(--fg-strong); }
-.c-chip[aria-pressed="true"] { background: var(--selected-bg); border-color: var(--selected-bg); color: var(--fg); font-weight: var(--weight-medium); }
+.c-chip[aria-pressed="true"] { border: var(--stroke) solid var(--selected-line); padding-inline: calc(var(--space-2) - 1px); color: var(--fg); font-weight: var(--weight-medium); }
 .c-chip__count { font-weight: var(--weight-regular); opacity: .8; }
 .c-chip:disabled { border-style: dashed; border-color: var(--line); color: var(--fg-muted); cursor: not-allowed; }
 

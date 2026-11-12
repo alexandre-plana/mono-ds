@@ -12,6 +12,7 @@ s'emploient jamais directement** : un composant ne connaît que des rôles.
 
 | Rôle | Emploi | Encre | Papier | Contraste min. |
 |---|---|---|---|---|
+| `--desk` / `--hatch` | Plan de travail hachuré, autour de la page | tone-0 / tone-4 | `#CBCBC7` / `#B3B4B0` | décoratif |
 | `--bg-sunken` | Creux : code, zones en retrait | tone-0 | `#CBCBC7` | — |
 | `--bg` | Fond de page | tone-1 | tone-10 | — |
 | `--surface` | Surface détachée, ligne survolée | tone-2 | tone-11 | — |
@@ -24,8 +25,7 @@ s'emploient jamais directement** : un composant ne connaît que des rôles.
 | `--fg` | Texte courant | tone-9 | tone-3 | 7 : 1 |
 | `--fg-strong` | Titres, labels, chiffres clés | tone-11 | tone-1 | 7 : 1 |
 | `--inverse-bg` / `--inverse-fg` | Bloc inversé : action primaire | tone-10 / tone-1 | tone-2 / tone-10 | 7 : 1 |
-| `--selected-bg` | Fond d'un élément sélectionné | tone-5 | `#BBBCB8` | texte 4,5 : 1 |
-| `--selected-line` | Trait de 2 px d'un élément sélectionné | tone-7 | `#57585A` | 3 : 1 |
+| `--selected-line` | Contour de 2 px d'un élément sélectionné | tone-7 | `#57585A` | 3 : 1 |
 | `--mark`, `--mark-2`, `--mark-3` | Marques de données | tone-7, 9, 6 | — | 3 : 1 |
 | `--signal` / `--on-signal` | L'exception | `#EA4F63` | `#AD1F37` | 4,5 : 1 |
 
@@ -35,9 +35,9 @@ Règles :
 - **T2 — Le clair se mérite** : `--fg-strong` nomme ou chiffre. Jamais un paragraphe entier.
 - **T3 — Élévation par le ton** : une surface se détache en s'éclaircissant d'un cran,
   jamais par une ombre. Trois plans au plus : creux, fond, surface.
-- **T4 — La sélection est un gris moyen** : `--selected-bg` ou `--selected-line`,
-  jamais le ton clair. On doit voir ce que l'action a produit, pas le contrôle
-  qui l'a produite.
+- **T4 — La sélection est un contour** : 2 px en `--selected-line`. Le fond d'un
+  élément sélectionné ne change pas et il ne prend jamais le ton clair. On doit
+  voir ce que l'action a produit, pas le contrôle qui l'a produite.
 - Toute nouvelle paire texte/fond s'ajoute à `scripts/contrast.mjs`.
 
 ## Thèmes

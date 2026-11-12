@@ -38,7 +38,12 @@ une fois, pour être lue. MONO compose donc des **vues**, pas des assemblages de
 widgets : un en-tête, un colophon, des axes, un point focal.
 
 - *Implique* : cadre de page constant, marges égales, ferré à gauche, grille de
-  douze colonnes, trois ou quatre axes verticaux.
+  douze colonnes, trois ou quatre axes verticaux, et des alignements au cordeau :
+  une rangée partage sa première ligne de base, un axe est tenu par le texte.
+- *La feuille et le plan de travail* : la page a un bord — un contour d'un pixel —
+  et repose sur un plan hachuré, en retrait de l'écran. Les hachures ne
+  décorent pas, elles désignent ce qui n'est pas la page. C'est ce qui permettra
+  de poser à côté d'elle un inspecteur ou des fenêtres.
 - *Serait un écart* : un tableau de bord fait de tuiles interchangeables ; un
   contenu centré ; une page qui n'a pas de « haut à gauche ».
 
@@ -109,7 +114,8 @@ Le système possède peu de formes et chacune ne dit qu'une chose, partout :
 | Filet tireté | Relation, inactif, provisoire, à venir |
 | Filet pointillé | Repère : ce qui aide à lire sans être lu |
 | Épaisseur de 2 px et plus | L'actif, le sélectionné, la donnée |
-| Aplat gris moyen, à peine plus clair que le fond | Le sélectionné |
+| Contour de 2 px en gris moyen, fond inchangé | Le sélectionné |
+| Hachures | Le plan de travail : ce qui n'est pas la page |
 | Capitales espacées | Le service : labels, légendes, titres courants |
 | Graisse 600 | Ce qui nomme |
 | Aplat clair | L'action primaire à faire — jamais un choix déjà fait |
@@ -126,11 +132,12 @@ s'ouvre, la liste qui se resserre, le chiffre qui change. Un contrôle sélectio
 qui s'allume en clair retient l'œil sur le geste déjà fait et vole l'éclat au
 contenu.
 
-- *Implique* : le sélectionné se marque en **gris moyen** (`--selected-bg`,
-  `--selected-line`), par un aplat discret, un trait de 2 px ou la graisse — on
-  le retrouve si on le cherche, il n'attire pas. Le ton clair va au résultat.
+- *Implique* : le sélectionné se marque par son **contour seul** — 2 px en gris
+  moyen (`--selected-line`) — et par la graisse. Son fond ne change pas : un
+  aplat, même discret, ferait du contrôle une tache. On le retrouve si on le
+  cherche, il n'attire pas. Le ton clair va au résultat.
 - *Serait un écart* : un onglet actif souligné de blanc ; un filtre actif en
-  aplat clair ; une fiche choisie encadrée au ton fort ; une ligne sélectionnée
+  aplat, clair ou gris ; une fiche choisie encadrée au ton fort ; une ligne sélectionnée
   plus claire que les chiffres qu'elle contient.
 - *À ne pas confondre* : le **focus clavier** n'est pas une sélection. Il doit
   rester très visible (contour de 2 px au ton fort) — c'est une exigence
@@ -162,7 +169,7 @@ Par vue, c'est-à-dire par écran visible sans défilement.
 | Corps de texte | 3 | La hiérarchie passe par la graisse et le ton |
 | Niveaux de ton du texte | 4 | En dessous, un gris est un filet |
 | Axes verticaux | 3 ou 4 | Au-delà, plus aucun bord ne se répète |
-| Plans de profondeur | 3 : creux, fond, surface | L'élévation n'existe pas |
+| Plans de profondeur | 3 dans la page : creux, fond, surface — plus le plan de travail dessous | L'élévation n'existe pas |
 | Superposition | 1 à la fois | Une interruption se mérite |
 | Vide | Un tiers au moins | Conviction 5 |
 
@@ -218,7 +225,7 @@ et le signal (2), on ne réduit pas le reste du tableau sous le plancher (1).
 | « Griser le bouton désactivé » | L'opacité fabrique un texte illisible | Contour tireté, texte au ton tertiaire |
 | « Une animation à l'apparition » | Rien d'ornemental | Transitions de 120 ms sur la couleur et la bordure, rien d'autre |
 | « Centrer l'état vide, c'est plus équilibré » | Ferré à gauche, sans exception | `.c-empty` sur l'axe du contenu qu'il remplace |
-| « L'onglet actif en blanc, pour bien voir où l'on est » | Le clair irait au contrôle, pas au contenu qu'il vient d'ouvrir | Trait de 2 px en gris moyen ; c'est le contenu de la vue qui porte le clair |
+| « L'onglet actif en blanc, pour bien voir où l'on est » | Le clair irait au contrôle, pas au contenu qu'il vient d'ouvrir | Contour de 2 px en gris moyen, fond inchangé ; c'est le contenu de la vue qui porte le clair |
 | « Deux boutons pleins, les deux actions comptent » | Deux points focaux | Choisir ; l'autre est en contour |
 | « Un fond coloré pour l'alerte » | Le signal n'est jamais une surface | `.c-notice--signal` : un trait de 2 px et un mot |
 

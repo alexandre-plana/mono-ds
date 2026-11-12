@@ -37,7 +37,6 @@ const pairs = [
   ['--fg-muted', '--surface-2', 4.5, 'tertiaire sur survol'],
   ['--fg-soft', '--bg-sunken', 4.5, 'secondaire sur creux'],
   ['--line-strong', '--bg', 3, 'bordure de contrôle'],
-  ['--fg', '--selected-bg', 4.5, 'texte sur élément sélectionné'],
   ['--selected-line', '--bg', 3, 'trait de sélection'],
   ['--selected-line', '--surface', 3, 'trait de sélection sur surface'],
   ['--mark', '--bg', 3, 'marque de donnée'],

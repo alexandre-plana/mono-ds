@@ -21,9 +21,14 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
 - Un seul bouton `--primary`, un seul `.c-stat--hero`, un seul bloc inversé, une
   seule superposition (modale ou tiroir) par vue.
 - Une fiche (`.c-card`) est un filet, pas une boîte ; jamais de fiche dans une fiche.
-- Un élément sélectionné (onglet, filtre, segment, fiche, ligne) se marque en gris
-  moyen : `--selected-bg` / `--selected-line`, jamais `--fg-strong` ni `--inverse-bg`.
-  Le clair va au résultat de l'action, pas au contrôle.
+- Un élément sélectionné (onglet, filtre, segment, fiche, ligne) ne change que de
+  contour : 2 px en `--selected-line`. Jamais de fond, jamais `--fg-strong` ni
+  `--inverse-bg`. Le clair va au résultat de l'action, pas au contrôle.
+- Toute page est une `.l-shell` (contour d'un pixel) posée sur `<body class="l-desk">`
+  (plan de travail hachuré). Les hachures ne s'emploient nulle part ailleurs.
+- Alignements au cordeau : les blocs d'une rangée vivent dans la même rangée de
+  grille et s'ouvrent par le même style de texte ; sur un axe, c'est le texte qui
+  s'aligne, pas le bord d'un cadre.
 - Aucun texte sous 11 px (capitales) / 12 px (bas de casse). Trois corps par écran.
 - Rayon 0, pas d'ombre, pas de dégradé. Filets de 1 px : plein = structure,
   tireté = relation/inactif, pointillé = repère.

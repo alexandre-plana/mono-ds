@@ -13,6 +13,8 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 
 | Classe | Rôle |
 |---|---|
+| `.l-desk` (sur `<body>`) | Plan de travail hachuré ; grille dont la gouttière sépare les pages |
+| `.l-shell` | La page : fond uni, contour d'un pixel, en retrait de `--shell-inset` |
 | `.l-page` | Conteneur : largeur max. 1440 px, marges de page |
 | `.l-frame` | Pleine hauteur : en-tête / contenu / pied |
 | `.l-grid` + `.l-span-1…12`, `.l-start-2…10` | Grille de 12 colonnes (6 puis 1 en étroit) |
@@ -50,7 +52,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|---|
 | `.c-button` | `--primary`, `--quiet`, `--signal`, `--large`, `disabled` | **Un seul primaire par vue.** `--signal` = irréversible |
 | `.c-tabs` | `__tab[aria-selected]` | Vues d'un même objet |
-| `.c-segmented` | `__item[aria-pressed]` | 2 à 4 options exclusives ; actif en retrait (`--selected-bg`) |
+| `.c-segmented` | `__item[aria-pressed]` | 2 à 4 options exclusives ; actif = contour de 2 px |
 | `.c-menu` (`<details>`) | `__list`, `__label`, `__item` (`--signal`), `__hint`, `__sep` ; `--end` | 3 à 7 actions secondaires. Jamais l'action principale, jamais de sous-menu |
 | `.c-chip` | `[aria-pressed]`, `__count`, `disabled` | Filtres cumulables ; aucun actif = tout |
 | `.c-steps` | `__step`, `.is-done`, `[aria-current="step"]` | Parcours linéaire de 3 à 6 étapes : plein = fait, épais = en cours, tireté = à venir |
@@ -75,7 +77,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-status` | `--on`, `--progress`, `--off`, `--warning`, `--critical` | Forme + mot ; seul `--critical` prend le signal |
 | `.c-tag` | `--solid`, `--dashed` | Métadonnée courte |
 | `.c-ref` | — | Référence entre parenthèses : `( WAP375CD )` |
-| `.c-notice` | `__label`, `--signal` | Note en marge du flux |
+| `.c-notice` | `__label`, `--signal`, `--stacked`, `--hang` | Note en marge du flux |
 | `.c-tooltip`, `.c-toast` (`--signal`) | — | Une notification à la fois, en bas à gauche |
 | `.c-empty` | `__label`, `__title`, `__text`, `__actions` ; `--plain` | Nomme ce qui manque, propose une issue. Ferré à gauche, sans illustration |
 | `.c-loader`, `.c-progress`, `.c-skeleton` | `--title`, `--block` ; `--w`, `--h` | < 1 s : rien · quelques secondes : points ou filet · au-delà : gabarit |
@@ -96,9 +98,10 @@ ses actions sont ferrées à gauche, la principale en premier.
 
 ## Règles transversales
 
-- **Sélectionné = gris moyen** (`--selected-bg`, `--selected-line`), jamais le ton
-  clair : onglet, segment, filtre, fiche, page courante, case cochée. Le contrôle
-  s'efface ; c'est le résultat de l'action qui porte le clair.
+- **Sélectionné = contour de 2 px** en `--selected-line` (gris moyen). Le fond
+  ne change pas, le ton clair n'est jamais employé : onglet, segment, filtre,
+  fiche, page courante, case cochée. Le contrôle s'efface ; c'est le résultat de
+  l'action qui porte le clair.
 - **Inactif = tireté**, jamais une opacité réduite : le texte reste lisible.
 - **Survol = un cran de ton** ou une bordure qui s'éclaircit. Pas de déplacement.
 - **Focus clavier = contour de 2 px** en `--fg-strong`, décalé de 3 px. Jamais

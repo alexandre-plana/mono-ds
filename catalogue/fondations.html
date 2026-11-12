@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="../src/mono.css">
   <link rel="stylesheet" href="assets/catalogue.css">
 </head>
-<body data-root="./">
+<body class="l-desk" data-root="./">
+  <div class="l-shell">
   <div class="l-page">
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
@@ -58,6 +59,7 @@
             <table class="c-table cat-roles">
               <thead><tr><th></th><th>Rôle</th><th>Emploi</th><th>Valeur</th><th class="is-num">Contraste</th></tr></thead>
               <tbody>
+                <tr><td><div class="cat-swatch" style="background-color:var(--desk); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px)"></div></td><th><code>--desk</code> · <code>--hatch</code></th><td>Plan de travail hachuré, autour de la page</td><td data-token="--desk"></td><td class="is-num" data-token="--desk" data-show="ratio"></td></tr>
                 <tr><td><div class="cat-swatch" style="background:var(--bg-sunken)"></div></td><th><code>--bg-sunken</code></th><td>Creux : blocs de code, zones en retrait</td><td data-token="--bg-sunken"></td><td class="is-num" data-token="--bg-sunken" data-show="ratio"></td></tr>
                 <tr><td><div class="cat-swatch" style="background:var(--bg)"></div></td><th><code>--bg</code></th><td>Fond de page. La masse dominante</td><td data-token="--bg"></td><td class="is-num">—</td></tr>
                 <tr><td><div class="cat-swatch" style="background:var(--surface)"></div></td><th><code>--surface</code></th><td>Surface détachée, ligne survolée</td><td data-token="--surface"></td><td class="is-num" data-token="--surface" data-show="ratio"></td></tr>
@@ -70,8 +72,7 @@
                 <tr><td><div class="cat-swatch" style="background:var(--fg)"></div></td><th><code>--fg</code></th><td>Texte courant</td><td data-token="--fg"></td><td class="is-num" data-token="--fg" data-show="ratio"></td></tr>
                 <tr><td><div class="cat-swatch" style="background:var(--fg-strong)"></div></td><th><code>--fg-strong</code></th><td>Titres, labels, chiffres clés</td><td data-token="--fg-strong"></td><td class="is-num" data-token="--fg-strong" data-show="ratio"></td></tr>
                 <tr><td><div class="cat-swatch" style="background:var(--inverse-bg)"></div></td><th><code>--inverse-bg</code></th><td>Bloc inversé : l'action primaire</td><td data-token="--inverse-bg"></td><td class="is-num" data-token="--inverse-bg" data-show="ratio"></td></tr>
-                <tr><td><div class="cat-swatch" style="background:var(--selected-bg)"></div></td><th><code>--selected-bg</code></th><td>Fond d'un élément sélectionné : segment, filtre, page courante</td><td data-token="--selected-bg"></td><td class="is-num" data-token="--selected-bg" data-show="ratio"></td></tr>
-                <tr><td><div class="cat-swatch" style="background:var(--selected-line)"></div></td><th><code>--selected-line</code></th><td>Trait de 2 px d'un élément sélectionné : onglet, fiche</td><td data-token="--selected-line"></td><td class="is-num" data-token="--selected-line" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--selected-line)"></div></td><th><code>--selected-line</code></th><td>Contour de 2 px d'un élément sélectionné — le fond ne change jamais</td><td data-token="--selected-line"></td><td class="is-num" data-token="--selected-line" data-show="ratio"></td></tr>
                 <tr><td><div class="cat-swatch" style="background:var(--mark)"></div></td><th><code>--mark</code></th><td>Marque de donnée principale (gris moyen)</td><td data-token="--mark"></td><td class="is-num" data-token="--mark" data-show="ratio"></td></tr>
                 <tr><td><div class="cat-swatch" style="background:var(--signal)"></div></td><th><code>--signal</code></th><td>L'exception. Voir ci-dessous</td><td data-token="--signal"></td><td class="is-num" data-token="--signal" data-show="ratio"></td></tr>
               </tbody>
@@ -80,7 +81,7 @@
           <div class="cat-rules">
             <div class="cat-rule" id="regle-t1" data-search="regle"><span class="cat-rule__num">T1</span><h3>Quatre niveaux de texte</h3><p>Fort, courant, secondaire, tertiaire. Pas de cinquième : en dessous de <code>--fg-muted</code> un gris n'est plus un texte, c'est un filet.</p></div>
             <div class="cat-rule" id="regle-t2" data-search="regle"><span class="cat-rule__num">T2</span><h3>Le clair se mérite</h3><p><code>--fg-strong</code> est réservé à ce qui nomme ou chiffre. Un paragraphe entier en ton fort aplatit la hiérarchie.</p></div>
-            <div class="cat-rule" id="regle-t4" data-search="regle"><span class="cat-rule__num">T4</span><h3>La sélection est un gris moyen</h3><p>Un élément sélectionné prend <code>--selected-bg</code> ou un trait <code>--selected-line</code>, jamais le ton clair. On doit voir ce que l'action a produit, pas le contrôle qui l'a produite.</p></div>
+            <div class="cat-rule" id="regle-t4" data-search="regle"><span class="cat-rule__num">T4</span><h3>La sélection est un contour</h3><p>Un élément sélectionné reçoit un contour de 2 px en <code>--selected-line</code>. Son fond ne change pas et il ne prend jamais le ton clair. On doit voir ce que l'action a produit, pas le contrôle qui l'a produite.</p></div>
             <div class="cat-rule" id="regle-t3" data-search="regle"><span class="cat-rule__num">T3</span><h3>Élévation par le ton</h3><p>Une surface se détache en s'éclaircissant d'un cran, jamais par une ombre. Trois plans au plus : creux, fond, surface.</p></div>
           </div>
         </section>
@@ -192,6 +193,7 @@
     </div>
 
     <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.2</span></footer>
+  </div>
   </div>
   <script src="assets/search-index.js"></script>
   <script src="assets/catalogue.js"></script>

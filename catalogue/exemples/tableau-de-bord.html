@@ -6,24 +6,44 @@
   <title>Observatoire du réseau — exemple MONO</title>
   <link rel="stylesheet" href="../../src/mono.css">
 </head>
-<body>
+<body class="l-desk">
   <!-- Exemple d'écran composé uniquement avec le système : aucune classe hors de src/.
-       Trois axes verticaux (col. 1, 4, 10). Un point focal : le chiffre héros.
+       Trois axes verticaux (col. 1, 4, 10) et trois lignes horizontales communes.
+       Un point focal : le chiffre héros.
        Un bloc inversé : « Exporter ». Un sens pour le signal : le repli de la branche vie. -->
+  <div class="l-shell">
   <div class="l-page l-frame">
     <header class="c-masthead">
       <div class="c-masthead__title">Observatoire du réseau</div>
       <div class="c-masthead__meta"><span>Exercice 2026</span><span>T3</span><span>Mis à jour 14:02</span></div>
     </header>
 
-    <main class="l-grid" style="padding-block: var(--space-7) var(--space-8); row-gap: var(--space-8); align-content: start">
+    <main class="l-grid" style="padding-block: var(--space-7) var(--space-8); row-gap: var(--space-7); align-content: start; align-items: start">
 
-      <section class="l-span-3 l-stack" style="--gap: var(--space-7)" aria-label="Synthèse">
-        <div class="c-stat c-stat--hero">
-          <span class="c-stat__label">Primes totales</span>
-          <span class="c-stat__value">5 190<small>M</small></span>
-          <span class="c-stat__note">−3,2 % sur un an</span>
+      <!-- Rangée 1 : les trois colonnes s'ouvrent par une ligne de micro-capitales, sur la même ligne. -->
+      <div class="c-stat c-stat--hero l-span-3">
+        <span class="c-stat__label">Primes totales</span>
+        <span class="c-stat__value">5 190<small>M</small></span>
+        <span class="c-stat__note">−3,2 % sur un an</span>
+      </div>
+
+      <figure class="v-figure l-span-6" style="grid-row: span 2">
+        <div>
+          <div class="v-figure__caption">Primes totales du groupe — en millions</div>
+          <div class="v-figure__title">Premier repli après vingt-trois ans de hausse</div>
         </div>
+        <div id="chart" data-label="Primes totales par année de 2003 à 2026. Maximum 5 364 en 2025, repli à 5 190 en 2026."></div>
+      </figure>
+
+      <div class="l-span-3">
+        <div class="c-notice c-notice--stacked c-notice--hang c-notice--signal">
+          <span class="c-notice__label">Branche vie</span>
+          <span>Collecte en recul de 44,9 % : premier repli du total depuis 2003.</span>
+        </div>
+      </div>
+
+      <!-- Rangée 2 : le détail à gauche et les régions à droite partent de la même ligne. -->
+      <section class="l-span-3 l-stack" style="--gap: var(--space-6)" aria-label="Détail">
         <dl class="c-kv">
           <div><dt>Non-vie</dt><dd>4 285 M</dd></div>
           <div><dt>Vie</dt><dd>905 M</dd></div>
@@ -36,27 +56,13 @@
         </div>
       </section>
 
-      <figure class="v-figure l-span-6">
-        <div>
-          <div class="v-figure__title">Premier repli après vingt-trois ans de hausse</div>
-          <div class="v-figure__caption">Primes totales du groupe — en millions</div>
-        </div>
-        <div id="chart" data-label="Primes totales par année de 2003 à 2026. Maximum 5 364 en 2025, repli à 5 190 en 2026."></div>
-      </figure>
-
-      <aside class="l-span-3 l-stack" style="--gap: var(--space-7)">
-        <div class="c-notice c-notice--signal" style="grid-template-columns: 1fr; row-gap: var(--space-1)">
-          <span class="c-notice__label">Branche vie</span>
-          <span>Collecte en recul de 44,9 % : premier repli du total depuis 2003.</span>
-        </div>
-        <div class="l-stack">
-          <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Régions</span><span class="c-section-head__aside">Agences</span></h2>
-          <div class="v-hbars">
-            <span class="v-hbars__label">Nord</span><div class="v-hbar" style="--value: 92"></div><span class="v-hbars__value">412</span>
-            <span class="v-hbars__label">Centre</span><div class="v-hbar" style="--value: 74"></div><span class="v-hbars__value">331</span>
-            <span class="v-hbars__label">Sud</span><div class="v-hbar" style="--value: 63"></div><span class="v-hbars__value">284</span>
-            <span class="v-hbars__label">Ouest</span><div class="v-hbar" style="--value: 39"></div><span class="v-hbars__value">177</span>
-          </div>
+      <aside class="l-span-3 l-start-10 l-stack" style="--gap: var(--space-4)">
+        <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Régions</span><span class="c-section-head__aside">Agences</span></h2>
+        <div class="v-hbars">
+          <span class="v-hbars__label">Nord</span><div class="v-hbar" style="--value: 92"></div><span class="v-hbars__value">412</span>
+          <span class="v-hbars__label">Centre</span><div class="v-hbar" style="--value: 74"></div><span class="v-hbars__value">331</span>
+          <span class="v-hbars__label">Sud</span><div class="v-hbar" style="--value: 63"></div><span class="v-hbars__value">284</span>
+          <span class="v-hbars__label">Ouest</span><div class="v-hbar" style="--value: 39"></div><span class="v-hbars__value">177</span>
         </div>
       </aside>
 
@@ -93,6 +99,7 @@
       <span>Exemple — <a href="../index.html">catalogue Mono</a></span>
       <span>Données de démonstration <span class="c-ref">OBS-2026-T3</span></span>
     </footer>
+  </div>
   </div>
   <script src="../assets/charts.js"></script>
   <script src="../assets/demo-data.js"></script>

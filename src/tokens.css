@@ -81,6 +81,7 @@
   --page-max: 1440px;
   --page-margin: clamp(1.25rem, 4vw, 4rem);
   --gutter: var(--space-5);
+  --shell-inset: clamp(0.5rem, 1.7vw, 1.5rem); /* 8 à 24 px entre le bord de l'écran et la page */
   --duration: 120ms;
 }
 
@@ -102,9 +103,11 @@
   --inverse-bg: var(--tone-10);
   --inverse-bg-hover: var(--tone-12);
   --inverse-fg: var(--tone-1);
-  /* Sélection : gris moyens. Le contrôle choisi s'efface, c'est le résultat qui ressort. */
-  --selected-bg: var(--tone-5);
+  /* Sélection : un contour de 2 px en gris moyen, jamais un fond. */
   --selected-line: var(--tone-7);
+  /* Plan de travail : ce qui entoure la page. Hachures légères, plus claires que lui. */
+  --desk: var(--tone-0);
+  --hatch: var(--tone-4);
   --mark: var(--tone-7);
   --mark-2: var(--tone-9);
   --mark-3: var(--tone-6);
@@ -129,8 +132,9 @@
   --inverse-bg: var(--tone-2);
   --inverse-bg-hover: var(--tone-4);
   --inverse-fg: var(--tone-10);
-  --selected-bg: #bbbcb8;
   --selected-line: #57585a;
+  --desk: #cbcbc7;
+  --hatch: #b3b4b0;
   --mark: #6f7072;
   --mark-2: var(--tone-4);
   --mark-3: #77787a;
