@@ -42,11 +42,18 @@ window.MonoDemo = {
     { name: 'Vie', values: [398, 402, 410, 405, 412, 380, 300, 226] },
   ],
   nuage: [[3, 1.8], [12, 8.7], [4, 2.2], [11, 7.9], [14, 9.8], [8, 5.4], [5, 3.3], [9, 6.2], [4, 2.6], [6, 4.1], [7, 4.4], [10, 6.1], [13, 8.1], [6, 3.2], [15, 9.1], [9, 5.1], [5, 2.4], [16, 10.6], [11, 6.6], [7, 5.2]]
-    .map(([x, y]) => ({ x, y })).concat([{ x: 18, y: 12.4, name: 'Grenoble Centre' }, { x: 17, y: 4.9, name: 'Vizille', signal: true }, { x: 6, y: 7.2, name: 'Arles' }]),
+    .map(([x, y]) => ({ x, y })).concat([{ x: 18, y: 12.4, name: 'Grenoble Centre' }, { x: 17, y: 4.9, name: 'Vizille', signal: true, note: '17 pers. · 4,9 M' }, { x: 6, y: 7.2, name: 'Arles' }]),
   jours: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
   heures: ['8 h', '', '10 h', '', '12 h', '', '14 h', '', '16 h', '', '18 h', ''],
   appels: [
     [12, 48, 96, 110, 74, 30, 52, 88, 92, 70, 41, 9], [10, 44, 84, 98, 70, 28, 49, 80, 86, 64, 38, 8], [8, 36, 70, 82, 60, 22, 40, 66, 70, 52, 30, 6],
     [11, 46, 88, 104, 72, 29, 50, 84, 90, 66, 40, 8], [9, 40, 76, 90, 64, 25, 44, 72, 68, 44, 22, 4], [4, 18, 32, 36, 20, 0, 0, 0, 0, 0, 0, 0],
   ],
+  // Profils horaires d'appels, un par mois : le sommet glisse du matin vers l'après-midi.
+  profils: ['Oct', 'Nov', 'Déc', 'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sept'].map((name, k) => {
+    const g = (x, m, s) => Math.exp(-((x - m) ** 2) / (2 * s * s)), a = 10.2 + k * 0.42, b = 15.5 - k * 0.1;
+    return { name, strong: k === 11, values: Array.from({ length: 56 }, (_, i) => { const hr = 7 + (i * 13) / 55; return Math.round(100 * ((1 - k * 0.05) * g(hr, a, 1.1) + (0.45 + k * 0.05) * g(hr, b, 1.5)) + 4 * Math.sin(i * 1.7 + k) + 5); }) };
+  }),
+  // Primes de soixante agences, en millions : un amas autour de 5, quelques isolés.
+  primesAgences: Array.from({ length: 60 }, (_, i) => { const u = ((i * 7919) % 101) / 101, v = ((i * 104729) % 97) / 97; return Math.round((2 + 6.5 * (u + v) / 1 * 0.62 + (i % 11 === 0 ? 4 : 0)) * 10) / 10; }).concat([12.4, 0.9]),
 };

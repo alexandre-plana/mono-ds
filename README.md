@@ -64,14 +64,19 @@ Un titre, quelques champs ou une phrase, deux actions. Ni bandeau, ni croix, ni 
 
 ### Les données
 
-Marques en gris moyen, chiffres en clair, un seul fait en signal. Pas de
-camembert : une carte proportionnelle, ici en thème papier.
+Marques en gris moyen, chiffres en clair, un seul fait en signal. Les séries se
+distinguent par le trait — plein, tramé, contour — et les signes du système
+annotent : repères d'angle, ligne de rappel, crochets.
 
 ![Carte proportionnelle des primes par produit, thème papier](docs/captures/treemap.png)
 
-![Barres empilées par clientèle](docs/captures/composition.png)
+![Crêtes : douze profils horaires](docs/captures/cretes.png)
 
-![Matrice des appels par jour et par heure](docs/captures/matrice.png)
+![Nuage annoté : graduations, médianes, ligne de rappel](docs/captures/nuage.png)
+
+![Matrice perforée des appels par jour et par heure](docs/captures/matrice.png)
+
+![Strates : trois séries, trois traits, thème papier](docs/captures/strates.png)
 
 ### Les images
 

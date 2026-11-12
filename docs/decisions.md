@@ -75,7 +75,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-052 | Sous une modale, la page reste lisible | en vigueur |
 | D-053 | La modale revient au centre | en vigueur |
 | D-055 | La modale reprend sa largeur classique | en vigueur |
-| D-054 | Graphiques : treemap, composition, nuage, matrice, tendance ; pas de camembert | en vigueur |
+| D-054 | Graphiques : treemap, composition, nuage, matrice, tendance ; pas de camembert | en vigueur, formes revues en D-056 |
+| D-056 | Graphiques : le trait avant le ton, les signes annotent | en vigueur |
 
 ---
 
@@ -503,3 +504,18 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Décision** : `.c-dialog` repasse à 32 rem de large (format couché, comme en D-048). `--small` : 24 rem. `--column` : 26 rem. `--large` : 48 rem, inchangée.
 - **Ce qui reste des essais** : centrée et ancrée au tiers haut ; hauteur du contenu ; fond et contour de la page ; aucun bandeau, aucune croix, aucun filet intérieur ; un seul titre en 24 px ; prose en sans-serif ; actions à droite, la principale au bout ; page hachurée mais lisible dessous (D-052).
 - **Clos** : les formats portrait (D-049, D-050) et la position excentrée (D-051) sont abandonnés. `__stake` et les compositions « chiffre » et « étiquette » restent disponibles.
+
+## D-056 — Graphiques : le trait avant le ton, les signes annotent
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« manque d'originalité ») · **Revoit** : D-054
+- **Contexte** : hors treemap, les graphiques de D-054 étaient des formes de bibliothèque repeintes en gris.
+- **Décision** : chaque graphique est redessiné à partir du vocabulaire du système.
+  - **Strates** — barres empilées dont les séries se distinguent par le trait : plein, tramé de lignes horizontales, contour seul.
+  - **Grille d'unités** — cent carrés, un par pour-cent ; mêmes trois traits. C'est la réponse au camembert.
+  - **Nuage annoté** — points carrés ; une graduation par point sur chaque axe ; médianes en pointillé ; le point commenté entre des repères d'angle, relié à sa note par une ligne de rappel.
+  - **Matrice perforée** — remplace la carte de chaleur : la taille du carré dit la quantité, zéro reste un point sur son fil ; le maximum est désigné et chiffré.
+  - **Crêtes** — une courbe par rangée, chacune masquant la précédente : pour lire le déplacement d'un sommet sur douze séries ou plus.
+  - **Frise** — un trait par valeur sur une règle, médiane entre crochets : la distribution sans histogramme.
+- **Raison** : « séries distinguées par ton et trait » (règle V4) penchait trop vers le ton. Trois gris se confondent dès qu'ils se touchent et s'inversent entre encre et papier ; trois traits, non. Les signes (D-016) trouvent ici leur emploi légitime : ils annotent.
+- **Abandonné** : les paliers `.v-heat--0…4` de D-054.
+- **Réserve** : les crêtes ne donnent pas de valeurs lisibles ; elles montrent une allure et doivent s'accompagner d'un titre qui dit le constat.

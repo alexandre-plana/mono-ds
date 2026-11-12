@@ -59,13 +59,14 @@
 .v-cell--2 { fill: var(--surface); stroke: var(--line-faint); stroke-width: 1; }
 .v-cell:hover, .v-cell:focus-visible { stroke: var(--fg-soft); stroke-width: 1; outline: 0; }
 .v-value--large { font-size: 15px; }
-/* Paliers d'une matrice : cinq tons, du fond vers le texte. */
-.v-heat--0 { fill: var(--surface); }
-.v-heat--1 { fill: var(--line-faint); }
-.v-heat--2 { fill: var(--line); }
-.v-heat--3 { fill: var(--line-strong); }
-.v-heat--4 { fill: var(--fg-soft); }
-.v-heat:hover, .v-heat:focus-visible { stroke: var(--fg-strong); stroke-width: 1; outline: 0; }
+/* Strates : trois traits pour trois séries — plein (.v-mark), tramé, contour seul. */
+.v-strate { stroke: var(--mark); stroke-width: 1; shape-rendering: crispEdges; }
+.v-strate--open { fill: none; }
+.v-strate:hover, .v-strate:focus-visible { stroke: var(--fg-strong); outline: 0; }
+.v-tick--mark { stroke: var(--mark); }
+.v-tick--signal, .v-axis--signal { stroke: var(--signal); }
+/* Ligne de rappel : relie un point à sa note. */
+.v-callout { fill: none; stroke: var(--fg-soft); stroke-width: 1; }
 .v-spark { display: inline-block; vertical-align: middle; overflow: visible; }
 
 /* Infobulle de graphique */

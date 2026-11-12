@@ -42,7 +42,8 @@ convient s'il applique les classes ou les rôles ci-dessous.
 | `.v-hit`, `.v-tip` | Zone de survol, infobulle |
 | `.v-hbars`, `.v-hbar` (`--signal`, `--strong`) | Barres horizontales en HTML |
 | `.v-cell`, `--2` ; `.v-value--large` | Tuiles d'une carte proportionnelle (treemap) |
-| `.v-heat--0` … `--4` | Cinq paliers de ton d'une matrice |
+| `.v-strate`, `--raster`, `--open` | Plein, tramé, contour : trois séries par le trait |
+| `.v-callout`, `.v-tick--mark`, `--signal`, `.v-axis--signal` | Ligne de rappel, graduations de valeur |
 | `.v-share` | Barre de répartition en HTML : remplace le camembert |
 | `.v-spark` | Courbe de tendance dans une ligne de texte |
 
@@ -58,14 +59,25 @@ convient s'il applique les classes ou les rôles ci-dessous.
 | Question | Graphique | Fonction de démonstration |
 |---|---|---|
 | Comment une grandeur évolue-t-elle ? | Barres (peu de points), courbes (beaucoup) | `bars`, `lines` |
-| Comment un tout se partage-t-il ? | Barre de répartition (jusqu'à cinq parts), carte proportionnelle (cinq à vingt, deux niveaux) | `.v-share`, `treemap` |
-| Comment ce partage évolue-t-il ? | Barres empilées, trois séries au plus | `stack` |
-| Deux grandeurs sont-elles liées ? | Nuage de points | `scatter` |
-| Où est la densité, sur deux axes ? | Matrice à cinq paliers de ton | `heat` |
+| Comment un tout se partage-t-il ? | Grille d'unités (cent carrés), barre de répartition ; carte proportionnelle au-delà de cinq parts | `waffle`, `.v-share`, `treemap` |
+| Comment ce partage évolue-t-il ? | Strates : barres empilées à trois traits | `stack` |
+| Deux grandeurs sont-elles liées ? | Nuage annoté : graduations sur les axes, médianes, ligne de rappel | `scatter` |
+| Où est la densité, sur deux axes ? | Matrice perforée : la taille du carré dit la quantité | `heat` |
+| Comment une forme se déplace-t-elle, sur beaucoup de séries ? | Crêtes | `ridges` |
+| Comment des valeurs se répartissent-elles ? | Frise : un trait par valeur sur une règle | `strip` |
 | Quelle allure, dans une ligne de tableau ? | Courbe de tendance | `spark` |
 | Quel classement ? | Barres horizontales | `.v-hbars` |
 | Quelle structure ? | Arbre | `tree` |
 | Où ? | Carte à graticule | `graticule` |
 
-Carte proportionnelle : tuiles en ton bas séparées par le fond, sans contour ; le
-groupe se nomme au-dessus avec son total ; le signal ne remplit jamais une tuile.
+Trois idées tiennent ces graphiques ensemble :
+
+- **Le trait avant le ton.** Trois séries se distinguent par plein, tramé (lignes
+  horizontales, comme les images tramées) et contour seul (`.v-strate`,
+  `--raster`, `--open`) — pas par trois gris, qui se confondent et s'inversent
+  d'un thème à l'autre.
+- **Les signes du système annotent.** Repères d'angle autour du point désigné,
+  ligne de rappel vers sa note (`.v-callout`), crochets pour une médiane,
+  graduations (`.v-tick--mark`) pour chaque valeur.
+- **Le vide reste vide.** Une matrice ne se couvre pas d'aplats : zéro est un
+  point. Une carte proportionnelle est en ton bas.

@@ -149,7 +149,7 @@
         </section>
 
         <section class="cat-section" id="composition" data-search="rubrique">
-          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Composition</span><span class="c-section-head__aside">Barres empilées, répartition</span></h2>
+          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Strates</span><span class="c-section-head__aside">Composition dans le temps</span></h2>
           <figure class="v-figure">
             <div>
               <div class="v-figure__title">La vie s’efface, le reste tient</div>
@@ -158,10 +158,23 @@
             <div id="chart-stack" data-label="Barres empilées des primes trimestrielles par clientèle sur huit trimestres. La part vie passe de 398 à 226."></div>
             <div class="v-figure__source">Source : données de démonstration</div>
           </figure>
-          <p class="cat-note">Trois séries au plus, distinguées par le ton. La série que l'on commente est en bas : c'est la seule dont la base est droite. Le total se lit au-dessus, les noms en bout de rangée.</p>
+          <p class="cat-note">Trois séries, trois traits : plein, tramé, contour seul. Pas trois gris — on les confond dès qu'ils se touchent, et ils s'inversent d'un thème à l'autre. La trame est celle des images tramées : des lignes horizontales. La série commentée est en bas, pleine, sur une base droite.</p>
+        </section>
+
+        <section class="cat-section" id="unites" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">08</span><span>Grille d'unités</span><span class="c-section-head__aside">Les parts d'un tout</span></h2>
+          <figure class="v-figure">
+            <div>
+              <div class="v-figure__title">Une prime sur six vient encore de la vie</div>
+              <div class="v-figure__caption">Répartition des primes — un carré pour un pour-cent</div>
+            </div>
+            <div id="chart-waffle" data-label="Grille de cent carrés : particuliers 51 pour cent, entreprises 32, vie 17."></div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </figure>
+          <p class="cat-note">Cent carrés, un par pour-cent : on compte au lieu d'estimer un angle. C'est la réponse de MONO au camembert. Trois parts au plus, distinguées par le trait.</p>
           <div class="cat-sub" id="v-share" data-search="rubrique">
             <h3>Barre de répartition — .v-share</h3>
-            <p>Les parts d'un tout, sur une ligne. MONO n'a pas de camembert : l'œil compare mal des angles, et un disque est la masse la plus lourde qu'on puisse poser sur une page.</p>
+            <p>La même chose en une ligne de HTML, quand la place manque.</p>
             <div class="cat-demo" data-code>
               <div class="v-share" style="max-width: 40rem">
                 <span style="--value: 51">Particuliers <b>51 %</b></span>
@@ -173,7 +186,7 @@
         </section>
 
         <section class="cat-section" id="nuage" data-search="rubrique">
-          <h2 class="c-section-head"><span class="c-section-head__num">08</span><span>Nuage de points</span></h2>
+          <h2 class="c-section-head"><span class="c-section-head__num">09</span><span>Nuage annoté</span></h2>
           <figure class="v-figure">
             <div>
               <div class="v-figure__title">Vizille : dix-sept personnes pour moins de cinq millions</div>
@@ -182,11 +195,11 @@
             <div id="chart-scatter" data-label="Nuage de points des agences selon l’effectif et les primes. Vizille est très en dessous de la tendance."></div>
             <div class="v-figure__source">Source : données de démonstration</div>
           </figure>
-          <p class="cat-note">Les points sont en gris moyen et muets. Seuls ceux dont on parle portent un nom ; un seul porte le signal. Pas de droite de tendance tracée si le nuage la montre déjà.</p>
+          <p class="cat-note">Un relevé plus qu'un nuage. Chaque point laisse une graduation sur les deux axes : on lit les deux distributions sans autre graphique. Les médianes partagent le champ en quatre. Le point commenté est pris entre des repères d'angle et relié à sa note par une ligne de rappel — les signes du système, employés pour ce qu'ils disent.</p>
         </section>
 
         <section class="cat-section" id="matrice" data-search="rubrique">
-          <h2 class="c-section-head"><span class="c-section-head__num">09</span><span>Matrice</span><span class="c-section-head__aside">Carte de chaleur</span></h2>
+          <h2 class="c-section-head"><span class="c-section-head__num">10</span><span>Matrice perforée</span><span class="c-section-head__aside">Deux axes, une quantité</span></h2>
           <figure class="v-figure">
             <div>
               <div class="v-figure__title">Deux pointes par jour, à onze heures et à seize heures</div>
@@ -195,11 +208,37 @@
             <div id="chart-heat" data-label="Matrice des appels par jour et par heure, du lundi au samedi, de 8 h à 19 h."></div>
             <div class="v-figure__source">Source : données de démonstration</div>
           </figure>
-          <p class="cat-note">Cinq paliers de ton, du fond vers le texte : plus c'est dense, plus c'est contrasté, dans les deux thèmes. Jamais de teinte, jamais de signal dans une matrice — il y aurait trop de cases à désigner.</p>
+          <p class="cat-note">Une carte à trous plutôt qu'une carte de chaleur. La taille du carré dit la quantité ; zéro reste un point sur son fil. La page garde son vide là où il ne se passe rien, au lieu de se couvrir d'aplats. Le maximum est désigné et chiffré.</p>
+        </section>
+
+        <section class="cat-section" id="cretes" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">11</span><span>Crêtes</span><span class="c-section-head__aside">Beaucoup de profils</span></h2>
+          <figure class="v-figure">
+            <div>
+              <div class="v-figure__title">En un an, la pointe d’appels est passée du matin à l’après-midi</div>
+              <div class="v-figure__caption">Appels par heure, un profil par mois</div>
+            </div>
+            <div id="chart-ridges" data-label="Douze profils horaires d’appels empilés, d’octobre à septembre : le sommet glisse de dix heures vers quinze heures."></div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </figure>
+          <p class="cat-note">Une courbe par rangée, chacune masquant la précédente. On ne lit pas des valeurs, on lit un relief : où est le sommet, comment il se déplace. Douze rangées ou plus, là où douze courbes superposées seraient illisibles. La dernière rangée est en clair ; son sommet porte le signal.</p>
+        </section>
+
+        <section class="cat-section" id="frise" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">12</span><span>Frise</span><span class="c-section-head__aside">Une distribution, trait par trait</span></h2>
+          <figure class="v-figure">
+            <div>
+              <div class="v-figure__title">La plupart des agences tiennent entre quatre et huit millions</div>
+              <div class="v-figure__caption">Primes par agence — un trait par agence</div>
+            </div>
+            <div id="chart-strip" data-label="Frise des primes de soixante-deux agences, de 0,9 à 12,4 millions."></div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </figure>
+          <p class="cat-note">Chaque valeur est un trait sur une règle, comme sur une étiquette technique. On voit les amas, les trous et les isolés — ce qu'une moyenne ou un histogramme cache. La médiane est entre crochets ; un seul trait porte le signal.</p>
         </section>
 
         <section class="cat-section" id="tendance" data-search="rubrique">
-          <h2 class="c-section-head"><span class="c-section-head__num">10</span><span>Tendance</span><span class="c-section-head__aside">Dans une ligne de tableau</span></h2>
+          <h2 class="c-section-head"><span class="c-section-head__num">13</span><span>Tendance</span><span class="c-section-head__aside">Dans une ligne de tableau</span></h2>
           <div class="cat-demo">
             <table class="c-table" style="max-width: 40rem">
               <thead><tr><th>Branche</th><th>Douze mois</th><th class="is-num">Indice</th></tr></thead>
@@ -210,7 +249,7 @@
               </tbody>
             </table>
           </div>
-          <p class="cat-note">Une courbe sans axe ni chiffre, à la hauteur d'une ligne de texte. Elle donne l'allure ; la valeur est dans la colonne voisine. Le dernier point est marqué, en signal s'il est le fait de l'écran.</p>
+          <p class="cat-note">Une courbe sans axe ni chiffre, à la hauteur d'une ligne de texte. Elle donne l'allure ; la valeur est dans la colonne voisine.</p>
         </section>
 
       </main>
@@ -229,7 +268,10 @@
     MonoCharts.tree('#chart-tree', { tree: MonoDemo.arbre });
     MonoCharts.treemap('#chart-treemap', { groups: MonoDemo.portefeuille, unit: 'M', height: 420 });
     MonoCharts.stack('#chart-stack', { labels: MonoDemo.trimestres, series: [MonoDemo.composition[2], MonoDemo.composition[1], MonoDemo.composition[0]], unit: 'M', height: 320 });
-    MonoCharts.scatter('#chart-scatter', { points: MonoDemo.nuage, xLabel: 'Effectif', yLabel: 'Primes (M)', xSteps: 4 });
+    MonoCharts.scatter('#chart-scatter', { points: MonoDemo.nuage, xLabel: 'Effectif', yLabel: 'Primes (M)', xSteps: 4, quadrants: ['Grandes équipes, peu de primes', 'Petites équipes, fortes primes'] });
+    MonoCharts.waffle('#chart-waffle', { parts: [{ name: 'Vie', value: 17 }, { name: 'Entreprises', value: 32 }, { name: 'Particuliers', value: 51 }] });
+    MonoCharts.ridges('#chart-ridges', { rows: MonoDemo.profils, labels: ['7 h', '10 h', '13 h', '17 h', '20 h'], mark: { row: 11, label: '15 h' } });
+    MonoCharts.strip('#chart-strip', { values: MonoDemo.primesAgences, max: 14, steps: 7, unit: 'M', mark: { value: 0.9, label: 'Vizille 0,9' } });
     MonoCharts.heat('#chart-heat', { rows: MonoDemo.jours, cols: MonoDemo.heures, values: MonoDemo.appels, unit: 'appels' });
     document.querySelectorAll('[data-spark]').forEach((n) => MonoCharts.spark(n, { values: MonoDemo.indices[+n.dataset.spark].values, signal: n.hasAttribute('data-signal') }));
     MonoCharts.graticule('#chart-map', { lon: [13, 19], lat: [49, 53], points: MonoDemo.agences, height: 380 });
