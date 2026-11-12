@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dossiers — exemple MONO</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+  <script src="../assets/prefs.js"></script>
+</head>
+<!-- Tableau de cartes (kanban).
+     Quatre colonnes d'état, des fiches que l'on fait glisser de l'une à l'autre. Une colonne n'est
+     pas une boîte : un filet, un nom, un compte. On crée une fiche au pied d'une colonne ; on la
+     modifie dans l'inspecteur, attaché à la page. Rien ne demande confirmation : chaque geste
+     laisse une annulation (toast, touche Z).
+     Au clavier : ↑ ↓ changent de fiche, ← → la déplacent de colonne, Entrée l'inspecte.
+     Aucune classe hors de src/ ; les comportements sont dans assets/kanban.js. -->
+<body class="l-desk l-desk--app">
+
+  <div class="l-shell">
+    <div class="l-pane">
+      <div class="l-pane__head">
+        <header class="c-masthead">
+          <div class="c-masthead__title">Réseau — Dossiers</div>
+          <div class="c-masthead__meta"><span>Exercice 2026</span><span>T3</span><a href="../index.html">Catalogue</a></div>
+        </header>
+      </div>
+
+      <main class="l-pane__body">
+        <div class="l-detail" id="detail" style="--detail: 21rem">
+          <div class="l-detail__main">
+            <h1 class="t-title"><span id="count"></span> <span class="t-soft t-body">dossiers, <span id="blocked"></span></span></h1>
+            <div class="c-board" id="board" aria-label="Tableau des dossiers"></div>
+          </div>
+          <aside class="l-detail__aside" id="inspector" aria-label="Inspecteur" hidden></aside>
+        </div>
+      </main>
+
+      <div class="l-pane__foot">
+        <div class="c-statusbar">
+          <span class="c-statusbar__group g-bracket" id="tally"></span>
+          <span class="c-statusbar__group" style="margin-left: auto"><span class="c-kbd">←</span> <span class="c-kbd">→</span> déplacer</span>
+          <span class="c-statusbar__group"><span class="c-kbd">↵</span> inspecter</span>
+          <span class="c-statusbar__group"><span class="c-kbd">Z</span> annuler</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="../assets/notifs.js"></script>
+  <script src="../assets/kanban.js"></script>
+  <script>
+    'use strict';
+    (() => {
+      const $ = (id) => document.getElementById(id);
+      const COLUMNS = [{ id: 'todo', name: 'À faire' }, { id: 'doing', name: 'En cours' }, { id: 'review', name: 'En revue' }, { id: 'done', name: 'Fait' }];
+      const CARDS = [
+        ['D-041', 'Reprise des contrats de Vizille', 'M. Delorme', '14 nov.', 'doing', true], ['D-038', 'Audit des primes du Nord', 'A. Perrin', '21 nov.', 'doing'],
+        ['D-044', 'Ouverture d\'Arles : effectif', 'J. Reynaud', '2 déc.', 'todo'], ['D-045', 'Rapport du troisième trimestre', 'P. Vidal', '30 nov.', 'todo'], ['D-047', 'Mise à jour des sources', 'S. Garcin', '—', 'todo'],
+        ['D-036', 'Nouveau barème santé', 'L. Brun', '12 nov.', 'review'], ['D-039', 'Carte du réseau', 'M. Delorme', '18 nov.', 'review'],
+        ['D-031', 'Clôture de l\'exercice 2025', 'P. Vidal', '31 oct.', 'done'], ['D-033', 'Migration des comptes', 'S. Garcin', '4 nov.', 'done'],
+      ].map(([ref, title, who, due, col, blocked], i) => ({ id: 'k' + i, ref, title, who, due, col, blocked: !!blocked, note: '' }));
+      const notifs = MonoNotifs({ toasts: $('toasts') });
+      MonoKanban({ board: $('board'), inspector: $('inspector'), detail: $('detail'), columns: COLUMNS, cards: CARDS, notifs,
+        onChange: ({ cards, columns }) => { const b = cards.filter((c) => c.blocked).length; $('count').textContent = cards.length; $('blocked').textContent = b ? `${b} bloqué${b > 1 ? 's' : ''}` : 'aucun bloqué'; $('tally').textContent = columns.map((c) => `${c.name} ${cards.filter((x) => x.col === c.id).length}`).join(' · '); } });
+      document.addEventListener('keydown', (e) => { if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return; if (e.key.toLowerCase() === 'z' && notifs.undoLast()) e.preventDefault(); });
+    })();
+  </script>
+</body>
+</html>

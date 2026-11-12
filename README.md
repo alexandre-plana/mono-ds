@@ -62,6 +62,13 @@ Un titre, quelques champs ou une phrase, deux actions. Ni bandeau, ni croix, ni 
 
 ![Modale sur la page hachurée](docs/captures/modale.png)
 
+### Le tableau de cartes
+
+Des colonnes sans boîte, des fiches que l'on fait glisser de l'une à l'autre,
+une édition par l'inspecteur. Chaque geste s'annule.
+
+![Kanban : une fiche en cours de glissé, l'inspecteur ouvert](docs/captures/kanban.png)
+
 ### Discret, fort ou flash
 
 Par défaut le signal tient en un carré. Une variante, sur les deux thèmes, le
@@ -115,15 +122,24 @@ rôles du thème.
 
 ### Les planches
 
-Trois animations procédurales, infinies, à regarder : un relief qui dérive, un
-atlas balayé, un arbre qui pousse. Chacune naît d'une graine de deux mots —
-ici « brume lente ».
+Quatre animations procédurales, infinies, à regarder. Chacune naît d'une graine
+de deux mots et porte un seul accent de couleur.
 
-![Planche Crêtes, animée](docs/captures/planche-cretes.gif)
+**Crêtes** — un relief qui dérive ; la rangée du sommet est en signal. Graine « brume lente ».
 
-| | |
-|---|---|
-| ![Planche Atlas](docs/captures/planche-atlas.png) | ![Planche Arbre](docs/captures/planche-arbre.png) |
+![Planche Crêtes](docs/captures/planche-cretes.gif)
+
+**Atlas** — des stations sur un graticule, balayées par un méridien. Graine « nacre du large ».
+
+![Planche Atlas](docs/captures/planche-atlas.gif)
+
+**Arbre** — un arbre de décision qui pousse, tient, puis se retire. Graine « givre de minuit ».
+
+![Planche Arbre](docs/captures/planche-arbre.gif)
+
+**Console** — des commandes s'écrivent, une figure se trace. Graine « sel du nord ».
+
+![Planche Console](docs/captures/planche-console.gif)
 
 ### Les images
 
@@ -141,7 +157,7 @@ seul, jamais dans une modale.
 
 ![Application à onglets, inspecteur attaché](docs/captures/application-onglets.png)
 
-Dix écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
+Onze écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
 
 ## En bref
 
@@ -195,7 +211,7 @@ docs/               les règles
   composants.md     index des composants et de leurs variantes
   dataviz.md        règles et classes de visualisation
 catalogue/          le catalogue navigable (démonstrations + code)
-  exemples/         dix écrans : carte, plan, planches, tableau de bord, rapport, collection + inspecteur,
+  exemples/         onze écrans : carte, plan, planches, kanban, tableau de bord, rapport, collection + inspecteur,
                     connexion, bureau à fenêtres, et deux gabarits de shell à
                     copier : application.html (arborescente) et
                     application-modules.html (modules séparés)

@@ -84,6 +84,9 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-061 | Plan détaillé : tuiles vectorielles, relief en courbes, calques | en vigueur |
 | D-062 | Planches animées : une exception délimitée à « rien d'ornemental » | en vigueur |
 | D-063 | Variante d'accent : fort et flash | en vigueur |
+| D-064 | Tableau de cartes (kanban) | en vigueur |
+| D-065 | Planches : accent de couleur sur Crêtes, quatrième planche Console | en vigueur |
+| D-066 | Logo : cinq propositions discrètes | proposée, choix à faire |
 
 ---
 
@@ -597,3 +600,25 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Flash** : une animation CSS de 2,2 s jouée à l'insertion de l'élément ou quand il devient critique. Un élément déjà signalé que l'on redessine porte `.is-settled`. Avec « réduire les animations », elle n'a pas lieu. C'est, avec les planches (D-062), la seule animation du système ; elle est fonctionnelle : elle dit « regarde ici, maintenant ».
 - **Hors périmètre** : le plan détaillé (MapLibre) et les planches ne suivent pas la variante.
 - **Réserve de Claude** : en accent fort, plusieurs éléments critiques sur un même écran produisent beaucoup de rouge et l'alarme perd sa force ; le flash est la forme la plus fidèle à l'esprit du système.
+
+## D-064 — Tableau de cartes (kanban)
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : composant `.c-board` et écran `exemples/kanban.html`. Une colonne n'est pas une boîte : un filet, un nom, un compte entre crochets, puis des `.c-card` ordinaires. On crée une fiche au pied d'une colonne ; on la modifie dans l'inspecteur attaché à la page.
+- **Glisser-déposer** : au pointeur (souris, doigt, stylet), sans bibliothèque. La fiche d'origine reste en tireté, une copie suit le pointeur (fond de la page, contour de sélection, aucune ombre), un trait de 2 px marque le point de chute, la colonne visée prend le contour de sélection. Aucun fond.
+- **Choix de Claude** : le glissé n'est jamais le seul moyen — la colonne se change aussi par des filtres dans l'inspecteur et par ← → au clavier ; tout geste (déplacer, créer, modifier, supprimer) passe par l'annulation de D-057 ; pas de couleur par colonne, une seule fiche en signal (bloquée) ; trois à cinq colonnes, sinon un tableau filtré.
+- **Limite** : pas de limite de travail en cours par colonne, pas de couloirs ; à ajouter si le besoin apparaît.
+
+## D-065 — Planches : accent de couleur sur Crêtes, quatrième planche Console
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Complète** : D-062
+- **Crêtes** : la rangée qui porte le sommet désigné est tracée en signal sur toute sa largeur ; avec le point et son étiquette, cela reste un seul fait désigné.
+- **Console** : une colonne de commandes s'écrit caractère par caractère (graine, onde, amortissement, tracé, mesure, effacement) et pilote une figure — une courbe harmonique amortie — qui se trace point par point, la plume en signal, puis s'efface ; une autre figure suit. Référence : l'étiquette technique.
+- **README** : un GIF par planche.
+
+## D-066 — Logo : cinq propositions discrètes
+
+- **Date** : 2026-11-12 · **Statut** : proposée, choix à faire · **Demandée par** : le commanditaire
+- **Première série écartée** par le commanditaire : lettrage dessiné à traits épais, signes démonstratifs — « trop agressif » pour un système minimaliste, technique, aéré.
+- **Seconde série** (`catalogue/logo.html`) : le nom composé dans le caractère du système, à la taille d'un titre courant ; signes au trait d'un pixel ; quatre pixels de signal au plus. A le mot et le point · B la référence, entre parenthèses · C le filet et « 13 / 1 » · D le cadre de repères d'angle · E un pour cent.
+- **Avis de Claude** : A pour le mot-symbole, E pour le signe réduit (favicon). B est la plus fidèle au système mais n'a pas de forme courte.

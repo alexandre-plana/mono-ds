@@ -7,6 +7,7 @@
      01  Crêtes   un relief qui dérive, rangée après rangée       (la pochette de disque)
      02  Atlas    des stations sur un graticule, balayées         (la carte du rapport)
      03  Arbre    un arbre de décision qui pousse et se retire    (l'arbre du rapport)
+     04  Console  des commandes s'écrivent, une figure se trace     (l'étiquette technique)
 
    Elles obéissent au système : aucune couleur écrite (les rôles du thème sont lus à chaque image),
    filets d'un pixel, pointillé pour les repères, tireté pour les relations, capitales espacées,
@@ -49,7 +50,7 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
         const k = k0 + i, base = top + (i - frac) * gap + amp * 0.3, pts = [];
         for (let q = 0; q <= steps; q++) { const u = q / steps, v = val(u, k); pts.push([mx + u * iw, Y(i, u, k)]); if (v > best.v && i > 4 && i < rows - 3) best = { v, u, k }; }
         ctx.beginPath(); ctx.moveTo(mx, base + 2); pts.forEach(([x, y]) => ctx.lineTo(x, y)); ctx.lineTo(mx + iw, base + 2); ctx.closePath(); ctx.fillStyle = C.bg; ctx.fill();
-        ctx.beginPath(); pts.forEach(([x, y], q) => (q ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.strokeStyle = i === rows ? C.max : C.mark; ctx.lineWidth = 1; ctx.stroke();
+        ctx.beginPath(); pts.forEach(([x, y], q) => (q ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); const crest = held && held.k === k; ctx.strokeStyle = crest ? C.signal : i === rows ? C.max : C.mark; ctx.lineWidth = crest ? 1.5 : 1; ctx.stroke();
         if (k % 6 === 0 && i > 0) text('R-' + String(k % 1000).padStart(3, '0'), mx - 14, base + 3, C.muted, 'right');
       }
       const ay = px(top + rows * gap + amp * 0.3 + 34);
@@ -126,8 +127,50 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
     };
   }
 
+  // ---- 04 · Console
+  function consoleScene(seed, seedText) {
+    let cycle = -1, S = null;
+    const build = (c) => {
+      const r = rng(seed + c * 104729), a = 2 + Math.floor(r() * 4), b = a + 1 + Math.floor(r() * 3), ph = r() * 3.14, d = 0.004 + r() * 0.01, turns = 14 + Math.floor(r() * 14), n = 2400, w = 0.15 + r() * 0.3, cc = 1 + Math.floor(r() * 6);
+      const pts = Array.from({ length: n }, (_, i) => { const th = (i / n) * turns * 6.2832, e = Math.exp(-d * th); return [(Math.sin(a * th + ph) * (1 - w) + Math.sin(cc * th) * w) * e, (Math.sin(b * th) * (1 - w) + Math.cos((cc + 1) * th + ph) * w) * e]; });
+      let len = 0; for (let i = 1; i < n; i++) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+      const cmds = [[`graine "${seedText}"`, `${(seed + c).toString(16).padStart(8, '0')}`], [`onde a=${a} b=${b} phase=${fr(ph, 2)}`, `rapport ${a}:${b}`], [`amortir ${fr(d, 4)}`, `${turns} tours`], [`tracer ${fr(n)} points`, null], ['mesurer', `longueur ${fr(len, 1)} · amorti ${fr((1 - Math.exp(-d * turns * 6.2832)) * 100)} %`], ['effacer', 'planche vide']];
+      let t = 1.2; const tl = cmds.map(([cmd, out], i) => { const type = cmd.length / 13, run = i === 3 ? 20 : i === 5 ? 3.5 : 0.6, o = { cmd, out, t0: t, t1: t + type, t2: t + type + run }; t = o.t2 + 1.1; return o; });
+      return { pts, tl, n, a, b, span: t + 1.5 };
+    };
+    let base = 0;
+    return (t) => {
+      if (!S || t - base > S.span) { cycle++; base = S ? base + S.span : t; S = build(cycle); }
+      const u = t - base, m = Math.max(56, W * 0.06), colW = Math.min(440, W * 0.34), top = H * 0.14, side = Math.min(W - colW - 3 * m, H * 0.7), cx = m + colW + m + (W - colW - 3 * m) / 2, cy = top + side / 2, R = side / 2;
+      // la colonne de commandes
+      let y = top + 4; const draw = S.tl[3], erase = S.tl[5];
+      const prog = u < draw.t1 ? 0 : Math.min(1, (u - draw.t1) / (draw.t2 - draw.t1)), gone = u < erase.t1 ? 0 : Math.min(1, (u - erase.t1) / (erase.t2 - erase.t1));
+      S.tl.forEach((o, i) => {
+        if (u < o.t0) return;
+        const typed = o.cmd.slice(0, Math.floor(((u - o.t0) / (o.t1 - o.t0)) * o.cmd.length + 0.001)), live = u < o.t1;
+        text('>', m, y, C.muted, 'left', false); text(typed, m + 16, y, live ? C.max : C.fg, 'left', false);
+        if (live) sq(m + 16 + ctx.measureText(typed).width + 6, y - 4, 7, C.max);
+        y += 18;
+        if (u >= o.t1) { const out = i === 3 ? `${fr(Math.floor(prog * S.n))} / ${fr(S.n)}` : u >= o.t2 || i !== 5 ? o.out : `${fr(Math.floor((1 - gone) * S.n))} points`; text('→ ' + out, m + 16, y, C.soft, 'left', false); y += 26; }
+      });
+      if (u > S.tl[5].t2 + 0.3) { text('>', m, y, C.muted, 'left', false); sq(m + 22, y - 4, 7, C.max); }
+      // la planche : un cadre coté, la figure qui se trace, la plume en signal
+      corners(cx, cy, R + 12, C.soft);
+      for (let i = -2; i <= 2; i++) { const g = px(cx + (i * R) / 2), h2 = px(cy + (i * R) / 2); seg(g, cy + R + 14, g, cy + R + 19, C.strong); seg(cx - R - 19, h2, cx - R - 14, h2, C.strong); if (i) { seg(g, cy - R, g, cy + R, C.faint, [1, 5]); seg(cx - R, h2, cx + R, h2, C.faint, [1, 5]); } }
+      text(`a=${S.a}`, cx - R, cy + R + 34, C.muted); text(`b=${S.b}`, cx + R, cy + R + 34, C.muted, 'right');
+      const i0 = Math.floor(gone * S.n), i1 = Math.floor(prog * S.n);
+      if (i1 - i0 > 1) {
+        ctx.strokeStyle = C.soft; ctx.lineWidth = 1; ctx.setLineDash([]); ctx.beginPath();
+        for (let i = i0; i < i1; i++) { const x = cx + S.pts[i][0] * R * 0.94, yy = cy + S.pts[i][1] * R * 0.94; i === i0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy); }
+        ctx.stroke();
+        if (prog < 1 || gone > 0) { const q = S.pts[gone > 0 ? i0 : i1 - 1], hx = cx + q[0] * R * 0.94, hy = cy + q[1] * R * 0.94; sq(hx, hy, 5, C.signal); text(`${fr(q[0], 2)} · ${fr(q[1], 2)}`, hx + 10, hy - 8, C.signal, 'left', false, true); }
+      }
+      return [`rapport ${S.a}:${S.b}`, `${fr(Math.max(0, i1 - i0))} points`, `figure ${String(cycle + 1).padStart(3, '0')}`];
+    };
+  }
+
   // ---- boucle
-  const SCENES = { cretes, atlas, arbre };
+  const SCENES = { cretes, atlas, arbre, console: consoleScene };
   let scene = 'cretes', seedText = '', frame = null, t0 = performance.now(), raf = 0, last = 0;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const size = () => { const d = Math.min(2, devicePixelRatio || 1); W = canvas.clientWidth; H = canvas.clientHeight; canvas.width = W * d; canvas.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0); };
@@ -140,7 +183,7 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
   const start = (name, seed) => {
     scene = SCENES[name] ? name : 'cretes'; const r = rng((Math.random() * 2 ** 32) >>> 0);
     seedText = seed || `${A[Math.floor(r() * A.length)]} ${B[Math.floor(r() * B.length)]}`;
-    frame = SCENES[scene](hash(scene + '·' + seedText)); t0 = performance.now(); last = 0;
+    frame = SCENES[scene](hash(scene + '·' + seedText), seedText); t0 = performance.now(); last = 0;
     cancelAnimationFrame(raf); size(); (document.fonts?.ready || Promise.resolve()).then(() => { raf = requestAnimationFrame(tick); });
     return seedText;
   };

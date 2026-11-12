@@ -19,6 +19,7 @@
     ['exemples/bureau.html', 'Bureau'],
     ['exemples/carte.html', 'Carte'],
     ['exemples/plan.html', 'Plan'],
+    ['exemples/kanban.html', 'Dossiers'],
     ['exemples/planches.html', 'Planches'],
   ];
   const here = location.pathname.replace(/\/$/, '/index.html');

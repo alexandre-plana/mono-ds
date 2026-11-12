@@ -42,6 +42,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-statusbar` | `__group` | Pied d'un volet : position, état d'enregistrement, raccourcis (`.c-kbd`) |
 | `.c-panel` | `--surface`, `--sunken`, `--dashed`, `--flush`, `__head`, `[data-theme]` | Seulement pour détacher du flux. Un bloc inversé par vue |
 | `.c-card` (+ `.c-cards`) | `__head`, `__title` (`--label`), `__body`, `__media`, `__foot` ; `--boxed`, `--surface`, `--dashed`, `--signal` ; `aria-current` / `aria-selected` | Collection d'objets de même nature. Un filet, pas une boîte ; jamais de fiche dans une fiche |
+| `.c-board` | `__col` (`.is-target`), `__head`, `__list`, `__drop`, `__add` ; `.c-card.is-dragging`, `.c-card--ghost`, `.c-card__title--small` | Tableau de cartes (kanban) : colonnes sans boîte, fiches glissées de l'une à l'autre, édition par l'inspecteur. Trois à cinq colonnes |
 | `.c-media` | `--raw`, `--raster`, `--threshold` ; `--square`, `--wide` ; `__caption` | Image. Dessin du système tel quel ; toute image brute est encrée (`--raw`), tramée si elle est grande ou sombre, seuillée en vignette |
 | `.c-cue` (+ `.c-cue-host`) | sur une `.c-icon` en fin d'élément interactif | Indice de survol : dit ce que fera le clic. Automatique (pointe de flèche) sur `tr[tabindex]` et `a.c-card` |
 | `.c-disclosure` (+ `.c-accordion`) | `<details>` ; `__body` | Contenu secondaire que peu de lecteurs ouvriront |

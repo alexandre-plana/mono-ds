@@ -302,6 +302,49 @@
             </dl>
           </div>
 
+          <div class="cat-sub" id="c-board" data-search="composant">
+            <h3>Tableau de cartes — .c-board</h3>
+            <p>Le kanban du système : des colonnes d'état, des fiches que l'on fait glisser de l'une à l'autre. Une colonne n'est pas une boîte : un filet, un nom, un compte entre crochets, puis ses fiches — qui sont des <code>.c-card</code> ordinaires. Ci-dessous, un glissé figé en cours de route : la fiche d'origine reste en tireté, le trait de 2 px marque le point de chute, la colonne visée prend le contour de sélection.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-board" style="max-width: 52rem">
+                <section class="c-board__col" aria-label="À faire">
+                  <header class="c-board__head"><span>À faire</span><span class="g-bracket">2</span></header>
+                  <ol class="c-board__list">
+                    <li><article class="c-card is-dragging" tabindex="0"><div class="c-card__head"><span>D-044</span><span>J. Reynaud</span></div><h4 class="c-card__title c-card__title--small">Ouverture d'Arles : effectif</h4><div class="c-card__foot"><span>Échéance</span><span>2 déc.</span></div></article></li>
+                    <li><article class="c-card" tabindex="0"><div class="c-card__head"><span>D-045</span><span>P. Vidal</span></div><h4 class="c-card__title c-card__title--small">Rapport du troisième trimestre</h4><div class="c-card__foot"><span>Échéance</span><span>30 nov.</span></div></article></li>
+                  </ol>
+                  <button class="c-button c-button--quiet c-board__add" type="button"><i class="c-icon i-plus" aria-hidden="true"></i>Ajouter</button>
+                </section>
+                <section class="c-board__col is-target" aria-label="En cours">
+                  <header class="c-board__head"><span>En cours</span><span class="g-bracket">2</span></header>
+                  <ol class="c-board__list">
+                    <li><article class="c-card c-card--signal" tabindex="0"><div class="c-card__head"><span>D-041</span><span>M. Delorme</span></div><h4 class="c-card__title c-card__title--small">Reprise des contrats de Vizille</h4><div class="c-card__foot"><span class="c-status c-status--critical">Bloqué</span><span>14 nov.</span></div></article></li>
+                    <li class="c-board__drop" aria-hidden="true"></li>
+                    <li><article class="c-card" tabindex="0"><div class="c-card__head"><span>D-038</span><span>A. Perrin</span></div><h4 class="c-card__title c-card__title--small">Audit des primes du Nord</h4><div class="c-card__foot"><span>Échéance</span><span>21 nov.</span></div></article></li>
+                  </ol>
+                  <button class="c-button c-button--quiet c-board__add" type="button"><i class="c-icon i-plus" aria-hidden="true"></i>Ajouter</button>
+                </section>
+                <section class="c-board__col" aria-label="Fait">
+                  <header class="c-board__head"><span>Fait</span><span class="g-bracket">1</span></header>
+                  <ol class="c-board__list">
+                    <li><article class="c-card" tabindex="0" aria-selected="true"><div class="c-card__head"><span>D-031</span><span>P. Vidal</span></div><h4 class="c-card__title c-card__title--small">Clôture de l'exercice 2025</h4><div class="c-card__foot"><span>Échéance</span><span>31 oct.</span></div></article></li>
+                  </ol>
+                  <button class="c-button c-button--quiet c-board__add" type="button"><i class="c-icon i-plus" aria-hidden="true"></i>Ajouter</button>
+                </section>
+              </div>
+            </div>
+            <p>L'écran complet, avec glissé-déposé, création et édition par l'inspecteur : <a href="exemples/kanban.html">exemple Dossiers</a>.</p>
+            <dl class="cat-spec">
+              <div><dt>Anatomie</dt><dd><code>.c-board</code> · <code>__col</code> (filet au-dessus) · <code>__head</code> (nom, compte entre crochets) · <code>__list</code> de <code>.c-card</code> (<code>__title--small</code>) · <code>__add</code> au pied de la colonne.</dd></div>
+              <div><dt>Employer</dt><dd>Des objets qui avancent par étapes, en nombre limité : dossiers, demandes, tâches. Trois à cinq colonnes.</dd></div>
+              <div><dt>Éviter</dt><dd>Plus de cinq colonnes ou de trente fiches visibles (un tableau filtré par état). Une couleur par colonne. Un fond de colonne. Des fiches à contenu variable : toutes ont la même anatomie.</dd></div>
+              <div><dt>Glisser</dt><dd>La fiche d'origine reste à sa place en tireté (<code>.is-dragging</code>) ; une copie suit le pointeur (<code>.c-card--ghost</code> : fond de la page, contour de sélection, aucune ombre) ; <code>.c-board__drop</code> marque le point de chute ; la colonne visée porte <code>.is-target</code>. Déposer s'annule (toast, touche Z).</dd></div>
+              <div><dt>Éditer</dt><dd>Dans l'inspecteur attaché à la page, jamais dans une modale ni dans la fiche. La colonne s'y change aussi, par des filtres : le glissé n'est jamais le seul moyen.</dd></div>
+              <div><dt>Signal</dt><dd>Une fiche bloquée porte <code>.c-card--signal</code> et le statut critique. C'est le seul rouge du tableau ; les colonnes n'ont pas de couleur.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Chaque fiche est focalisable. ↑ ↓ passent de l'une à l'autre, ← → la déplacent de colonne, Entrée l'inspecte. Sur téléphone, les colonnes s'empilent.</dd></div>
+            </dl>
+          </div>
+
           <div class="cat-sub" id="c-disclosure" data-search="composant">
             <h3>Dépliant et accordéon — .c-disclosure</h3>
             <p>Un <code>&lt;details&gt;</code> natif. Le filet supérieur porte la ligne, le signe + / − dit l'état. Plusieurs dépliants empilés dans <code>.c-accordion</code> forment un accordéon.</p>

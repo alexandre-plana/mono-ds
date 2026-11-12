@@ -8,10 +8,10 @@
   <script src="../assets/prefs.js"></script>
 </head>
 <!-- Planches animées.
-     Trois tableaux procéduraux, infinis, à regarder : Crêtes, Atlas, Arbre. Chacun naît d'une
+     Quatre tableaux procéduraux, infinis, à regarder : Crêtes, Atlas, Arbre, Console. Chacun naît d'une
      graine de deux mots ; la même graine redonne la même planche (elle est dans l'adresse).
      Le dessin est celui du système — voir assets/planches.js. La page garde son contour ;
-     « F » la passe en plein écran, « Espace » tire une autre graine, 1 2 3 changent de planche.
+     « F » la passe en plein écran, « Espace » tire une autre graine, 1 2 3 4 changent de planche.
      Avec « réduire les animations », chaque planche est une image fixe. -->
 <body class="l-desk l-desk--app">
 
@@ -34,6 +34,7 @@
             <button class="c-chip" type="button" data-scene="cretes" aria-pressed="true">01 Crêtes</button>
             <button class="c-chip" type="button" data-scene="atlas" aria-pressed="false">02 Atlas</button>
             <button class="c-chip" type="button" data-scene="arbre" aria-pressed="false">03 Arbre</button>
+            <button class="c-chip" type="button" data-scene="console" aria-pressed="false">04 Console</button>
           </span>
           <span class="c-statusbar__group" id="info" style="white-space: normal"></span>
           <span class="c-statusbar__group" style="margin-left: auto"><span class="c-kbd">Espace</span> autre graine</span>
@@ -47,7 +48,7 @@
   <script>
     'use strict';
     (() => {
-      const $ = (id) => document.getElementById(id), NAMES = { cretes: '01 — Crêtes', atlas: '02 — Atlas', arbre: '03 — Arbre' };
+      const $ = (id) => document.getElementById(id), NAMES = { cretes: '01 — Crêtes', atlas: '02 — Atlas', arbre: '03 — Arbre', console: '04 — Console' };
       const planches = MonoPlanches($('planche'), { onInfo: ({ info }) => { $('info').textContent = info.join(' · '); } });
       const go = (scene, seed) => {
         const s = planches.start(scene, seed); $('seed').textContent = s; $('title').textContent = 'Planche ' + NAMES[planches.scene];
@@ -60,7 +61,7 @@
       $('scenes').addEventListener('click', (e) => { const b = e.target.closest('[data-scene]'); if (b) go(b.dataset.scene); });
       document.addEventListener('keydown', (e) => {
         if (e.key === ' ') { e.preventDefault(); go(planches.scene); }
-        else if (e.key === '1') go('cretes'); else if (e.key === '2') go('atlas'); else if (e.key === '3') go('arbre');
+        else if (e.key === '1') go('cretes'); else if (e.key === '2') go('atlas'); else if (e.key === '3') go('arbre'); else if (e.key === '4') go('console');
         else if (e.key.toLowerCase() === 'f') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.(); }
       });
       $('planche').addEventListener('click', () => go(planches.scene));

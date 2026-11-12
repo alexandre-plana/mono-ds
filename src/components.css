@@ -400,7 +400,29 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 /* Sélection : le filet passe à 2 px, en gris moyen. Le fond ne change pas. */
 .c-card[aria-selected="true"], .c-card[aria-current], .c-card.is-selected { border-top: var(--stroke) solid var(--selected-line); padding-top: calc(var(--space-3) - 1px); }
 .c-card--boxed[aria-selected="true"], .c-card--boxed[aria-current], .c-card--boxed.is-selected { border: var(--stroke) solid var(--selected-line); padding: calc(var(--space-4) - 1px) calc(var(--space-5) - 1px) calc(var(--space-5) - 1px); }
+.c-card__title--small { font-size: var(--text-base); line-height: var(--leading-base); }
 .c-card--signal { border-top-color: var(--signal); }
+
+/* Tableau de cartes (kanban) : des colonnes d'état, des fiches que l'on fait glisser de l'une à l'autre.
+   Une colonne n'est pas une boîte : un filet, un nom, un compte entre crochets, puis ses fiches.
+     <div class="c-board"> <section class="c-board__col"> <header class="c-board__head"> <ol class="c-board__list"> <li><article class="c-card">
+   Pendant un glissé : la fiche d'origine reste à sa place en tireté (.is-dragging), une copie suit le
+   pointeur (.c-card--ghost), un trait de 2 px marque le point de chute (.c-board__drop), et la colonne
+   visée prend le contour de sélection (.is-target). Aucun fond, aucune ombre. */
+.c-board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(13rem, 1fr); column-gap: var(--gutter); align-items: start; min-width: 0; }
+.c-board__col { display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; padding-top: var(--space-3); border-top: var(--hairline) solid var(--fg-soft); }
+.c-board__col.is-target { border-top: var(--stroke) solid var(--selected-line); padding-top: calc(var(--space-3) - 1px); }
+.c-board__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-strong); }
+.c-board__list { display: flex; flex-direction: column; gap: var(--space-5); min-height: var(--space-7); margin: 0; padding: 0; list-style: none; }
+.c-board__list > li { min-width: 0; }
+.c-board__list .c-card { cursor: grab; touch-action: none; user-select: none; }
+.c-board__drop { height: 0; margin-block: calc(var(--space-5) / -2 - 1px); border-top: var(--stroke) solid var(--selected-line); }
+.c-board__add { align-self: flex-start; margin-left: calc(-1 * var(--space-2)); }
+.c-card.is-dragging { border-top-style: dashed; cursor: grabbing; }
+.c-card.is-dragging, .c-card.is-dragging * { color: var(--fg-muted); }
+.c-card.is-dragging::after { content: none; }
+.c-card--ghost { position: fixed; z-index: 70; margin: 0; pointer-events: none; padding: var(--space-3) var(--space-4) var(--space-4); background: var(--bg); border: var(--stroke) solid var(--selected-line); cursor: grabbing; }
+@media (max-width: 760px) { .c-board { grid-auto-flow: row; row-gap: var(--space-7); } }
 .c-card--signal .c-card__head > :first-child { color: var(--signal); font-weight: var(--weight-medium); }
 
 /* --- Menu déroulant : <details class="c-menu"> ------------------------------------ */
