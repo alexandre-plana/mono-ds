@@ -296,36 +296,30 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-tooltip { display: inline-block; padding: var(--space-2) var(--space-3); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-small); line-height: var(--leading-small); max-width: 32ch; }
 .c-toast { display: inline-flex; align-items: baseline; gap: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); border-left: var(--stroke) solid var(--fg-strong); color: var(--fg-strong); font-size: var(--text-small); }
 .c-toast--signal { border-left-color: var(--signal); }
-/* Modale : une petite page posée sur la page hachurée. Même fond et même contour que la page,
-   aucun bandeau, aucun filet intérieur. Un seul titre, en grand, comme un titre de rapport ;
-   le texte ; puis un pied : la référence ou la touche à gauche, les actions à droite, la
-   principale tout au bout — là où la lecture s'achève. Seul l'espace sépare.
-   Ancrée au tiers haut plutôt que centrée : le bord supérieur ne bouge pas quand le contenu
-   change de hauteur. */
-.c-dialog { --dialog-pad: var(--space-6); padding: 0; margin-top: 12vh; width: min(32rem, calc(100vw - 2rem)); max-height: min(76vh, 44rem); background: var(--bg); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
+/* Modale : une feuille posée sur la page hachurée. Plus haute que large (1 : √2, le format A),
+   même fond et même contour que la page, aucun bandeau, aucun filet intérieur. Un seul titre,
+   en haut, en grand ; le texte ; le vide ; puis __stake, ce qui est en jeu ; enfin le pied :
+   la référence ou la touche à gauche, les actions à droite, la principale tout au bout. */
+.c-dialog { --dialog-pad: var(--space-6); padding: 0; margin-top: 9vh; width: min(23rem, calc(100vw - 2rem)); min-height: min(32.5rem, 80vh); max-height: min(84vh, 48rem); background: var(--bg); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
 .c-dialog[open] { display: flex; flex-direction: column; }
 /* Fond d'une modale : la page dessous est hachurée. En dessin technique, une zone hachurée est
    une zone exclue — c'est exactement ce qu'elle est tant que la modale est ouverte. Les hachures
    n'apparaissent nulle part ailleurs. (repeating-linear-gradient ne sert qu'à tracer des traits
    nets d'un pixel : il n'y a aucun dégradé visible.) */
 .c-dialog::backdrop { background-color: color-mix(in srgb, var(--desk) 78%, transparent); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px); }
-.c-dialog--small { width: min(27rem, calc(100vw - 2rem)); }
-.c-dialog--large { width: min(48rem, calc(100vw - 2rem)); }
-/* Portrait : une feuille plus haute que large (1 : √2, le format A). Le titre en haut, en grand,
-   sur deux lignes s'il le faut ; le pied en bas ; entre les deux, le vide — ou ce qui est en jeu.
-     --portrait   la feuille : titre, texte, puis __stake poussé au bas du corps
-     --column     la colonne : toute la hauteur de l'écran, pour un formulaire qui se remplit de haut en bas */
-.c-dialog--portrait, .c-dialog--column { width: min(23rem, calc(100vw - 2rem)); }
-.c-dialog--portrait { min-height: min(32.5rem, 80vh); margin-top: 9vh; }
-.c-dialog--column { height: calc(100vh - 4 * var(--shell-inset)); height: calc(100dvh - 4 * var(--shell-inset)); max-height: none; margin-block: calc(2 * var(--shell-inset)); }
-.c-dialog--portrait .c-dialog__title, .c-dialog--column .c-dialog__title { font-size: var(--text-display); line-height: var(--leading-display); letter-spacing: -0.01em; }
-.c-dialog--portrait .c-dialog__body, .c-dialog--column .c-dialog__body { gap: var(--space-5); }
+/* Formats couchés : --small pour une confirmation d'une phrase, --large pour un contenu large
+   (tableau, « Aller à »). Le titre y revient au corps de titre. */
+.c-dialog--small { width: min(27rem, calc(100vw - 2rem)); min-height: 0; margin-top: 12vh; }
+.c-dialog--large { width: min(48rem, calc(100vw - 2rem)); min-height: 0; margin-top: 12vh; max-height: min(76vh, 44rem); }
+/* --column : la colonne, toute la hauteur de l'écran, pour un formulaire qui se remplit de haut en bas. */
+.c-dialog--column { height: calc(100vh - 4 * var(--shell-inset)); height: calc(100dvh - 4 * var(--shell-inset)); min-height: 0; max-height: none; margin-block: calc(2 * var(--shell-inset)); }
 /* Ce qui est en jeu : le chiffre, la fiche ou la phrase que l'on doit avoir lu avant d'agir.
    Poussé au bas du corps, juste au-dessus des actions. */
 .c-dialog__stake { margin-top: auto; padding-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
-.c-dialog__title { flex: none; margin: 0; padding: var(--dialog-pad) var(--dialog-pad) 0; font-size: var(--text-title); line-height: var(--leading-title); color: var(--fg-strong); font-weight: var(--weight-regular); text-wrap: balance; }
+.c-dialog__title { flex: none; margin: 0; padding: var(--dialog-pad) var(--dialog-pad) 0; font-size: var(--text-display); line-height: var(--leading-display); letter-spacing: -0.01em; color: var(--fg-strong); font-weight: var(--weight-regular); text-wrap: balance; }
+.c-dialog--small .c-dialog__title, .c-dialog--large .c-dialog__title { font-size: var(--text-title); line-height: var(--leading-title); letter-spacing: 0; }
 /* Le corps défile seul ; un filet n'apparaît qu'à la limite d'un contenu qui dépasse. */
-.c-dialog__body { --_w: calc(100% - 2 * var(--dialog-pad)); flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-5) var(--dialog-pad) var(--space-2); display: flex; flex-direction: column; gap: var(--space-4); color: var(--fg-soft);
+.c-dialog__body { --_w: calc(100% - 2 * var(--dialog-pad)); flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-5) var(--dialog-pad) var(--space-2); display: flex; flex-direction: column; gap: var(--space-5); color: var(--fg-soft);
   background:
     linear-gradient(var(--bg), var(--bg)) local 0 0 / 100% 1px no-repeat,
     linear-gradient(var(--bg), var(--bg)) local 0 100% / 100% 1px no-repeat,

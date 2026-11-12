@@ -69,7 +69,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-046 | La modale est une petite page, sans habillage | amendée par D-048 |
 | D-047 | Le filet de survol d'une ligne cliquable dépasse à droite | en vigueur |
 | D-048 | Modale éditoriale : un seul titre, actions à droite | en vigueur |
-| D-049 | Modales portrait : le chiffre, l'étiquette, la colonne | proposée, choix à faire |
+| D-049 | Modales portrait : le chiffre, l'étiquette, la colonne | adoptée, voir D-050 |
+| D-050 | La modale est portrait par défaut | en vigueur |
 
 ---
 
@@ -441,7 +442,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 
 ## D-049 — Modales portrait : le chiffre, l'étiquette, la colonne
 
-- **Date** : 2026-11-12 · **Statut** : proposée, choix à faire · **Demandée par** : le commanditaire (« plus hautes que larges, sois créatif »)
+- **Date** : 2026-11-12 · **Statut** : adoptée, voir D-050 · **Demandée par** : le commanditaire (« plus hautes que larges, sois créatif »)
 - **Proposition** (de Claude) : une feuille au format A (1 : √2, 23 rem de large). Titre en haut en corps d'écran (32 px), sur deux lignes s'il le faut ; pied en bas ; le vide au milieu fait partie de la composition. Un bloc `__stake`, poussé au bas du corps, porte ce qui est en jeu : c'est la dernière chose lue avant le bouton. Trois compositions :
   - **le chiffre** — `--portrait` + un `.c-stat--hero` : ce que l'action engage, en un nombre ;
   - **l'étiquette** — `--portrait` + un `.c-kv` à filets conducteurs : la fiche de l'objet, comme une étiquette technique ;
@@ -449,3 +450,10 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Raison** : les références sont des pages et des étiquettes, pas des boîtes de dialogue ; le format portrait est le leur. Il laisse aussi la page hachurée visible des deux côtés.
 - **À trancher** : le portrait devient-il le format par défaut de toute modale, ou reste-t-il une variante à côté du format paysage de D-048 ? La colonne ressemble-t-elle trop au tiroir écarté en D-020 ? Elle est centrée et modale, mais occupe la même hauteur.
 - **Limite** : le format ne convient pas à un contenu large (tableau, « Aller à ») : `--large` reste.
+
+## D-050 — La modale est portrait par défaut
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Validée par** : le commanditaire (« ok pour la modale ») · **Suite de** : D-049
+- **Décision** : les trois compositions de D-049 sont adoptées et la feuille portrait devient le format de `.c-dialog` sans modificateur : 23 rem de large, 1 : √2, titre en 32 px. `--column` garde la pleine hauteur. Les formats couchés restent en modificateurs : `--small` pour une confirmation d'une phrase, `--large` pour un contenu large (« Aller à », tableau). La classe `--portrait` de D-049 n'a plus lieu d'être.
+- **Choix de Claude** sur les deux points laissés ouverts : portrait par défaut ; la colonne est gardée, pour quatre à huit champs — au-delà, une page.
+- **Remplace dans D-048** : les largeurs (32 rem / 27 rem) et le corps du titre (24 px), qui ne valent plus que pour les formats couchés.

@@ -4,7 +4,7 @@ Design system monochrome, sobre et technique, pour les interfaces de données,
 les outils et les rapports. Treize gris, une seule couleur, des règles de
 composition — et un catalogue pour les réemployer.
 
-![Une collection et son inspecteur, thème encre](docs/captures/collection.png)
+![Tableau de bord : une encre, des filets, et un seul fait en couleur](docs/captures/tableau-de-bord.png)
 
 > MONO traite l'écran comme une page imprimée : une encre, un papier, des filets,
 > beaucoup de vide — et une seule couleur, gardée pour ce qui ne doit pas être manqué.
@@ -40,12 +40,13 @@ d'arbitrage sont dans [`docs/philosophie.md`](docs/philosophie.md).
 9. **Lisible avant d'être beau.** 11 px au moins, contrastes WCAG contrôlés par
    script. Quand le style et la lisibilité s'opposent, la lisibilité gagne.
 
+## En images
+
 ### Une couleur, et rarement
 
-Sur un écran entier, le signal ne désigne qu'un fait : ici, la branche en repli.
-Tout le reste se distingue par le ton, la graisse et le trait.
-
-![Tableau de bord : une seule barre et un seul chiffre en signal](docs/captures/tableau-de-bord.png)
+Sur l'écran ci-dessus, le signal ne désigne qu'un fait : la branche en repli.
+Tout le reste se distingue par le ton, la graisse et le trait. Un écran sans
+aucune couleur est l'état normal du système.
 
 ### Encre et papier
 
@@ -54,36 +55,56 @@ porte la masse sombre sur le papier.
 
 ![Rapport, thème papier](docs/captures/rapport-papier.png)
 
-### La page, ses onglets, son inspecteur
+### Le survol annonce, la modale hachure
 
-Toute page a un contour et repose sur un plan de travail uni. L'écran ne défile
-jamais : c'est le contenu de la page qui défile. La navigation s'écrit en mots.
-Le détail d'un élément va dans l'inspecteur, séparé par l'espace seul, jamais
-dans une modale. La ligne sélectionnée ne change que de contour.
+Un tableau n'a aucun filet : il en vient un sous la ligne survolée, terminé en
+flèche si le clic mène quelque part. « Aller à » se tape au clavier. Sous une
+modale, la page se hachure — en dessin technique, une zone hachurée est une
+zone exclue. Les deux thèmes s'échangent sans rien déplacer.
 
-![Application à onglets, inspecteur attaché](docs/captures/application-onglets.png)
+![Survol d'un tableau, « Aller à », modale, changement de thème](docs/captures/interactions.gif)
 
-### La modale : une petite page sur une page hachurée
+### La modale est une feuille
 
-Les hachures n'apparaissent qu'ici. En dessin technique, une zone hachurée est
-une zone exclue : c'est l'état de la page tant que la modale est ouverte. La
-modale elle-même n'a ni bandeau, ni croix, ni filet intérieur.
+Plus haute que large, au format d'une page. Un seul titre, le texte, le vide,
+puis ce qui est en jeu juste au-dessus des actions : un chiffre, ou la fiche de
+l'objet comme sur une étiquette technique.
 
-![Confirmation sur la page hachurée](docs/captures/modale.png)
+| | |
+|---|---|
+| ![Modale avec chiffre, thème encre](docs/captures/modale.png) | ![Modale en étiquette, thème papier](docs/captures/modale-etiquette.png) |
 
 ### Les images sont encrées
 
 Un dessin au trait du système entre tel quel. Une photo est ramenée au gris et
-fondue dans le ton de la page ; tramée si elle pèse encore. Au survol, le filet
-d'une fiche cliquable se termine en flèche : le survol annonce le clic.
+fondue dans le ton de la page ; tramée si elle pèse encore.
 
 ![Fiches avec dessin, image encrée et image tramée, thème papier](docs/captures/images.png)
 
-### Connexion, bureau
+### Une page d'entrée
 
-| | |
-|---|---|
-| ![Écran de connexion](docs/captures/connexion.png) | ![Bureau à fenêtres flottantes](docs/captures/bureau.png) |
+![Écran de connexion](docs/captures/connexion.png)
+
+## Pour les applications
+
+Le système fournit aussi de quoi bâtir un outil complet. Toute page a un
+contour et repose sur un plan de travail uni ; l'écran ne défile jamais, c'est
+le contenu de la page qui défile.
+
+- **Onglets persistants et inspecteur.** La navigation s'écrit en mots. Le
+  détail d'un élément s'ouvre dans la page, séparé par l'espace seul, jamais
+  dans une modale. La ligne sélectionnée ne change que de contour.
+
+  ![Application à onglets, inspecteur attaché](docs/captures/application-onglets.png)
+
+- **Collection et inspecteur épinglé.** Deux pages côte à côte sur le plan de
+  travail, valeurs modifiables en place.
+
+  ![Une collection et son inspecteur](docs/captures/collection.png)
+
+- **Bureau.** Fenêtres flottantes, aimantées, et barre des fenêtres.
+
+  ![Bureau à fenêtres flottantes](docs/captures/bureau.png)
 
 ## En bref
 
