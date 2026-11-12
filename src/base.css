@@ -151,7 +151,7 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .l-pane__head { padding: var(--space-4) var(--pane-pad) 0; display: flex; flex-direction: column; gap: var(--space-5); }
 /* Deux volets voisins ont des en-têtes de même hauteur : leurs filets tombent sur la même ligne. */
 .l-pane__head > .c-masthead { align-items: center; min-height: 3rem; padding-bottom: var(--space-3); border-bottom: 0; }
-@media (max-width: 640px) { .l-pane__head > .c-masthead { align-items: flex-start; } }
+@media (max-width: 640px) { .l-pane__head > .c-masthead { align-items: flex-start; flex-wrap: wrap; row-gap: var(--space-2); } }
 .l-pane__bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3) var(--space-4); min-height: var(--control-height); }
 /* Le corps défile seul. Un filet n'apparaît en haut que lorsque du contenu est passé sous
    l'en-tête, en bas que lorsqu'il en reste sous la barre d'état : c'est une limite de

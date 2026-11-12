@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carte — exemple MONO</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+</head>
+<!-- Carte.
+     Un plan géographique dans le dessin du système. Le fond est réel : Natural Earth, domaine
+     public, monde entier au 1:50 000 000, embarqué (aucune tuile, aucun service en ligne).
+     On peut cadrer n'importe quelle partie du monde ; les cadrages nommés sont des raccourcis.
+     Terres un ton au-dessus du fond, côtes pleines, frontières tiretées, graticule pointillé
+     coté en degrés, barre d'échelle. Les agences sont posées à leurs coordonnées réelles ;
+     leurs chiffres sont fictifs. Une seule porte le signal.
+     Aucune classe hors de src/ ; le script en bas de page n'est qu'une démonstration. -->
+<body class="l-desk l-desk--app">
+
+  <div class="l-shell">
+    <div class="l-pane">
+      <div class="l-pane__head">
+        <header class="c-masthead">
+          <div class="c-masthead__title">Réseau — Carte</div>
+          <div class="c-masthead__meta"><span>Exercice 2026</span><span>T3</span><a href="../index.html">Catalogue</a></div>
+        </header>
+        <div class="l-pane__bar">
+          <div class="l-cluster" role="group" aria-label="Cadrage" id="views">
+            <button class="c-chip" type="button" data-view="reseau" aria-pressed="true">Réseau</button>
+            <button class="c-chip" type="button" data-view="isere" aria-pressed="false">Isère</button>
+            <button class="c-chip" type="button" data-view="france" aria-pressed="false">France</button>
+            <button class="c-chip" type="button" data-view="europe" aria-pressed="false">Europe</button>
+            <button class="c-chip" type="button" data-view="monde" aria-pressed="false">Monde</button>
+          </div>
+          <div class="l-cluster" style="--gap: var(--space-2)">
+            <button class="c-button" type="button" id="zoom-out" aria-label="Réduire l'échelle"><i class="c-icon i-minus" aria-hidden="true"></i></button>
+            <button class="c-button" type="button" id="zoom-in" aria-label="Agrandir l'échelle"><i class="c-icon i-plus" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <main class="l-pane__body" style="padding-block: var(--space-4); overflow: hidden; background: none">
+        <div id="map" style="position: relative; flex: 1; min-height: 0" data-label="Carte du réseau : douze agences entre Limoges et Avignon. Grenoble Centre est la plus importante ; Vizille, en fermeture, porte le signal."></div>
+      </main>
+
+      <div class="l-pane__foot">
+        <div class="c-statusbar">
+          <span class="c-statusbar__group g-bracket" id="coords">—</span>
+          <span class="c-statusbar__group" id="frame"></span>
+          <span class="c-statusbar__group" style="margin-left: auto">12 agences</span>
+          <span class="c-statusbar__group"><span class="c-status c-status--critical">1 en fermeture</span></span>
+          <span class="c-statusbar__group">Fond : Natural Earth</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/vendor/world-50m.js"></script>
+  <script src="../assets/geo.js"></script>
+  <script>
+    'use strict';
+    (() => {
+      const VIEWS = { reseau: { lon: 3.7, lat: 45.0, span: 4.4 }, isere: { lon: 5.75, lat: 45.3, span: 1 }, france: { lon: 2.6, lat: 46.4, span: 11 }, europe: { lon: 11, lat: 51, span: 36 }, monde: { lon: 12, lat: 22, span: 150 } };
+      const NOMS = { France: 'France', Spain: 'Espagne', Italy: 'Italie', Switzerland: 'Suisse', Germany: 'Allemagne', Belgium: 'Belgique', 'United Kingdom': 'Royaume-Uni', Portugal: 'Portugal', Austria: 'Autriche', Netherlands: 'Pays-Bas', Poland: 'Pologne', Ireland: 'Irlande', Norway: 'Norvège', Sweden: 'Suède', Finland: 'Finlande', Russia: 'Russie', Algeria: 'Algérie', Morocco: 'Maroc', Libya: 'Libye', Egypt: 'Égypte', Turkey: 'Turquie', Ukraine: 'Ukraine', China: 'Chine', India: 'Inde', Brazil: 'Brésil', 'United States of America': 'États-Unis', Canada: 'Canada', Australia: 'Australie', Greece: 'Grèce', Romania: 'Roumanie', Mali: 'Mali', Niger: 'Niger', Chad: 'Tchad', Sudan: 'Soudan', 'Saudi Arabia': 'Arabie saoudite', Iran: 'Iran', Kazakhstan: 'Kazakhstan', Mongolia: 'Mongolie', Argentina: 'Argentine', Mexico: 'Mexique', Tunisia: 'Tunisie', Czechia: 'Tchéquie', Hungary: 'Hongrie', Denmark: 'Danemark', Belarus: 'Biélorussie', Slovenia: 'Slovénie', Croatia: 'Croatie', Iceland: 'Islande', Serbia: 'Serbie', Bulgaria: 'Bulgarie', Slovakia: 'Slovaquie', Lithuania: 'Lituanie', Latvia: 'Lettonie', Estonia: 'Estonie', Syria: 'Syrie', Iraq: 'Irak', Uzbekistan: 'Ouzbékistan', Turkmenistan: 'Turkménistan', Greenland: 'Groenland', Japan: 'Japon', Indonesia: 'Indonésie', 'South Africa': 'Afrique du Sud', Ethiopia: 'Éthiopie', Nigeria: 'Nigéria', Angola: 'Angola', Peru: 'Pérou', Colombia: 'Colombie', Bolivia: 'Bolivie', Mauritania: 'Mauritanie', 'Dem. Rep. Congo': 'RD Congo', Pakistan: 'Pakistan', Afghanistan: 'Afghanistan', Antarctica: 'Antarctique' };
+      // Coordonnées réelles des villes ; primes fictives, en millions.
+      const AGENCES = [['Grenoble Centre', 5.72, 45.19, 12.4], ['Chambéry', 5.92, 45.57, 7.9], ['Voiron', 5.59, 45.36, 4.1], ['Vizille', 5.77, 45.08, 0.9, 'en fermeture'], ['Clermont Jaude', 3.08, 45.78, 9.8], ['Avignon', 4.81, 43.95, 8.7], ['Arles', 4.63, 43.68, 1.8], ['Brive', 1.53, 45.16, 2.2], ['Limoges', 1.26, 45.83, 5.4], ['Montluçon', 2.6, 46.34, 3.3], ['Nîmes Arènes', 4.36, 43.84, 6.2], ['Vichy', 3.43, 46.13, 2.6]]
+        .map(([name, lon, lat, value, note]) => ({ name, lon, lat, value, note, signal: !!note }));
+      const deg = (v, pos, neg) => `${Math.abs(v).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}° ${v >= 0 ? pos : neg}`;
+      const map = MonoGeo(document.getElementById('map'), { world: MonoWorld, view: VIEWS.reseau, points: AGENCES, names: NOMS, unit: 'M',
+        onMove: (lon, lat) => { document.getElementById('coords').textContent = `${deg(lat, 'N', 'S')} · ${deg(lon, 'E', 'O')}`; },
+        onView: (v) => { document.getElementById('frame').textContent = `Cadre ${Math.round(v.span * 111)} km de haut`; } });
+      const press = (id) => document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === id)));
+      document.getElementById('views').addEventListener('click', (e) => { const b = e.target.closest('[data-view]'); if (!b) return; map.set(VIEWS[b.dataset.view]); press(b.dataset.view); });
+      document.getElementById('zoom-in').addEventListener('click', () => { map.zoom(0.7); press(null); });
+      document.getElementById('zoom-out').addEventListener('click', () => { map.zoom(1.4); press(null); });
+      document.getElementById('map').addEventListener('pointerdown', () => press(null));
+      document.getElementById('map').addEventListener('wheel', () => press(null), { passive: true });
+      document.addEventListener('keydown', (e) => { if (e.key === '+' || e.key === '=') map.zoom(0.7); else if (e.key === '-') map.zoom(1.4); else return; press(null); });
+    })();
+  </script>
+</body>
+</html>

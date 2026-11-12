@@ -25,6 +25,7 @@ const EXAMPLES = [
   ['exemples/application-modules.html', 'Application — gabarit à onglets', 'Shell d\'application non linéaire à copier : onglets persistants au-dessus de la page, menu de débordement, fil d\'Ariane en tête, plan de travail comme carte, deux pages côte à côte, Aller à.'],
   ['exemples/connexion.html', 'Connexion', 'Écran de connexion : formulaire ferré à gauche, erreurs de saisie, refus, indicateur pendant la vérification, état du service.'],
   ['exemples/bureau.html', 'Bureau', 'Version bureau : fenêtres flottantes déplaçables, redimensionnables et aimantées (interact.js), barre des fenêtres, canevas, menu contextuel à sous-menu.'],
+  ['exemples/carte.html', 'Carte', 'Plan géographique dans le dessin du système : fond réel Natural Earth embarqué, monde entier, cadrages nommés, déplacement et échelle, graticule coté, barre d\'échelle, anneaux proportionnels.'],
   ['exemples/rapport.html', 'Rapport', 'Page éditoriale en thème papier : titre, prose, clé-valeur, tableau, courbes, et une figure cartographique dans un bloc inversé encre.'],
 ];
 

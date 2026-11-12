@@ -80,6 +80,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-057 | Annuler plutôt que confirmer | en vigueur |
 | D-058 | Notifications : un journal, trois échelles | en vigueur |
 | D-059 | Touche Z, saisie et archives : précisions | en vigueur |
+| D-060 | Carte géographique : fond réel embarqué, pas de tuiles | en vigueur |
 
 ---
 
@@ -551,3 +552,12 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **En cours de saisie** : dans un champ, Z écrit un z et Ctrl+Z reste l'annulation de frappe du navigateur. Tous les raccourcis d'une lettre (G, N, C, Z, /) sont inactifs tant que le focus est dans un champ.
 - **Archives** : archiver range sans détruire. L'événement quitte le centre et la liste courante, ne compte plus comme non lu, et se retrouve sous le filtre « Archivés » du journal ; on peut l'y désarchiver ou le supprimer, et son annulation y fonctionne toujours. Archiver s'annule depuis son toast.
 - **Correction** : la touche était dans le bouton d'action et son cadre chevauchait le soulignement ; elle en sort et le suit.
+
+## D-060 — Carte géographique : fond réel embarqué, pas de tuiles
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« si c'est trop lourd, ne le fais pas »)
+- **Décision** : un écran de carte (`exemples/carte.html`) dont le fond est Natural Earth au 1:50 000 000, monde entier, embarqué dans `assets/vendor/world-50m.js` (760 Ko, domaine public, redistribué par world-atlas sous licence ISC). Le tracé (`assets/geo.js`) est du SVG sans bibliothèque : décodage du TopoJSON, projection équirectangulaire corrigée à la latitude du cadre, déplacement, échelle, cadrages nommés.
+- **Dessin** : terres un ton au-dessus du fond ; côte pleine (limite physique), frontière tiretée (relation) — la distinction se déduit des données : un arc partagé par deux pays est une frontière ; graticule pointillé coté ; barre d'échelle ; anneaux proportionnels, un seul en signal.
+- **Écarté** : des tuiles vectorielles avec MapLibre. C'est la seule voie pour un plan de ville (rues, bâtiments), et une feuille de style MONO y est faisable, mais elle impose une bibliothèque de 800 Ko, un service de tuiles en ligne, et n'a pas pu être essayée ici. À rouvrir si le besoin est le plan de ville.
+- **Limites** : détail d'atlas (un département n'a presque aucun trait) ; pas de villes ni de relief dans le fond ; projection simple, déformée aux très petites échelles ; noms de pays en anglais hors de la table de traduction de l'exemple.
+- **Données de l'exemple** : coordonnées réelles des villes, chiffres fictifs.

@@ -17,6 +17,7 @@
     ['exemples/application-modules.html', 'Application · onglets'],
     ['exemples/connexion.html', 'Connexion'],
     ['exemples/bureau.html', 'Bureau'],
+    ['exemples/carte.html', 'Carte'],
   ];
   const here = location.pathname.replace(/\/$/, '/index.html');
   const isCurrent = (href) => here.endsWith('/catalogue/' + href) || here.endsWith('/' + href);

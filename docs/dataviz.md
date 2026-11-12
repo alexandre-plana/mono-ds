@@ -81,3 +81,20 @@ Trois idées tiennent ces graphiques ensemble :
   graduations (`.v-tick--mark`) pour chaque valeur.
 - **Le vide reste vide.** Une matrice ne se couvre pas d'aplats : zéro est un
   point. Une carte proportionnelle est en ton bas.
+
+## Carte géographique
+
+`catalogue/exemples/carte.html`, tracée par `catalogue/assets/geo.js`.
+
+- **Fond réel, embarqué.** Natural Earth (domaine public), 1:50 000 000, monde
+  entier : `assets/vendor/world-50m.js`, 760 Ko. Aucune tuile, aucun service.
+  On cadre n'importe quelle partie du monde ; le détail est celui d'un atlas.
+- **Dessin.** Terres un ton au-dessus du fond (`.v-land`) ; côte en filet plein
+  (`.v-coast`), parce que c'est une limite physique ; frontière en tireté
+  (`.v-border`), parce que c'est une relation ; graticule pointillé coté en degrés ;
+  barre d'échelle en kilomètres ; noms de pays en capitales espacées, ton éteint.
+- **Données.** Anneaux proportionnels, un seul en signal, toujours nommé. Un nom
+  qui toucherait un anneau ou un autre nom se tait ; l'infobulle le rend. Les
+  anneaux rétrécissent aux petites échelles.
+- **Limite.** Ni rues, ni relief, ni villes : pour un plan de ville, il faut des
+  tuiles vectorielles (MapLibre et une feuille de style MONO) et un service en ligne.

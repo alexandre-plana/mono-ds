@@ -69,6 +69,14 @@
 .v-callout { fill: none; stroke: var(--fg-soft); stroke-width: 1; }
 .v-spark { display: inline-block; vertical-align: middle; overflow: visible; }
 
+/* Carte : terres un ton au-dessus du fond ; côte pleine (limite physique), frontière tiretée (relation). */
+.v-geo { cursor: grab; touch-action: none; user-select: none; overflow: hidden; }
+.v-geo.is-dragging { cursor: grabbing; }
+.v-land { fill: var(--surface); }
+.v-coast { fill: none; stroke: var(--fg-soft); stroke-width: 1; stroke-linejoin: round; }
+.v-border { fill: none; stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 4 3; stroke-linejoin: round; }
+.v-geo__country { fill: var(--fg-muted); letter-spacing: .2em; pointer-events: none; }
+
 /* Infobulle de graphique */
 .v-tip { position: absolute; z-index: 5; pointer-events: none; padding: var(--space-2) var(--space-3); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-small); line-height: var(--leading-small); white-space: nowrap; transform: translate(-50%, calc(-100% - 10px)); opacity: 0; transition: opacity var(--duration); }
 .v-tip.is-visible { opacity: 1; }

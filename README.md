@@ -89,6 +89,14 @@ annotent : repères d'angle, ligne de rappel, crochets.
 
 ![Strates : trois séries, trois traits, thème papier](docs/captures/strates.png)
 
+### La carte
+
+Un fond réel — Natural Earth, monde entier, embarqué — dans le dessin du système :
+côtes pleines, frontières tiretées, graticule coté, barre d'échelle. On cadre
+n'importe quelle partie du monde.
+
+![Carte du réseau : anneaux proportionnels sur fond Natural Earth](docs/captures/carte.png)
+
 ### Les images
 
 Des photos sans rapport entre elles — studio, nuit, relevé scientifique —
@@ -105,7 +113,7 @@ seul, jamais dans une modale.
 
 ![Application à onglets, inspecteur attaché](docs/captures/application-onglets.png)
 
-Sept écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
+Huit écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
 
 ## En bref
 
@@ -158,11 +166,12 @@ docs/               les règles
   composants.md     index des composants et de leurs variantes
   dataviz.md        règles et classes de visualisation
 catalogue/          le catalogue navigable (démonstrations + code)
-  exemples/         sept écrans : tableau de bord, rapport, collection + inspecteur,
+  exemples/         huit écrans : carte, tableau de bord, rapport, collection + inspecteur,
                     connexion, bureau à fenêtres, et deux gabarits de shell à
                     copier : application.html (arborescente) et
                     application-modules.html (modules séparés)
-  assets/vendor/    interact.js (MIT), pour la seule version bureau
+  assets/vendor/    interact.js (MIT), pour la seule version bureau ;
+                    world-50m.js (Natural Earth, domaine public), pour la carte
 scripts/
   contrast.mjs      contrôle des contrastes des tokens
   build-search-index.mjs  index de la recherche du catalogue
