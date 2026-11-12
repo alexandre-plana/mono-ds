@@ -93,6 +93,10 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
    travail, les pages commencent toutes sur la même ligne en dessous. */
 .l-desk--tabs { grid-template-rows: auto minmax(0, 1fr); row-gap: 0; }
 .l-desk--tabs > .c-doctabs, .l-desk--tabs > .c-plan { grid-column: 1 / -1; }
+/* Avec une page à côté, les onglets ne coiffent que la page qu'ils gouvernent. Au-dessus de
+   la page d'à côté il n'y a que le plan de travail : elle ne dépend d'aucun onglet. */
+.l-desk--tabs.l-desk--split > .c-doctabs { grid-column: 1; }
+.l-desk--tabs > .l-shell, .l-desk--tabs > .c-plan { grid-row: 2; }
 .l-desk--tabs > .c-plan { padding-top: var(--shell-inset); }
 
 /* Séparateur : la bande hachurée elle-même se saisit pour redimensionner l'inspecteur.

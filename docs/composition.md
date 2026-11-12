@@ -78,6 +78,11 @@ le plan : un fond hachuré, visible sur une bande de 24 px autour de la page.
 - **K4 — Légères.** Traits d'un pixel à 135°, tous les 7 px, à peine plus clairs
   que le plan en encre, à peine plus sombres en papier.
 
+- **K7 — Hors de la page, hors des onglets.** Ce qui est dessiné hors d'une page
+  ne dépend pas d'elle. Une page posée à côté d'une page à onglets reste telle
+  quelle quand on change d'onglet ; on la remplace ou on la ferme soi-même. Les
+  onglets ne coiffent que la page qu'ils gouvernent. Un détail qui doit suivre
+  l'onglet se place dans la page, séparé par un filet, pas à côté.
 - **K5 — Les pages se répondent.** Deux pages voisines ont des en-têtes et des
   barres d'état de même hauteur : leurs filets tombent sur les mêmes lignes.
 - **K6 — À gauche la collection, à droite le détail.** L'inspecteur est permanent

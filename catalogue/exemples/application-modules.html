@@ -21,8 +21,12 @@
                      À droite, « Aller à » et le menu de l'utilisateur.
        en bas        la barre d'état.
 
+     À CÔTÉ : une seconde page, hors des onglets. On y inspecte une ligne (un clic dans un
+     tableau) ou l'on y pose une autre page (depuis le plan). Elle ne dépend d'aucun onglet :
+     changer d'onglet ne la change pas. Les onglets ne coiffent que la page de gauche.
+
      « Plan » (touche G, ou un clic sur les hachures) montre toutes les pages de
-     l'application ; une page s'y ouvre en onglet ou se pose À CÔTÉ de la page courante.
+     l'application ; une page s'y ouvre en onglet ou se pose à côté.
 
      Si l'application est un arbre dans lequel on descend, partir plutôt de application.html.
      Les panneaux des onglets sont créés par ../assets/tabs-demo.js : c'est là que se
@@ -70,23 +74,22 @@
     </div>
   </div>
 
-  <!-- Page posée à côté : une seconde page, lue pendant qu'on travaille sur la première. -->
-  <aside class="l-shell" id="beside" aria-label="Page posée à côté" hidden>
+  <!-- À côté : une seconde page, HORS des onglets. Elle montre ce que l'on a inspecté ou posé
+       là, et ne change pas quand on change d'onglet : on la remplace ou on la ferme soi-même. -->
+  <aside class="l-shell" id="side" aria-label="À côté" hidden>
     <div class="l-pane">
       <div class="l-pane__head">
         <header class="c-masthead">
-          <nav class="c-breadcrumb c-breadcrumb--head" aria-label="Page d'à côté" style="flex-wrap: nowrap"><span aria-current="page" id="beside-title"></span></nav>
+          <div class="c-masthead__title">À côté</div>
           <div class="l-cluster" style="--gap: var(--space-1); flex-wrap: nowrap">
-            <button class="c-button c-button--quiet" type="button" id="beside-swap">Ouvrir en grand</button>
-            <button class="c-button c-button--quiet" type="button" id="beside-close" aria-label="Retirer la page d'à côté"><i class="c-icon i-close" aria-hidden="true"></i></button>
+            <button class="c-button c-button--quiet" type="button" id="side-open">Ouvrir en onglet</button>
+            <button class="c-button c-button--quiet" type="button" id="side-close" aria-label="Fermer la page d'à côté"><i class="c-icon i-close" aria-hidden="true"></i></button>
           </div>
         </header>
       </div>
-      <div class="l-pane__body">
-        <h2 class="t-title"><span id="beside-hero"></span> <span class="t-soft t-body" id="beside-label"></span></h2>
-        <p class="t-soft" id="beside-desc" style="max-width: 46ch"></p>
-      </div>
-      <div class="l-pane__foot"><div class="c-statusbar"><span class="c-statusbar__group" id="beside-family"></span><span class="c-statusbar__group">À côté · lecture</span></div></div>
+      <div class="l-pane__body" id="side-body" aria-live="polite"></div>
+      <span class="u-hidden" id="side-title"></span>
+      <div class="l-pane__foot"><div class="c-statusbar"><span class="c-statusbar__group">Vient de <a href="#" id="side-origin"></a></span><span class="c-statusbar__group">Indépendant des onglets</span></div></div>
     </div>
   </aside>
 

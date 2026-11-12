@@ -72,7 +72,8 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   navigation (`.c-pathnav`). À parties séparées (on saute de l'une à l'autre) :
   `application-modules.html`, des onglets persistants (`.c-doctabs`) au-dessus de
   la page et le fil d'Ariane en tête. Jamais les deux. Un onglet doit garder l'état
-  de sa page ; au débordement, menu « … ». Dans les deux cas : pas de rail ; le
+  de sa page ; au débordement, menu « … ». Ce qui est posé à côté de la page est
+  hors des onglets : cela ne change pas quand on change d'onglet. Dans les deux cas : pas de rail ; le
   plan (`.c-plan`), la pose à côté et « Aller à » (`.c-palette`) servent aux
   déplacements hors de l'ordre ; console et aide sont des fenêtres. La navigation
   s'écrit en mots : ni numéros seuls, ni icônes seules, ni texte vertical.

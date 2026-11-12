@@ -56,6 +56,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-033 | Le plan de travail comme carte, et les pages côte à côte | en vigueur |
 | D-034 | Des onglets assumés, persistants, avec fil d'Ariane | en vigueur |
 | D-035 | Tenir ce journal | en vigueur |
+| D-036 | Ce qui est hors de la page ne dépend pas de l'onglet | en vigueur |
 
 ---
 
@@ -282,3 +283,12 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Décision** : toute décision de conception s'inscrit dans ce fichier, dans le même commit que le changement. Les entrées ne se réécrivent pas.
 - **Raison** : éviter de rouvrir sans le savoir une question déjà tranchée.
 - **Conséquences** : consigne ajoutée à `CLAUDE.md`. Les entrées D-001 à D-034 ont été reconstituées après coup, à partir de l'historique du projet.
+
+## D-036 — Ce qui est hors de la page ne dépend pas de l'onglet
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (problème relevé), solution proposée
+- **Contexte** : avec des onglets au-dessus de la page, l'inspecteur est dessiné à côté, hors de la page. On s'attend donc à ce qu'il reste en l'état quand on change d'onglet — or il montrait le détail d'une ligne de l'onglet quitté.
+- **Décision** : l'image fait foi. Il n'y a qu'un emplacement « à côté », global : il reçoit ce que l'on inspecte (un clic sur une ligne) ou une page posée là depuis le plan. Il ne change pas quand on change d'onglet ; on le remplace par un autre contenu ou on le ferme soi-même. Il dit d'où vient ce qu'il montre (« Vient de Agences ») et permet de l'ouvrir en onglet.
+- **Conséquences** : la rangée d'onglets s'arrête au bord de la page qu'elle gouverne ; au-dessus de la page d'à côté il n'y a que le plan de travail. La ligne inspectée garde son contour tant que sa fiche est à côté. Inspecteur et « page à côté » (D-033) deviennent un seul mécanisme. « Aller à » une agence l'inspecte à côté, sans quitter l'onglet courant — ce qui lève l'incohérence notée après D-034. La descente dans l'onglet (liste → détail dans la même page) est retirée du gabarit.
+- **Alternative non retenue** : placer l'inspecteur dans la page, séparé de la liste par un filet, pour qu'il suive l'onglet. Elle reste la bonne réponse quand un détail n'a aucun sens hors de sa liste ; elle n'a pas été retenue comme règle générale parce qu'elle renonce à la séparation par les hachures et à l'usage non linéaire (garder une fiche sous les yeux en travaillant ailleurs).
+- **Règle** : K7 dans `composition.md`.
