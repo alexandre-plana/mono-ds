@@ -296,11 +296,11 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-tooltip { display: inline-block; padding: var(--space-2) var(--space-3); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-small); line-height: var(--leading-small); max-width: 32ch; }
 .c-toast { display: inline-flex; align-items: baseline; gap: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); border-left: var(--stroke) solid var(--fg-strong); color: var(--fg-strong); font-size: var(--text-small); }
 .c-toast--signal { border-left-color: var(--signal); }
-/* Modale : une feuille étroite posée au centre, sur la page hachurée mais lisible. Même fond et
+/* Modale : une feuille large (32 rem) posée au centre, sur la page hachurée mais lisible. Même fond et
    même contour que la page, aucun bandeau, aucun filet intérieur. Trois choses au plus : un
    titre, une phrase ou quelques champs, les actions à droite. Sa hauteur est celle de son
    contenu ; ancrée au tiers haut, son bord supérieur ne bouge pas quand le contenu change. */
-.c-dialog { --dialog-pad: var(--space-6); padding: 0; margin: 12vh auto auto; width: min(22rem, calc(100vw - 2rem)); max-height: min(76vh, 44rem); background: var(--bg); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
+.c-dialog { --dialog-pad: var(--space-6); padding: 0; margin: 12vh auto auto; width: min(32rem, calc(100vw - 2rem)); max-height: min(76vh, 44rem); background: var(--bg); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
 .c-dialog[open] { display: flex; flex-direction: column; }
 /* Fond d'une modale : la page dessous est hachurée. En dessin technique, une zone hachurée est
    une zone exclue — c'est exactement ce qu'elle est tant que la modale est ouverte. Les hachures
@@ -309,10 +309,10 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
    nets d'un pixel : il n'y a aucun dégradé visible.) */
 .c-dialog::backdrop { background-color: color-mix(in srgb, var(--desk) 30%, transparent); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 9px); }
 /* --small : une question d'une ligne. --large : contenu large (tableau, « Aller à »). */
-.c-dialog--small { width: min(18rem, calc(100vw - 2rem)); }
+.c-dialog--small { width: min(24rem, calc(100vw - 2rem)); }
 .c-dialog--large { width: min(48rem, calc(100vw - 2rem)); }
 /* --column : la colonne, toute la hauteur de l'écran, pour un formulaire qui se remplit de haut en bas. */
-.c-dialog--column { height: calc(100vh - 6 * var(--shell-inset)); height: calc(100dvh - 6 * var(--shell-inset)); max-height: none; margin-top: calc(3 * var(--shell-inset)); }
+.c-dialog--column { width: min(26rem, calc(100vw - 2rem)); height: calc(100vh - 6 * var(--shell-inset)); height: calc(100dvh - 6 * var(--shell-inset)); max-height: none; margin-top: calc(3 * var(--shell-inset)); }
 /* Ce qui est en jeu : le chiffre, la fiche ou la phrase que l'on doit avoir lu avant d'agir.
    Poussé au bas du corps, juste au-dessus des actions. */
 .c-dialog__stake { margin-top: auto; padding-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }

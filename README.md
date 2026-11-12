@@ -58,9 +58,9 @@ page se hachure mais reste lisible. Les deux thèmes s'échangent sans rien dép
 
 ### La modale
 
-Un titre, une phrase, deux actions. Ni bandeau, ni croix, ni filet.
+Un titre, quelques champs ou une phrase, deux actions. Ni bandeau, ni croix, ni filet.
 
-![Confirmation sur la page hachurée](docs/captures/modale.png)
+![Modale sur la page hachurée](docs/captures/modale.png)
 
 ### Les données
 

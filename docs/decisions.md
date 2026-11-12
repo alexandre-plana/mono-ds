@@ -74,6 +74,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-051 | La modale est excentrée à droite, minimale | amendée par D-053 |
 | D-052 | Sous une modale, la page reste lisible | en vigueur |
 | D-053 | La modale revient au centre | en vigueur |
+| D-055 | La modale reprend sa largeur classique | en vigueur |
 | D-054 | Graphiques : treemap, composition, nuage, matrice, tendance ; pas de camembert | en vigueur |
 
 ---
@@ -495,3 +496,10 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Matrice** : cinq paliers pris dans les rôles existants (`--surface`, `--line-faint`, `--line`, `--line-strong`, `--fg-soft`), donc mesurés et symétriques entre thèmes ; pas de transparence.
 - **Refusé** (choix de Claude) : camembert, anneau, jauge circulaire — règle V9. On compare mal des angles, et un disque est la masse la plus lourde qu'on puisse poser sur une page. La barre de répartition et le treemap répondent à la même question.
 - **Limite** : trois séries au plus par ton dans les barres empilées ; au-delà, des petits multiples.
+
+## D-055 — La modale reprend sa largeur classique
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Amende** : D-051, D-053
+- **Décision** : `.c-dialog` repasse à 32 rem de large (format couché, comme en D-048). `--small` : 24 rem. `--column` : 26 rem. `--large` : 48 rem, inchangée.
+- **Ce qui reste des essais** : centrée et ancrée au tiers haut ; hauteur du contenu ; fond et contour de la page ; aucun bandeau, aucune croix, aucun filet intérieur ; un seul titre en 24 px ; prose en sans-serif ; actions à droite, la principale au bout ; page hachurée mais lisible dessous (D-052).
+- **Clos** : les formats portrait (D-049, D-050) et la position excentrée (D-051) sont abandonnés. `__stake` et les compositions « chiffre » et « étiquette » restent disponibles.
