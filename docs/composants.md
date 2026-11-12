@@ -16,6 +16,8 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.l-desk` (sur `<body>`) | Plan de travail hachuré ; grille dont la gouttière sépare les pages |
 | `.l-shell` | La page : fond uni, contour d'un pixel, en retrait de `--shell-inset` |
 | `.l-desk--app`, `.l-desk--split` | Application : le plan occupe l'écran, chaque page défile seule ; deux pages côte à côte (collection + inspecteur, `--inspector`) |
+| `.l-app` (`__rail`, `__brand`, `__nav`, `__foot`) | Shell d'application : rail de navigation + volet, dans une même page. Gabarit : `catalogue/exemples/application.html` |
+| `.l-desk--os`, `.l-desk__area` | Version bureau : le plan occupe l'écran, les fenêtres en sont les pages |
 | `.l-splitter` | `role="separator"`, `.is-dragging` | La bande hachurée entre deux pages se saisit pour régler `--inspector` |
 | `.l-pane` (`__head`, `__bar`, `__body`, `__foot`) | Volet d'application : en-tête fixe, barre d'outils, corps défilant, pied |
 | `.l-page` | Conteneur : largeur max. 1440 px, marges de page |
@@ -34,6 +36,9 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-section-head` | `__num`, `__aside` | Ouvre chaque région |
 | `.c-colophon` | — | Pied d'écran : source, folio, référence |
 | `.c-doctabs` | `__tab[aria-current]`, `__tab--add` | Documents ouverts, sur le plan de travail au-dessus de la page. Courant = trait de 2 px dessus, ouvert dessous |
+| `.c-taskbar` | `__group` (`--windows`), `__item[aria-pressed]`, `.is-minimized`, `__meta` | Barre des fenêtres, en version bureau seulement. Active = trait de 2 px dessus ; réduite = tireté |
+| `.c-console` | `__head`, `__log`, `__line` (`--warn`, `--error`, `--cmd`), `__time`, `__mark`, `__prompt` ; `--fill` | Journal et ligne de commande. Niveau lu au glyphe (· ▲ ■ >), jamais à une teinte |
+| `.c-canvas` | `__plane`, `__item[aria-selected]`, `__head`, `__body` ; `--x`, `--y`, `--z`, `--grid` | Surface libre de représentations. Sa trame de points est la grille d'aimantation, et n'existe que là |
 | `.c-statusbar` | `__group` | Pied d'un volet : position, état d'enregistrement, raccourcis (`.c-kbd`) |
 | `.c-panel` | `--surface`, `--sunken`, `--dashed`, `--flush`, `__head`, `[data-theme]` | Seulement pour détacher du flux. Un bloc inversé par vue |
 | `.c-card` (+ `.c-cards`) | `__head`, `__title` (`--label`), `__body`, `__media`, `__foot` ; `--boxed`, `--surface`, `--dashed`, `--signal` ; `aria-current` / `aria-selected` | Collection d'objets de même nature. Un filet, pas une boîte ; jamais de fiche dans une fiche |
@@ -59,7 +64,8 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-button` | `--primary`, `--quiet`, `--signal`, `--large`, `disabled` | **Un seul primaire par vue.** `--signal` = irréversible |
 | `.c-tabs` | `__tab[aria-selected]` | Vues d'un même objet |
 | `.c-segmented` | `__item[aria-pressed]` | 2 à 4 options exclusives ; actif = contour de 2 px |
-| `.c-menu` (`<details>`) | `__list`, `__label`, `__item` (`--signal`), `__hint`, `__sep` ; `--end` | 3 à 7 actions secondaires. Jamais l'action principale, jamais de sous-menu |
+| `.c-menu` (`<details>`) | `__list`, `__label`, `__item` (`--signal`), `__hint`, `__sep` ; `--end`, `--up` | 3 à 7 actions secondaires. Jamais l'action principale ; pas de sous-menu dans un menu de bouton |
+| `.c-menu__list--context` | `--x`, `--y` ; `.c-menu__sub` (`--left`, `.is-open`) | Menu contextuel au clic droit ; un seul niveau de sous-menu. Aucune action ne doit exister seulement là |
 | `.c-chip` | `[aria-pressed]`, `__count`, `disabled` | Filtres cumulables ; aucun actif = tout |
 | `.c-steps` | `__step`, `.is-done`, `[aria-current="step"]` | Parcours linéaire de 3 à 6 étapes : plein = fait, épais = en cours, tireté = à venir |
 | `.c-nav` | `__label`, `__item[aria-current]` | Menu numéroté |
@@ -98,10 +104,12 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|---|
 | `.c-dialog` (`<dialog>`) | `__head`, `__title`, `__body`, `__actions`, `__aside` ; `--small`, `--large` | Tâche courte qui exige une réponse. Titre = verbe + objet ; le bouton principal répète le verbe |
 | `.c-dialog--small` (confirmation) | — | Irréversible uniquement. Pas de bouton fermer ; focus initial sur « Annuler » ; seul le bouton porte le signal |
-| `.c-window` | `__frame`, `__bar`, `__title`, `__body` ; `--window` | Fenêtre flottante non modale : un outil gardé sous la main. Liseré hachuré, aucune ombre. Deux au plus |
+| `.c-window` | `__frame`, `__bar`, `__title`, `__actions`, `__body` (`--flush`) ; `--resizable`, `.is-active`, `.is-maximized`, `.is-minimized` ; `--window`, `--window-height` | Fenêtre flottante non modale : un outil gardé sous la main. Liseré hachuré, aucune ombre. Deux au plus |
 
 Deux natures : la modale interrompt (une seule à la fois, voile et filet), la
-fenêtre accompagne (elle ne bloque rien). Aucune ne porte d'ombre. Le détail d'un
+fenêtre accompagne (elle ne bloque rien). Aucune ne porte d'ombre. Déplacement,
+redimensionnement et aimantation des fenêtres ne font pas partie du système : la
+version bureau les confie à interact.js (`catalogue/assets/vendor`, licence MIT). Le détail d'un
 élément ne va dans aucune des deux : il va dans l'inspecteur — il n'y a pas de tiroir. La modale est ancrée au tiers haut ;
 ses actions sont ferrées à gauche, la principale en premier.
 

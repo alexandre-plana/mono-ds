@@ -13,6 +13,9 @@
     ['exemples/tableau-de-bord.html', 'Tableau de bord'],
     ['exemples/rapport.html', 'Rapport'],
     ['exemples/collection.html', 'Collection'],
+    ['exemples/application.html', 'Application'],
+    ['exemples/connexion.html', 'Connexion'],
+    ['exemples/bureau.html', 'Bureau'],
   ];
   const here = location.pathname.replace(/\/$/, '/index.html');
   const isCurrent = (href) => here.endsWith('/catalogue/' + href) || here.endsWith('/' + href);

@@ -10,7 +10,9 @@ composition — et un catalogue pour les réemployer.
 - **Une page encadrée** posée sur un plan de travail hachuré, en retrait de 24 px.
 - **Deux thèmes** : `encre` (clair sur sombre) et `papier` (sombre sur clair).
 - **Lisibilité vérifiée** : 11 px au moins, contrastes WCAG contrôlés par script.
-- **Aucune dépendance**, aucune étape de construction. Polices embarquées.
+- **Aucune dépendance** pour le système, aucune étape de construction. Polices
+  embarquées. Seul l'exemple « bureau » embarque une bibliothèque (interact.js)
+  pour déplacer, redimensionner et aimanter les fenêtres.
 
 ## Voir le catalogue
 
@@ -51,7 +53,10 @@ docs/               les règles
   composants.md     index des composants et de leurs variantes
   dataviz.md        règles et classes de visualisation
 catalogue/          le catalogue navigable (démonstrations + code)
-  exemples/         trois écrans composés avec le seul système
+  exemples/         six écrans : tableau de bord, rapport, collection + inspecteur,
+                    connexion, bureau à fenêtres, et application.html — le
+                    gabarit de shell à copier pour démarrer
+  assets/vendor/    interact.js (MIT), pour la seule version bureau
 scripts/
   contrast.mjs      contrôle des contrastes des tokens
   build-search-index.mjs  index de la recherche du catalogue

@@ -83,6 +83,27 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .l-desk--app { height: 100vh; height: 100dvh; min-height: 0; }
 .l-desk--app > .l-shell { min-height: 0; overflow: hidden; display: grid; grid-template-rows: minmax(0, 1fr); }
 .l-desk--split { grid-template-columns: minmax(0, 1fr) var(--inspector); }
+/* Shell d'application : un rail de navigation et un volet de contenu, dans une même page.
+   Le haut du rail (.l-app__brand) a la hauteur de l'en-tête du volet : leurs filets s'alignent. */
+.l-app { display: grid; grid-template-columns: var(--rail, 15rem) minmax(0, 1fr); min-height: 0; min-width: 0; }
+.l-app__rail { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; border-right: var(--hairline) solid var(--line); }
+.l-app__brand { display: flex; align-items: center; min-height: 3rem; margin: var(--space-4) var(--space-5) 0; padding-bottom: var(--space-3); border-bottom: var(--hairline) solid var(--line); }
+.l-app__nav { padding: var(--space-6) var(--space-5); overflow-y: auto; min-height: 0; }
+.l-app__foot { padding: 0 var(--space-5); }
+.l-app__foot .c-statusbar { flex-wrap: nowrap; }
+@media (max-width: 900px) {
+  .l-app { grid-template-columns: minmax(0, 1fr); }
+  .l-app__rail { border-right: 0; border-bottom: var(--hairline) solid var(--line); }
+  .l-app__nav { padding-block: var(--space-4); }
+  .l-app__foot { display: none; }
+}
+
+/* Bureau : le plan de travail occupe tout l'écran, les fenêtres en sont les pages.
+   .l-desk__area reçoit les fenêtres ; la barre des fenêtres est posée dessous. */
+.l-desk--os { height: 100vh; height: 100dvh; min-height: 0; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
+.l-desk__area { position: relative; min-height: 0; min-width: 0; overflow: clip; }
+.l-desk__area > .c-window { position: absolute; }
+
 /* Séparateur : la bande hachurée elle-même se saisit pour redimensionner l'inspecteur.
    <div class="l-splitter" role="separator" aria-orientation="vertical" tabindex="0"> entre les deux pages. */
 .l-desk--split:has(> .l-splitter) { grid-template-columns: minmax(0, 1fr) var(--shell-inset) var(--inspector); column-gap: 0; }
@@ -97,7 +118,7 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
   .l-desk--app > .l-shell { overflow: visible; }
 }
 /* Volet : en-tête fixe, corps défilant, pied fixe. Les trois partagent la même marge. */
-.l-pane { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; min-width: 0; }
+.l-pane { display: grid; grid-template-rows: auto minmax(0, 1fr); grid-auto-rows: auto; min-height: 0; min-width: 0; }
 .l-pane__head { padding: var(--space-4) var(--pane-pad) 0; display: flex; flex-direction: column; gap: var(--space-5); }
 /* Deux volets voisins ont des en-têtes de même hauteur : leurs filets tombent sur la même ligne. */
 .l-pane__head > .c-masthead { align-items: center; min-height: 3rem; padding-bottom: var(--space-3); }
@@ -154,4 +175,11 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Bureau sur petit écran : plus de fenêtres libres, elles s'empilent en pleine largeur. */
+@media (max-width: 760px) {
+  .l-desk--os { height: auto; min-height: 100dvh; overflow: visible; }
+  .l-desk__area { display: grid; gap: var(--shell-inset); align-content: start; }
+  .l-desk__area > .c-window { position: static; width: 100% !important; height: 24rem !important; max-width: none; }
 }

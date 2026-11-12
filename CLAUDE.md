@@ -60,6 +60,12 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   `<div class="cat-sub" id="c-nom" data-search="composant">` avec un `<h3>`, une
   démonstration `<div class="cat-demo" data-code>` et sa fiche `<dl class="cat-spec">`
   (Employer / Éviter / États / Accessibilité). Ajouter une ligne à `docs/composants.md`.
+- Nouvelle application : partir de `catalogue/exemples/application.html` (shell à
+  rail, fil d'Ariane, console, barre d'état) ; ne pas modifier les hauteurs de
+  `.l-app__brand`, `.c-masthead` et `.c-statusbar`, qui alignent les filets.
+- Le système reste en CSS pur. Les comportements (fenêtres, canevas, menus,
+  console) vivent dans `catalogue/assets/` comme démonstrations ; seule la version
+  bureau dépend d'une bibliothèque, interact.js, embarquée dans `assets/vendor/`.
 - Nouvelle icône : l'ajouter à `src/icons.json`, puis `node scripts/build-icons.mjs`.
 - Après toute modification du catalogue ou des tokens : `node scripts/build-search-index.mjs`.
   Tout élément `data-search` doit porter un `id` et contenir un titre.

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connexion — exemple MONO</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+</head>
+<!-- Connexion. Le formulaire est ferré à gauche sur quatre colonnes, pas centré ; l'état du
+     service lui répond à droite, sur la même ligne. Un seul bouton primaire. Le signal
+     n'apparaît que si la connexion échoue.
+     Démonstration : n'importe quel identifiant, mot de passe « mono ». -->
+<body class="l-desk">
+ <div class="l-shell">
+  <div class="l-page l-frame">
+    <header class="c-masthead">
+      <div class="c-masthead__title">Mono — Réseau</div>
+      <div class="c-masthead__meta"><span>Accès réservé</span><span>v0.4</span></div>
+    </header>
+
+    <main class="l-grid" style="padding-block: var(--space-9) var(--space-8); row-gap: var(--space-8); align-content: start; align-items: start">
+      <form class="l-span-4 l-stack" style="--gap: var(--space-6)" id="login" novalidate>
+        <div class="l-stack" style="--gap: var(--space-3)">
+          <span class="t-micro">Connexion</span>
+          <h1 class="t-display">Ouvrir une session</h1>
+        </div>
+
+        <div class="c-notice c-notice--stacked c-notice--hang c-notice--signal" id="failure" role="alert" hidden>
+          <span class="c-notice__label">Connexion refusée</span>
+          <span>Identifiant ou mot de passe incorrect. Il vous reste deux essais.</span>
+        </div>
+
+        <div class="l-stack" style="--gap: var(--space-5)">
+          <label class="c-field">
+            <span class="c-field__label">Identifiant</span>
+            <input class="c-input" type="email" name="id" autocomplete="username" placeholder="prenom.nom@reseau.fr" aria-describedby="err-id">
+            <span class="c-field__error" id="err-id" hidden>Saisissez votre identifiant.</span>
+          </label>
+          <label class="c-field">
+            <span class="c-field__label">Mot de passe <button class="c-button c-button--quiet" type="button" id="reveal" style="min-height: 1rem; padding: 0" aria-pressed="false"><i class="c-icon i-eye" aria-hidden="true"></i>Afficher</button></span>
+            <input class="c-input" type="password" name="pw" autocomplete="current-password" aria-describedby="err-pw">
+            <span class="c-field__error" id="err-pw" hidden>Saisissez votre mot de passe.</span>
+          </label>
+          <label class="c-check"><input type="checkbox" name="keep"><span>Rester connecté sur cet appareil</span></label>
+        </div>
+
+        <div class="l-cluster" style="--gap: var(--space-5)">
+          <button class="c-button c-button--primary c-button--large" type="submit" id="submit">Se connecter</button>
+          <a href="#login">Mot de passe oublié</a>
+        </div>
+      </form>
+
+      <aside class="l-span-3 l-start-10 l-stack" style="--gap: var(--space-3)">
+        <span class="t-micro">État du service</span>
+        <hr class="c-rule">
+        <dl class="c-kv c-kv--plain">
+          <div><dt>Service</dt><dd><span class="c-status c-status--on">Disponible</span></dd></div>
+          <div><dt>Données</dt><dd>À jour, 14:02</dd></div>
+          <div><dt>Session</dt><dd>30 min d'inactivité</dd></div>
+          <div><dt>Version</dt><dd>0.4</dd></div>
+        </dl>
+      </aside>
+    </main>
+
+    <footer class="c-colophon">
+      <span>Exemple — <a href="../index.html">catalogue Mono</a></span>
+      <span>Démonstration : mot de passe « mono » <span class="c-ref">AUTH-01</span></span>
+    </footer>
+  </div>
+ </div>
+  <script>
+    (() => {
+      'use strict';
+      const form = document.getElementById('login'), submit = document.getElementById('submit'), failure = document.getElementById('failure');
+      const field = (name) => form.elements[name], err = (name) => document.getElementById('err-' + name);
+      const check = (name) => { const ok = !!field(name).value.trim(); field(name).setAttribute('aria-invalid', String(!ok)); err(name).hidden = ok; return ok; };
+      ['id', 'pw'].forEach((n) => field(n).addEventListener('input', () => { if (field(n).getAttribute('aria-invalid') === 'true') check(n); failure.hidden = true; }));
+      document.getElementById('reveal').addEventListener('click', (e) => {
+        const btn = e.currentTarget, show = field('pw').type === 'password';
+        field('pw').type = show ? 'text' : 'password'; btn.setAttribute('aria-pressed', String(show));
+        btn.lastChild.textContent = show ? 'Masquer' : 'Afficher';
+      });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const ok = [check('id'), check('pw')].every(Boolean);
+        if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
+        failure.hidden = true; submit.disabled = true; submit.innerHTML = '<span class="c-spinner" aria-hidden="true"></span> Connexion';
+        setTimeout(() => {
+          if (field('pw').value === 'mono') { location.href = 'application.html'; return; }
+          submit.disabled = false; submit.textContent = 'Se connecter'; failure.hidden = false; field('pw').select();
+        }, 900);
+      });
+    })();
+  </script>
+</body>
+</html>

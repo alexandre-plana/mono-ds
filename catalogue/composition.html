@@ -13,7 +13,7 @@
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
       <div class="c-masthead__meta">
-        <span>Composition</span><span>v0.3</span>
+        <span>Composition</span><span>v0.4</span>
         <span class="c-segmented" role="group" aria-label="Thème">
           <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
           <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
@@ -273,6 +273,37 @@
             </div>
           </div>
           <p class="cat-note">En application, le plan occupe exactement l'écran (<code>.l-desk--app</code>) et chaque page défile pour elle-même ; <code>.l-desk--split</code> pose la collection et l'inspecteur côte à côte. Une page est alors un volet (<code>.l-pane</code>) : en-tête fixe, corps défilant, barre d'état. Voir l'exemple <a href="exemples/collection.html">Collection et inspecteur</a>.</p>
+          <div class="cat-sub" id="l-app" data-search="rubrique">
+            <h3>Shell d'application — .l-app</h3>
+            <p>La base d'une application : une page, un rail de navigation, un volet de contenu. Le haut du rail a la hauteur de l'en-tête du volet, son pied celle de la barre d'état : les filets se prolongent d'un côté à l'autre. Le fil d'Ariane ouvre la barre du volet, à gauche ; les actions sont à droite. Gabarit à copier : <a href="exemples/application.html">exemples/application.html</a>.</p>
+            <div class="cat-demo cat-demo--plain" data-code>
+              <div class="l-desk" style="min-height: 0; height: 17rem">
+                <div class="l-shell" style="display: grid">
+                  <div class="l-app" style="--rail: 11rem">
+                    <aside class="l-app__rail">
+                      <div class="l-app__brand"><span class="c-masthead__title">Mono</span></div>
+                      <nav class="c-nav l-app__nav" aria-label="Exemple">
+                        <a class="c-nav__item" href="#l-app"><span>01</span><span>Synthèse</span></a>
+                        <a class="c-nav__item" href="#l-app" aria-current="page"><span>02</span><span>Agences</span></a>
+                      </nav>
+                      <div class="l-app__foot"><div class="c-statusbar"><span>M. Delorme</span></div></div>
+                    </aside>
+                    <div class="l-pane">
+                      <div class="l-pane__head">
+                        <header class="c-masthead"><div class="c-masthead__title">Agences</div><div class="c-masthead__meta"><span>T3</span></div></header>
+                        <div class="l-pane__bar">
+                          <nav class="c-breadcrumb" aria-label="Fil d'Ariane"><a href="#l-app">Réseau</a><a href="#l-app">Branche Nord</a><span aria-current="page">Agences</span></nav>
+                        </div>
+                      </div>
+                      <div class="l-pane__body"></div>
+                      <div class="l-pane__foot"><div class="c-statusbar"><span class="c-status c-status--on">Connecté</span></div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="cat-note">En version bureau (<code>.l-desk--os</code>), il n'y a plus de page fixe : le plan de travail occupe tout l'écran, les fenêtres en sont les pages et la barre du bas les retrouve. Voir l'exemple <a href="exemples/bureau.html">Bureau</a>.</p>
           <div class="cat-rules">
             <div class="cat-rule" id="regle-k1" data-search="regle"><span class="cat-rule__num">K1</span><h3>Un contour, toujours</h3><p>Toute page a son contour d'un pixel. C'est le seul cadre systématique du système : à l'intérieur, la règle reste le filet avant la boîte.</p></div>
             <div class="cat-rule" id="regle-k2" data-search="regle"><span class="cat-rule__num">K2</span><h3>Retrait constant</h3><p><code>--shell-inset</code> : 24 px sur grand écran, 8 px sur téléphone, identique des quatre côtés et entre deux pages voisines.</p></div>
@@ -286,7 +317,7 @@
       </main>
     </div>
 
-    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.3</span></footer>
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.4</span></footer>
   </div>
   </div>
   <script src="assets/search-index.js"></script>

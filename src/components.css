@@ -171,6 +171,7 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-table tr[tabindex]:focus-visible { outline-offset: -2px; }
 .c-table tr[aria-selected="true"] > * { border-top: var(--stroke) solid var(--selected-line); border-bottom: var(--stroke) solid var(--selected-line); padding-block: calc(var(--space-2) - 1px); color: var(--fg); }
 .c-table tr[aria-selected="true"] > th { font-weight: var(--weight-medium); }
+.c-table--dense tr[aria-selected="true"] > * { padding-block: calc(var(--space-1) - 1px); }
 /* En-tête triable : un bouton sans habillage, l'icône dit le sens. */
 .c-table__sort { appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; cursor: pointer; display: inline-flex; align-items: baseline; gap: var(--space-1); }
 .c-table__sort:hover, th[aria-sort] .c-table__sort { color: var(--fg); }
@@ -210,7 +211,7 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-stat { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
 .c-stat__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-soft); }
 .c-stat__value { margin-left: -0.06em; font-size: var(--text-display); line-height: var(--leading-display); color: var(--fg-strong); letter-spacing: -0.02em; white-space: nowrap; }
-.c-stat__value small { font-size: var(--text-base); letter-spacing: 0; color: var(--fg-soft); margin-left: var(--space-1); }
+.c-stat__value small { line-height: 1; font-size: var(--text-base); letter-spacing: 0; color: var(--fg-soft); margin-left: var(--space-1); }
 .c-stat__note { font-size: var(--text-small); line-height: var(--leading-small); color: var(--fg-muted); }
 .c-stat--hero .c-stat__value { font-size: var(--text-hero); line-height: var(--leading-hero); }
 .c-stat--compact .c-stat__value { font-size: var(--text-title); line-height: var(--leading-title); }
@@ -317,6 +318,16 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 .c-menu__item--signal { color: var(--signal); }
 .c-menu__item--signal:hover { color: var(--signal); }
 .c-menu__hint { color: var(--fg-muted); font-size: var(--text-micro); font-weight: var(--weight-regular); }
+/* Menu contextuel : la même liste, posée au pointeur (clic droit). */
+.c-menu__list--context { position: fixed; top: var(--y, 0); left: var(--x, 0); z-index: 60; }
+/* Sous-menu : un seul niveau. Il s'ouvre à droite de son entrée, aligné sur elle. */
+.c-menu__sub { position: relative; }
+.c-menu__sub > .c-menu__item .c-icon { color: var(--fg-muted); align-self: center; }
+.c-menu__sub > .c-menu__list { display: none; top: calc(-1 * var(--space-1) - 1px); left: calc(100% - 1px); }
+.c-menu__sub:hover > .c-menu__list, .c-menu__sub:focus-within > .c-menu__list, .c-menu__sub.is-open > .c-menu__list { display: flex; }
+.c-menu__sub:hover > .c-menu__item, .c-menu__sub:focus-within > .c-menu__item { background: var(--line-faint); color: var(--fg-strong); }
+.c-menu__sub--left > .c-menu__list { left: auto; right: calc(100% - 1px); }
+.c-menu--up .c-menu__list { top: auto; bottom: calc(100% + var(--space-1)); }
 .c-menu__sep { border: 0; border-top: var(--hairline) solid var(--line); margin: var(--space-1) 0; }
 
 /* --- Dépliant et accordéon : <details class="c-disclosure"> ----------------------- */
@@ -434,6 +445,70 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
 .c-window__title { flex: 1; min-width: 0; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-strong); }
 .c-window__bar .c-button { min-height: 1.5rem; padding-inline: var(--space-1); }
 .c-window__body { padding: var(--space-4); overflow-y: auto; min-height: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+
+/* Fenêtre active : son titre est au ton fort. Les autres s'effacent — titre et contour d'un cran plus bas. */
+.c-window:not(.is-active) .c-window__title { color: var(--fg-muted); }
+.c-window:not(.is-active) .c-window__frame { border-color: var(--line); }
+/* Dans un bureau, .is-active est géré par l'application ; hors bureau, une fenêtre seule est active. */
+.c-window:only-of-type .c-window__title { color: var(--fg-strong); }
+.c-window:only-of-type .c-window__frame { border-color: var(--line-strong); }
+.c-window__actions { display: inline-flex; align-items: center; }
+/* Redimensionnable : la fenêtre a une taille propre, son cadre remplit tout, le coin bas droit porte une équerre. */
+.c-window--resizable { width: var(--window, 28rem); height: var(--window-height, 20rem); min-width: 14rem; min-height: 8rem; display: flex; }
+.c-window--resizable .c-window__frame { flex: 1; min-width: 0; max-height: none; position: relative; }
+.c-window--resizable .c-window__frame::after { content: ''; position: absolute; right: 2px; bottom: 2px; width: 0.375rem; height: 0.375rem; border-right: var(--hairline) solid var(--line-strong); border-bottom: var(--hairline) solid var(--line-strong); pointer-events: none; }
+.c-window--resizable .c-window__body { flex: 1; }
+.c-window__body--flush { padding: 0; gap: 0; }
+.c-window.is-maximized { left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; }
+.c-window.is-minimized { display: none; }
+
+/* --- Barre des fenêtres ----------------------------------------------------------------
+   La page du bas, dans un bureau : le lanceur à gauche, les fenêtres ouvertes au milieu,
+   l'état à droite. La fenêtre active n'y change que de contour (trait de 2 px dessus) ;
+   une fenêtre réduite a un contour tireté. */
+.c-taskbar { display: flex; align-items: stretch; gap: var(--space-4); min-height: 2.5rem; padding: 0 var(--space-3); background: var(--bg); border: var(--hairline) solid var(--line-strong); min-width: 0; }
+.c-taskbar__group { display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
+.c-taskbar__group--windows { flex: 1; overflow-x: auto; padding-inline: var(--space-4); border-inline: var(--hairline) solid var(--line); }
+.c-taskbar__item { appearance: none; display: inline-flex; align-items: center; gap: var(--space-2); height: 1.75rem; padding: 0 var(--space-3); background: none; border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); white-space: nowrap; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
+.c-taskbar__item:hover { color: var(--fg-strong); border-color: var(--fg-soft); }
+.c-taskbar__item[aria-pressed="true"] { border-top: var(--stroke) solid var(--selected-line); color: var(--fg); font-weight: var(--weight-medium); }
+.c-taskbar__item.is-minimized { border-style: dashed; color: var(--fg-muted); }
+.c-taskbar__meta { display: inline-flex; align-items: center; gap: var(--space-4); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); white-space: nowrap; }
+
+/* --- Console -----------------------------------------------------------------------------
+   Un journal et une ligne de commande, en creux. Le niveau d'un message se lit à son glyphe
+   et à son ton, jamais à une teinte : · information, ▲ avertissement, ■ erreur (seul signal),
+   > commande saisie. Pas de curseur clignotant, pas de vert : c'est un journal, pas un décor. */
+.c-console { --console-pad: var(--pane-pad); display: flex; flex-direction: column; min-height: 0; background: var(--bg-sunken); border-top: var(--hairline) solid var(--line); font-size: var(--text-small); line-height: var(--leading-base); }
+.c-console__head { flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-height: 2rem; padding: 0 var(--console-pad); border-bottom: var(--hairline) solid var(--line-faint); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
+.c-console__head .c-button { min-height: 1.5rem; padding-inline: var(--space-1); }
+.c-console__log { flex: 1; min-height: 0; max-height: var(--console-height, 11rem); overflow-y: auto; margin: 0; padding: var(--space-2) var(--console-pad); list-style: none; }
+.c-console__line { display: grid; grid-template-columns: 8ch 1ch minmax(0, 1fr); column-gap: var(--space-3); color: var(--fg-soft); overflow-wrap: anywhere; }
+.c-console__time { color: var(--fg-muted); }
+.c-console__line::before { content: none; }
+.c-console__mark { color: var(--fg-muted); }
+.c-console__line--warn { color: var(--fg); }
+.c-console__line--warn .c-console__mark { color: var(--fg-strong); }
+.c-console__line--error { color: var(--fg-strong); }
+.c-console__line--error .c-console__mark { color: var(--signal); }
+.c-console__line--cmd { color: var(--fg-strong); }
+.c-console__prompt { flex: none; display: flex; align-items: baseline; gap: var(--space-3); padding: var(--space-2) var(--console-pad); border-top: var(--hairline) solid var(--line-faint); color: var(--fg-muted); }
+.c-console__prompt input { appearance: none; flex: 1; min-width: 0; background: none; border: 0; outline: 0; padding: 0; color: var(--fg-strong); font: inherit; }
+.c-console__prompt input::placeholder { color: var(--fg-muted); opacity: 1; }
+.c-console--fill .c-console__log { max-height: none; }
+
+/* --- Canevas ------------------------------------------------------------------------------
+   Une surface libre où poser des représentations : graphique, tableau, chiffre, note.
+   Sa trame de points est un repère — elle donne le pas de la grille sur laquelle les
+   objets s'aimantent — et n'existe que là. Un objet sélectionné ne change que de contour. */
+.c-canvas { --grid: 1rem; --x: 0px; --y: 0px; --z: 1; position: relative; overflow: hidden; min-height: 0; background-color: var(--bg); background-image: radial-gradient(circle, var(--line-strong) 0.6px, transparent 0.9px); background-size: calc(var(--grid) * var(--z)) calc(var(--grid) * var(--z)); background-position: var(--x) var(--y); cursor: grab; touch-action: none; }
+.c-canvas.is-panning { cursor: grabbing; }
+.c-canvas__plane { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; transform: translate(var(--x), var(--y)) scale(var(--z)); }
+.c-canvas__item { position: absolute; left: var(--ix, 0); top: var(--iy, 0); width: var(--iw, 16rem); display: flex; flex-direction: column; background: var(--bg); border: var(--hairline) solid var(--line-strong); cursor: grab; touch-action: none; user-select: none; }
+.c-canvas__item[aria-selected="true"] { border: var(--stroke) solid var(--selected-line); margin: -1px; }
+.c-canvas__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); padding: var(--space-2) var(--space-3); border-bottom: var(--hairline) solid var(--line-faint); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-canvas__head > :first-child { color: var(--fg-soft); }
+.c-canvas__body { padding: var(--space-3); min-width: 0; }
 
 /* --- Onglets de documents -------------------------------------------------------------
    Posés sur le plan de travail, au-dessus de la page qu'ils ouvrent. Tous ont le fond

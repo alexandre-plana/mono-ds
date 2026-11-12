@@ -130,9 +130,11 @@ technique. Un signe n'entre dans le système que s'il a un sens, le même partou
 - **G2 — Deux par écran**, au plus, hachures non comprises.
 - **G3 — Au ton des filets** : un pixel, gris moyen. Jamais le ton clair ; le
   signal seulement sur le point d'une ligne de rappel qui désigne l'exception.
-- **G4 — Refusés** : croix de repérage, trame de points, code-barres, séparateur
-  en tirets ASCII. Envisagés puis écartés, faute d'un sens que le système
-  n'exprime pas déjà. Un nouveau signe se propose avec son sens, pas avec son dessin.
+- **G4 — Refusés** : croix de repérage, code-barres, séparateur en tirets ASCII.
+  Envisagés puis écartés, faute d'un sens que le système n'exprime pas déjà. La
+  trame de points, d'abord refusée, est admise dans le seul canevas (`.c-canvas`),
+  où elle a un sens : la grille d'aimantation. Un nouveau signe se propose avec
+  son sens, pas avec son dessin.
 
 ## Icônes
 

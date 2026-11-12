@@ -173,7 +173,7 @@ Par vue, c'est-à-dire par écran visible sans défilement.
 | Axes verticaux | 3 ou 4 | Au-delà, plus aucun bord ne se répète |
 | Plans de profondeur | 3 dans la page : creux, fond, surface — plus le plan de travail dessous | L'élévation n'existe pas |
 | Modale | 1 à la fois | Une interruption se mérite |
-| Fenêtre flottante | 2 au plus | Elle accompagne, elle n'encombre pas |
+| Fenêtre flottante | 2 au plus sur une page ; libre en version bureau, où les fenêtres sont les pages | Elle accompagne, elle n'encombre pas |
 | Vide | Un tiers au moins | Conviction 5 |
 
 Un budget dépassé n'est pas une faute de goût : c'est le signe que l'écran essaie
@@ -232,6 +232,7 @@ et le signal (2), on ne réduit pas le reste du tableau sous le plancher (1).
 | « Un spinner pendant l'enregistrement » | Le cercle tournant est une forme étrangère au système | `.c-spinner` : un caractère qui tourne, `\| / - \\`, à côté de la valeur concernée |
 | « Une bibliothèque d'icônes » | Une seconde main de dessin, arrondie ou trop grasse pour des filets d'un pixel | Un jeu propre de 49 signes, tracé comme les filets |
 | « D'autres éléments graphiques, pour enrichir » | Rien d'ornemental | Oui, s'ils ont un sens : six signes admis, quatre refusés (voir `fondations.md`) |
+| « Un menu au clic droit, avec des sous-menus » | Un sous-menu cache, et le clic droit ne se découvre pas | Oui, sur un seul niveau, et aucune action ne doit exister seulement là |
 | « Deux boutons pleins, les deux actions comptent » | Deux points focaux | Choisir ; l'autre est en contour |
 | « Un fond coloré pour l'alerte » | Le signal n'est jamais une surface | `.c-notice--signal` : un trait de 2 px et un mot |
 
@@ -262,7 +263,9 @@ et le signal (2), on ne réduit pas le reste du tableau sous le plancher (1).
   ce qui ne porte ni information ni structure.
 - **Pas une esthétique « terminal ».** Le monospace est là pour l'alignement des
   chiffres et l'égalité des caractères, pas pour évoquer le code. Ni curseur
-  clignotant, ni vert phosphore, ni art ASCII.
+  clignotant, ni vert phosphore, ni art ASCII. La console (`.c-console`) existe
+  parce qu'un journal et une ligne de commande sont utiles, et elle obéit aux
+  mêmes règles que le reste : niveaux lus à la forme, signal pour la seule erreur.
 - **Pas un système de marque.** Il ne porte aucune identité colorée et n'en
   accueillera pas.
 - **Pas une boîte à outils neutre.** Il a un avis sur la composition ; un écran

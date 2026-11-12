@@ -13,7 +13,7 @@
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
       <div class="c-masthead__meta">
-        <span>Composants</span><span>v0.3</span>
+        <span>Composants</span><span>v0.4</span>
         <span class="c-segmented" role="group" aria-label="Thème">
           <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
           <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
@@ -543,7 +543,7 @@
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Trois à sept actions secondaires sur un même objet, ou un choix parmi quelques options (<code>aria-checked</code>).</dd></div>
-              <div><dt>Éviter</dt><dd>Pour y ranger l'action principale, pour deux actions seulement (deux boutons), pour une navigation (préférer <code>.c-nav</code>), et tout sous-menu.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour y ranger l'action principale, pour deux actions seulement (deux boutons), pour une navigation (préférer <code>.c-nav</code>). Pas de sous-menu dans un menu de bouton : il est réservé au menu contextuel.</dd></div>
               <div><dt>Variantes</dt><dd><code>--end</code> aligne la liste à droite · <code>__label</code> titre de groupe · <code>__sep</code> filet · <code>__hint</code> raccourci · <code>__item--signal</code> action irréversible, toujours en dernier.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>role="menu"</code> / <code>menuitem</code>. Échap et clic extérieur ferment ; le focus revient au bouton.</dd></div>
             </dl>
@@ -898,10 +898,34 @@
               <div><dt>Accessibilité</dt><dd>Décoratif (<code>aria-hidden</code>) : le mot à côté, ou un texte masqué, porte l'information. Mouvement réduit : il devient « … ».</dd></div>
             </dl>
           </div>
+
+          <div class="cat-sub" id="c-console" data-search="composant">
+            <h3>Console — .c-console</h3>
+            <p>Un journal et une ligne de commande, en creux. Le niveau d'un message se lit à son glyphe et à son ton, jamais à une teinte : un point pour l'information, un triangle pour l'avertissement, un carré — seul signal — pour l'erreur, un chevron pour la commande saisie.</p>
+            <div class="cat-demo cat-demo--plain" data-code>
+              <section class="c-console" style="--console-pad: var(--space-4); border-top: 0" aria-label="Console">
+                <div class="c-console__head"><span>Console</span><span>4 lignes</span></div>
+                <ol class="c-console__log" role="log">
+                  <li class="c-console__line"><span class="c-console__time">14:02:07</span><span class="c-console__mark" aria-hidden="true">·</span><span>412 agences chargées en 0,8 s</span></li>
+                  <li class="c-console__line c-console__line--warn"><span class="c-console__time">14:02:09</span><span class="c-console__mark" aria-hidden="true">▲</span><span>2 branches sans responsable</span></li>
+                  <li class="c-console__line c-console__line--cmd"><span class="c-console__time">14:02:31</span><span class="c-console__mark" aria-hidden="true">&gt;</span><span>exporter</span></li>
+                  <li class="c-console__line c-console__line--error"><span class="c-console__time">14:02:31</span><span class="c-console__mark" aria-hidden="true">■</span><span>Export impossible : hôte injoignable</span></li>
+                </ol>
+                <label class="c-console__prompt"><span aria-hidden="true">&gt;</span><input type="text" placeholder="aide" aria-label="Commande"></label>
+              </section>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Suivre ce que fait l'application et lui parler : journal d'opérations, diagnostics, commandes pour utilisateurs avancés. Repliable, au-dessus de la barre d'état d'un volet, ou dans une fenêtre.</dd></div>
+              <div><dt>Éviter</dt><dd>Y mettre une information que tout utilisateur doit voir (une note ou une notification). Un curseur clignotant, un texte vert, un effet de frappe : c'est un journal, pas un décor de terminal.</dd></div>
+              <div><dt>Anatomie</dt><dd><code>__head</code> facultatif · <code>__log</code> (<code>&lt;ol role="log"&gt;</code>) · <code>__line</code> : <code>__time</code>, <code>__mark</code>, message · <code>__prompt</code>. Variantes de ligne : <code>--warn</code>, <code>--error</code>, <code>--cmd</code>. <code>--fill</code> occupe toute la hauteur.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="log"</code> et <code>aria-live="polite"</code> ; le glyphe est décoratif, le niveau doit aussi se lire dans le message. Flèches haut et bas rappellent les commandes précédentes.</dd></div>
+              <div><dt>Script</dt><dd>L'exécution des commandes revient à l'application ; <code>catalogue/assets/console.js</code> en donne un exemple.</dd></div>
+            </dl>
+          </div>
         </section>
 
         <section class="cat-section" id="superpositions" data-search="rubrique">
-          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Superpositions</span><span class="c-section-head__aside">Modale, fenêtre</span></h2>
+          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Superpositions</span><span class="c-section-head__aside">Modale, fenêtre, menu, canevas</span></h2>
           <p class="cat-note">Deux natures. La modale interrompt : elle doit le mériter, il n'y en a qu'une à la fois, et elle se détache par un voile sombre et un filet. La fenêtre accompagne : elle ne bloque rien. Ni l'une ni l'autre ne porte d'ombre. Le détail d'un élément ne va dans aucune des deux : il va dans l'inspecteur.</p>
 
           <div class="cat-sub" id="c-dialog" data-search="composant">
@@ -972,6 +996,37 @@
             </dl>
           </div>
 
+          <div class="cat-sub" id="c-menu-contextuel" data-search="composant">
+            <h3>Menu contextuel et sous-menu — .c-menu__list--context</h3>
+            <p>Le clic droit ouvre la même liste que le menu déroulant, posée au pointeur. Une entrée peut ouvrir un sous-menu, sur un seul niveau : il s'aligne sur son entrée et bascule à gauche près du bord de l'écran.</p>
+            <div class="cat-demo" data-code>
+              <div style="min-height: 13rem; position: relative; overflow-x: auto">
+                <div class="c-menu__list" role="menu" style="top: 0">
+                  <div class="c-menu__label">Canevas</div>
+                  <div class="c-menu__sub is-open">
+                    <button class="c-menu__item" type="button" role="menuitem" aria-haspopup="menu">Ajouter<i class="c-icon i-chevron-right" aria-hidden="true"></i></button>
+                    <div class="c-menu__list" role="menu">
+                      <button class="c-menu__item" type="button" role="menuitem">Graphique en barres</button>
+                      <button class="c-menu__item" type="button" role="menuitem" aria-checked="true">Tableau</button>
+                      <button class="c-menu__item" type="button" role="menuitem">Chiffre clé</button>
+                    </div>
+                  </div>
+                  <button class="c-menu__item" type="button" role="menuitem">Dupliquer <span class="c-menu__hint">⌘ D</span></button>
+                  <hr class="c-menu__sep">
+                  <button class="c-menu__item c-menu__item--signal" type="button" role="menuitem">Supprimer <span class="c-menu__hint">Suppr</span></button>
+                </div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Les actions propres à ce que l'on vient de pointer : un objet du canevas, une ligne, une fenêtre. Le titre de groupe rappelle la cible.</dd></div>
+              <div><dt>Éviter</dt><dd>Y cacher une action qui n'existe nulle part ailleurs : le clic droit ne se découvre pas, et il n'existe pas au toucher. Un second niveau de sous-menu. Plus de sept entrées par liste.</dd></div>
+              <div><dt>Sous-menu</dt><dd><code>.c-menu__sub</code> enveloppe l'entrée et sa liste ; il s'ouvre au survol, au focus ou par <code>.is-open</code>. <code>--left</code> le fait basculer. Réservé au menu contextuel : un menu déroulant de bouton reste sur un niveau.</dd></div>
+              <div><dt>Placement</dt><dd><code>--x</code> et <code>--y</code> sur la liste, en pixels ; l'application la ramène dans l'écran.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="menu"</code>, <code>aria-haspopup</code> sur l'entrée parente. Flèches haut et bas parcourent, droite entre dans le sous-menu, gauche en sort, Échap ferme. Le menu s'ouvre aussi par la touche Menu ou Maj + F10.</dd></div>
+              <div><dt>Script</dt><dd>Ouverture, placement et clavier reviennent à l'application ; voir <code>catalogue/assets/bureau.js</code>.</dd></div>
+            </dl>
+          </div>
+
           <div class="cat-sub" id="c-window" data-search="composant">
             <h3>Fenêtre flottante — .c-window</h3>
             <p>Une petite page posée par-dessus les autres, que l'on déplace par sa barre. Elle n'est pas modale : la page dessous reste utilisable. Elle ne porte aucune ombre ; elle emporte avec elle un liseré de plan de travail hachuré, comme toute page.</p>
@@ -995,10 +1050,63 @@
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Un outil que l'on garde sous la main en travaillant : aide, raccourcis, palette, aperçu. L'utilisateur l'ouvre, la place et la ferme lui-même.</dd></div>
-              <div><dt>Éviter</dt><dd>Pour exiger une réponse (une modale), pour le détail de la ligne sélectionnée (l'inspecteur), pour un contenu long. Deux fenêtres ouvertes au plus.</dd></div>
-              <div><dt>Anatomie</dt><dd><code>__frame</code> · <code>__bar</code> (poignée, <code>__title</code>, fermer) · <code>__body</code>. Largeur par <code>--window</code>, 20 rem par défaut.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour exiger une réponse (une modale), pour le détail de la ligne sélectionnée (l'inspecteur), pour un contenu long. Deux fenêtres ouvertes au plus sur une page ; en version bureau, où les fenêtres sont les pages, cette limite ne s'applique pas.</dd></div>
+              <div><dt>Anatomie</dt><dd><code>__frame</code> · <code>__bar</code> (poignée, <code>__title</code>, <code>__actions</code> : réduire, agrandir, fermer) · <code>__body</code> (<code>--flush</code> sans marge). Largeur par <code>--window</code>, 20 rem par défaut.</dd></div>
+              <div><dt>États</dt><dd><code>--resizable</code> : taille propre, équerre au coin bas droit. <code>.is-active</code> : titre au ton fort ; les autres fenêtres s'effacent d'un cran. <code>.is-maximized</code>, <code>.is-minimized</code>.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>role="dialog"</code> sans <code>aria-modal</code>, nommée par <code>aria-label</code>. Échap la ferme quand elle a le focus ; elle se déplace aussi aux flèches depuis sa barre.</dd></div>
               <div><dt>Script</dt><dd>Position et déplacement reviennent à l'application ; voir l'exemple « Collection » (touche <span class="c-kbd">?</span>).</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-taskbar" data-search="composant">
+            <h3>Barre des fenêtres — .c-taskbar</h3>
+            <p>Dans un bureau, la page du bas : le lanceur à gauche, les fenêtres ouvertes au milieu, l'état à droite. La fenêtre active n'y change que de contour — un trait de 2 px dessus ; une fenêtre réduite a un contour tireté.</p>
+            <div class="cat-demo cat-demo--plain" data-code>
+              <div class="l-desk" style="min-height: 0">
+                <footer class="c-taskbar">
+                  <div class="c-taskbar__group"><button class="c-taskbar__item" type="button"><i class="c-icon i-grid" aria-hidden="true"></i>Ouvrir</button></div>
+                  <div class="c-taskbar__group c-taskbar__group--windows" role="toolbar" aria-label="Fenêtres ouvertes">
+                    <button class="c-taskbar__item" type="button" aria-pressed="true"><i class="c-icon i-table" aria-hidden="true"></i>Agences</button>
+                    <button class="c-taskbar__item" type="button" aria-pressed="false"><i class="c-icon i-panel" aria-hidden="true"></i>Inspecteur</button>
+                    <button class="c-taskbar__item is-minimized" type="button" aria-pressed="false"><i class="c-icon i-menu" aria-hidden="true"></i>Console</button>
+                  </div>
+                  <div class="c-taskbar__meta"><span class="g-bracket">3 fenêtres</span><time>14:02</time></div>
+                </footer>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Uniquement en version bureau (<code>.l-desk--os</code>), où les fenêtres sont les pages. Un clic sur une fenêtre la ramène devant ; un clic sur la fenêtre active la réduit.</dd></div>
+              <div><dt>Éviter</dt><dd>Dans une application à pages fixes : la navigation y passe par le rail. Des libellés de plus de deux mots.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="toolbar"</code>, <code>aria-pressed</code> pour la fenêtre active ; l'état réduit doit aussi figurer dans le libellé accessible.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-canvas" data-search="composant">
+            <h3>Canevas — .c-canvas</h3>
+            <p>Une surface libre où poser des représentations : graphique, tableau, chiffre, note. Sa trame de points donne le pas de la grille sur laquelle les objets s'aimantent. Un objet sélectionné ne change que de contour.</p>
+            <div class="cat-demo cat-demo--plain" data-code>
+              <div class="c-canvas" style="height: 17rem; --x: 24px; --y: 24px">
+                <div class="c-canvas__plane">
+                  <article class="c-canvas__item" style="--ix: 0px; --iy: 0px; --iw: 12rem" aria-selected="true">
+                    <header class="c-canvas__head"><span>Chiffre clé</span><span>R01</span></header>
+                    <div class="c-canvas__body">
+                      <div class="c-stat c-stat--compact"><span class="c-stat__label">Primes totales</span><span class="c-stat__value">5 190<small>M</small></span></div>
+                    </div>
+                  </article>
+                  <article class="c-canvas__item" style="--ix: 224px; --iy: 32px; --iw: 14rem" aria-selected="false">
+                    <header class="c-canvas__head"><span>Note</span><span>R02</span></header>
+                    <div class="c-canvas__body"><p class="t-soft">Vérifier le repli de la branche vie avant la clôture.</p></div>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Composer librement une vue à partir de plusieurs représentations d'une même donnée, les comparer, les annoter. Chaque objet porte son type et sa référence en en-tête.</dd></div>
+              <div><dt>Éviter</dt><dd>Comme mise en page d'un écran (une grille), ou pour un contenu que tout le monde doit lire dans le même ordre. Un zoom sous 75 % : le texte passerait sous le plancher de lisibilité.</dd></div>
+              <div><dt>Anatomie</dt><dd><code>.c-canvas</code> (<code>--x</code>, <code>--y</code>, <code>--z</code>, <code>--grid</code>) · <code>__plane</code> · <code>__item</code> (<code>--ix</code>, <code>--iy</code>, <code>--iw</code>) · <code>__head</code> · <code>__body</code>.</dd></div>
+              <div><dt>Trame de points</dt><dd>Elle n'existe que dans le canevas et y a un sens : c'est la grille d'aimantation, à l'échelle du zoom. Elle ne s'emploie nulle part ailleurs.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Le canevas est focalisable ; les objets sont des <code>&lt;article&gt;</code> lus dans l'ordre du document. Toute action du menu contextuel doit rester atteignable au clavier.</dd></div>
+              <div><dt>Script</dt><dd>Déplacement de la vue, zoom et aimantation reviennent à l'application ; l'exemple « Bureau » s'appuie sur interact.js.</dd></div>
             </dl>
           </div>
         </section>
@@ -1081,7 +1189,7 @@
       </main>
     </div>
 
-    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.3</span></footer>
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.4</span></footer>
   </div>
   </div>
   <script src="assets/search-index.js"></script>

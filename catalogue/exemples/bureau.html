@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bureau — exemple MONO</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+</head>
+<!-- Version bureau.
+     Le plan de travail hachuré occupe tout l'écran ; les fenêtres en sont les pages.
+     La barre du bas retrouve les fenêtres ouvertes. Clic droit : menu contextuel avec
+     sous-menu, sur le bureau comme dans le canevas.
+
+     Déplacement, redimensionnement et aimantation sont confiés à interact.js
+     (assets/vendor, licence MIT). Le système ne fournit que l'habillage : .c-window,
+     .c-taskbar, .c-canvas, .c-menu. Toute la logique ci-dessous est une démonstration. -->
+<body class="l-desk l-desk--os">
+
+  <main class="l-desk__area" id="area" aria-label="Bureau"></main>
+
+  <footer class="c-taskbar">
+    <div class="c-taskbar__group">
+      <details class="c-menu c-menu--up" id="launcher">
+        <summary class="c-taskbar__item"><i class="c-icon i-grid" aria-hidden="true"></i>Ouvrir</summary>
+        <div class="c-menu__list" role="menu" id="launcher-list"></div>
+      </details>
+    </div>
+    <div class="c-taskbar__group c-taskbar__group--windows" id="tasks" role="toolbar" aria-label="Fenêtres ouvertes"></div>
+    <div class="c-taskbar__meta">
+      <span class="g-bracket" id="count">0</span>
+      <a href="../index.html">Catalogue</a>
+      <time id="clock"></time>
+    </div>
+  </footer>
+
+  <div class="c-menu__list c-menu__list--context" id="ctx" role="menu" hidden></div>
+
+  <!-- Contenus des fenêtres -->
+  <template id="tpl-agences">
+    <table class="c-table c-table--sticky c-table--dense">
+      <thead><tr><th>Réf.</th><th>Agence</th><th>Branche</th><th class="is-num">Primes (M)</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </template>
+  <template id="tpl-inspecteur">
+    <div class="c-stat c-stat--compact">
+      <span class="c-stat__label" data-f="ref"></span>
+      <span class="c-stat__value" data-f="nom"></span>
+    </div>
+    <dl class="c-kv c-kv--plain">
+      <div><dt>Branche</dt><dd data-f="branche"></dd></div>
+      <div><dt>Responsable</dt><dd data-f="resp"></dd></div>
+      <div><dt>Effectif</dt><dd data-f="effectif"></dd></div>
+      <div><dt>Primes</dt><dd data-f="primes"></dd></div>
+    </dl>
+  </template>
+  <template id="tpl-console">
+    <section class="c-console c-console--fill" style="--console-pad: var(--space-4); border-top: 0; flex: 1" aria-label="Console">
+      <ol class="c-console__log" role="log" aria-live="polite"></ol>
+      <label class="c-console__prompt"><span aria-hidden="true">&gt;</span><input type="text" placeholder="aide" aria-label="Commande" autocomplete="off" spellcheck="false"></label>
+    </section>
+  </template>
+  <template id="tpl-canevas">
+    <div class="l-pane__bar" style="padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--line-faint)">
+      <div class="c-segmented" role="group" aria-label="Zoom">
+        <button class="c-segmented__item" type="button" data-zoom="0.75" aria-pressed="false">75</button>
+        <button class="c-segmented__item" type="button" data-zoom="1" aria-pressed="true">100</button>
+        <button class="c-segmented__item" type="button" data-zoom="1.5" aria-pressed="false">150</button>
+      </div>
+      <span class="t-micro"><span data-coords>x 0 · y 0</span> &nbsp; <span class="g-bracket" data-n>0</span></span>
+    </div>
+    <div class="c-canvas" style="flex: 1" tabindex="0" aria-label="Canevas : clic droit pour ajouter une représentation"><div class="c-canvas__plane"></div></div>
+  </template>
+
+  <script src="../assets/vendor/interact.min.js"></script>
+  <script src="../assets/charts.js"></script>
+  <script src="../assets/demo-data.js"></script>
+  <script src="../assets/console.js"></script>
+  <script src="../assets/bureau.js"></script>
+</body>
+</html>
