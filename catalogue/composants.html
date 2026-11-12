@@ -176,7 +176,7 @@
               <div><dt>Employer</dt><dd>Une collection d'objets de même nature, que l'on compare ou parmi lesquels on choisit : agences, rapports, modèles.</dd></div>
               <div><dt>Éviter</dt><dd>Pour habiller un contenu unique (un filet suffit), pour des données tabulaires (préférer <code>.c-table</code>), et toute fiche dans une fiche. Pas de bouton primaire dans une fiche : une action au plus, en pied.</dd></div>
               <div><dt>Variantes</dt><dd><code>--boxed</code> cadre · <code>--surface</code> fond détaché · <code>--dashed</code> emplacement vide · <code>--signal</code> une seule par vue · <code>__title--label</code> titre en capitales.</dd></div>
-              <div><dt>États</dt><dd>Survol : filet supérieur au ton fort. Sélection (<code>aria-current</code>, <code>aria-selected</code>) : filet de 2 px. Jamais d'élévation ni de déplacement.</dd></div>
+              <div><dt>États</dt><dd>Survol : filet supérieur au ton fort, le temps du survol. Sélection (<code>aria-current</code>, <code>aria-selected</code>) : filet de 2 px en gris moyen et surface d'un cran — jamais le ton clair. Ni élévation ni déplacement.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;article&gt;</code> avec un titre <code>h3</code>/<code>h4</code> ; cliquable : un seul <code>&lt;a&gt;</code> englobant, sans autre contrôle à l'intérieur.</dd></div>
             </dl>
           </div>
@@ -349,7 +349,7 @@
               <div><dt>Employer</dt><dd>Déclencher une action. Le libellé est un verbe, deux mots au plus.</dd></div>
               <div><dt>Éviter</dt><dd>Deux primaires sur une vue. Un bouton pour naviguer (un lien). Le signal pour une action courante. Une icône seule sans <code>aria-label</code>.</dd></div>
               <div><dt>Hiérarchie</dt><dd><code>--primary</code> une fois par vue · défaut (contour) pour le reste · <code>--quiet</code> pour l'action tertiaire ou dans une ligne · <code>--signal</code> pour l'irréversible.</dd></div>
-              <div><dt>États</dt><dd>Survol : bordure au ton fort et fond d'un cran. Inactif : contour tireté, texte encore lisible. Focus : contour de 2 px.</dd></div>
+              <div><dt>États</dt><dd>Survol : bordure au ton fort et fond d'un cran. Inactif : contour tireté, texte encore lisible. Focus clavier : contour de 2 px.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;button type&gt;</code> ; 32 px de haut au moins, 40 px en <code>--large</code> sur écran tactile.</dd></div>
             </dl>
           </div>
@@ -357,23 +357,29 @@
           <div class="cat-sub" id="c-tabs" data-search="composant">
             <h3>Onglets — .c-tabs</h3>
             <div class="cat-demo" data-code>
-              <div class="c-tabs" role="tablist" aria-label="Période">
-                <button class="c-tabs__tab" type="button" role="tab" aria-selected="true">Synthèse</button>
-                <button class="c-tabs__tab" type="button" role="tab" aria-selected="false">Branches</button>
-                <button class="c-tabs__tab" type="button" role="tab" aria-selected="false">Agences</button>
+              <div class="l-stack" style="--gap: var(--space-5)">
+                <div class="c-tabs" role="tablist" aria-label="Vue">
+                  <button class="c-tabs__tab" type="button" role="tab" aria-selected="true" aria-controls="demo-tabpanel" data-label="Primes totales" data-value="5 190" data-unit="M">Synthèse</button>
+                  <button class="c-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="demo-tabpanel" data-label="Branches régionales" data-value="4" data-unit="">Branches</button>
+                  <button class="c-tabs__tab" type="button" role="tab" aria-selected="false" aria-controls="demo-tabpanel" data-label="Agences ouvertes" data-value="1 204" data-unit="">Agences</button>
+                </div>
+                <div class="c-stat c-stat--compact" role="tabpanel" id="demo-tabpanel">
+                  <span class="c-stat__label">Primes totales</span>
+                  <span class="c-stat__value">5 190<small>M</small></span>
+                </div>
               </div>
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Plusieurs vues d'un même objet, de deux à six.</dd></div>
               <div><dt>Éviter</dt><dd>Pour des étapes ordonnées (préférer <code>.c-steps</code>) ou pour filtrer une liste (préférer <code>.c-chip</code>).</dd></div>
-              <div><dt>États</dt><dd>Actif : texte au ton fort et trait de 2 px. Survol : trait fin.</dd></div>
+              <div><dt>États</dt><dd>Actif : trait de 2 px en gris moyen, graisse 500 — pas de ton clair. C'est le contenu de la vue qui change et qui porte le clair. Survol : trait fin.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>role="tablist"</code> / <code>tab</code> / <code>aria-selected</code>, ou des liens avec <code>aria-current="page"</code>.</dd></div>
             </dl>
           </div>
 
           <div class="cat-sub" id="c-segmented" data-search="composant">
             <h3>Sélecteur segmenté — .c-segmented</h3>
-            <p>Deux à quatre options exclusives. L'option active est remplie en gris moyen, pas en clair : elle ne concurrence pas le bouton primaire.</p>
+            <p>Deux à quatre options exclusives. L'option active est remplie d'un gris à peine plus clair que le fond : on la retrouve si on la cherche, elle ne retient pas l'œil.</p>
             <div class="cat-demo" data-code>
               <div class="c-segmented" role="group" aria-label="Échelle">
                 <button class="c-segmented__item" type="button" aria-pressed="true">Jour</button>
@@ -414,14 +420,15 @@
 
           <div class="cat-sub" id="c-chip" data-search="composant">
             <h3>Filtre — .c-chip</h3>
-            <p>Un bouton bascule compact, pour filtrer une liste. Actif : rempli en gris moyen, comme le segment actif. Le compteur est facultatif.</p>
+            <p>Un bouton bascule compact, pour filtrer une liste. Actif : rempli comme le segment actif, en retrait. Ce qui doit se voir après le clic, c'est la liste filtrée et son décompte, pas le filtre.</p>
             <div class="cat-demo" data-code>
-              <div class="l-cluster" style="--gap: var(--space-2)">
+              <div class="l-cluster" style="--gap: var(--space-2)" role="group" aria-label="Branche">
                 <button class="c-chip" type="button" aria-pressed="true">Non-vie <span class="c-chip__count">812</span></button>
                 <button class="c-chip" type="button" aria-pressed="false">Vie <span class="c-chip__count">392</span></button>
                 <button class="c-chip" type="button" aria-pressed="false">Provisoire <span class="c-chip__count">14</span></button>
                 <button class="c-chip" type="button" disabled>Archivé <span class="c-chip__count">0</span></button>
               </div>
+              <p class="t-large" style="margin-top: var(--space-4)" aria-live="polite"><span id="demo-chip-total">812</span> <span class="t-soft t-body">agences affichées</span></p>
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Des critères cumulables sur une liste ou un tableau. Aucun filtre actif signifie « tout ».</dd></div>
@@ -870,15 +877,25 @@
   <script src="assets/catalogue.js"></script>
   <script>
     // Démonstrations : onglets et segments réagissent au clic.
+    // Onglets : l'onglet choisi reste en retrait, c'est le panneau qui change.
     document.querySelectorAll('.cat-demo [role="tablist"]').forEach((list) => list.addEventListener('click', (e) => {
       const tab = e.target.closest('[role="tab"]'); if (!tab) return;
       list.querySelectorAll('[role="tab"]').forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+      const panel = document.getElementById(tab.getAttribute('aria-controls')); if (!panel) return;
+      panel.querySelector('.c-stat__label').textContent = tab.dataset.label;
+      panel.querySelector('.c-stat__value').innerHTML = tab.dataset.value + (tab.dataset.unit ? `<small>${tab.dataset.unit}</small>` : '');
     }));
     document.querySelectorAll('.cat-demo .c-segmented').forEach((group) => group.addEventListener('click', (e) => {
       const item = e.target.closest('.c-segmented__item'); if (!item) return;
       group.querySelectorAll('.c-segmented__item').forEach((t) => t.setAttribute('aria-pressed', String(t === item)));
     }));
-    document.querySelectorAll('.cat-demo .c-chip').forEach((chip) => chip.addEventListener('click', () => chip.setAttribute('aria-pressed', String(chip.getAttribute('aria-pressed') !== 'true'))));
+    // Filtres : le décompte — le résultat — se met à jour ; aucun filtre actif = tout.
+    document.querySelectorAll('.cat-demo .c-chip').forEach((chip) => chip.addEventListener('click', () => {
+      chip.setAttribute('aria-pressed', String(chip.getAttribute('aria-pressed') !== 'true'));
+      const all = [...chip.parentElement.querySelectorAll('.c-chip:not(:disabled)')], on = all.filter((c) => c.getAttribute('aria-pressed') === 'true');
+      const sum = (on.length ? on : all.slice(0, 2)).reduce((a, c) => a + +c.querySelector('.c-chip__count').textContent.replace(/\D/g, ''), 0);
+      const out = document.getElementById('demo-chip-total'); if (out) out.textContent = new Intl.NumberFormat('fr-FR').format(sum);
+    }));
     // Menu : Échap et clic extérieur ferment, le focus revient au bouton.
     document.addEventListener('click', (e) => document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item')) m.open = false; }));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-menu[open]').forEach((m) => { m.open = false; m.querySelector('summary').focus(); }); });

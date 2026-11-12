@@ -29,7 +29,7 @@ img, svg { display: block; max-width: 100%; }
 button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; border-radius: 0; }
 a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.3em; text-decoration-color: var(--line-strong); transition: text-decoration-color var(--duration); }
 a:hover { text-decoration-color: var(--fg-strong); color: var(--fg-strong); }
-::selection { background: var(--inverse-bg); color: var(--inverse-fg); }
+::selection { background: var(--selected-bg); color: var(--fg-strong); }
 :focus-visible { outline: var(--stroke) solid var(--fg-strong); outline-offset: 3px; }
 /* Surlignage : ton fort et filet, jamais un aplat de couleur. */
 mark { background: none; color: var(--fg-strong); font-weight: var(--weight-bold); border-bottom: var(--hairline) solid var(--fg-soft); }

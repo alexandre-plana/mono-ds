@@ -21,6 +21,9 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
 - Un seul bouton `--primary`, un seul `.c-stat--hero`, un seul bloc inversé, une
   seule superposition (modale ou tiroir) par vue.
 - Une fiche (`.c-card`) est un filet, pas une boîte ; jamais de fiche dans une fiche.
+- Un élément sélectionné (onglet, filtre, segment, fiche, ligne) se marque en gris
+  moyen : `--selected-bg` / `--selected-line`, jamais `--fg-strong` ni `--inverse-bg`.
+  Le clair va au résultat de l'action, pas au contrôle.
 - Aucun texte sous 11 px (capitales) / 12 px (bas de casse). Trois corps par écran.
 - Rayon 0, pas d'ombre, pas de dégradé. Filets de 1 px : plein = structure,
   tireté = relation/inactif, pointillé = repère.

@@ -29,6 +29,9 @@ part de pixels de la vue (1440 × 900) par `scripts/tonal-audit.mjs`.
   diagonale ou en triangle, jamais tous dans le même quart d'écran.
 - **M5 — Plisser les yeux.** Écran flouté : un point clair, deux ou trois nappes
   grises, le reste uni.
+- **M7 — Le résultat, pas le contrôle.** Après une action, le clair va à ce qui
+  a changé : le chiffre, la liste filtrée, la vue ouverte. L'onglet, le filtre ou
+  la fiche choisis restent dans la trame, en gris moyen.
 - **M6 — Mesurer.** `node scripts/tonal-audit.mjs <page>`.
 
 ## Équilibre

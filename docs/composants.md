@@ -50,7 +50,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|---|
 | `.c-button` | `--primary`, `--quiet`, `--signal`, `--large`, `disabled` | **Un seul primaire par vue.** `--signal` = irréversible |
 | `.c-tabs` | `__tab[aria-selected]` | Vues d'un même objet |
-| `.c-segmented` | `__item[aria-pressed]` | 2 à 4 options exclusives ; actif en gris moyen |
+| `.c-segmented` | `__item[aria-pressed]` | 2 à 4 options exclusives ; actif en retrait (`--selected-bg`) |
 | `.c-menu` (`<details>`) | `__list`, `__label`, `__item` (`--signal`), `__hint`, `__sep` ; `--end` | 3 à 7 actions secondaires. Jamais l'action principale, jamais de sous-menu |
 | `.c-chip` | `[aria-pressed]`, `__count`, `disabled` | Filtres cumulables ; aucun actif = tout |
 | `.c-steps` | `__step`, `.is-done`, `[aria-current="step"]` | Parcours linéaire de 3 à 6 étapes : plein = fait, épais = en cours, tireté = à venir |
@@ -96,9 +96,14 @@ ses actions sont ferrées à gauche, la principale en premier.
 
 ## Règles transversales
 
+- **Sélectionné = gris moyen** (`--selected-bg`, `--selected-line`), jamais le ton
+  clair : onglet, segment, filtre, fiche, page courante, case cochée. Le contrôle
+  s'efface ; c'est le résultat de l'action qui porte le clair.
 - **Inactif = tireté**, jamais une opacité réduite : le texte reste lisible.
 - **Survol = un cran de ton** ou une bordure qui s'éclaircit. Pas de déplacement.
-- **Focus = contour de 2 px** en `--fg-strong`, décalé de 3 px. Jamais supprimé.
+- **Focus clavier = contour de 2 px** en `--fg-strong`, décalé de 3 px. Jamais
+  supprimé : ce n'est pas une sélection, c'est un repère de navigation. Un champ
+  de saisie actif s'éclaircit seulement d'un cran (`--fg-soft`).
 - **Hauteur de contrôle : 32 px** (40 px en `--large`), cible tactile comprise.
 - **Détacher = un cran de ton et un filet.** Menu, infobulle, modale : jamais d'ombre.
 - **Natif d'abord** : `<dialog>`, `<details>`, contrôles de formulaire. Le

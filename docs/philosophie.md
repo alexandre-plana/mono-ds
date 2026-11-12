@@ -109,15 +109,34 @@ Le système possède peu de formes et chacune ne dit qu'une chose, partout :
 | Filet tireté | Relation, inactif, provisoire, à venir |
 | Filet pointillé | Repère : ce qui aide à lire sans être lu |
 | Épaisseur de 2 px et plus | L'actif, le sélectionné, la donnée |
+| Aplat gris moyen, à peine plus clair que le fond | Le sélectionné |
 | Capitales espacées | Le service : labels, légendes, titres courants |
 | Graisse 600 | Ce qui nomme |
-| Aplat clair | L'action primaire, et elle seule |
+| Aplat clair | L'action primaire à faire — jamais un choix déjà fait |
 | Carré / rond | Choix multiple / choix unique ; critique / normal |
 
 - *Serait un écart* : un tireté décoratif ; un contour épais sans état ; des
   capitales pour une phrase ; un aplat clair qui n'est pas une action.
 
-### 8. Lisible avant d'être beau
+### 8. La sélection s'efface devant son résultat
+
+Choisir un onglet, cocher un filtre, sélectionner une fiche : ce sont des moyens.
+Ce que l'on veut voir ensuite, c'est ce que l'action a produit — la vue qui
+s'ouvre, la liste qui se resserre, le chiffre qui change. Un contrôle sélectionné
+qui s'allume en clair retient l'œil sur le geste déjà fait et vole l'éclat au
+contenu.
+
+- *Implique* : le sélectionné se marque en **gris moyen** (`--selected-bg`,
+  `--selected-line`), par un aplat discret, un trait de 2 px ou la graisse — on
+  le retrouve si on le cherche, il n'attire pas. Le ton clair va au résultat.
+- *Serait un écart* : un onglet actif souligné de blanc ; un filtre actif en
+  aplat clair ; une fiche choisie encadrée au ton fort ; une ligne sélectionnée
+  plus claire que les chiffres qu'elle contient.
+- *À ne pas confondre* : le **focus clavier** n'est pas une sélection. Il doit
+  rester très visible (contour de 2 px au ton fort) — c'est une exigence
+  d'accessibilité, et il ne dure que le temps de la navigation.
+
+### 9. Lisible avant d'être beau
 
 L'esthétique des références flirte avec l'illisible : textes minuscules, gris sur
 gris. MONO garde l'allure et refuse le coût. Quand le style et la lisibilité
@@ -136,7 +155,7 @@ Par vue, c'est-à-dire par écran visible sans défilement.
 | Ressource | Budget | Pourquoi |
 |---|---|---|
 | Signal | Un fait, moins de 1 % de la surface — le plus souvent zéro | Conviction 4 |
-| Éclat (ton opposé au fond) | 3 % au plus | Convictions 2, 3 |
+| Éclat (ton opposé au fond) | 3 % au plus, et jamais pour un état sélectionné | Convictions 2, 3, 8 |
 | Bouton primaire | 1 | Seul aplat clair autorisé |
 | Chiffre héros | 1 | C'est le point focal |
 | Bloc inversé | 1, un tiers de la vue au plus | Seule grande masse du ton opposé |
@@ -199,6 +218,7 @@ et le signal (2), on ne réduit pas le reste du tableau sous le plancher (1).
 | « Griser le bouton désactivé » | L'opacité fabrique un texte illisible | Contour tireté, texte au ton tertiaire |
 | « Une animation à l'apparition » | Rien d'ornemental | Transitions de 120 ms sur la couleur et la bordure, rien d'autre |
 | « Centrer l'état vide, c'est plus équilibré » | Ferré à gauche, sans exception | `.c-empty` sur l'axe du contenu qu'il remplace |
+| « L'onglet actif en blanc, pour bien voir où l'on est » | Le clair irait au contrôle, pas au contenu qu'il vient d'ouvrir | Trait de 2 px en gris moyen ; c'est le contenu de la vue qui porte le clair |
 | « Deux boutons pleins, les deux actions comptent » | Deux points focaux | Choisir ; l'autre est en contour |
 | « Un fond coloré pour l'alerte » | Le signal n'est jamais une surface | `.c-notice--signal` : un trait de 2 px et un mot |
 
