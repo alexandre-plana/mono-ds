@@ -62,6 +62,17 @@ Un titre, quelques champs ou une phrase, deux actions. Ni bandeau, ni croix, ni 
 
 ![Modale sur la page hachurée](docs/captures/modale.png)
 
+### Annuler plutôt que confirmer
+
+Modifier un champ ou supprimer s'exécute sans question et laisse une annulation.
+Chaque événement se montre à trois échelles : un toast sur le moment, un centre
+condensé accessible partout, et un journal complet où l'on filtre, sélectionne à
+plusieurs, archive et supprime. Une suppression s'y rétablit à tout moment.
+
+![Toasts d'annulation et centre de notifications](docs/captures/notifications.png)
+
+![Journal : filtres, sélection multiple, actions groupées](docs/captures/journal.png)
+
 ### Les données
 
 Marques en gris moyen, chiffres en clair, un seul fait en signal. Les séries se

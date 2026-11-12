@@ -1053,18 +1053,18 @@
                 <span class="c-tooltip" role="tooltip">Agences ouvertes au 31 décembre.</span>
                 <div class="c-toast" role="status">
                   <span>Export terminé</span>
-                  <button class="c-button c-button--quiet" type="button">Ouvrir</button>
+                  <button class="c-toast__action" type="button">Ouvrir</button>
                 </div>
                 <div class="c-toast c-toast--signal" role="alert">
                   <span>Échec de la synchronisation</span>
-                  <button class="c-button c-button--quiet" type="button">Réessayer</button>
+                  <button class="c-toast__action" type="button">Réessayer</button>
                 </div>
               </div>
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Infobulle : une précision de moins de quinze mots. Notification : le résultat d'une action que l'utilisateur vient de lancer.</dd></div>
-              <div><dt>Éviter</dt><dd>Une information indispensable dans une infobulle ; une erreur de saisie dans une notification (elle va sous le champ) ; plus d'une notification à la fois.</dd></div>
-              <div><dt>Placement</dt><dd>Notification en bas à gauche, sur l'axe de la marge. Elle disparaît seule après 6 s, sauf <code>--signal</code>, qui attend une réponse.</dd></div>
+              <div><dt>Éviter</dt><dd>Une information indispensable dans une infobulle ; une erreur de saisie dans une notification (elle va sous le champ) ; plus de trois notifications empilées.</dd></div>
+              <div><dt>Placement</dt><dd>Notification en bas à gauche, sur l'axe de la marge (<code>.c-toasts</code>), la plus récente en bas. Elle disparaît seule après 3 s, 8 s si elle porte une annulation ; <code>--signal</code> attend une réponse. Rien n'est perdu quand elle s'efface : l'événement reste au centre de notifications.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>role="status"</code> pour une confirmation, <code>role="alert"</code> pour un échec. L'infobulle s'ouvre aussi au focus.</dd></div>
             </dl>
           </div>
@@ -1158,6 +1158,39 @@
           <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Superpositions</span><span class="c-section-head__aside">Modale, fenêtre, menu, canevas</span></h2>
           <p class="cat-note">Deux natures. La modale interrompt : elle doit le mériter, il n'y en a qu'une à la fois, et elle se détache par un filet, et hachure la page qu'elle bloque : en dessin technique, une zone hachurée est une zone exclue. La fenêtre accompagne : elle ne bloque rien. Ni l'une ni l'autre ne porte d'ombre. Le détail d'un élément ne va dans aucune des deux : il va dans l'inspecteur.</p>
 
+          <div class="cat-sub" id="c-notifs" data-search="composant">
+            <h3>Annulation et notifications — .c-toasts / .c-notifs</h3>
+            <p>On ne demande pas confirmation : on exécute, et l'on offre l'annulation. Modifier un champ ou supprimer un élément produit un événement, et chaque événement se montre à trois échelles. Le <strong>toast</strong>, au moment même, avec « Annuler » ou « Rétablir ». Le <strong>centre</strong>, liste condensée ouverte depuis l'en-tête, partout dans l'application. L'<strong>écran</strong> (le journal), tableau complet où l'on filtre, sélectionne à plusieurs, archive et supprime. Une suppression reste rétablissable tant que son événement est au journal.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-7); align-items: flex-start">
+                <div class="l-stack" style="--gap: var(--space-2); align-items: flex-start">
+                  <div class="c-toast" role="status"><span>Vizille : responsable L. Brun → C. Morel</span><button class="c-toast__action" type="button">Annuler <kbd class="c-kbd">Z</kbd></button></div>
+                  <div class="c-toast" role="status"><span>Vizille supprimée</span><button class="c-toast__action" type="button">Rétablir <kbd class="c-kbd">Z</kbd></button></div>
+                </div>
+                <div class="c-menu__list c-notifs" style="position: static" aria-label="Notifications">
+                  <div class="c-notifs__head"><span>Notifications</span><span>2 non lues</span></div>
+                  <ol class="c-notifs__list">
+                    <li class="c-notifs__item is-unread"><span class="c-notifs__meta"><span>20:51</span><span>Suppression</span></span><span class="c-notifs__text">Vizille supprimée</span><span class="c-notifs__action"><button class="c-toast__action" type="button">Rétablir</button></span></li>
+                    <li class="c-notifs__item is-unread"><span class="c-notifs__meta"><span>20:51</span><span>Modification</span></span><span class="c-notifs__text">Vizille : responsable L. Brun → C. Morel</span><span class="c-notifs__action"><button class="c-toast__action" type="button">Annuler</button></span></li>
+                    <li class="c-notifs__item"><span class="c-notifs__meta"><span>20:10</span><span>Modification</span></span><span class="c-notifs__text">Voiron : effectif passé de 5 à 6</span><span class="c-notifs__action"><span class="t-muted">Annulé</span></span></li>
+                    <li class="c-notifs__item"><span class="c-notifs__meta"><span>19:16</span><span>Création</span></span><span class="c-notifs__text">Rapport du troisième trimestre généré</span><span class="c-notifs__action"></span></li>
+                  </ol>
+                  <div class="c-notifs__foot"><button class="c-toast__action" type="button">Tout marquer lu</button><button class="c-toast__action" type="button">Tout voir <i class="c-icon i-arrow-right" aria-hidden="true"></i></button></div>
+                </div>
+              </div>
+            </div>
+            <p>Le parcours complet se joue dans l'exemple <a href="exemples/application-modules.html">Application · onglets</a> : ouvrir une agence, changer son responsable ou la supprimer, puis <kbd class="c-kbd">Z</kbd> pour annuler, <kbd class="c-kbd">N</kbd> pour le centre, et l'onglet Journal pour l'écran complet.</p>
+            <dl class="cat-spec">
+              <div><dt>Annuler plutôt que confirmer</dt><dd>Toute action réversible s'exécute sans question et laisse une annulation : dans le toast pendant 8 s, puis au centre et au journal sans limite de durée. La modale de confirmation est réservée à ce que rien ne peut défaire — un envoi, un paiement, une purge.</dd></div>
+              <div><dt>Mots</dt><dd>« Annuler » défait une modification, « Rétablir » ramène ce qui a été supprimé. Une fois fait : « Annulé », « Rétabli », en ton éteint. L'événement dit ce qui a changé, avec l'ancienne et la nouvelle valeur.</dd></div>
+              <div><dt>Toast</dt><dd><code>.c-toasts</code> : trois au plus, en bas à gauche. Une action au plus, <code>.c-toast__action</code>, et sa touche.</dd></div>
+              <div><dt>Centre</dt><dd><code>.c-notifs</code> dans un <code>.c-menu</code> de l'en-tête : les six derniers événements, le compte des non lus entre crochets sur le bouton, « Tout marquer lu », « Tout voir ». Il ne se substitue pas au journal : pas de filtre, pas de sélection.</dd></div>
+              <div><dt>Écran</dt><dd>Un <code>.c-table</code> à cases : filtres <code>.c-chip</code> (tous, non lus, suppressions, archivés), puis <code>.c-bulkbar</code> dès qu'une ligne est cochée — marquer lu, archiver, supprimer. Retirer des événements du journal est lui-même un événement annulable.</dd></div>
+              <div><dt>Non lu</dt><dd>Un point plein et la graisse. Jamais le signal : il reste au fait unique de l'écran, pas au compteur.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Toasts dans une région <code>aria-live="polite"</code>. L'annulation est toujours atteignable au clavier, et jamais seulement dans un toast qui s'efface.</dd></div>
+            </dl>
+          </div>
+
           <div class="cat-sub" id="c-dialog" data-search="composant">
             <h3>Modale — .c-dialog</h3>
             <p>Une feuille large posée au centre, sur la page hachurée mais encore lisible. Même fond et même contour que la page, aucun bandeau ni filet intérieur. Trois choses au plus : un titre, une phrase ou quelques champs, les actions à droite. Sa hauteur est celle de son contenu.</p>
@@ -1215,7 +1248,7 @@
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Suppression, écrasement, envoi définitif. Uniquement quand l'action ne peut pas être annulée après coup.</dd></div>
-              <div><dt>Éviter</dt><dd>Pour une action annulable : l'exécuter et proposer « Annuler » dans une notification. Pas de case « Ne plus demander ».</dd></div>
+              <div><dt>Éviter</dt><dd>Pour toute action annulable — y compris une suppression que l'on peut rétablir : l'exécuter et proposer l'annulation (voir Annulation et notifications). Pas de case « Ne plus demander ».</dd></div>
               <div><dt>Règles</dt><dd>Pas de bouton fermer : il faut choisir. Le focus initial est sur « Annuler ». Le bouton d'action répète le verbe du titre.</dd></div>
             </dl>
           </div>

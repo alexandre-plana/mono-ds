@@ -230,6 +230,8 @@ et le signal (2), on ne réduit pas le reste du tableau sous le plancher (1).
 | « Un fond au survol, pour montrer que ça se clique » | Un état ne change pas de fond ; et le fond ne dit pas ce que fera le clic | Le survol annonce : un filet terminé en pointe, ou une icône `.c-cue` |
 | « Mettre la photo telle quelle, elle est belle » | Sa couleur et ses extrêmes écrasent tout le reste de la page | `.c-media--raw` : encrée, au ton de la page ; `--raster` si elle pèse encore |
 | « Rendre la couleur de l'image au survol » | La seule couleur est le signal | L'image reste encrée ; le survol annonce le clic, pas l'image |
+| « Une confirmation avant chaque suppression » | Une modale qui interrompt pour une action que l'on peut défaire | Exécuter, puis offrir « Rétablir » : dans le toast, au centre, au journal |
+| « Une pastille rouge sur les notifications » | Le signal deviendrait un compteur | Le nombre entre crochets, un point plein pour le non lu |
 | « Une animation à l'apparition » | Rien d'ornemental | Transitions de 120 ms sur la couleur et la bordure, rien d'autre |
 | « Centrer l'état vide, c'est plus équilibré » | Ferré à gauche, sans exception | `.c-empty` sur l'axe du contenu qu'il remplace |
 | « L'onglet actif en blanc, pour bien voir où l'on est » | Le clair irait au contrôle, pas au contenu qu'il vient d'ouvrir | Contour de 2 px en gris moyen, fond inchangé ; c'est le contenu de la vue qui porte le clair |

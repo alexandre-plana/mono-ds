@@ -54,6 +54,10 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
 - Image : un dessin du système entre tel quel (`.c-media`) ; toute image brute est
   encrée (`.c-media--raw`, ou `--raster` / `--threshold`). Jamais de photo en couleur,
   jamais de texte sur une image, un tiers de la vue au plus.
+- Annuler plutôt que confirmer : toute action réversible (modifier un champ,
+  supprimer) s'exécute sans question et laisse une annulation — toast, centre de
+  notifications (`.c-notifs`), journal. La modale de confirmation est réservée à
+  l'irréversible. Le non-lu se dit par un point et la graisse, jamais par le signal.
 - Tableau : aucun filet entre les lignes ; un filet sous la ligne survolée ;
   `.c-table--ruled` seulement pour un tableau large, dense ou imprimé.
 - Dans un graphique : marques en `--mark` (gris moyen), valeurs en `--fg-strong`,

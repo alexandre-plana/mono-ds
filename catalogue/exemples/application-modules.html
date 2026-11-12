@@ -53,6 +53,10 @@
           <nav class="c-breadcrumb c-breadcrumb--head" aria-label="Fil d'Ariane" id="crumbs"></nav>
           <div class="l-cluster" style="--gap: var(--space-2); flex-wrap: nowrap">
             <button class="c-button c-button--quiet" type="button" id="goto">Aller à <span class="c-kbd" aria-hidden="true">/</span></button>
+            <details class="c-menu c-menu--end" id="notifs">
+              <summary class="c-button c-button--quiet">Notifications <span class="g-bracket" id="notifs-badge" hidden></span></summary>
+              <div class="c-menu__list c-notifs" id="notifs-center" aria-label="Notifications"></div>
+            </details>
             <details class="c-menu c-menu--end" id="user">
               <summary class="c-button c-button--quiet">M. Delorme<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
               <div class="c-menu__list" role="menu">
@@ -72,7 +76,7 @@
       <div class="l-pane__foot">
         <div class="c-statusbar">
           <span class="c-statusbar__group"><span class="c-status c-status--on">Connecté</span> <span class="c-statusbar__group">Exercice 2026 · T3</span> <span class="c-statusbar__group g-bracket" id="tab-count"></span></span>
-          <span class="c-statusbar__group"><span class="c-kbd">G</span> plan <span class="c-statusbar__group"><span class="c-kbd">/</span> aller à</span><span class="c-statusbar__group"><a href="../index.html">Catalogue</a></span></span>
+          <span class="c-statusbar__group"><span class="c-kbd">G</span> plan <span class="c-statusbar__group"><span class="c-kbd">/</span> aller à</span><span class="c-statusbar__group"><span class="c-kbd">N</span> notifications</span><span class="c-statusbar__group"><a href="../index.html">Catalogue</a></span></span>
         </div>
       </div>
     </div>
@@ -117,6 +121,10 @@
     </div>
   </section>
 
+  <!-- Toasts : l'événement au moment où il se produit, avec son annulation. -->
+  <div class="c-toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="../assets/notifs.js"></script>
   <script src="../assets/console.js"></script>
   <script src="../assets/palette.js"></script>
   <script src="../assets/tabs-demo.js"></script>

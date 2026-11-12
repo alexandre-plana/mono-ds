@@ -96,7 +96,8 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-tag` | `--solid`, `--dashed` | Métadonnée courte |
 | `.c-ref` | — | Référence entre parenthèses : `( WAP375CD )` |
 | `.c-notice` | `__label`, `--signal`, `--stacked`, `--hang` | Note en marge du flux |
-| `.c-tooltip`, `.c-toast` (`--signal`) | — | Une notification à la fois, en bas à gauche |
+| `.c-tooltip`, `.c-toast` (`--signal`) | `__action` ; `.c-toasts` | Trois toasts au plus, en bas à gauche ; une action et sa touche |
+| `.c-notifs` | `__head`, `__list`, `__item` (`.is-unread`), `__meta`, `__text`, `__action`, `__foot` | Centre de notifications dans un `.c-menu` de l'en-tête : les six derniers événements, leur annulation, « Tout voir » |
 | `.c-empty` | `__label`, `__title`, `__text`, `__actions` ; `--plain` | Nomme ce qui manque, propose une issue. Ferré à gauche, sans illustration |
 | `.c-spinner` | — | `\| / - \\` : une valeur en cours d'enregistrement. Toujours à côté d'elle, jamais seul |
 | `.c-loader`, `.c-progress`, `.c-skeleton` | `--title`, `--block` ; `--w`, `--h` | < 1 s : rien · quelques secondes : points ou filet · au-delà : gabarit |
@@ -139,3 +140,17 @@ ses actions sont à droite, la principale tout au bout.
   système ne fournit aucun script ; les comportements viennent du navigateur.
 - **Ajouter un composant** : passer les tests d'écart de `philosophie.md`, puis
   suivre « Étendre le système » dans `CLAUDE.md`.
+
+## Annulation et notifications
+
+On ne demande pas confirmation : on exécute et l'on offre l'annulation. Chaque
+modification ou suppression est un événement, montré à trois échelles :
+
+1. **Toast** (`.c-toasts`) — sur le moment, avec « Annuler » ou « Rétablir » et sa touche.
+2. **Centre** (`.c-notifs`) — liste condensée, ouverte depuis l'en-tête de toute page.
+3. **Écran** — le journal : un `.c-table` à cases, des filtres `.c-chip`, une
+   `.c-bulkbar` pour marquer lu, archiver, supprimer.
+
+Une suppression reste rétablissable tant que son événement est au journal. La
+modale de confirmation est réservée à l'irréversible. Démonstration :
+`catalogue/assets/notifs.js`, branchée dans `exemples/application-modules.html`.

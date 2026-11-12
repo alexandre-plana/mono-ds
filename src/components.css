@@ -296,6 +296,26 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-tooltip { display: inline-block; padding: var(--space-2) var(--space-3); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-small); line-height: var(--leading-small); max-width: 32ch; }
 .c-toast { display: inline-flex; align-items: baseline; gap: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); border-left: var(--stroke) solid var(--fg-strong); color: var(--fg-strong); font-size: var(--text-small); }
 .c-toast--signal { border-left-color: var(--signal); }
+.c-toast__action { appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; font-size: var(--text-micro); line-height: var(--leading-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-strong); cursor: pointer; display: inline-flex; align-items: center; gap: var(--space-2); white-space: nowrap; border-bottom: var(--hairline) solid var(--line-strong); }
+.c-toast__action:hover { border-bottom-color: var(--fg-strong); }
+.c-toast__action:disabled { color: var(--fg-muted); border-bottom-style: dashed; cursor: not-allowed; }
+.c-toast__action .c-kbd { margin-block: -2px; }
+/* Pile de toasts : en bas à gauche de la page, sur l'axe du texte, au-dessus de la barre d'état.
+   Trois au plus ; le plus récent en bas. */
+.c-toasts { position: fixed; z-index: 40; left: calc(var(--shell-inset) + var(--pane-pad)); bottom: calc(var(--shell-inset) + 3.5rem); display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); pointer-events: none; }
+.c-toasts > * { pointer-events: auto; }
+
+/* Centre de notifications : la liste condensée du journal, dans un menu de l'en-tête.
+   <details class="c-menu c-menu--end"><summary>…</summary><div class="c-menu__list c-notifs">…</div></details> */
+.c-notifs { width: min(26rem, calc(100vw - 2 * var(--shell-inset) - 2rem)); padding: 0; background: var(--bg); }
+.c-notifs__head, .c-notifs__foot { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-5); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-notifs__head > :first-child { color: var(--fg-strong); }
+.c-notifs__list { margin: 0; padding: 0; list-style: none; max-height: min(60vh, 26rem); overflow-y: auto; }
+.c-notifs__item { display: grid; grid-template-columns: minmax(0, 1fr) max-content; column-gap: var(--space-4); row-gap: var(--space-1); align-items: baseline; padding: var(--space-3) var(--space-5); color: var(--fg-soft); }
+.c-notifs__meta { grid-column: 1 / -1; display: flex; gap: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-notifs__item.is-unread .c-notifs__text { color: var(--fg-strong); font-weight: var(--weight-medium); }
+.c-notifs__item.is-unread .c-notifs__meta::before { content: ''; align-self: center; width: 6px; height: 6px; border-radius: 50%; background: var(--fg-strong); }
+.c-notifs__empty { margin: 0; padding: var(--space-3) var(--space-5); color: var(--fg-muted); }
 /* Modale : une feuille large (32 rem) posée au centre, sur la page hachurée mais lisible. Même fond et
    même contour que la page, aucun bandeau, aucun filet intérieur. Trois choses au plus : un
    titre, une phrase ou quelques champs, les actions à droite. Sa hauteur est celle de son

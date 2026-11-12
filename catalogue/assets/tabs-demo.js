@@ -12,7 +12,7 @@
 (() => {
   const MAP = [
     ['Réseau', [['Synthèse', 'Chiffres clés du trimestre', '5 190', 'M de primes'], ['Agences', '412 points de vente', '412', 'agences'], ['Branches', '4 branches régionales', '4', 'branches']]],
-    ['Pilotage', [['Rapports', 'Annuel, trimestriels', '6', 'rapports'], ['Journal', 'Opérations et diagnostics', '128', 'entrées']]],
+    ['Pilotage', [['Rapports', 'Annuel, trimestriels', '6', 'rapports'], ['Journal', 'Événements et annulations', '5', 'événements']]],
     ['Système', [['Réglages', 'Comptes, droits, sources', '3', 'sources']]],
   ];
   const PAGES = MAP.flatMap(([family, list]) => list.map(([name, desc, fig, label]) => ({ id: name, name, family, desc, fig, label })));
@@ -29,14 +29,23 @@
   const panels = new Map();
   const tab = (id) => tabs.find((t) => t.id === id);
 
+  // ---- notifications : un journal, trois échelles (toast, centre, écran Journal)
+  const notifs = MonoNotifs({ toasts: $('#toasts'), center: $('#notifs-center'), badge: $('#notifs-badge'), onShowAll: () => { $('#notifs').open = false; openPage('Journal'); }, seed: [
+    { ago: 190, kind: 'Système', text: '412 agences chargées en 0,8 s', read: true },
+    { ago: 95, kind: 'Création', text: 'Rapport du troisième trimestre généré', ref: 'RA-2026-03', read: true },
+    { ago: 41, kind: 'Modification', text: 'Voiron : effectif passé de 5 à 6', ref: 'N-015', undo: () => {} },
+    { ago: 12, kind: 'Système', text: 'Vizille passe en fermeture', ref: 'N-016' },
+  ] });
+
   const kv = (rows) => `<dl class="c-kv c-kv--plain" style="max-width: 30rem">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>`;
   const note = (label, hint) => `<section class="l-stack" style="--gap: var(--space-4); max-width: 40rem"><h2 class="c-section-head"><span>Note</span><span class="c-section-head__aside">${hint}</span></h2><div class="c-editable" style="align-items: flex-start"><textarea class="c-editable__input" rows="2" aria-label="${label}" placeholder="Écrire ici, changer d'onglet, revenir : le texte est toujours là."></textarea></div></section>`;
-  const fiche = (a) => `<div class="c-stat"><span class="c-stat__label">${a.ref}</span><span class="c-stat__value">${a.nom}</span><span class="c-stat__note"><span class="c-status ${a.cls}">${a.etat}</span></span></div>${kv([['Branche', 'Nord'], ['Responsable', a.resp], ['Primes', a.primes + ' M']])}`;
+  const fiche = (a, edit) => `<div class="c-stat"><span class="c-stat__label">${a.ref}</span><span class="c-stat__value">${a.nom}</span><span class="c-stat__note"><span class="c-status ${a.cls}">${a.etat}</span></span></div>${kv([['Branche', 'Nord'], ['Responsable', edit ? `<span class="c-editable"><input class="c-editable__input" data-edit-resp="${a.ref}" value="${a.resp}" aria-label="Responsable de ${a.nom}" spellcheck="false"></span>` : a.resp], ['Primes', a.primes + ' M']])}`;
 
   function build(t) {
     const el = document.createElement('main');
     el.className = 'l-pane__body'; el.id = 'panel-' + slug(t.id); el.setAttribute('role', 'tabpanel'); el.dataset.tab = t.id;
     if (t.agence) el.innerHTML = fiche(t.agence) + note('Note sur ' + t.agence.nom, 'Conservée avec l\'onglet');
+    else if (t.id === 'Journal') { el.innerHTML = '<div class="l-stack" style="--gap: var(--space-6)"></div>'; notifs.mount(el.firstChild); }
     else if (t.id === 'Agences') {
       el.innerHTML = `<div class="l-detail"><div class="l-detail__main"><div class="l-split" style="align-items: flex-end"><h1 class="t-title"><span data-count></span> <span class="t-soft t-body">agences affichées</span></h1><button class="c-button" type="button"><i class="c-icon i-plus" aria-hidden="true"></i>Nouvelle agence</button></div>
         <label class="c-search" style="max-width: 22rem"><i class="c-icon i-search" aria-hidden="true"></i><input type="search" placeholder="Filtrer les agences" aria-label="Filtrer les agences" autocomplete="off"></label>
@@ -58,11 +67,25 @@
   // Inspecteur attaché : dans le panneau de l'onglet, donc conservé et masqué avec lui.
   function inspect(ref, keep) {
     const el = panels.get('Agences') || build(tab('Agences')), box = $('.l-detail__aside', el), a = AGENCES.find((x) => x.ref === ref);
-    if (a && el.dataset.inspect !== ref) box.innerHTML = `<div class="l-detail__head"><span class="t-micro">Inspecteur</span><span class="l-cluster" style="--gap: var(--space-1); flex-wrap: nowrap"><button class="c-button c-button--quiet" type="button" data-pin="${a.ref}"><i class="c-icon i-pin" aria-hidden="true"></i>Épingler</button><button class="c-button c-button--quiet" type="button" data-uninspect aria-label="Fermer l'inspecteur"><i class="c-icon i-close" aria-hidden="true"></i></button></span></div>${fiche(a)}${note('Note sur ' + a.nom, 'Suit l\'onglet')}`;
+    if (a && el.dataset.inspect !== ref) box.innerHTML = `<div class="l-detail__head"><span class="t-micro">Inspecteur</span><span class="l-cluster" style="--gap: var(--space-1); flex-wrap: nowrap"><button class="c-button c-button--quiet" type="button" data-delete="${a.ref}"><i class="c-icon i-trash" aria-hidden="true"></i>Supprimer</button><button class="c-button c-button--quiet" type="button" data-pin="${a.ref}"><i class="c-icon i-pin" aria-hidden="true"></i>Épingler</button><button class="c-button c-button--quiet" type="button" data-uninspect aria-label="Fermer l'inspecteur"><i class="c-icon i-close" aria-hidden="true"></i></button></span></div>${fiche(a, true)}${note('Note sur ' + a.nom, 'Suit l\'onglet')}`;
     if (a && keep) $('textarea', box).value = keep;
     el.dataset.inspect = a ? ref : ''; box.hidden = !a; $('.l-detail', el).classList.toggle('has-aside', !!a);
     drawAgences();
   }
+
+  // Supprimer : pas de confirmation. On exécute, et l'annulation reste offerte — dans le toast, puis au journal.
+  function removeAgence(ref) {
+    const i = AGENCES.findIndex((x) => x.ref === ref); if (i < 0) return; const [a] = AGENCES.splice(i, 1);
+    if (panels.get('Agences')?.dataset.inspect === ref) inspect(null); else drawAgences();
+    notifs.push({ kind: 'Suppression', text: `${a.nom} supprimée`, ref, undo: () => { AGENCES.splice(Math.min(i, AGENCES.length), 0, a); drawAgences(); } });
+  }
+  // Modifier en place : la valeur est enregistrée tout de suite, l'ancienne reste à une touche.
+  document.addEventListener('change', (e) => {
+    const ref = e.target.dataset?.editResp; if (!ref) return;
+    const a = AGENCES.find((x) => x.ref === ref), before = a.resp, after = e.target.value.trim(); if (!after || after === before) { e.target.value = before; return; }
+    a.resp = after; drawAgences();
+    notifs.push({ kind: 'Modification', text: `${a.nom} : responsable ${before} → ${after}`, ref, undo: () => { a.resp = before; drawAgences(); document.querySelectorAll(`[data-edit-resp="${ref}"]`).forEach((n) => { n.value = before; }); } });
+  });
 
   // ---- rangée d'onglets, avec débordement dans le menu « … »
   const list = $('#tablist'), bar = $('#tabs'), more = $('#more');
@@ -146,9 +169,10 @@
   $('#side-open').addEventListener('click', () => { const s = side; side = null; s.kind === 'agence' ? openAgence(AGENCES.find((a) => a.ref === s.id)) : openPage(s.id); });
   document.addEventListener('click', (e) => {
     if (e.target === document.body || e.target === plan) { closeMenus(); showPlan(!planOpen()); return; }
-    const t = e.target.closest('[data-close], [data-tab], [data-open], [data-beside], [data-pin], [data-uninspect], [data-console], tr[data-ref]');
+    const t = e.target.closest('[data-delete], [data-close], :is(button, a)[data-tab], [data-open], [data-beside], [data-pin], [data-uninspect], [data-console], tr[data-ref]');
     if (t) {
-      if (t.dataset.close) closeTab(t.dataset.close);
+      if (t.dataset.delete) removeAgence(t.dataset.delete);
+      else if (t.dataset.close) closeTab(t.dataset.close);
       else if (t.dataset.tab) { e.preventDefault(); activate(t.dataset.tab); }
       else if (t.dataset.open) openPage(t.dataset.open);
       else if (t.dataset.beside) setSide({ kind: 'page', id: t.dataset.beside });
@@ -173,6 +197,8 @@
     if (e.key === '/') { e.preventDefault(); closeMenus(); palette.open(); }
     else if (k === 'g') { e.preventDefault(); closeMenus(); showPlan(!planOpen()); }
     else if (k === 'c') { e.preventDefault(); toggleConsole(); }
+    else if (k === 'n') { e.preventDefault(); const m = $('#notifs'); closeMenus(m); m.open = !m.open; }
+    else if (k === 'z') { if (notifs.undoLast()) e.preventDefault(); }
     else if (e.key === 'Escape') { closeMenus(); if (planOpen()) showPlan(false); else if (current === 'Agences' && panels.get('Agences').dataset.inspect) inspect(null); }
   });
   new ResizeObserver(() => renderTabs()).observe(bar);

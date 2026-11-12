@@ -77,6 +77,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-055 | La modale reprend sa largeur classique | en vigueur |
 | D-054 | Graphiques : treemap, composition, nuage, matrice, tendance ; pas de camembert | en vigueur, formes revues en D-056 |
 | D-056 | Graphiques : le trait avant le ton, les signes annotent | en vigueur |
+| D-057 | Annuler plutôt que confirmer | en vigueur |
+| D-058 | Notifications : un journal, trois échelles | en vigueur |
 
 ---
 
@@ -519,3 +521,24 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Raison** : « séries distinguées par ton et trait » (règle V4) penchait trop vers le ton. Trois gris se confondent dès qu'ils se touchent et s'inversent entre encre et papier ; trois traits, non. Les signes (D-016) trouvent ici leur emploi légitime : ils annotent.
 - **Abandonné** : les paliers `.v-heat--0…4` de D-054.
 - **Réserve** : les crêtes ne donnent pas de valeurs lisibles ; elles montrent une allure et doivent s'accompagner d'un titre qui dit le constat.
+
+## D-057 — Annuler plutôt que confirmer
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : modifier un champ ou supprimer un élément s'exécute immédiatement et propose son annulation : « Annuler » pour une modification, « Rétablir » pour une suppression. L'annulation est offerte dans le toast (8 s, touche Z), puis reste disponible au centre de notifications et au journal, sans limite de durée.
+- **Raison** : une confirmation interrompt à chaque fois pour protéger d'une erreur rare ; l'annulation ne coûte rien quand tout va bien et répare quand on s'est trompé. Elle prolonge l'édition en place (D-017) et évite une modale.
+- **Conséquence** : la modale de confirmation (`.c-dialog--small`) ne sert plus que pour ce que rien ne peut défaire : envoi, paiement, purge définitive.
+- **Exigence** : l'annulation ne doit jamais n'exister que dans un toast qui s'efface ; elle a toujours une place durable.
+- **Non tranché** : la durée de conservation. Dans la démonstration, une suppression est rétablissable tant que son événement est au journal ; une application réelle devra fixer un délai de purge et le dire.
+
+## D-058 — Notifications : un journal, trois échelles
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : un seul journal d'événements (modifications, suppressions, créations, système), montré à trois échelles. Le **toast** (`.c-toasts`), en temps réel, trois au plus, en bas à gauche. Le **centre** (`.c-notifs`), liste condensée des six derniers événements dans un menu de l'en-tête, accessible partout (touche N). L'**écran** : l'onglet Journal, tableau à cases avec filtres (tous, non lus, suppressions, archivés) et actions groupées (marquer lu, archiver, supprimer).
+- **Choix de Claude** :
+  - le centre est un menu de l'en-tête, pas un panneau latéral — ce serait le retour du tiroir (D-020) ;
+  - le non-lu se dit par un point plein et la graisse, le compte par un nombre entre crochets ; jamais le signal, qui deviendrait un compteur ;
+  - retirer des événements du journal est lui-même un événement annulable ;
+  - l'écran complet réutilise le tableau avancé, les filtres et la barre d'actions existants : aucun composant nouveau.
+- **Remplace** : « une notification à la fois » (trois au plus désormais).
+- **Démonstration** : `catalogue/assets/notifs.js`, dans `exemples/application-modules.html` (suppression et changement de responsable depuis l'inspecteur).
