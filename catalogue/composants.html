@@ -1198,6 +1198,82 @@
             </dl>
           </div>
 
+          <div class="cat-sub" id="c-dialog--portrait" data-search="composant">
+            <h3>Modale portrait — .c-dialog--portrait, --column</h3>
+            <p>Une feuille plus haute que large, au format A (1 : √2). Le titre en haut, en grand ; le pied en bas ; entre les deux, le vide — ou ce qui est en jeu. Trois compositions : le chiffre, l'étiquette, la colonne.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster">
+                <button class="c-button" type="button" onclick="document.getElementById('demo-portrait-a').showModal()">Le chiffre</button>
+                <button class="c-button" type="button" onclick="document.getElementById('demo-portrait-b').showModal()">L'étiquette</button>
+                <button class="c-button" type="button" onclick="document.getElementById('demo-portrait-c').showModal()">La colonne</button>
+              </div>
+              <dialog class="c-dialog c-dialog--portrait" id="demo-portrait-a" aria-labelledby="demo-portrait-a-title">
+                <h3 class="c-dialog__title" id="demo-portrait-a-title">Fermer l'agence de Vizille ?</h3>
+                <form method="dialog" style="display: contents">
+                  <div class="c-dialog__body">
+                    <p>Ses contrats passent à Grenoble Centre. L'historique est archivé et ne pourra plus être modifié.</p>
+                    <div class="c-dialog__stake">
+                      <div class="c-stat c-stat--hero">
+                        <span class="c-stat__label">Historique archivé</span>
+                        <span class="c-stat__value">14<small>mois</small></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="c-dialog__actions">
+                    <span class="c-dialog__aside"><span class="c-ref">N-016</span></span>
+                    <button class="c-button c-button--quiet" type="submit" autofocus>Annuler</button>
+                    <button class="c-button c-button--signal" type="submit">Fermer</button>
+                  </div>
+                </form>
+              </dialog>
+              <dialog class="c-dialog c-dialog--portrait" id="demo-portrait-b" aria-labelledby="demo-portrait-b-title">
+                <h3 class="c-dialog__title" id="demo-portrait-b-title">Fermer l'agence ?</h3>
+                <form method="dialog" style="display: contents">
+                  <div class="c-dialog__body">
+                    <dl class="c-kv c-kv--plain">
+                      <div><dt>Agence</dt><dd>Vizille</dd></div>
+                      <div><dt>Référence</dt><dd>N-016</dd></div>
+                      <div><dt>Branche</dt><dd>Nord</dd></div>
+                      <div><dt>Effectif</dt><dd>2</dd></div>
+                      <div><dt>Historique</dt><dd>14 mois</dd></div>
+                      <div><dt>Reprise par</dt><dd>Grenoble Centre</dd></div>
+                    </dl>
+                    <div class="c-dialog__stake"><p>Cette action est irréversible.</p></div>
+                  </div>
+                  <div class="c-dialog__actions">
+                    <span class="c-dialog__aside"><kbd class="c-kbd">Échap</kbd></span>
+                    <button class="c-button c-button--quiet" type="submit" autofocus>Annuler</button>
+                    <button class="c-button c-button--signal" type="submit">Fermer</button>
+                  </div>
+                </form>
+              </dialog>
+              <dialog class="c-dialog c-dialog--column" id="demo-portrait-c" aria-labelledby="demo-portrait-c-title">
+                <h3 class="c-dialog__title" id="demo-portrait-c-title">Nouvelle agence</h3>
+                <form method="dialog" style="display: contents">
+                  <div class="c-dialog__body">
+                    <label class="c-field"><span class="c-field__label">Nom</span><input class="c-input" type="text" placeholder="Ville, quartier" autofocus></label>
+                    <label class="c-field"><span class="c-field__label">Branche</span><select class="c-select"><option>Nord</option><option>Centre</option><option>Sud</option><option>Ouest</option></select></label>
+                    <label class="c-field"><span class="c-field__label">Responsable</span><input class="c-input" type="text"></label>
+                    <label class="c-field"><span class="c-field__label">Ouverture</span><input class="c-input" type="text" placeholder="2026"></label>
+                    <div class="c-dialog__stake"><p>L'agence est créée en attente. Elle n'apparaît dans les totaux qu'une fois activée.</p></div>
+                  </div>
+                  <div class="c-dialog__actions">
+                    <span class="c-dialog__aside"><span class="g-bracket">1 / 2</span></span>
+                    <button class="c-button c-button--quiet" type="submit">Annuler</button>
+                    <button class="c-button c-button--primary" type="submit">Continuer</button>
+                  </div>
+                </form>
+              </dialog>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Le chiffre</dt><dd><code>--portrait</code> avec un <code>.c-stat--hero</code> dans <code>__stake</code>. Ce que l'action engage, en un nombre, juste au-dessus du bouton. Pour une confirmation dont la conséquence se mesure.</dd></div>
+              <div><dt>L'étiquette</dt><dd><code>--portrait</code> avec un <code>.c-kv</code> : la fiche de l'objet, à filets conducteurs, comme une étiquette technique. Pour vérifier que l'on agit sur le bon objet.</dd></div>
+              <div><dt>La colonne</dt><dd><code>--column</code> : toute la hauteur de l'écran, centrée. Les champs se remplissent de haut en bas, le pied ne bouge pas, la position dans la suite se lit entre crochets. Pour un formulaire de quatre à huit champs, ou en deux temps.</dd></div>
+              <div><dt>__stake</dt><dd>Poussé au bas du corps. Une seule chose : un chiffre, ou une phrase. C'est la dernière chose lue avant le bouton.</dd></div>
+              <div><dt>Éviter</dt><dd>Remplir le vide du milieu : il fait partie de la composition. Un titre de plus de trois lignes. Le format portrait pour un tableau ou un contenu large (<code>--large</code>).</dd></div>
+            </dl>
+          </div>
+
           <div class="cat-sub" id="c-window" data-search="composant">
             <h3>Fenêtre flottante — .c-window</h3>
             <p>Une petite page posée par-dessus les autres, que l'on déplace par sa barre. Elle n'est pas modale : la page dessous reste utilisable. Elle ne porte aucune ombre ; elle emporte avec elle un liseré de plan de travail, une bande du ton le plus sombre, comme toute page.</p>

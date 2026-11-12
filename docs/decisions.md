@@ -69,6 +69,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-046 | La modale est une petite page, sans habillage | amendée par D-048 |
 | D-047 | Le filet de survol d'une ligne cliquable dépasse à droite | en vigueur |
 | D-048 | Modale éditoriale : un seul titre, actions à droite | en vigueur |
+| D-049 | Modales portrait : le chiffre, l'étiquette, la colonne | proposée, choix à faire |
 
 ---
 
@@ -437,3 +438,14 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Raison** : la lecture d'une modale descend du titre au texte et s'achève en bas à droite ; l'action qui conclut s'y trouve. C'est une exception assumée au « ferré à gauche », limitée au pied de la modale : le titre, le texte et les champs restent sur l'axe gauche.
 - **Ce qui reste de D-046** : fond et contour de la page, aucun filet intérieur, pas de croix, filet de défilement seulement si le contenu dépasse.
 - **Abandonné** : `__head`, `__close`.
+
+## D-049 — Modales portrait : le chiffre, l'étiquette, la colonne
+
+- **Date** : 2026-11-12 · **Statut** : proposée, choix à faire · **Demandée par** : le commanditaire (« plus hautes que larges, sois créatif »)
+- **Proposition** (de Claude) : une feuille au format A (1 : √2, 23 rem de large). Titre en haut en corps d'écran (32 px), sur deux lignes s'il le faut ; pied en bas ; le vide au milieu fait partie de la composition. Un bloc `__stake`, poussé au bas du corps, porte ce qui est en jeu : c'est la dernière chose lue avant le bouton. Trois compositions :
+  - **le chiffre** — `--portrait` + un `.c-stat--hero` : ce que l'action engage, en un nombre ;
+  - **l'étiquette** — `--portrait` + un `.c-kv` à filets conducteurs : la fiche de l'objet, comme une étiquette technique ;
+  - **la colonne** — `--column` : toute la hauteur de l'écran, centrée, pour un formulaire de quatre à huit champs ou en deux temps ; la position se lit entre crochets.
+- **Raison** : les références sont des pages et des étiquettes, pas des boîtes de dialogue ; le format portrait est le leur. Il laisse aussi la page hachurée visible des deux côtés.
+- **À trancher** : le portrait devient-il le format par défaut de toute modale, ou reste-t-il une variante à côté du format paysage de D-048 ? La colonne ressemble-t-elle trop au tiroir écarté en D-020 ? Elle est centrée et modale, mais occupe la même hauteur.
+- **Limite** : le format ne convient pas à un contenu large (tableau, « Aller à ») : `--large` reste.

@@ -311,6 +311,18 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-dialog::backdrop { background-color: color-mix(in srgb, var(--desk) 78%, transparent); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px); }
 .c-dialog--small { width: min(27rem, calc(100vw - 2rem)); }
 .c-dialog--large { width: min(48rem, calc(100vw - 2rem)); }
+/* Portrait : une feuille plus haute que large (1 : √2, le format A). Le titre en haut, en grand,
+   sur deux lignes s'il le faut ; le pied en bas ; entre les deux, le vide — ou ce qui est en jeu.
+     --portrait   la feuille : titre, texte, puis __stake poussé au bas du corps
+     --column     la colonne : toute la hauteur de l'écran, pour un formulaire qui se remplit de haut en bas */
+.c-dialog--portrait, .c-dialog--column { width: min(23rem, calc(100vw - 2rem)); }
+.c-dialog--portrait { min-height: min(32.5rem, 80vh); margin-top: 9vh; }
+.c-dialog--column { height: calc(100vh - 4 * var(--shell-inset)); height: calc(100dvh - 4 * var(--shell-inset)); max-height: none; margin-block: calc(2 * var(--shell-inset)); }
+.c-dialog--portrait .c-dialog__title, .c-dialog--column .c-dialog__title { font-size: var(--text-display); line-height: var(--leading-display); letter-spacing: -0.01em; }
+.c-dialog--portrait .c-dialog__body, .c-dialog--column .c-dialog__body { gap: var(--space-5); }
+/* Ce qui est en jeu : le chiffre, la fiche ou la phrase que l'on doit avoir lu avant d'agir.
+   Poussé au bas du corps, juste au-dessus des actions. */
+.c-dialog__stake { margin-top: auto; padding-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
 .c-dialog__title { flex: none; margin: 0; padding: var(--dialog-pad) var(--dialog-pad) 0; font-size: var(--text-title); line-height: var(--leading-title); color: var(--fg-strong); font-weight: var(--weight-regular); text-wrap: balance; }
 /* Le corps défile seul ; un filet n'apparaît qu'à la limite d'un contenu qui dépasse. */
 .c-dialog__body { --_w: calc(100% - 2 * var(--dialog-pad)); flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-5) var(--dialog-pad) var(--space-2); display: flex; flex-direction: column; gap: var(--space-4); color: var(--fg-soft);

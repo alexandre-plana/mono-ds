@@ -107,7 +107,8 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 
 | Composant | Éléments et variantes | Règle d'emploi |
 |---|---|---|
-| `.c-dialog` (`<dialog>`) | `__title`, `__body`, `__actions`, `__aside` ; `--small`, `--large` | Tâche courte qui exige une réponse. Une petite page sur la page hachurée : un seul titre en grand, la prose, puis le pied — référence à gauche, actions à droite, la principale au bout. Titre = verbe + objet ; le bouton principal répète le verbe |
+| `.c-dialog` (`<dialog>`) | `__title`, `__body`, `__actions`, `__aside` ; `--small`, `--large`, `--portrait`, `--column` ; `__stake` | Tâche courte qui exige une réponse. Une petite page sur la page hachurée : un seul titre en grand, la prose, puis le pied — référence à gauche, actions à droite, la principale au bout. Titre = verbe + objet ; le bouton principal répète le verbe |
+| `.c-dialog--portrait`, `--column` | `__stake` (chiffre ou phrase poussé au bas du corps) | Feuille plus haute que large (1 : √2). Le chiffre, l'étiquette (`.c-kv`) ou la colonne pleine hauteur pour un formulaire |
 | `.c-dialog--small` (confirmation) | — | Irréversible uniquement. Pas de bouton fermer ; focus initial sur « Annuler » ; seul le bouton porte le signal |
 | `.c-window` | `__frame`, `__bar`, `__title`, `__actions`, `__body` (`--flush`) ; `--resizable`, `.is-active`, `.is-maximized`, `.is-minimized` ; `--window`, `--window-height` | Fenêtre flottante non modale : un outil gardé sous la main. Liseré de plan de travail, aucune ombre. Deux au plus |
 
