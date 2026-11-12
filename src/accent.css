@@ -1,0 +1,63 @@
+/* ==========================================================================
+   MONO — Variante d'accent (data-accent sur <html>)
+
+   Par défaut le signal est discret : un carré, un filet, un mot, moins de 1 % de l'écran.
+   Cette variante le rend explicite, sur les deux thèmes, sans ajouter de couleur ni de
+   cible : seul ce qui porte DÉJÀ le signal change.
+
+     (absent)              discret — le système tel qu'il est
+     data-accent="fort"    le signal devient un aplat : toute la ligne, toute la fiche
+     data-accent="flash"   l'aplat apparaît à l'arrivée de l'élément — chargement de la page,
+                           nouvelle ligne, état qui devient critique — puis laisse place au
+                           style discret
+
+   Rien ne bouge : l'aplat déborde par un contour ou un pseudo-élément, jamais par une
+   marge. Sur l'aplat, tout le texte passe en --on-signal (contraste contrôlé).
+   Un élément déjà signalé que l'on redessine porte .is-settled pour ne pas rejouer le flash.
+   Avec « réduire les animations », le flash n'a pas lieu : on voit le style discret.
+   ========================================================================== */
+
+/* --- Fort ----------------------------------------------------------------- */
+:root[data-accent="fort"] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > * { background-color: var(--signal); color: var(--on-signal); }
+:root[data-accent="fort"] :is(.c-card--signal, .c-notice--signal, .c-toast--signal) { background-color: var(--signal); color: var(--on-signal); border-color: var(--signal); outline: var(--space-2) solid var(--signal); }
+:root[data-accent="fort"] .c-toast--signal { outline: 0; }
+:root[data-accent="fort"] .c-button--signal { background-color: var(--signal); color: var(--on-signal); }
+:root[data-accent="fort"] .c-status--critical { background-color: var(--signal); color: var(--on-signal); outline: 3px solid var(--signal); }
+/* Sur l'aplat, une seule encre. */
+:root[data-accent="fort"] :is(.c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > *, .c-card--signal, .c-notice--signal, .c-toast--signal) :is(*, .is-signal) { color: var(--on-signal); }
+:root[data-accent="fort"] .c-status--critical::before { background-color: var(--on-signal); border-color: var(--on-signal); }
+:root[data-accent="fort"] :is(.c-card--signal, .c-notice--signal, .c-toast--signal) :is(.c-toast__action, a) { border-bottom-color: var(--on-signal); }
+/* La ligne déborde de 8 px de chaque côté : le texte garde son axe, l'aplat a sa marge. */
+:root[data-accent] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > * { position: relative; }
+:root[data-accent] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > :first-child::before,
+:root[data-accent] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > :last-child::after { content: ''; position: absolute; top: 0; bottom: 0; width: var(--space-2); height: auto; border: 0; transform: none; opacity: 1; }
+:root[data-accent] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > :first-child::before { right: 100%; left: auto; }
+:root[data-accent] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > :last-child::after { left: 100%; right: auto; }
+:root[data-accent] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > :last-child:not(:first-child)::before { content: none; }
+:root[data-accent="fort"] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > :first-child::before,
+:root[data-accent="fort"] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)) > :last-child::after { background-color: var(--signal); }
+/* Dans une zone qui défile en largeur, la zone s'élargit d'autant pour laisser passer le débord. */
+:root[data-accent] .c-table-wrap { padding-inline: var(--space-2); margin-inline: calc(-1 * var(--space-2)); }
+/* Graphiques : l'anneau, la tuile et le point se remplissent. */
+:root[data-accent="fort"] .v-ring--signal { fill: var(--signal); }
+:root[data-accent="fort"] .v-ring--signal + .v-dot--signal { fill: var(--on-signal); }
+:root[data-accent="fort"] g:has(> .v-cell):has(> .v-mark--signal) > .v-cell { fill: var(--signal); }
+:root[data-accent="fort"] g:has(> .v-cell):has(> .v-mark--signal) > :is(text, .v-mark--signal) { fill: var(--on-signal); }
+
+/* --- Flash ---------------------------------------------------------------- */
+@keyframes accent-fill { 0%, 55% { background-color: var(--signal); color: var(--on-signal); border-color: var(--signal); outline-color: var(--signal); } }
+@keyframes accent-ink { 0%, 55% { color: var(--on-signal); border-color: var(--on-signal); } }
+@keyframes accent-glyph { 0%, 55% { background-color: var(--on-signal); border-color: var(--on-signal); } }
+@keyframes accent-edge { 0%, 55% { background-color: var(--signal); } }
+@keyframes accent-svg { 0%, 55% { fill: var(--signal); } }
+@keyframes accent-svg-ink { 0%, 55% { fill: var(--on-signal); } }
+:root[data-accent="flash"] { --accent-flash: 2.2s; }
+:root[data-accent="flash"] :is(.c-card--signal, .c-notice--signal) { outline: var(--space-2) solid transparent; }
+:root[data-accent="flash"] .c-status--critical { outline: 3px solid transparent; }
+:root[data-accent="flash"] :is(.c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)):not(.is-settled) > *, .c-card--signal, .c-notice--signal, .c-toast--signal, .c-button--signal, .c-status--critical):not(.is-settled) { animation: accent-fill var(--accent-flash) ease-out 1; }
+:root[data-accent="flash"] :is(.c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)):not(.is-settled) > *, .c-card--signal:not(.is-settled), .c-notice--signal:not(.is-settled), .c-toast--signal) :is(*, .is-signal) { animation: accent-ink var(--accent-flash) ease-out 1; }
+:root[data-accent="flash"] :not(.is-settled) > * > .c-status--critical::before, :root[data-accent="flash"] :not(.is-settled) > .c-status--critical::before { animation: accent-glyph var(--accent-flash) ease-out 1; }
+:root[data-accent="flash"] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)):not(.is-settled) > :first-child::before,
+:root[data-accent="flash"] .c-table tbody tr:is(.is-critical, :has(.c-status--critical, .is-signal)):not(.is-settled) > :last-child::after { animation: accent-edge var(--accent-flash) ease-out 1; }
+:root[data-accent="flash"] :is(.v-ring--signal, g:has(> .v-cell):has(> .v-mark--signal) > .v-cell) { animation: accent-svg var(--accent-flash) ease-out 1; }
+:root[data-accent="flash"] :is(.v-ring--signal + .v-dot--signal, g:has(> .v-cell):has(> .v-mark--signal) > :is(text, .v-mark--signal)) { animation: accent-svg-ink var(--accent-flash) ease-out 1; }

@@ -62,6 +62,14 @@ Un titre, quelques champs ou une phrase, deux actions. Ni bandeau, ni croix, ni 
 
 ![Modale sur la page hachurée](docs/captures/modale.png)
 
+### Discret, fort ou flash
+
+Par défaut le signal tient en un carré. Une variante, sur les deux thèmes, le
+passe en aplat sur tout ce qui le porte déjà — à demeure (`fort`) ou le temps
+d'un flash à l'arrivée (`flash`). Toujours une seule couleur.
+
+![Accent fort : la ligne critique, la note et la barre en aplat, thème papier](docs/captures/accent-fort.png)
+
 ### Annuler plutôt que confirmer
 
 Modifier un champ ou supprimer s'exécute sans question et laisse une annulation.

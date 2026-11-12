@@ -48,6 +48,15 @@
     nav.innerHTML = html;
   }
   document.querySelectorAll('[data-set-theme]').forEach((b) => b.addEventListener('click', () => setTheme(b.dataset.setTheme)));
+  // Accent : discret (défaut), fort (le signal en aplat) ou flash (l'aplat à l'arrivée, puis discret).
+  const setAccent = (a) => {
+    if (a === 'fort' || a === 'flash') document.documentElement.dataset.accent = a; else { a = 'discret'; delete document.documentElement.dataset.accent; }
+    try { localStorage.setItem('mono-accent', a); } catch {}
+    document.querySelectorAll('[data-set-accent]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.setAccent === a)));
+  };
+  let savedAccent = null; try { savedAccent = localStorage.getItem('mono-accent'); } catch {}
+  setAccent(new URLSearchParams(location.search).get('accent') || savedAccent || 'discret');
+  document.querySelectorAll('[data-set-accent]').forEach((b) => b.addEventListener('click', () => setAccent(b.dataset.setAccent)));
   setTheme(initial);
 
   // ---------------------------------------------------------------------------

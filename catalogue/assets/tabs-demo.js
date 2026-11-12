@@ -57,12 +57,15 @@
     if (t.id === 'Agences') drawAgences();
     return el;
   }
+  const settled = new Set();
   // La ligne inspectée porte le contour : c'est l'inspecteur de CET onglet qui en dépend.
   function drawAgences() {
     const el = panels.get('Agences'); if (!el) return;
     const q = norm($('input', el).value), rows = AGENCES.filter((a) => !q || norm(a.nom + a.ref + a.resp).includes(q));
-    $('tbody', el).innerHTML = rows.map((a) => `<tr tabindex="0" data-ref="${a.ref}" aria-selected="${el.dataset.inspect === a.ref}"><td class="t-muted u-nowrap">${a.ref}</td><th>${a.nom}</th><td>${a.resp}</td><td><span class="c-status ${a.cls}">${a.etat}</span></td><td class="is-num">${a.primes}</td></tr>`).join('');
+    // Une ligne déjà signalée que l'on redessine ne rejoue pas le flash (.is-settled).
+    $('tbody', el).innerHTML = rows.map((a) => `<tr tabindex="0" data-ref="${a.ref}" class="${settled.has(a.ref + a.etat) ? 'is-settled' : ''}" aria-selected="${el.dataset.inspect === a.ref}"><td class="t-muted u-nowrap">${a.ref}</td><th>${a.nom}</th><td>${a.resp}</td><td><span class="c-status ${a.cls}">${a.etat}</span></td><td class="is-num">${a.primes}</td></tr>`).join('');
     $('[data-count]', el).textContent = rows.length;
+    setTimeout(() => rows.forEach((x) => settled.add(x.ref + x.etat)), 2400);
   }
   // Inspecteur attaché : dans le panneau de l'onglet, donc conservé et masqué avec lui.
   function inspect(ref, keep) {

@@ -18,6 +18,11 @@
           <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
           <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
         </span>
+        <span class="c-segmented" role="group" aria-label="Accent">
+          <button class="c-segmented__item" type="button" data-set-accent="discret">Discret</button>
+          <button class="c-segmented__item" type="button" data-set-accent="fort">Fort</button>
+          <button class="c-segmented__item" type="button" data-set-accent="flash">Flash</button>
+        </span>
       </div>
     </header>
 
@@ -113,6 +118,28 @@
             <div class="cat-rule" id="regle-s2" data-search="regle"><span class="cat-rule__num">S2</span><h3>Un seul sens par écran</h3><p>Tout ce qui est rouge sur une vue signifie la même chose. Trois occurrences du même fait : oui. Deux faits différents : non.</p></div>
             <div class="cat-rule" id="regle-s3" data-search="regle"><span class="cat-rule__num">S3</span><h3>Jamais seul</h3><p>Le signal double toujours une forme, une graisse ou un mot. L'écran reste compréhensible imprimé en noir et blanc.</p></div>
             <div class="cat-rule" id="regle-s4" data-search="regle"><span class="cat-rule__num">S4</span><h3>Ajouté en dernier</h3><p>On compose en gris, on vérifie la hiérarchie, puis on pose le signal. S'il faut de la couleur pour que l'écran tienne, la composition est à revoir.</p></div>
+          </div>
+                  <div class="cat-sub" id="accent" data-search="rubrique">
+            <h3>Variante d'accent — data-accent</h3>
+            <p>Par défaut le signal est discret. Une variante, sur les deux thèmes, le rend explicite sans ajouter de couleur ni de cible : seul ce qui porte déjà le signal change. Elle se règle en haut de cette page, à côté du thème, et vaut pour tout le catalogue et ses exemples.</p>
+            <div class="cat-demo" data-code>
+              <table class="c-table" style="max-width: 40rem">
+                <thead><tr><th>Agence</th><th>État</th><th class="is-num">Primes (M)</th></tr></thead>
+                <tbody>
+                  <tr><th>Voiron</th><td><span class="c-status c-status--progress">En cours</span></td><td class="is-num">4,1</td></tr>
+                  <tr><th>Vizille</th><td><span class="c-status c-status--critical">Fermeture</span></td><td class="is-num">0,9</td></tr>
+                  <tr><th>Avignon</th><td><span class="c-status c-status--on">Actif</span></td><td class="is-num">8,7</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Discret</dt><dd>Sans attribut. Le système tel qu'il est : un carré, un filet, un mot ; moins de 1 % de l'écran.</dd></div>
+              <div><dt>Fort</dt><dd><code>data-accent="fort"</code> sur <code>&lt;html&gt;</code>. Le signal devient un aplat : toute la ligne du tableau, toute la fiche, la note, le toast, le statut, le bouton ; dans un graphique, l'anneau et la tuile se remplissent. Sur l'aplat, tout le texte passe en <code>--on-signal</code>.</dd></div>
+              <div><dt>Flash</dt><dd><code>data-accent="flash"</code>. L'aplat apparaît quand l'élément arrive — chargement de la page, nouvelle ligne, état qui devient critique — tient une seconde, puis laisse place au style discret. Un élément déjà signalé que l'on redessine porte <code>.is-settled</code> pour ne pas rejouer.</dd></div>
+              <div><dt>Ce qui ne change pas</dt><dd>Une seule couleur. Les mêmes cibles. Rien ne bouge : l'aplat déborde par un contour, jamais par une marge. Le budget, lui, n'est plus tenu : en accent fort le signal dépasse 1 % de l'écran — c'est le prix assumé de la variante.</dd></div>
+              <div><dt>Choisir</dt><dd>Discret pour un outil que l'on regarde toute la journée. Fort pour un écran de supervision vu de loin. Flash pour attirer l'œil une fois sans laisser de rouge à demeure.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Le texte sur aplat tient 4,5 : 1 dans les deux thèmes (contrôlé par script). Avec « réduire les animations », le flash n'a pas lieu. La forme et le mot restent : la couleur ne porte jamais seule l'information.</dd></div>
+            </dl>
           </div>
         </section>
 

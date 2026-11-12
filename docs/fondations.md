@@ -170,3 +170,19 @@ un multiple de 16.
 Rayon 0 partout ; le cercle est réservé aux marques de données, aux radios et aux
 glyphes de statut. Aucune ombre, aucun dégradé. Transitions de 120 ms, sur la
 couleur et la bordure uniquement.
+
+## Variante d'accent
+
+`data-accent` sur `<html>`, à côté de `data-theme` (`src/accent.css`). Elle ne change
+que ce qui porte déjà le signal, et n'ajoute aucune couleur.
+
+| Valeur | Effet |
+|---|---|
+| absent | Discret : le système par défaut, signal sous 1 % de l'écran |
+| `fort` | Le signal en aplat : ligne de tableau critique, `.c-card--signal`, `.c-notice--signal`, `.c-toast--signal`, `.c-status--critical`, `.c-button--signal` ; anneau et tuile de graphique remplis ; texte en `--on-signal` |
+| `flash` | L'aplat à l'arrivée de l'élément (chargement, nouvelle ligne, état qui devient critique), puis retour au discret ; `.is-settled` empêche de rejouer |
+
+Une ligne de tableau est critique si elle contient `.c-status--critical` ou `.is-signal`,
+ou porte `.is-critical`. En accent fort, le budget de 1 % n'est plus tenu : c'est voulu.
+Le catalogue et les exemples lisent le réglage dans l'adresse (`?accent=fort`) ou le
+stockage local (`catalogue/assets/prefs.js`).

@@ -21,6 +21,9 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
   `src/tokens.css`. Les composants consomment les rôles (`--bg`, `--fg`, `--line`…).
 - Une seule couleur : `--signal`. Moins de 1 % de l'écran, un seul sens par écran,
   jamais décorative, toujours doublée d'une forme ou d'un mot. Pas de vert/orange/bleu.
+- Variante d'accent (`data-accent="fort"` ou `"flash"` sur `<html>`, `src/accent.css`) :
+  le signal devient un aplat, à demeure ou le temps d'un flash. Elle ne change que ce
+  qui porte déjà le signal ; ne jamais lui ajouter de cible ni de seconde couleur.
 - Le bouton `--primary` conclut une tâche (connexion, formulaire, modale) : zéro sur
   un écran de consultation, un au plus ailleurs. Un seul `.c-stat--hero`, un seul bloc inversé, une
   seule modale par vue. Le détail d'un élément va dans l'inspecteur, pas dans une modale.

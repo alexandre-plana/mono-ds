@@ -83,6 +83,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-060 | Carte géographique : fond réel embarqué, pas de tuiles | en vigueur, complétée par D-061 |
 | D-061 | Plan détaillé : tuiles vectorielles, relief en courbes, calques | en vigueur |
 | D-062 | Planches animées : une exception délimitée à « rien d'ornemental » | en vigueur |
+| D-063 | Variante d'accent : fort et flash | en vigueur |
 
 ---
 
@@ -585,3 +586,14 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Règles tenues** : aucune couleur écrite (rôles du thème relus à chaque image) ; filets d'un pixel ; pointillé pour les repères, tireté pour les relations ; capitales espacées ; un seul point en signal par planche ; aucune transparence — ce qui s'efface descend les tons un à un ; la page garde son contour.
 - **L'exception** : le système dit « rien d'ornemental, transitions de 120 ms, rien d'autre ». Les planches sont du mouvement pour lui-même. Elles sont admises parce qu'elles ne sont **pas une interface** : un écran à regarder (veille, accueil, projection), jamais un fond derrière du contenu ni une animation dans un composant. La règle des interfaces ne change pas.
 - **Garde-fous** : avec « réduire les animations », chaque planche est une image fixe ; le sommet désigné ne saute pas d'un pic à l'autre (il n'est lâché que pour un sommet nettement plus haut).
+
+## D-063 — Variante d'accent : fort et flash
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : un attribut `data-accent` sur `<html>`, combinable avec les deux thèmes. `fort` : ce qui porte le signal devient un aplat (toute la ligne du tableau, la fiche, la note, le toast, le statut, le bouton, l'anneau et la tuile d'un graphique). `flash` : l'aplat apparaît à l'arrivée de l'élément puis laisse place au style discret. Sans attribut, rien ne change.
+- **Tranché avec le commanditaire** (quatre questions posées avant de coder) : une seule couleur, le rouge du signal ; seulement ce qui porte déjà le signal ; flash à l'arrivée sur la page et à chaque changement d'état ; réglage à côté du thème dans le catalogue.
+- **Ce que la variante suspend** : « moins de 1 % de l'écran » et « jamais un fond » (convictions 2 et 4, D-011). C'est un choix d'application, explicite, pas un assouplissement du système par défaut.
+- **Ce qu'elle garde** : une seule couleur ; un seul sens ; la forme et le mot doublent toujours la couleur ; rien ne bouge (l'aplat déborde par un contour ou un pseudo-élément) ; texte sur aplat en `--on-signal`, paire déjà contrôlée.
+- **Flash** : une animation CSS de 2,2 s jouée à l'insertion de l'élément ou quand il devient critique. Un élément déjà signalé que l'on redessine porte `.is-settled`. Avec « réduire les animations », elle n'a pas lieu. C'est, avec les planches (D-062), la seule animation du système ; elle est fonctionnelle : elle dit « regarde ici, maintenant ».
+- **Hors périmètre** : le plan détaillé (MapLibre) et les planches ne suivent pas la variante.
+- **Réserve de Claude** : en accent fort, plusieurs éléments critiques sur un même écran produisent beaucoup de rouge et l'alarme perd sa force ; le flash est la forme la plus fidèle à l'esprit du système.
