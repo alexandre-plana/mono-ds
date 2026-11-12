@@ -172,8 +172,32 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-table tr[aria-selected="true"] > * { border-top: var(--stroke) solid var(--selected-line); border-bottom: var(--stroke) solid var(--selected-line); padding-block: calc(var(--space-2) - 1px); color: var(--fg); }
 .c-table tr[aria-selected="true"] > th { font-weight: var(--weight-medium); }
 /* En-tête triable : un bouton sans habillage, l'icône dit le sens. */
-.c-table__sort { appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: var(--space-1); }
+.c-table__sort { appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; cursor: pointer; display: inline-flex; align-items: baseline; gap: var(--space-1); }
 .c-table__sort:hover, th[aria-sort] .c-table__sort { color: var(--fg); }
+/* L'icône de tri n'apparaît que sur la colonne triée, ou au survol d'une colonne triable. */
+.c-table__sort .c-icon { visibility: hidden; align-self: center; }
+th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-table__sort .c-icon, .c-table__sort:hover .c-icon, .c-table__sort:focus-visible .c-icon { visibility: visible; }
+.c-table th.is-num .c-table__sort { flex-direction: row-reverse; }
+/* En-tête figé : il reste en haut de la zone qui défile. Le filet est peint dans le fond,
+   car une bordure fusionnée ne suit pas une cellule collante. */
+.c-table--sticky thead th { position: sticky; top: 0; z-index: 1; border-bottom-color: transparent; background: linear-gradient(var(--fg-soft), var(--fg-soft)) left bottom / 100% 1px no-repeat var(--bg); }
+/* Colonne de cases (sélection multiple) et bascule de ligne dépliable. */
+.c-table__check, .c-table__toggle { width: 1.75rem; min-width: 1.75rem; box-sizing: border-box; padding-right: var(--space-2) !important; }
+.c-table__check .c-check { min-height: 0; vertical-align: middle; }
+.c-table__expand { appearance: none; background: none; border: 0; padding: 0; margin: 0; color: var(--fg-soft); cursor: pointer; display: inline-grid; place-content: center; width: 1rem; height: 1.25rem; vertical-align: middle; }
+.c-table__expand:hover { color: var(--fg-strong); }
+.c-table__expand[aria-expanded="true"] .c-icon { transform: rotate(90deg); }
+/* Détail d'une ligne dépliée : il s'aligne sur la colonne de titre, pas sur la bascule. */
+/* --controls : nombre de colonnes de contrôle (case, bascule) placées avant le titre. */
+.c-table tr.c-table__detail > td { padding: var(--space-3) 0 var(--space-5) calc(1.75rem * var(--controls, 1)); color: var(--fg-soft); }
+.c-table tr.c-table__detail:hover > * { background: none; }
+.c-table tr.is-open > * { border-bottom-color: transparent; }
+
+/* Barre d'actions groupées : elle prend la place de la barre d'outils dès qu'une ligne est cochée. */
+.c-bulkbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); min-height: var(--control-height); }
+.c-bulkbar__count { color: var(--fg-strong); font-size: var(--text-large); line-height: var(--leading-large); }
+.c-bulkbar__count small { font-size: var(--text-base); color: var(--fg-soft); margin-left: var(--space-2); }
+.c-bulkbar__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-left: auto; }
 .c-table tr.is-key > * { color: var(--fg-strong); font-weight: var(--weight-bold); }
 .c-table tr.is-muted > * { color: var(--fg-muted); }
 .c-table tfoot th, .c-table tfoot td { border-top: var(--hairline) solid var(--fg-soft); border-bottom: 0; color: var(--fg-strong); font-weight: var(--weight-bold); }
@@ -250,8 +274,6 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-dialog__body { flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); }
 .c-dialog__actions { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-top: var(--hairline) solid var(--line); }
 .c-dialog__aside { margin-left: auto; font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); }
-/* Tiroir : la même modale, accrochée au bord droit sur toute la hauteur. */
-.c-dialog--drawer { margin: 0 0 0 auto; width: min(28rem, calc(100vw - 3rem)); height: 100vh; height: 100dvh; max-height: none; border-width: 0 0 0 var(--hairline); }
 
 /* --- Fiche (carte) --------------------------------------------------------------
    Une fiche n'est pas une boîte : c'est un filet, un en-tête, un contenu, un pied.
@@ -400,3 +422,25 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
 
 /* Valeur qui vient de changer : c'est elle, le résultat de l'action, qui porte le clair. */
 .is-fresh { color: var(--fg-strong) !important; font-weight: var(--weight-medium); }
+
+/* --- Fenêtre flottante --------------------------------------------------------------
+   Une petite page posée par-dessus les autres. Elle n'est pas modale : la page
+   dessous reste utilisable. Elle ne se détache par aucune ombre : elle emporte avec
+   elle un liseré de plan de travail hachuré, comme toute page. */
+.c-window { position: fixed; z-index: 40; width: var(--window, 20rem); max-width: calc(100vw - 2 * var(--shell-inset)); padding: 0.375rem; background-color: var(--desk); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px); }
+.c-window__frame { background: var(--bg); border: var(--hairline) solid var(--line-strong); display: flex; flex-direction: column; max-height: min(70vh, 32rem); }
+.c-window__bar { flex: none; display: flex; align-items: center; gap: var(--space-2); min-height: 2rem; padding: 0 var(--space-1) 0 var(--space-3); border-bottom: var(--hairline) solid var(--line); color: var(--fg-muted); cursor: grab; user-select: none; touch-action: none; }
+.c-window__bar:active { cursor: grabbing; }
+.c-window__title { flex: 1; min-width: 0; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-strong); }
+.c-window__bar .c-button { min-height: 1.5rem; padding-inline: var(--space-1); }
+.c-window__body { padding: var(--space-4); overflow-y: auto; min-height: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+
+/* --- Onglets de documents -------------------------------------------------------------
+   Posés sur le plan de travail, au-dessus de la page qu'ils ouvrent. Tous ont le fond
+   de la page ; l'onglet courant s'en distingue par son seul contour : un trait de
+   2 px dessus, et pas de trait dessous — il s'ouvre sur la page. */
+.c-doctabs { display: flex; align-items: flex-end; gap: 0; margin-bottom: -1px; position: relative; z-index: 1; overflow-x: auto; }
+.c-doctabs__tab { appearance: none; display: inline-flex; align-items: center; gap: var(--space-2); height: 2rem; padding: 0 var(--space-4); margin-right: -1px; background: var(--bg); border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color var(--duration); }
+.c-doctabs__tab:hover { color: var(--fg-strong); }
+.c-doctabs__tab[aria-current], .c-doctabs__tab[aria-selected="true"] { border-top: var(--stroke) solid var(--selected-line); border-bottom-color: var(--bg); color: var(--fg); font-weight: var(--weight-medium); }
+.c-doctabs__tab--add { padding-inline: var(--space-2); }

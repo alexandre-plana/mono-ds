@@ -81,8 +81,9 @@ le plan : un fond hachuré, visible sur une bande de 24 px autour de la page.
 - **K5 — Les pages se répondent.** Deux pages voisines ont des en-têtes et des
   barres d'état de même hauteur : leurs filets tombent sur les mêmes lignes.
 - **K6 — À gauche la collection, à droite le détail.** L'inspecteur est permanent
-  et ne bloque rien ; le tiroir est une modale, pour une tâche ponctuelle. Jamais
-  les deux à la fois.
+  et ne bloque rien ; la bande hachurée qui le sépare de la collection se saisit
+  pour le redimensionner (`.l-splitter`). Le détail d'un élément ne s'ouvre jamais
+  en modale.
 
 `.l-desk` est une grille : plusieurs `.l-shell` côte à côte sont séparés par la
 même bande hachurée.
@@ -101,6 +102,7 @@ même bande hachurée.
       <div class="l-pane__foot"><div class="c-statusbar">…</div></div>
     </div>
   </div>
+  <div class="l-splitter" role="separator" aria-orientation="vertical" tabindex="0"></div>
   <aside class="l-shell" aria-label="Inspecteur">
     <div class="l-pane">…même structure : le détail de la ligne sélectionnée…</div>
   </aside>

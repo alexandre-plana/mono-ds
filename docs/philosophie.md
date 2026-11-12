@@ -172,7 +172,8 @@ Par vue, c'est-à-dire par écran visible sans défilement.
 | Niveaux de ton du texte | 4 | En dessous, un gris est un filet |
 | Axes verticaux | 3 ou 4 | Au-delà, plus aucun bord ne se répète |
 | Plans de profondeur | 3 dans la page : creux, fond, surface — plus le plan de travail dessous | L'élévation n'existe pas |
-| Superposition | 1 à la fois | Une interruption se mérite |
+| Modale | 1 à la fois | Une interruption se mérite |
+| Fenêtre flottante | 2 au plus | Elle accompagne, elle n'encombre pas |
 | Vide | Un tiers au moins | Conviction 5 |
 
 Un budget dépassé n'est pas une faute de goût : c'est le signe que l'écran essaie

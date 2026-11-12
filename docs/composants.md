@@ -16,6 +16,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.l-desk` (sur `<body>`) | Plan de travail hachuré ; grille dont la gouttière sépare les pages |
 | `.l-shell` | La page : fond uni, contour d'un pixel, en retrait de `--shell-inset` |
 | `.l-desk--app`, `.l-desk--split` | Application : le plan occupe l'écran, chaque page défile seule ; deux pages côte à côte (collection + inspecteur, `--inspector`) |
+| `.l-splitter` | `role="separator"`, `.is-dragging` | La bande hachurée entre deux pages se saisit pour régler `--inspector` |
 | `.l-pane` (`__head`, `__bar`, `__body`, `__foot`) | Volet d'application : en-tête fixe, barre d'outils, corps défilant, pied |
 | `.l-page` | Conteneur : largeur max. 1440 px, marges de page |
 | `.l-frame` | Pleine hauteur : en-tête / contenu / pied |
@@ -32,6 +33,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-masthead` | `__title`, `__meta` | Un par écran |
 | `.c-section-head` | `__num`, `__aside` | Ouvre chaque région |
 | `.c-colophon` | — | Pied d'écran : source, folio, référence |
+| `.c-doctabs` | `__tab[aria-current]`, `__tab--add` | Documents ouverts, sur le plan de travail au-dessus de la page. Courant = trait de 2 px dessus, ouvert dessous |
 | `.c-statusbar` | `__group` | Pied d'un volet : position, état d'enregistrement, raccourcis (`.c-kbd`) |
 | `.c-panel` | `--surface`, `--sunken`, `--dashed`, `--flush`, `__head`, `[data-theme]` | Seulement pour détacher du flux. Un bloc inversé par vue |
 | `.c-card` (+ `.c-cards`) | `__head`, `__title` (`--label`), `__body`, `__media`, `__foot` ; `--boxed`, `--surface`, `--dashed`, `--signal` ; `aria-current` / `aria-selected` | Collection d'objets de même nature. Un filet, pas une boîte ; jamais de fiche dans une fiche |
@@ -44,7 +46,8 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|---|
 | `.c-kv` (`<dl>` de `<div><dt><dd>`) | `--plain` | Label gras, filet conducteur, valeur maigre |
 | `.c-index` | `__row`, `__title`, `__value` | Numérotation automatique ; sommaire, classement |
-| `.c-table` | `--caps`, `--dense`, `.is-num`, `tr.is-key`, `tr.is-muted`, `.is-signal`, `.c-table-wrap`, `tr[tabindex][aria-selected]`, `__sort` | Filets horizontaux seuls ; une cellule signal au plus |
+| `.c-table` | `--caps`, `--dense`, `.is-num`, `tr.is-key`, `tr.is-muted`, `.is-signal`, `.c-table-wrap`, `tr[tabindex][aria-selected]`, `__sort` + `th[aria-sort]`, `--sticky`, `__check`, `__expand` + `tr.c-table__detail` | Filets horizontaux seuls ; une cellule signal au plus |
+| `.c-bulkbar` | `__count`, `__actions` | Remplace la barre d'outils dès qu'une ligne est cochée ; deux actions au plus |
 | `.c-stat` | `__label`, `__value` (+ `<small>` unité), `__note`, `--hero`, `--compact`, `--ruled` | Un seul `--hero` par écran |
 | `.c-key` | `__title`, `__item`, `__swatch` (`--2`, `--3`, `--line`, `--dashed`, `--dotted`, `--dot`, `--ring`, `--signal`) | Nomme les formes ; se loge dans un vide |
 | `.c-meter` | `--signal`, `style="--value: 42"` | Filet fin + segment épais |
@@ -95,10 +98,11 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|---|
 | `.c-dialog` (`<dialog>`) | `__head`, `__title`, `__body`, `__actions`, `__aside` ; `--small`, `--large` | Tâche courte qui exige une réponse. Titre = verbe + objet ; le bouton principal répète le verbe |
 | `.c-dialog--small` (confirmation) | — | Irréversible uniquement. Pas de bouton fermer ; focus initial sur « Annuler » ; seul le bouton porte le signal |
-| `.c-dialog--drawer` (tiroir) | — | Détail d'un élément de liste, à droite, contexte visible à gauche |
+| `.c-window` | `__frame`, `__bar`, `__title`, `__body` ; `--window` | Fenêtre flottante non modale : un outil gardé sous la main. Liseré hachuré, aucune ombre. Deux au plus |
 
-Une seule superposition à la fois, jamais l'une sur l'autre. Elle se détache par
-un voile et un filet, jamais par une ombre. La modale est ancrée au tiers haut ;
+Deux natures : la modale interrompt (une seule à la fois, voile et filet), la
+fenêtre accompagne (elle ne bloque rien). Aucune ne porte d'ombre. Le détail d'un
+élément ne va dans aucune des deux : il va dans l'inspecteur — il n'y a pas de tiroir. La modale est ancrée au tiers haut ;
 ses actions sont ferrées à gauche, la principale en premier.
 
 ## Règles transversales

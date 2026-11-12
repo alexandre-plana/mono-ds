@@ -11,6 +11,8 @@
      séparés par la bande hachurée. La ligne sélectionnée ne change que de contour ;
      ce qui porte le clair, c'est l'inspecteur — le résultat de la sélection — puis,
      après une modification, la cellule du tableau qui vient de changer.
+     Les en-têtes trient ; la bande hachurée entre les deux pages se glisse pour
+     redimensionner l'inspecteur ; « ? » ouvre une fenêtre flottante.
      Aucune classe hors de src/ ; le script en bas de page n'est qu'une démonstration. -->
 <body class="l-desk l-desk--app l-desk--split">
 
@@ -36,23 +38,21 @@
         </div>
       </div>
 
-      <main class="l-pane__body" style="gap: var(--space-5)">
-        <p class="t-title" aria-live="polite"><span id="count">12</span> <span class="t-soft t-body" id="count-label">agences</span></p>
-        <div class="c-table-wrap">
-          <table class="c-table" id="table">
+      <main class="l-pane__body" style="gap: var(--space-5); padding-top: 0">
+        <p class="t-title" aria-live="polite" style="padding-top: var(--space-6)"><span id="count">12</span> <span class="t-soft t-body" id="count-label">agences</span></p>
+          <table class="c-table c-table--sticky" id="table">
             <thead>
               <tr>
-                <th>Réf.</th>
-                <th aria-sort="ascending"><button class="c-table__sort" type="button">Agence <i class="c-icon i-chevron-down" aria-hidden="true"></i></button></th>
-                <th>Branche</th>
-                <th>État</th>
-                <th class="is-num">Effectif</th>
-                <th class="is-num">Primes (M)</th>
+                <th data-key="ref" aria-sort="none"><button class="c-table__sort" type="button">Réf. <i class="c-icon i-sort" aria-hidden="true"></i></button></th>
+                <th data-key="nom" aria-sort="ascending"><button class="c-table__sort" type="button">Agence <i class="c-icon i-chevron-up" aria-hidden="true"></i></button></th>
+                <th data-key="branche" aria-sort="none"><button class="c-table__sort" type="button">Branche <i class="c-icon i-sort" aria-hidden="true"></i></button></th>
+                <th data-key="etat" aria-sort="none"><button class="c-table__sort" type="button">État <i class="c-icon i-sort" aria-hidden="true"></i></button></th>
+                <th data-key="effectif" class="is-num" aria-sort="none"><button class="c-table__sort" type="button">Effectif <i class="c-icon i-sort" aria-hidden="true"></i></button></th>
+                <th data-key="primes" class="is-num" aria-sort="none"><button class="c-table__sort" type="button">Primes (M) <i class="c-icon i-sort" aria-hidden="true"></i></button></th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
-        </div>
         <div class="c-empty" id="empty" hidden>
           <span class="c-empty__label">Aucun résultat</span>
           <div class="c-empty__title">Aucune agence ne correspond</div>
@@ -64,11 +64,13 @@
       <div class="l-pane__foot">
         <div class="c-statusbar">
           <span class="c-statusbar__group"><span class="g-bracket" id="position">1 / 12</span></span>
-          <span class="c-statusbar__group"><span class="c-kbd">↑</span><span class="c-kbd">↓</span> ligne <span class="c-statusbar__group"><span class="c-kbd">/</span> chercher</span></span>
+          <span class="c-statusbar__group"><span class="c-kbd">↑</span><span class="c-kbd">↓</span> ligne <span class="c-statusbar__group"><span class="c-kbd">/</span> chercher</span><span class="c-statusbar__group"><span class="c-kbd">?</span> raccourcis</span></span>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="l-splitter" id="splitter" role="separator" aria-orientation="vertical" aria-label="Largeur de l'inspecteur" tabindex="0"></div>
 
   <aside class="l-shell" aria-label="Inspecteur">
     <div class="l-pane">
@@ -140,6 +142,28 @@
     </div>
   </aside>
 
+  <!-- Fenêtre flottante, non modale : les raccourcis. Ouverte par « ? », déplaçable par sa barre. -->
+  <section class="c-window" id="help" role="dialog" aria-label="Raccourcis clavier" hidden style="right: calc(var(--inspector) + 3 * var(--shell-inset)); bottom: calc(4 * var(--shell-inset)); --window: 19rem">
+    <div class="c-window__frame">
+      <header class="c-window__bar">
+        <i class="c-icon i-grip" aria-hidden="true"></i>
+        <span class="c-window__title">Raccourcis</span>
+        <button class="c-button c-button--quiet" type="button" id="help-close" aria-label="Fermer"><i class="c-icon i-close" aria-hidden="true"></i></button>
+      </header>
+      <div class="c-window__body">
+        <dl class="c-kv c-kv--plain">
+          <div><dt>Ligne précédente</dt><dd><span class="c-kbd">↑</span></dd></div>
+          <div><dt>Ligne suivante</dt><dd><span class="c-kbd">↓</span></dd></div>
+          <div><dt>Modifier le nom</dt><dd><span class="c-kbd">E</span></dd></div>
+          <div><dt>Enregistrer</dt><dd><span class="c-kbd">↵</span></dd></div>
+          <div><dt>Annuler la saisie</dt><dd><span class="c-kbd">esc</span></dd></div>
+          <div><dt>Chercher</dt><dd><span class="c-kbd">/</span></dd></div>
+          <div><dt>Cette fenêtre</dt><dd><span class="c-kbd">?</span></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <script>
     // Démonstration : données fictives, enregistrement simulé (900 ms).
     (() => {
@@ -164,9 +188,13 @@
       const fr = (n, d = 1) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
       const norm = (v) => v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
       const tbody = $('#table tbody');
-      const state = { selected: 'N-014', branches: new Set(), q: '', fresh: null };
+      const state = { selected: 'N-014', branches: new Set(), q: '', fresh: null, sort: { key: 'nom', dir: 1 } };
+      const ORDRE_ETATS = ['actif', 'cours', 'attente', 'fermeture'];
 
-      const visible = () => data.filter((d) => (!state.branches.size || state.branches.has(d.branche)) && (!state.q || norm(d.nom + ' ' + d.ref + ' ' + d.ville + ' ' + d.resp).includes(norm(state.q)))).sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
+      const visible = () => data.filter((d) => (!state.branches.size || state.branches.has(d.branche)) && (!state.q || norm(d.nom + ' ' + d.ref + ' ' + d.ville + ' ' + d.resp).includes(norm(state.q)))).sort((a, b) => {
+        const k = state.sort.key, x = k === 'etat' ? ORDRE_ETATS.indexOf(a.etat) : a[k], y = k === 'etat' ? ORDRE_ETATS.indexOf(b.etat) : b[k];
+        return ((typeof x === 'number' ? x - y : String(x).localeCompare(String(y), 'fr')) || a.nom.localeCompare(b.nom, 'fr')) * state.sort.dir;
+      });
 
       function renderTable() {
         const rows = visible();
@@ -227,6 +255,43 @@
         });
       });
 
+      // Tri : un clic sur un en-tête trie, un second inverse le sens. La sélection suit sa ligne.
+      $('#table thead').addEventListener('click', (e) => {
+        const th = e.target.closest('th[data-key]'); if (!th) return;
+        state.sort = { key: th.dataset.key, dir: state.sort.key === th.dataset.key ? -state.sort.dir : 1 };
+        document.querySelectorAll('#table th[data-key]').forEach((h) => {
+          const on = h === th;
+          h.setAttribute('aria-sort', on ? (state.sort.dir > 0 ? 'ascending' : 'descending') : 'none');
+          $('.c-icon', h).className = 'c-icon ' + (on ? (state.sort.dir > 0 ? 'i-chevron-up' : 'i-chevron-down') : 'i-sort');
+        });
+        state.fresh = null; renderTable();
+        tbody.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest' });
+      });
+
+      // Séparateur : la bande hachurée se glisse ; flèches gauche et droite au clavier.
+      const splitter = $('#splitter'), rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      const setInspector = (px) => { const w = Math.max(20 * rem, Math.min(innerWidth * 0.5, px)); document.body.style.setProperty('--inspector', w + 'px'); splitter.setAttribute('aria-valuenow', Math.round(w)); };
+      splitter.addEventListener('pointerdown', (e) => { splitter.setPointerCapture(e.pointerId); splitter.classList.add('is-dragging'); });
+      splitter.addEventListener('pointermove', (e) => { if (splitter.classList.contains('is-dragging')) setInspector(innerWidth - e.clientX - 1.5 * parseFloat(getComputedStyle(document.body).paddingRight)); });
+      splitter.addEventListener('pointerup', () => splitter.classList.remove('is-dragging'));
+      splitter.addEventListener('keydown', (e) => { if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return; e.preventDefault(); e.stopPropagation(); setInspector($('aside.l-shell').offsetWidth + (e.key === 'ArrowLeft' ? 16 : -16)); });
+
+      // Fenêtre des raccourcis : non modale, déplaçable par sa barre.
+      const help = $('#help');
+      const toggleHelp = (open = help.hidden) => { help.hidden = !open; };
+      $('#help-close').addEventListener('click', () => toggleHelp(false));
+      help.addEventListener('keydown', (e) => { if (e.key === 'Escape') { toggleHelp(false); e.stopPropagation(); } });
+      (() => {
+        const bar = $('.c-window__bar', help); let start = null;
+        bar.addEventListener('pointerdown', (e) => { if (e.target.closest('button')) return; const r = help.getBoundingClientRect(); start = { dx: e.clientX - r.left, dy: e.clientY - r.top }; bar.setPointerCapture(e.pointerId); });
+        bar.addEventListener('pointermove', (e) => {
+          if (!start) return;
+          const x = Math.max(0, Math.min(innerWidth - help.offsetWidth, e.clientX - start.dx)), y = Math.max(0, Math.min(innerHeight - help.offsetHeight, e.clientY - start.dy));
+          Object.assign(help.style, { left: x + 'px', top: y + 'px', right: 'auto', bottom: 'auto' });
+        });
+        bar.addEventListener('pointerup', () => { start = null; });
+      })();
+
       tbody.addEventListener('click', (e) => { const tr = e.target.closest('tr'); if (tr) select(tr.dataset.ref); });
       tbody.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(e.target.closest('tr').dataset.ref, true); } });
       $('#prev').addEventListener('click', () => step(-1)); $('#next').addEventListener('click', () => step(1));
@@ -242,6 +307,8 @@
         if (e.key === 'ArrowDown') { e.preventDefault(); step(1); }
         else if (e.key === 'ArrowUp') { e.preventDefault(); step(-1); }
         else if (e.key === '/') { e.preventDefault(); $('#q').focus(); }
+        else if (e.key === '?') { e.preventDefault(); toggleHelp(); }
+        else if (e.key === 'Escape' && !help.hidden) toggleHelp(false);
         else if (e.key.toLowerCase() === 'e') { e.preventDefault(); const i = $('.c-editable__input'); i.focus(); i.select(); }
       });
 

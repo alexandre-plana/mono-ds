@@ -223,6 +223,47 @@
               <div><dt>Éviter</dt><dd>Des actions, des liens, une alerte. Plus de trois raccourcis : au-delà, un panneau d'aide.</dd></div>
             </dl>
           </div>
+
+          <div class="cat-sub" id="c-doctabs" data-search="composant">
+            <h3>Onglets de documents — .c-doctabs</h3>
+            <p>Ils vivent sur le plan de travail, au-dessus de la page qu'ils ouvrent. Tous ont le fond de la page ; l'onglet courant ne s'en distingue que par son contour : un trait de 2 px dessus, et aucun trait dessous — il s'ouvre sur la page.</p>
+            <div class="cat-demo cat-demo--plain" data-code>
+              <div class="l-desk" style="min-height: 0">
+                <div>
+                  <nav class="c-doctabs" aria-label="Documents ouverts">
+                    <a class="c-doctabs__tab" href="#c-doctabs" aria-current="page">Agences</a>
+                    <a class="c-doctabs__tab" href="#c-doctabs">Branches</a>
+                    <a class="c-doctabs__tab" href="#c-doctabs">Rapport T3</a>
+                    <button class="c-doctabs__tab c-doctabs__tab--add" type="button" aria-label="Nouveau document"><i class="c-icon i-plus" aria-hidden="true"></i></button>
+                  </nav>
+                  <div class="l-shell" style="height: 6rem"></div>
+                </div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Plusieurs documents de même rang ouverts en même temps dans une application : on passe de l'un à l'autre sans perdre leur état.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour les vues d'un même objet (<code>.c-tabs</code>, dans la page). Au-dessus d'une seule des deux pages d'un écran partagé : leurs en-têtes ne tomberaient plus sur la même ligne. Plus de six onglets.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;nav&gt;</code> de liens avec <code>aria-current="page"</code>, ou <code>role="tablist"</code> si les documents restent montés.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="l-splitter" data-search="composant">
+            <h3>Séparateur — .l-splitter</h3>
+            <p>Entre deux pages, c'est la bande hachurée elle-même qui se saisit. Un court trait vertical en marque le milieu ; il s'allonge au survol. Aucune poignée ajoutée, aucun bouton.</p>
+            <div class="cat-demo cat-demo--plain" data-code>
+              <div class="l-desk l-desk--split" style="min-height: 0; height: 9rem; --inspector: 32%">
+                <div class="l-shell"></div>
+                <div class="l-splitter" role="separator" aria-orientation="vertical" aria-label="Largeur de l'inspecteur" tabindex="0"></div>
+                <div class="l-shell"></div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Entre la collection et l'inspecteur, quand le détail peut demander plus ou moins de place. La largeur se règle par <code>--inspector</code>.</dd></div>
+              <div><dt>Éviter</dt><dd>Plus d'un séparateur par écran. Une largeur d'inspecteur sous 20 rem ou au-delà de la moitié de l'écran.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="separator"</code>, <code>aria-orientation="vertical"</code>, focalisable ; les flèches gauche et droite déplacent la limite.</dd></div>
+              <div><dt>Script</dt><dd>Le glissement revient à l'application ; voir l'exemple « Collection ».</dd></div>
+            </dl>
+          </div>
         </section>
 
         <section class="cat-section" id="listes" data-search="rubrique">
@@ -287,6 +328,79 @@
               <div><dt>Sélection</dt><dd>Ligne sélectionnable : <code>&lt;tr tabindex="0" aria-selected&gt;</code>. Sélectionnée, elle prend deux filets de 2 px, dessus et dessous ; le contour reste ouvert sur les côtés pour que le texte garde son axe.</dd></div>
               <div><dt>États</dt><dd>Survol : la ligne passe sur <code>--surface</code>. <code>tr.is-key</code> ligne commentée · <code>tr.is-muted</code> ligne provisoire · <code>tfoot</code> total.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;caption&gt;</code>, <code>&lt;th&gt;</code> d'en-tête et de ligne. Envelopper dans <code>.c-table-wrap</code> pour le défilement horizontal en étroit.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-table-avance" data-search="composant">
+            <h3>Tableau avancé — tri, en-tête figé, sélection, détail</h3>
+            <p>Quatre extensions du tableau, qui se combinent. Le tri se lit à l'icône de la colonne triée ; l'en-tête reste en haut quand la liste défile ; les cases cochent plusieurs lignes et font apparaître la barre d'actions groupées ; une ligne se déplie pour montrer son détail.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-bulkbar" id="demo-bulk" hidden>
+                <span class="c-bulkbar__count"><span data-count>0</span><small>sélectionnées</small></span>
+                <div class="c-bulkbar__actions">
+                  <button class="c-button" type="button"><i class="c-icon i-download" aria-hidden="true"></i>Exporter</button>
+                  <button class="c-button c-button--quiet" type="button" data-clear>Tout décocher</button>
+                </div>
+              </div>
+              <div class="c-table-wrap" style="max-height: 15rem; overflow-y: auto">
+                <table class="c-table c-table--sticky" id="demo-table" style="--controls: 2">
+                  <thead>
+                    <tr>
+                      <th class="c-table__check"><span class="u-hidden">Sélection</span></th>
+                      <th class="c-table__toggle"><span class="u-hidden">Détail</span></th>
+                      <th aria-sort="ascending"><button class="c-table__sort" type="button">Agence <i class="c-icon i-chevron-up" aria-hidden="true"></i></button></th>
+                      <th aria-sort="none"><button class="c-table__sort" type="button">Branche <i class="c-icon i-sort" aria-hidden="true"></i></button></th>
+                      <th class="is-num" aria-sort="none"><button class="c-table__sort" type="button">Primes (M) <i class="c-icon i-sort" aria-hidden="true"></i></button></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="c-table__check"><label class="c-check"><input type="checkbox" aria-label="Sélectionner Avignon"></label></td>
+                      <td class="c-table__toggle"><button class="c-table__expand" type="button" aria-expanded="false" aria-label="Détail d'Avignon"><i class="c-icon i-chevron-right" aria-hidden="true"></i></button></td>
+                      <th>Avignon</th><td>Sud</td><td class="is-num">8,7</td>
+                    </tr>
+                    <tr class="c-table__detail" hidden><td colspan="5">Responsable J. Reynaud · 12 personnes · ouverte en 2006.</td></tr>
+                    <tr>
+                      <td class="c-table__check"><label class="c-check"><input type="checkbox" aria-label="Sélectionner Brive"></label></td>
+                      <td class="c-table__toggle"><button class="c-table__expand" type="button" aria-expanded="false" aria-label="Détail de Brive"><i class="c-icon i-chevron-right" aria-hidden="true"></i></button></td>
+                      <th>Brive</th><td>Ouest</td><td class="is-num">2,2</td>
+                    </tr>
+                    <tr class="c-table__detail" hidden><td colspan="5">Responsable R. Dumas · 4 personnes · ouverte en 2016.</td></tr>
+                    <tr>
+                      <td class="c-table__check"><label class="c-check"><input type="checkbox" aria-label="Sélectionner Chambéry"></label></td>
+                      <td class="c-table__toggle"><button class="c-table__expand" type="button" aria-expanded="false" aria-label="Détail de Chambéry"><i class="c-icon i-chevron-right" aria-hidden="true"></i></button></td>
+                      <th>Chambéry</th><td>Nord</td><td class="is-num">7,9</td>
+                    </tr>
+                    <tr class="c-table__detail" hidden><td colspan="5">Responsable A. Perrin · 11 personnes · ouverte en 2009.</td></tr>
+                    <tr>
+                      <td class="c-table__check"><label class="c-check"><input type="checkbox" aria-label="Sélectionner Grenoble Centre"></label></td>
+                      <td class="c-table__toggle"><button class="c-table__expand" type="button" aria-expanded="false" aria-label="Détail de Grenoble Centre"><i class="c-icon i-chevron-right" aria-hidden="true"></i></button></td>
+                      <th>Grenoble Centre</th><td>Nord</td><td class="is-num">12,4</td>
+                    </tr>
+                    <tr class="c-table__detail" hidden><td colspan="5">Responsable M. Delorme · 18 personnes · ouverte en 2011.</td></tr>
+                    <tr>
+                      <td class="c-table__check"><label class="c-check"><input type="checkbox" aria-label="Sélectionner Limoges"></label></td>
+                      <td class="c-table__toggle"><button class="c-table__expand" type="button" aria-expanded="false" aria-label="Détail de Limoges"><i class="c-icon i-chevron-right" aria-hidden="true"></i></button></td>
+                      <th>Limoges</th><td>Ouest</td><td class="is-num">5,4</td>
+                    </tr>
+                    <tr class="c-table__detail" hidden><td colspan="5">Responsable H. Lacroix · 8 personnes · ouverte en 2010.</td></tr>
+                    <tr>
+                      <td class="c-table__check"><label class="c-check"><input type="checkbox" aria-label="Sélectionner Nîmes Arènes"></label></td>
+                      <td class="c-table__toggle"><button class="c-table__expand" type="button" aria-expanded="false" aria-label="Détail de Nîmes Arènes"><i class="c-icon i-chevron-right" aria-hidden="true"></i></button></td>
+                      <th>Nîmes Arènes</th><td>Sud</td><td class="is-num">6,2</td>
+                    </tr>
+                    <tr class="c-table__detail" hidden><td colspan="5">Responsable N. Blanc · 9 personnes · ouverte en 2012.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Tri</dt><dd><code>aria-sort</code> sur le <code>th</code>, bouton <code>.c-table__sort</code>. Chevron haut : croissant ; chevron bas : décroissant. Les autres colonnes triables ne montrent leur icône qu'au survol. Une seule colonne triée à la fois ; un clic inverse le sens.</dd></div>
+              <div><dt>En-tête figé</dt><dd><code>.c-table--sticky</code>, dans une zone qui défile. À partir d'une quinzaine de lignes.</dd></div>
+              <div><dt>Sélection multiple</dt><dd>Colonne <code>.c-table__check</code>. Une ligne cochée ne change pas d'aspect : la case suffit. Ce qui se voit, c'est la barre <code>.c-bulkbar</code> et son décompte, qui remplacent la barre d'outils.</dd></div>
+              <div><dt>Ligne dépliable</dt><dd>Bouton <code>.c-table__expand</code> avec <code>aria-expanded</code>, suivi d'une ligne <code>tr.c-table__detail</code>. Le détail s'aligne sur la colonne de titre : <code>--controls</code> donne le nombre de colonnes de contrôle qui la précèdent.</dd></div>
+              <div><dt>Éviter</dt><dd>Cocher et inspecter avec le même geste : cocher prépare une action groupée, cliquer la ligne l'ouvre dans l'inspecteur. Ligne dépliable et inspecteur sur le même écran : choisir l'un. Plus de deux actions dans la barre groupée.</dd></div>
+              <div><dt>Script</dt><dd>Le tri des données, l'état des cases et le dépliage reviennent à l'application.</dd></div>
             </dl>
           </div>
 
@@ -787,8 +901,8 @@
         </section>
 
         <section class="cat-section" id="superpositions" data-search="rubrique">
-          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Superpositions</span><span class="c-section-head__aside">Modale, tiroir</span></h2>
-          <p class="cat-note">Une superposition interrompt : elle doit le mériter. Elle se détache par un voile sombre et un filet, jamais par une ombre. Une seule à la fois, jamais l'une sur l'autre.</p>
+          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Superpositions</span><span class="c-section-head__aside">Modale, fenêtre</span></h2>
+          <p class="cat-note">Deux natures. La modale interrompt : elle doit le mériter, il n'y en a qu'une à la fois, et elle se détache par un voile sombre et un filet. La fenêtre accompagne : elle ne bloque rien. Ni l'une ni l'autre ne porte d'ombre. Le détail d'un élément ne va dans aucune des deux : il va dans l'inspecteur.</p>
 
           <div class="cat-sub" id="c-dialog" data-search="composant">
             <h3>Modale — .c-dialog</h3>
@@ -824,7 +938,7 @@
             <dl class="cat-spec">
               <div><dt>Anatomie</dt><dd><code>__head</code> (<code>__title</code> + bouton fermer) · <code>__body</code> (défile seul) · <code>__actions</code> (principale, secondaire, puis <code>__aside</code> à droite pour une référence).</dd></div>
               <div><dt>Employer</dt><dd>Une tâche courte et autonome qui exige une réponse avant de continuer : modifier un objet, confirmer une action irréversible.</dd></div>
-              <div><dt>Éviter</dt><dd>Pour informer (préférer <code>.c-notice</code> ou <code>.c-toast</code>), pour un formulaire de plus de cinq champs (une page), pour consulter un détail sans quitter la liste (un tiroir). Jamais de modale ouverte depuis une modale.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour informer (préférer <code>.c-notice</code> ou <code>.c-toast</code>), pour un formulaire de plus de cinq champs (une page), pour consulter un détail sans quitter la liste (un inspecteur). Jamais de modale ouverte depuis une modale.</dd></div>
               <div><dt>Titre et actions</dt><dd>Le titre est un verbe et son objet (« Modifier l'agence »). Le bouton principal reprend ce verbe, jamais « OK ». Deux actions, trois au plus.</dd></div>
               <div><dt>Tailles</dt><dd><code>--small</code> 24 rem · défaut 32 rem · <code>--large</code> 48 rem. Hauteur limitée à 76 % de l'écran.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>showModal()</code> piège le focus et rend la page inerte ; Échap ferme ; <code>aria-labelledby</code> pointe le titre ; le focus revient à l'élément déclencheur.</dd></div>
@@ -858,43 +972,33 @@
             </dl>
           </div>
 
-          <div class="cat-sub" id="c-dialog--drawer" data-search="composant">
-            <h3>Tiroir — .c-dialog--drawer</h3>
-            <p>La même modale, accrochée au bord droit sur toute la hauteur. Elle montre le détail d'un objet sans quitter la liste d'où il vient.</p>
+          <div class="cat-sub" id="c-window" data-search="composant">
+            <h3>Fenêtre flottante — .c-window</h3>
+            <p>Une petite page posée par-dessus les autres, que l'on déplace par sa barre. Elle n'est pas modale : la page dessous reste utilisable. Elle ne porte aucune ombre ; elle emporte avec elle un liseré de plan de travail hachuré, comme toute page.</p>
             <div class="cat-demo" data-code>
-              <button class="c-button" type="button" onclick="document.getElementById('demo-drawer').showModal()">Voir l'agence</button>
-              <dialog class="c-dialog c-dialog--drawer" id="demo-drawer" aria-labelledby="demo-drawer-title">
-                <div class="c-dialog__head">
-                  <h3 class="c-dialog__title" id="demo-drawer-title">Agence <span class="c-ref">N-014</span></h3>
-                  <button class="c-button c-button--quiet" type="button" aria-label="Fermer" onclick="this.closest('dialog').close()">
-                    <i class="c-icon i-close" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <div class="c-dialog__body" style="gap: var(--space-6)">
-                  <div class="c-stat">
-                    <span class="c-stat__label">Primes 2026</span>
-                    <span class="c-stat__value">12,4<small>M</small></span>
-                    <span class="c-stat__note">+6,1 % sur un an</span>
+              <section class="c-window" style="position: relative" aria-label="Raccourcis">
+                <div class="c-window__frame">
+                  <header class="c-window__bar">
+                    <i class="c-icon i-grip" aria-hidden="true"></i>
+                    <span class="c-window__title">Raccourcis</span>
+                    <button class="c-button c-button--quiet" type="button" aria-label="Fermer"><i class="c-icon i-close" aria-hidden="true"></i></button>
+                  </header>
+                  <div class="c-window__body">
+                    <dl class="c-kv c-kv--plain">
+                      <div><dt>Ligne suivante</dt><dd><span class="c-kbd">↓</span></dd></div>
+                      <div><dt>Modifier</dt><dd><span class="c-kbd">E</span></dd></div>
+                      <div><dt>Chercher</dt><dd><span class="c-kbd">/</span></dd></div>
+                    </dl>
                   </div>
-                  <dl class="c-kv">
-                    <div><dt>Nom</dt><dd>Grenoble Centre</dd></div>
-                    <div><dt>Branche</dt><dd>Nord</dd></div>
-                    <div><dt>Effectif</dt><dd>18</dd></div>
-                    <div><dt>Ouverture</dt><dd>2011</dd></div>
-                  </dl>
-                  <div class="c-notice"><span class="c-notice__label">Note</span><span>Montants provisoires jusqu'à la clôture.</span></div>
                 </div>
-                <div class="c-dialog__actions">
-                  <button class="c-button" type="button">Modifier</button>
-                  <span class="c-dialog__aside">Maj 14:02</span>
-                </div>
-              </dialog>
+              </section>
             </div>
             <dl class="cat-spec">
-              <div><dt>Employer</dt><dd>Consulter ou ajuster un élément d'une liste, d'un tableau ou d'une carte, en gardant le contexte visible à gauche.</dd></div>
-              <div><dt>Éviter</dt><dd>Pour une navigation principale, pour un contenu qui mérite sa page, et côté gauche : la gauche appartient à la structure, la droite au détail.</dd></div>
-              <div><dt>Règles</dt><dd>Largeur 28 rem. Pas de bouton primaire si le tiroir ne fait que montrer. Ouvrir un autre élément remplace le contenu, sans refermer.</dd></div>
-              <div><dt>Accessibilité</dt><dd>Identique à la modale : focus piégé, Échap, retour du focus à la ligne d'origine.</dd></div>
+              <div><dt>Employer</dt><dd>Un outil que l'on garde sous la main en travaillant : aide, raccourcis, palette, aperçu. L'utilisateur l'ouvre, la place et la ferme lui-même.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour exiger une réponse (une modale), pour le détail de la ligne sélectionnée (l'inspecteur), pour un contenu long. Deux fenêtres ouvertes au plus.</dd></div>
+              <div><dt>Anatomie</dt><dd><code>__frame</code> · <code>__bar</code> (poignée, <code>__title</code>, fermer) · <code>__body</code>. Largeur par <code>--window</code>, 20 rem par défaut.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="dialog"</code> sans <code>aria-modal</code>, nommée par <code>aria-label</code>. Échap la ferme quand elle a le focus ; elle se déplace aussi aux flèches depuis sa barre.</dd></div>
+              <div><dt>Script</dt><dd>Position et déplacement reviennent à l'application ; voir l'exemple « Collection » (touche <span class="c-kbd">?</span>).</dd></div>
             </dl>
           </div>
         </section>
@@ -1003,6 +1107,28 @@
       const sum = (on.length ? on : all.slice(0, 2)).reduce((a, c) => a + +c.querySelector('.c-chip__count').textContent.replace(/\D/g, ''), 0);
       const out = document.getElementById('demo-chip-total'); if (out) out.textContent = new Intl.NumberFormat('fr-FR').format(sum);
     }));
+    // Tableau avancé : tri par clic, lignes dépliables, décompte des cases.
+    (() => {
+      const table = document.getElementById('demo-table'); if (!table) return;
+      const body = table.tBodies[0], bulk = document.getElementById('demo-bulk');
+      const pairs = () => [...body.querySelectorAll('tr:not(.c-table__detail)')].map((tr) => [tr, tr.nextElementSibling]);
+      table.tHead.addEventListener('click', (e) => {
+        const btn = e.target.closest('.c-table__sort'); if (!btn) return;
+        const th = btn.closest('th'), col = th.cellIndex, dir = th.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
+        table.tHead.querySelectorAll('th[aria-sort]').forEach((h) => { h.setAttribute('aria-sort', 'none'); h.querySelector('.c-icon').className = 'c-icon i-sort'; });
+        th.setAttribute('aria-sort', dir); btn.querySelector('.c-icon').className = 'c-icon ' + (dir === 'ascending' ? 'i-chevron-up' : 'i-chevron-down');
+        const val = (tr) => { const t = tr.cells[col].textContent.trim(), n = parseFloat(t.replace(',', '.')); return isNaN(n) ? t : n; };
+        pairs().sort(([a], [b]) => { const x = val(a), y = val(b); return (typeof x === 'number' ? x - y : x.localeCompare(y, 'fr')) * (dir === 'ascending' ? 1 : -1); }).forEach(([tr, detail]) => body.append(tr, detail));
+      });
+      body.addEventListener('click', (e) => {
+        const btn = e.target.closest('.c-table__expand'); if (!btn) return;
+        const tr = btn.closest('tr'), open = btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', String(open)); tr.classList.toggle('is-open', open); tr.nextElementSibling.hidden = !open;
+      });
+      const count = () => { const n = body.querySelectorAll('input:checked').length; bulk.hidden = !n; bulk.querySelector('[data-count]').textContent = n; };
+      body.addEventListener('change', count);
+      bulk.querySelector('[data-clear]').addEventListener('click', () => { body.querySelectorAll('input:checked').forEach((i) => (i.checked = false)); count(); });
+    })();
     // Menu : Échap et clic extérieur ferment, le focus revient au bouton.
     document.addEventListener('click', (e) => document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item')) m.open = false; }));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-menu[open]').forEach((m) => { m.open = false; m.querySelector('summary').focus(); }); });

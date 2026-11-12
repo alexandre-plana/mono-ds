@@ -19,7 +19,7 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
 - Une seule couleur : `--signal`. Moins de 1 % de l'écran, un seul sens par écran,
   jamais décorative, toujours doublée d'une forme ou d'un mot. Pas de vert/orange/bleu.
 - Un seul bouton `--primary`, un seul `.c-stat--hero`, un seul bloc inversé, une
-  seule superposition (modale ou tiroir) par vue.
+  seule modale par vue. Le détail d'un élément va dans l'inspecteur, pas dans une modale.
 - Une fiche (`.c-card`) est un filet, pas une boîte ; jamais de fiche dans une fiche.
 - Un élément sélectionné (onglet, filtre, segment, fiche, ligne) ne change que de
   contour : 2 px en `--selected-line`. Jamais de fond, jamais `--fg-strong` ni

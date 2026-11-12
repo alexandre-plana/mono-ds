@@ -81,11 +81,19 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
    --split pose deux pages côte à côte : la collection, puis l'inspecteur. La bande
    hachurée entre les deux est la gouttière de la grille. */
 .l-desk--app { height: 100vh; height: 100dvh; min-height: 0; }
-.l-desk--app > .l-shell { min-height: 0; overflow: hidden; display: grid; }
+.l-desk--app > .l-shell { min-height: 0; overflow: hidden; display: grid; grid-template-rows: minmax(0, 1fr); }
 .l-desk--split { grid-template-columns: minmax(0, 1fr) var(--inspector); }
+/* Séparateur : la bande hachurée elle-même se saisit pour redimensionner l'inspecteur.
+   <div class="l-splitter" role="separator" aria-orientation="vertical" tabindex="0"> entre les deux pages. */
+.l-desk--split:has(> .l-splitter) { grid-template-columns: minmax(0, 1fr) var(--shell-inset) var(--inspector); column-gap: 0; }
+.l-splitter { position: relative; cursor: col-resize; touch-action: none; }
+.l-splitter::before { content: ''; position: absolute; left: 50%; top: 50%; width: 2px; height: 1.5rem; transform: translate(-50%, -50%); background: var(--line-strong); transition: background var(--duration), height var(--duration); }
+.l-splitter:hover::before, .l-splitter:focus-visible::before, .l-splitter.is-dragging::before { background: var(--fg-soft); height: 3rem; }
+.l-splitter:focus-visible { outline-offset: -2px; }
 @media (max-width: 900px) {
   .l-desk--app { height: auto; min-height: 100dvh; }
-  .l-desk--split { grid-template-columns: minmax(0, 1fr); }
+  .l-desk--split, .l-desk--split:has(> .l-splitter) { grid-template-columns: minmax(0, 1fr); row-gap: var(--shell-inset); }
+  .l-splitter { display: none; }
   .l-desk--app > .l-shell { overflow: visible; }
 }
 /* Volet : en-tête fixe, corps défilant, pied fixe. Les trois partagent la même marge. */
@@ -95,7 +103,7 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .l-pane__head > .c-masthead { align-items: center; min-height: 3rem; padding-bottom: var(--space-3); }
 @media (max-width: 640px) { .l-pane__head > .c-masthead { align-items: flex-start; } }
 .l-pane__bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3) var(--space-4); min-height: var(--control-height); }
-.l-pane__body { padding: var(--space-6) var(--pane-pad); overflow-y: auto; min-height: 0; display: flex; flex-direction: column; gap: var(--space-7); }
+.l-pane__body { padding: var(--space-6) var(--pane-pad); overflow: auto; min-height: 0; display: flex; flex-direction: column; gap: var(--space-7); }
 .l-pane__foot { padding: 0 var(--pane-pad); }
 
 
