@@ -74,7 +74,7 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   `application-modules.html`, des onglets persistants (`.c-doctabs`) au-dessus de
   la page et le fil d'Ariane en tête. Jamais les deux. Un onglet doit garder l'état
   de sa page ; au débordement, menu « … ». L'inspecteur est attaché à son
-  onglet : dans la page, séparé par un filet (`.l-detail`). Épinglé, il sort à côté,
+  onglet : dans la page, séparé par l'espace seul (`.l-detail`, pas de filet vertical). Épinglé, il sort à côté,
   séparé par les hachures, et ne dépend plus d'aucun onglet. Dans les deux cas : pas de rail ; le
   plan (`.c-plan`), la pose à côté et « Aller à » (`.c-palette`) servent aux
   déplacements hors de l'ordre ; console et aide sont des fenêtres. La navigation

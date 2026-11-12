@@ -79,11 +79,15 @@ le plan : un fond hachuré, visible sur une bande de 24 px autour de la page.
   que le plan en encre, à peine plus sombres en papier.
 
 - **K7 — Dans la page, ou hors de la page.** L'image dit à qui un contenu
-  appartient. Séparé par un filet (`.l-detail`), il est dans la page : il suit son
-  onglet. Séparé par les hachures (`.l-desk--split`), il est hors de la page : il
+  appartient. Séparé par l'espace seul (`.l-detail`), il est dans la page : il suit
+  son onglet. Séparé par les hachures (`.l-desk--split`), il est hors de la page : il
   ne dépend d'aucun onglet, et la rangée d'onglets s'arrête avant lui. Un
   inspecteur est attaché par défaut ; on l'épingle pour le sortir, on le rattache
   pour le rentrer.
+- **K8 — Pas de cloison dans la page.** Deux régions d'une même page se séparent
+  par l'espace — au moins 64 px, quatre fois l'écart interne — jamais par un filet
+  vertical. Les filets horizontaux qui s'arrêtent net et un axe de texte propre
+  suffisent. Empilées sur écran étroit, elles reprennent un filet horizontal.
 - **K5 — Les pages se répondent.** Deux pages voisines ont des en-têtes et des
   barres d'état de même hauteur : leurs filets tombent sur les mêmes lignes.
 - **K6 — À gauche la collection, à droite le détail.** L'inspecteur est permanent

@@ -59,6 +59,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-036 | Ce qui est hors de la page ne dépend pas de l'onglet | remplacée par D-038 |
 | D-037 | Le bouton primaire conclut une tâche | en vigueur |
 | D-038 | L'inspecteur attaché à son onglet, épinglable | en vigueur |
+| D-039 | Pas de filet vertical entre deux régions d'une page | en vigueur |
 
 ---
 
@@ -313,3 +314,12 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Conséquences** : la rangée d'onglets ne se raccourcit que lorsqu'un contenu est épinglé. « Aller à » une agence mène à l'onglet Agences et l'y inspecte. Une page posée depuis le plan reste à côté : elle est épinglée par nature. Règle K7 réécrite.
 - **Limite connue** : un seul contenu épinglé à la fois ; en épingler un autre remplace le premier sans avertissement.
 - **Non concerné** : l'écran « collection + inspecteur » sans onglets, où il n'y a qu'un seul contexte et où l'inspecteur reste une page séparée par les hachures.
+
+## D-039 — Pas de filet vertical entre deux régions d'une page
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Contexte** : D-038 séparait l'inspecteur attaché de la liste par un filet vertical. C'était le seul filet vertical du système : les tableaux n'en ont pas, les colonnes d'un écran non plus.
+- **Décision** : l'espace seul sépare — 64 px, quatre fois l'écart entre deux colonnes du tableau. Les filets des lignes s'arrêtent net au bord du tableau, l'inspecteur a son propre axe de texte.
+- **Raison** : « le vide est un matériau » ; un filet vertical faisait de l'inspecteur un compartiment, alors qu'il n'est qu'une autre région de la même page.
+- **Conséquences** : D-038 reste en vigueur, seule sa séparation change. Le contraste avec l'état épinglé est plus net encore : de l'espace dans la page, des hachures hors de la page. Empilé sous la liste sur écran étroit, l'inspecteur garde un filet horizontal. Règle K8.
+- **À surveiller** : si une page porte un tableau très large dont la dernière colonne est du texte long, l'écart peut ne plus suffire ; la réponse est alors de réduire le tableau, pas de remettre un filet.

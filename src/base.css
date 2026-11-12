@@ -89,18 +89,20 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .l-desk__area { position: relative; min-height: 0; min-width: 0; overflow: clip; }
 .l-desk__area > .c-window { position: absolute; }
 
-/* Détail attaché : un inspecteur DANS la page, séparé de son contenu par un filet.
+/* Détail attaché : un inspecteur DANS la page, séparé de son contenu par l'espace seul —
+   64 px, quatre fois l'écart entre deux colonnes du tableau. Pas de filet vertical : les
+   filets des lignes qui s'arrêtent net et l'axe de texte de l'inspecteur suffisent.
    Il appartient à la page — donc à son onglet — et la suit. Pour un contenu qui doit
    rester quand la page change, on le sort à côté, sur le plan de travail (.l-desk--split). */
 .l-detail { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; min-height: 100%; }
 .l-detail__main { min-width: 0; display: flex; flex-direction: column; gap: var(--space-7); }
 .l-detail__aside { min-width: 0; display: flex; flex-direction: column; gap: var(--space-6); }
-.l-detail.has-aside { grid-template-columns: minmax(0, 1fr) var(--detail, 23rem); column-gap: var(--pane-pad); }
-.l-detail.has-aside > .l-detail__aside { align-self: stretch; padding-left: var(--pane-pad); border-left: var(--hairline) solid var(--line); }
+.l-detail.has-aside { grid-template-columns: minmax(0, 1fr) var(--detail, 23rem); column-gap: var(--space-8); }
 .l-detail__head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); min-height: var(--control-height); }
 @media (max-width: 900px) {
   .l-detail.has-aside { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); }
-  .l-detail.has-aside > .l-detail__aside { padding: var(--space-5) 0 0; border-left: 0; border-top: var(--hairline) solid var(--line); }
+  /* Empilé sous le contenu, l'inspecteur reprend un filet horizontal : c'est une structure, pas une cloison. */
+  .l-detail.has-aside > .l-detail__aside { padding-top: var(--space-5); border-top: var(--hairline) solid var(--line); }
 }
 
 /* Onglets au-dessus des pages : la rangée d'onglets occupe toute la largeur du plan de
