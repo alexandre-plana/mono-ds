@@ -27,4 +27,26 @@ window.MonoDemo = {
     { lon: 13.6, lat: 50.8 }, { lon: 16.1, lat: 52.4 }, { lon: 18.3, lat: 52.1 }, { lon: 17.4, lat: 51.9 },
     { lon: 14.9, lat: 49.5 }, { lon: 18.5, lat: 51.2 }, { lon: 16.3, lat: 49.6 }, { lon: 13.9, lat: 51.6 },
   ],
+  portefeuille: [
+    { name: 'Non-vie', children: [
+      { name: 'Auto', value: 1420 }, { name: 'Entreprises', value: 1125 }, { name: 'Habitation', value: 980 }, { name: 'Santé', value: 760 },
+    ] },
+    { name: 'Vie', children: [
+      { name: 'Épargne', value: 520, signal: true, note: 'en repli de 45 %' }, { name: 'Prévoyance', value: 245 }, { name: 'Retraite', value: 140 },
+    ] },
+  ],
+  trimestres: ['T4 24', 'T1 25', 'T2 25', 'T3 25', 'T4 25', 'T1 26', 'T2 26', 'T3 26'],
+  composition: [
+    { name: 'Particuliers', values: [520, 541, 556, 570, 588, 596, 604, 612] },
+    { name: 'Entreprises', values: [402, 410, 428, 441, 455, 462, 470, 472] },
+    { name: 'Vie', values: [398, 402, 410, 405, 412, 380, 300, 226] },
+  ],
+  nuage: [[3, 1.8], [12, 8.7], [4, 2.2], [11, 7.9], [14, 9.8], [8, 5.4], [5, 3.3], [9, 6.2], [4, 2.6], [6, 4.1], [7, 4.4], [10, 6.1], [13, 8.1], [6, 3.2], [15, 9.1], [9, 5.1], [5, 2.4], [16, 10.6], [11, 6.6], [7, 5.2]]
+    .map(([x, y]) => ({ x, y })).concat([{ x: 18, y: 12.4, name: 'Grenoble Centre' }, { x: 17, y: 4.9, name: 'Vizille', signal: true }, { x: 6, y: 7.2, name: 'Arles' }]),
+  jours: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+  heures: ['8 h', '', '10 h', '', '12 h', '', '14 h', '', '16 h', '', '18 h', ''],
+  appels: [
+    [12, 48, 96, 110, 74, 30, 52, 88, 92, 70, 41, 9], [10, 44, 84, 98, 70, 28, 49, 80, 86, 64, 38, 8], [8, 36, 70, 82, 60, 22, 40, 66, 70, 52, 30, 6],
+    [11, 46, 88, 104, 72, 29, 50, 84, 90, 66, 40, 8], [9, 40, 76, 90, 64, 25, 44, 72, 68, 44, 22, 4], [4, 18, 32, 36, 20, 0, 0, 0, 0, 0, 0, 0],
+  ],
 };

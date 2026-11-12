@@ -225,6 +225,59 @@
             </dl>
           </div>
 
+          <div class="cat-sub" id="c-media-collection" data-search="composant">
+            <h3>Collection d'images</h3>
+            <p>Huit images de sources, de sujets et de lumières sans rapport — un portrait en studio, une photo de nuit, un relevé scientifique. Encrées, elles tiennent ensemble : même gamme de tons, même poids, et la grille reste une page. Ici la fiche se réduit à un filet, une ligne de service, l'image et une légende.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-cards" style="--card-min: 13rem">
+                <a class="c-card" href="#c-media-collection">
+                  <div class="c-card__head"><span>Portrait</span><span>P-001</span></div>
+                  <figure class="c-card__media c-media c-media--raw"><img src="assets/img/astronaut.jpg" alt="Portrait d’une astronaute en combinaison" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Équipage du vol 93</span><span>NASA</span></div>
+                </a>
+                <a class="c-card" href="#c-media-collection">
+                  <div class="c-card__head"><span>Site</span><span>S-014</span></div>
+                  <figure class="c-card__media c-media c-media--raw"><img src="assets/img/rocket.jpg" alt="Fusée sur son pas de tir, de nuit" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Pas de tir</span><span>SpaceX</span></div>
+                </a>
+                <a class="c-card" href="#c-media-collection">
+                  <div class="c-card__head"><span>Relevé</span><span>R-102</span></div>
+                  <figure class="c-card__media c-media c-media--raw"><img src="assets/img/hubble.jpg" alt="Galaxies lointaines sur fond noir" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Champ profond</span><span>NASA</span></div>
+                </a>
+                <a class="c-card" href="#c-media-collection">
+                  <div class="c-card__head"><span>Relevé</span><span>R-087</span></div>
+                  <figure class="c-card__media c-media c-media--raw"><img src="assets/img/moon.jpg" alt="Cratères à la surface de la Lune" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Surface lunaire</span><span>NASA</span></div>
+                </a>
+                <a class="c-card" href="#c-media-collection">
+                  <div class="c-card__head"><span>Objet</span><span>O-233</span></div>
+                  <figure class="c-card__media c-media c-media--raw"><img src="assets/img/coffee.jpg" alt="Tasse de café sur une table en bois" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Tasse, comptoir</span><span>Démo</span></div>
+                </a>
+                <a class="c-card" href="#c-media-collection">
+                  <div class="c-card__head"><span>Portrait</span><span>P-019</span></div>
+                  <figure class="c-card__media c-media c-media--raw"><img src="assets/img/chelsea.jpg" alt="Chat tigré de face" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Chelsea</span><span>Démo</span></div>
+                </a>
+                <a class="c-card" href="#c-media-collection">
+                  <div class="c-card__head"><span>Portrait</span><span>P-020</span></div>
+                  <figure class="c-card__media c-media c-media--raw"><img src="assets/img/camera.jpg" alt="Photographe derrière un appareil sur trépied" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Opérateur</span><span>Démo</span></div>
+                </a>
+                <a class="c-card" href="#c-media-collection">
+                  <div class="c-card__head"><span>Relevé</span><span>R-140</span></div>
+                  <figure class="c-card__media c-media c-media--raw"><img src="assets/img/retina.jpg" alt="Rétine et ses vaisseaux" loading="lazy"></figure>
+                  <div class="c-card__foot"><span>Fond d’œil</span><span>Démo</span></div>
+                </a>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Règles</dt><dd>Un seul format par collection (3:2 ici). Un seul traitement par collection : tout en <code>--raw</code> ou tout en <code>--raster</code>, jamais mélangés. La légende sous l'image, jamais dessus.</dd></div>
+              <div><dt>Sélection</dt><dd>Comme toute fiche : le filet supérieur passe à 2 px. L'image ne change pas.</dd></div>
+            </dl>
+          </div>
+
           <div class="cat-sub" id="c-cue" data-search="composant">
             <h3>Indice de survol — .c-cue</h3>
             <p>Le survol annonce : avant le clic, l'élément dit ce qui va se passer. Jamais par un fond ; par un trait ou par un signe. Un filet qui se termine en pointe de flèche : le clic mène quelque part. Une icône qui glisse en place : le clic fait ce que l'icône dessine. Le texte, lui, ne bouge pas.</p>
@@ -1107,7 +1160,7 @@
 
           <div class="cat-sub" id="c-dialog" data-search="composant">
             <h3>Modale — .c-dialog</h3>
-            <p>Une feuille étroite posée à droite de l'écran, sur la page hachurée. Excentrée : elle laisse lisible, à gauche, ce sur quoi l'on travaillait, et se range du côté où la lecture s'achève. Même fond et même contour que la page, aucun bandeau ni filet intérieur. Trois choses au plus : un titre, une phrase ou quelques champs, les actions à droite. Sa hauteur est celle de son contenu.</p>
+            <p>Une feuille étroite posée au centre, sur la page hachurée mais encore lisible. Même fond et même contour que la page, aucun bandeau ni filet intérieur. Trois choses au plus : un titre, une phrase ou quelques champs, les actions à droite. Sa hauteur est celle de son contenu.</p>
             <div class="cat-demo" data-code>
               <button class="c-button" type="button" onclick="document.getElementById('demo-dialog').showModal()">Modifier l'agence</button>
               <dialog class="c-dialog" id="demo-dialog" aria-labelledby="demo-dialog-title">
@@ -1132,12 +1185,12 @@
             </div>
             <dl class="cat-spec">
               <div><dt>Anatomie</dt><dd><code>__title</code> : le seul titre, en corps de titre (24 px), bas de casse · <code>__body</code> : une phrase en sans-serif de lecture, ou quelques champs ; il défile seul si le contenu dépasse · <code>__actions</code> : « Annuler » en bouton discret puis l'action principale, à droite. <code>__aside</code>, à gauche du pied, seulement pour une position dans une suite.</dd></div>
-              <div><dt>Place</dt><dd>En haut à droite, à trois retraits du bord de l'écran. Toujours au même endroit : on sait où regarder. Sur téléphone, au centre. <code>--large</code> (« Aller à », tableau) reste centrée.</dd></div>
+              <div><dt>Place</dt><dd>Au centre, ancrée au tiers haut : son bord supérieur ne bouge pas quand le contenu change de hauteur. Toujours au même endroit.</dd></div>
               <div><dt>Ce qu'elle n'a pas</dt><dd>Ni bandeau, ni surtitre, ni croix dans l'angle, ni pied séparé par un filet, ni fond plus clair que la page. Échap et « Annuler » ferment. C'est la page hachurée dessous qui dit « modale », pas son habillage.</dd></div>
               <div><dt>Employer</dt><dd>Une tâche courte et autonome qui exige une réponse avant de continuer : modifier un objet, confirmer une action irréversible.</dd></div>
               <div><dt>Éviter</dt><dd>Pour informer (préférer <code>.c-notice</code> ou <code>.c-toast</code>), pour un formulaire de plus de cinq champs (une page), pour consulter un détail sans quitter la liste (un inspecteur). Jamais de modale ouverte depuis une modale.</dd></div>
               <div><dt>Titre et actions</dt><dd>Le titre est un verbe et son objet (« Modifier l'agence »). Le bouton principal reprend ce verbe, jamais « OK ». Deux actions, trois au plus.</dd></div>
-              <div><dt>Tailles</dt><dd>Défaut 22 rem · <code>--small</code> 18 rem pour une question d'une ligne · <code>--column</code> : toute la hauteur, pour un formulaire · <code>--large</code> 48 rem, centrée.</dd></div>
+              <div><dt>Tailles</dt><dd>Défaut 22 rem · <code>--small</code> 18 rem pour une question d'une ligne · <code>--column</code> : toute la hauteur, pour un formulaire · <code>--large</code> 48 rem.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>showModal()</code> piège le focus et rend la page inerte ; Échap ferme ; <code>aria-labelledby</code> pointe le titre ; le focus revient à l'élément déclencheur.</dd></div>
             </dl>
           </div>
@@ -1266,7 +1319,7 @@
             <dl class="cat-spec">
               <div><dt>Le chiffre</dt><dd>Un <code>.c-stat--hero</code> dans <code>__stake</code>. Ce que l'action engage, en un nombre, juste au-dessus du bouton. Pour une confirmation dont la conséquence se mesure.</dd></div>
               <div><dt>L'étiquette</dt><dd>Un <code>.c-kv</code> : la fiche de l'objet, à filets conducteurs, comme une étiquette technique. Pour vérifier que l'on agit sur le bon objet.</dd></div>
-              <div><dt>La colonne</dt><dd><code>--column</code> : toute la hauteur de l'écran, à droite. Les champs se remplissent de haut en bas, le pied ne bouge pas, la position dans la suite se lit entre crochets. Pour un formulaire de quatre à huit champs, ou en deux temps.</dd></div>
+              <div><dt>La colonne</dt><dd><code>--column</code> : toute la hauteur de l'écran. Les champs se remplissent de haut en bas, le pied ne bouge pas, la position dans la suite se lit entre crochets. Pour un formulaire de quatre à huit champs, ou en deux temps.</dd></div>
               <div><dt>__stake</dt><dd>Sous le texte, juste au-dessus des actions. Une seule chose : un chiffre, ou une phrase. C'est la dernière chose lue avant le bouton.</dd></div>
               <div><dt>Éviter</dt><dd>Cumuler le chiffre et l'étiquette. Un titre de plus de trois lignes. La feuille pour un tableau ou un contenu large : c'est le rôle de <code>--large</code>.</dd></div>
             </dl>

@@ -42,6 +42,7 @@
             <div class="cat-rule" id="regle-v5" data-search="regle"><span class="cat-rule__num">V5</span><h3>Grille pointillée</h3><p>Les repères sont pointillés et discrets ; seul l'axe de base est plein. Aucun cadre autour du graphique.</p></div>
             <div class="cat-rule" id="regle-v6" data-search="regle"><span class="cat-rule__num">V6</span><h3>Titre, unité, source</h3><p>Chaque figure porte un titre qui dit le constat, une ligne d'unité en micro-capitales et, dessous, sa source.</p></div>
             <div class="cat-rule" id="regle-v7" data-search="regle"><span class="cat-rule__num">V7</span><h3>Légende en clé</h3><p>Étiquetage direct d'abord. La clé nomme les formes et se loge dans un vide de la figure, jamais dans un cadre.</p></div>
+            <div class="cat-rule" id="regle-v9" data-search="regle"><span class="cat-rule__num">V9</span><h3>Pas de camembert</h3><p>Les parts d'un tout se lisent sur une barre de répartition, ou sur une carte proportionnelle au-delà de cinq parts. Ni disque, ni anneau, ni jauge circulaire.</p></div>
             <div class="cat-rule" id="regle-v8" data-search="regle"><span class="cat-rule__num">V8</span><h3>Plat et droit</h3><p>Ni dégradé, ni ombre, ni arrondi, ni 3D. Un seul axe vertical par graphique. Le texte ne descend jamais sous 11 px.</p></div>
           </div>
         </section>
@@ -129,6 +130,89 @@
           <p class="cat-note">Pas de fond de carte : le graticule pointillé et les coordonnées suffisent à situer. La taille des anneaux porte la quantité, le signal porte l'unique branche commentée.</p>
         </section>
 
+        <section class="cat-section" id="treemap" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">06</span><span>Carte proportionnelle</span><span class="c-section-head__aside">Treemap</span></h2>
+          <figure class="v-figure">
+            <div>
+              <div class="v-figure__title">Quatre produits non-vie pèsent plus des quatre cinquièmes du portefeuille</div>
+              <div class="v-figure__caption">Primes par branche et par produit — en millions</div>
+            </div>
+            <div id="chart-treemap" data-label="Carte proportionnelle des primes : non-vie 4 285 millions en quatre produits, vie 905 millions en trois produits."></div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </figure>
+          <p class="cat-note">La surface dit la part. Les tuiles sont en ton bas et séparées par le fond de la page, sans contour : c'est le chiffre qui porte le clair. Deux niveaux au plus ; le groupe se nomme au-dessus de ses tuiles, avec son total. Une tuile trop petite perd d'abord son chiffre, puis son nom — l'infobulle les rend. Le signal ne remplit jamais une tuile : il marque son nom et un carré de six pixels.</p>
+          <dl class="cat-spec">
+            <div><dt>Employer</dt><dd>Pour montrer comment un tout se partage entre cinq à vingt parts, sur un ou deux niveaux, quand l'ordre de grandeur compte plus que la valeur exacte.</dd></div>
+            <div><dt>Éviter</dt><dd>Pour comparer précisément (des barres), pour une évolution (des courbes), au-delà de deux niveaux, ou pour moins de cinq parts (la barre de répartition suffit).</dd></div>
+            <div><dt>Classes</dt><dd><code>.v-cell</code>, <code>.v-cell--2</code> (un groupe sur deux, pour les distinguer par le ton), <code>.v-value--large</code>.</dd></div>
+          </dl>
+        </section>
+
+        <section class="cat-section" id="composition" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Composition</span><span class="c-section-head__aside">Barres empilées, répartition</span></h2>
+          <figure class="v-figure">
+            <div>
+              <div class="v-figure__title">La vie s’efface, le reste tient</div>
+              <div class="v-figure__caption">Primes trimestrielles par clientèle — en millions</div>
+            </div>
+            <div id="chart-stack" data-label="Barres empilées des primes trimestrielles par clientèle sur huit trimestres. La part vie passe de 398 à 226."></div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </figure>
+          <p class="cat-note">Trois séries au plus, distinguées par le ton. La série que l'on commente est en bas : c'est la seule dont la base est droite. Le total se lit au-dessus, les noms en bout de rangée.</p>
+          <div class="cat-sub" id="v-share" data-search="rubrique">
+            <h3>Barre de répartition — .v-share</h3>
+            <p>Les parts d'un tout, sur une ligne. MONO n'a pas de camembert : l'œil compare mal des angles, et un disque est la masse la plus lourde qu'on puisse poser sur une page.</p>
+            <div class="cat-demo" data-code>
+              <div class="v-share" style="max-width: 40rem">
+                <span style="--value: 51">Particuliers <b>51 %</b></span>
+                <span style="--value: 32">Entreprises <b>32 %</b></span>
+                <span style="--value: 17">Vie <b>17 %</b></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="nuage" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">08</span><span>Nuage de points</span></h2>
+          <figure class="v-figure">
+            <div>
+              <div class="v-figure__title">Vizille : dix-sept personnes pour moins de cinq millions</div>
+              <div class="v-figure__caption">Effectif et primes par agence</div>
+            </div>
+            <div id="chart-scatter" data-label="Nuage de points des agences selon l’effectif et les primes. Vizille est très en dessous de la tendance."></div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </figure>
+          <p class="cat-note">Les points sont en gris moyen et muets. Seuls ceux dont on parle portent un nom ; un seul porte le signal. Pas de droite de tendance tracée si le nuage la montre déjà.</p>
+        </section>
+
+        <section class="cat-section" id="matrice" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">09</span><span>Matrice</span><span class="c-section-head__aside">Carte de chaleur</span></h2>
+          <figure class="v-figure">
+            <div>
+              <div class="v-figure__title">Deux pointes par jour, à onze heures et à seize heures</div>
+              <div class="v-figure__caption">Appels reçus par heure</div>
+            </div>
+            <div id="chart-heat" data-label="Matrice des appels par jour et par heure, du lundi au samedi, de 8 h à 19 h."></div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </figure>
+          <p class="cat-note">Cinq paliers de ton, du fond vers le texte : plus c'est dense, plus c'est contrasté, dans les deux thèmes. Jamais de teinte, jamais de signal dans une matrice — il y aurait trop de cases à désigner.</p>
+        </section>
+
+        <section class="cat-section" id="tendance" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">10</span><span>Tendance</span><span class="c-section-head__aside">Dans une ligne de tableau</span></h2>
+          <div class="cat-demo">
+            <table class="c-table" style="max-width: 40rem">
+              <thead><tr><th>Branche</th><th>Douze mois</th><th class="is-num">Indice</th></tr></thead>
+              <tbody>
+                <tr><th>Non-vie</th><td><span data-spark="0"></span></td><td class="is-num">115</td></tr>
+                <tr><th>Marché</th><td><span data-spark="2"></span></td><td class="is-num">105</td></tr>
+                <tr><th>Vie</th><td><span data-spark="1" data-signal></span></td><td class="is-num is-signal">62</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="cat-note">Une courbe sans axe ni chiffre, à la hauteur d'une ligne de texte. Elle donne l'allure ; la valeur est dans la colonne voisine. Le dernier point est marqué, en signal s'il est le fait de l'écran.</p>
+        </section>
+
       </main>
     </div>
 
@@ -143,6 +227,11 @@
     MonoCharts.bars('#chart-bars', { data: MonoDemo.primes, unit: 'M', steps: 6, height: 340 });
     MonoCharts.lines('#chart-lines', { labels: MonoDemo.mois, series: MonoDemo.indices, mark: { series: 1, index: 11, label: '62' }, steps: 6, height: 280 });
     MonoCharts.tree('#chart-tree', { tree: MonoDemo.arbre });
+    MonoCharts.treemap('#chart-treemap', { groups: MonoDemo.portefeuille, unit: 'M', height: 420 });
+    MonoCharts.stack('#chart-stack', { labels: MonoDemo.trimestres, series: [MonoDemo.composition[2], MonoDemo.composition[1], MonoDemo.composition[0]], unit: 'M', height: 320 });
+    MonoCharts.scatter('#chart-scatter', { points: MonoDemo.nuage, xLabel: 'Effectif', yLabel: 'Primes (M)', xSteps: 4 });
+    MonoCharts.heat('#chart-heat', { rows: MonoDemo.jours, cols: MonoDemo.heures, values: MonoDemo.appels, unit: 'appels' });
+    document.querySelectorAll('[data-spark]').forEach((n) => MonoCharts.spark(n, { values: MonoDemo.indices[+n.dataset.spark].values, signal: n.hasAttribute('data-signal') }));
     MonoCharts.graticule('#chart-map', { lon: [13, 19], lat: [49, 53], points: MonoDemo.agences, height: 380 });
   </script>
 </body>

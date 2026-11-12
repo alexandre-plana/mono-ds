@@ -197,5 +197,128 @@ window.MonoCharts = (() => {
     });
   }
 
-  return { bars, lines, tree, graticule };
+  const hover = (node, api, x, y, html) => {
+    const show = () => api.tip(x, y, html);
+    node.addEventListener('pointerenter', show); node.addEventListener('focus', show);
+    node.addEventListener('pointerleave', () => api.tip()); node.addEventListener('blur', () => api.tip());
+  };
+
+  // Découpage « squarified » : des tuiles aussi carrées que possible, de la plus grande à la plus petite.
+  const squarify = (items, x, y, w, h) => {
+    const total = items.reduce((a, d) => a + d.value, 0), out = [];
+    let rest = [...items].sort((a, b) => b.value - a.value).map((d) => ({ d, a: (d.value / total) * w * h }));
+    const worst = (row, side) => { const s = row.reduce((a, r) => a + r.a, 0), mx = Math.max(...row.map((r) => r.a)), mn = Math.min(...row.map((r) => r.a)); return Math.max((side * side * mx) / (s * s), (s * s) / (side * side * mn)); };
+    while (rest.length) {
+      const side = Math.min(w, h); let n = 1;
+      while (n < rest.length && worst(rest.slice(0, n + 1), side) <= worst(rest.slice(0, n), side)) n++;
+      const row = rest.slice(0, n), sum = row.reduce((a, r) => a + r.a, 0);
+      if (w >= h) { const cw = sum / h; let cy = y; row.forEach((r) => { const ch = r.a / cw; out.push({ d: r.d, x, y: cy, w: cw, h: ch }); cy += ch; }); x += cw; w -= cw; }
+      else { const ch = sum / w; let cx = x; row.forEach((r) => { const cw = r.a / ch; out.push({ d: r.d, x: cx, y, w: cw, h: ch }); cx += cw; }); y += ch; h -= ch; }
+      rest = rest.slice(n);
+    }
+    return out;
+  };
+
+  /* Carte proportionnelle (treemap). groups : [{ name, children: [{ name, value, signal?, note? }] }]
+     Deux niveaux : les groupes se partagent la surface, leurs tuiles se partagent le groupe.
+     Les tuiles sont en ton bas : c'est le chiffre qui porte le clair. */
+  function treemap(host, { groups, unit = '', height = 420 }) {
+    mount(host, height, (svg, w, h, api) => {
+      const head = 24, gap = 2, total = groups.reduce((a, g) => a + g.children.reduce((b, c) => b + c.value, 0), 0);
+      const top = squarify(groups.map((g) => ({ ...g, value: g.children.reduce((b, c) => b + c.value, 0) })), 0, 0, w, h);
+      top.forEach((G, gi) => {
+        const gx = G.x + (G.x > 0 ? 16 : 0), gw = G.w - (G.x > 0 ? 16 : 0), gy = G.y + (G.y > 0 ? 16 : 0), gh = G.h - (G.y > 0 ? 16 : 0);
+        el('text', { class: 'v-label v-label--strong', x: gx, y: gy + 12 }, svg, G.d.name);
+        el('text', { class: 'v-label v-label--muted', x: gx + gw - gap, y: gy + 12, 'text-anchor': 'end' }, svg, `${fmt(G.d.value)} ${unit} · ${Math.round((G.d.value / total) * 100)} %`);
+        squarify(G.d.children, gx, gy + head, gw, gh - head).forEach((c) => {
+          const x = Math.round(c.x), y = Math.round(c.y), cw = Math.round(c.x + c.w) - x - gap, ch = Math.round(c.y + c.h) - y - gap, d = c.d;
+          const g = el('g', {}, svg);
+          el('rect', { class: 'v-cell' + (gi % 2 ? ' v-cell--2' : ''), x, y, width: Math.max(1, cw), height: Math.max(1, ch), tabindex: 0, role: 'img', 'aria-label': `${G.d.name}, ${d.name} : ${fmt(d.value)} ${unit}` }, g);
+          const fits = cw >= d.name.length * 7.6 + 20;
+          if (fits && ch >= 26) el('text', { class: 'v-label' + (d.signal ? ' v-label--signal' : ''), x: x + 10, y: y + 19 }, g, d.name);
+          if (cw >= 60 && ch >= 50) el('text', { class: 'v-value v-value--large' + (d.signal ? ' v-value--signal' : ''), x: x + 10, y: y + 40 }, g, fmt(d.value));
+          if (d.signal && cw >= 28 && ch >= 26) el('rect', { class: 'v-mark--signal', x: x + cw - 16, y: y + 10, width: 6, height: 6 }, g);
+          hover(g.firstChild, api, x + cw / 2, y, `<span>${d.name}</span>${fmt(d.value)} ${unit} · ${((d.value / total) * 100).toFixed(1).replace('.', ',')} %${d.note ? ' — ' + d.note : ''}`);
+        });
+      });
+    });
+  }
+
+  /* Barres empilées. series : [{ name, values }] du bas vers le haut ; trois séries au plus (ton, pas teinte). */
+  function stack(host, { labels, series, unit = '', steps = 4, height = 300 }) {
+    mount(host, height, (svg, w, h, api) => {
+      const m = { t: 24, r: 104, b: 32, l: 44 }, iw = w - m.l - m.r, ih = h - m.t - m.b;
+      const totals = labels.map((_, i) => series.reduce((a, s) => a + s.values[i], 0));
+      const { step, max } = niceMax(Math.max(...totals), steps), y = (v) => m.t + ih - (v / max) * ih;
+      for (let i = 0; i <= steps; i++) {
+        if (i) el('line', { class: 'v-grid', x1: m.l, x2: m.l + iw, y1: snap(y(i * step)), y2: snap(y(i * step)) }, svg);
+        el('text', { class: 'v-label v-label--muted', x: m.l - 10, y: y(i * step) + 4, 'text-anchor': 'end' }, svg, fmt(i * step));
+      }
+      const band = iw / labels.length, bw = Math.max(6, Math.min(40, Math.round(band * 0.5))), tones = ['', ' v-mark--3', ' v-mark--2'];
+      const ends = [];
+      labels.forEach((l, i) => {
+        const x = Math.round(m.l + band * i + band / 2 - bw / 2); let acc = 0;
+        series.forEach((s, k) => {
+          const y0 = y(acc), y1 = y(acc + s.values[i]); acc += s.values[i];
+          const r = el('rect', { class: 'v-mark' + tones[k % 3], x, y: Math.round(y1), width: bw, height: Math.max(1, Math.round(y0) - Math.round(y1) - 1), tabindex: 0, role: 'img', 'aria-label': `${l}, ${s.name} : ${fmt(s.values[i])} ${unit}` }, svg);
+          hover(r, api, x + bw / 2, y1, `<span>${l} · ${s.name}</span>${fmt(s.values[i])} ${unit}`);
+          if (i === labels.length - 1) ends.push({ name: s.name, y: (y0 + y1) / 2 });
+        });
+        el('text', { class: 'v-value', x: x + bw / 2, y: y(acc) - 7, 'text-anchor': 'middle' }, svg, fmt(acc));
+        el('text', { class: 'v-label', x: x + bw / 2, y: h - m.b + 18, 'text-anchor': 'middle' }, svg, l);
+      });
+      ends.sort((a, b) => a.y - b.y); for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 14) ends[i].y = ends[i - 1].y + 14;
+      ends.forEach((e) => el('text', { class: 'v-label', x: m.l + iw + 4, y: e.y + 4 }, svg, e.name));
+      el('line', { class: 'v-axis', x1: m.l, x2: m.l + iw, y1: snap(y(0)), y2: snap(y(0)) }, svg);
+    });
+  }
+
+  /* Nuage de points. points : [{ x, y, name?, signal? }] ; seuls les points nommés sont étiquetés. */
+  function scatter(host, { points, xLabel = '', yLabel = '', xSteps = 5, ySteps = 4, height = 340 }) {
+    mount(host, height, (svg, w, h, api) => {
+      const m = { t: 24, r: 24, b: 48, l: 52 }, iw = w - m.l - m.r, ih = h - m.t - m.b;
+      const X = niceMax(Math.max(...points.map((p) => p.x)), xSteps), Y = niceMax(Math.max(...points.map((p) => p.y)), ySteps);
+      const x = (v) => m.l + (v / X.max) * iw, y = (v) => m.t + ih - (v / Y.max) * ih;
+      for (let i = 0; i <= ySteps; i++) { if (i) el('line', { class: 'v-grid', x1: m.l, x2: m.l + iw, y1: snap(y(i * Y.step)), y2: snap(y(i * Y.step)) }, svg); el('text', { class: 'v-label v-label--muted', x: m.l - 10, y: y(i * Y.step) + 4, 'text-anchor': 'end' }, svg, fmt(i * Y.step)); }
+      for (let i = 0; i <= xSteps; i++) { el('line', { class: 'v-tick', x1: snap(x(i * X.step)), x2: snap(x(i * X.step)), y1: y(0), y2: y(0) + 5 }, svg); el('text', { class: 'v-label v-label--muted', x: x(i * X.step), y: y(0) + 20, 'text-anchor': 'middle' }, svg, fmt(i * X.step)); }
+      el('line', { class: 'v-axis', x1: m.l, x2: m.l + iw, y1: snap(y(0)), y2: snap(y(0)) }, svg);
+      el('text', { class: 'v-label', x: m.l + iw, y: h - 6, 'text-anchor': 'end' }, svg, xLabel);
+      el('text', { class: 'v-label', x: m.l, y: 12 }, svg, yLabel);
+      points.forEach((p) => {
+        const cx = x(p.x), cy = y(p.y);
+        if (p.signal) el('circle', { class: 'v-ring v-ring--signal', cx, cy, r: 7 }, svg);
+        const c = el('circle', { class: 'v-dot' + (p.signal ? ' v-dot--signal' : p.name ? '' : ' v-dot--soft'), cx, cy, r: p.name ? 3 : 2.5, tabindex: p.name ? 0 : undefined }, svg);
+        if (p.name) { const left = cx > m.l + iw - 150; el('text', { class: 'v-label' + (p.signal ? ' v-label--signal' : ' v-label--strong'), x: cx + (left ? -12 : 12), y: cy + 4, 'text-anchor': left ? 'end' : 'start' }, svg, p.name); hover(c, api, cx, cy - 8, `<span>${p.name}</span>${fmt(p.x)} · ${fmt(p.y)}`); }
+      });
+    });
+  }
+
+  /* Matrice de chaleur. rows, cols : libellés ; values[r][c] ; cinq paliers de ton, jamais de teinte. */
+  function heat(host, { rows, cols, values, unit = '', cell = 22 }) {
+    const max = Math.max(...values.flat());
+    mount(host, () => 28 + rows.length * (cell + 2) + 8, (svg, w, h, api) => {
+      const l = 44, cw = Math.max(10, Math.min(40, Math.floor((w - l) / cols.length) - 2));
+      cols.forEach((c, j) => { if (c) el('text', { class: 'v-label v-label--muted', x: l + j * (cw + 2), y: 12 }, svg, c); });
+      rows.forEach((r, i) => {
+        const y = 24 + i * (cell + 2);
+        el('text', { class: 'v-label', x: 0, y: y + cell / 2 + 4 }, svg, r);
+        values[i].forEach((v, j) => {
+          const level = v === 0 ? 0 : Math.min(4, 1 + Math.floor((v / max) * 3.999));
+          const rect = el('rect', { class: 'v-heat v-heat--' + level, x: l + j * (cw + 2), y, width: cw, height: cell, tabindex: 0, role: 'img', 'aria-label': `${r} ${cols[j] || j} : ${fmt(v)} ${unit}` }, svg);
+          hover(rect, api, l + j * (cw + 2) + cw / 2, y, `<span>${r}${cols[j] ? ' · ' + cols[j] : ''}</span>${fmt(v)} ${unit}`);
+        });
+      });
+    });
+  }
+
+  /* Courbe de tendance : une ligne dans le texte, sans axe. Le dernier point est marqué. */
+  function spark(host, { values, signal = false, width = 96, height = 20 }) {
+    host = typeof host === 'string' ? document.querySelector(host) : host; if (!host) return;
+    const svg = el('svg', { class: 'v-spark', viewBox: `0 0 ${width} ${height}`, width, height, role: 'img', 'aria-label': host.dataset.label || `De ${fmt(values[0])} à ${fmt(values.at(-1))}` }, host);
+    const mn = Math.min(...values), mx = Math.max(...values), x = (i) => 2 + (i * (width - 6)) / (values.length - 1), y = (v) => height - 3 - ((v - mn) / (mx - mn || 1)) * (height - 6);
+    el('path', { class: 'v-line v-line--2', 'stroke-width': 1, d: values.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ') }, svg);
+    el('circle', { class: 'v-dot' + (signal ? ' v-dot--signal' : ''), cx: x(values.length - 1), cy: y(values.at(-1)), r: 2 }, svg);
+  }
+
+  return { bars, lines, tree, graticule, treemap, stack, scatter, heat, spark };
 })();

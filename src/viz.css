@@ -54,6 +54,20 @@
 .v-value--signal { fill: var(--signal); font-weight: 600; }
 .v-hit { fill: transparent; cursor: default; }
 
+/* Tuiles d'une carte proportionnelle : ton bas, c'est le chiffre qui porte le clair. */
+.v-cell { fill: var(--surface-2); }
+.v-cell--2 { fill: var(--surface); stroke: var(--line-faint); stroke-width: 1; }
+.v-cell:hover, .v-cell:focus-visible { stroke: var(--fg-soft); stroke-width: 1; outline: 0; }
+.v-value--large { font-size: 15px; }
+/* Paliers d'une matrice : cinq tons, du fond vers le texte. */
+.v-heat--0 { fill: var(--surface); }
+.v-heat--1 { fill: var(--line-faint); }
+.v-heat--2 { fill: var(--line); }
+.v-heat--3 { fill: var(--line-strong); }
+.v-heat--4 { fill: var(--fg-soft); }
+.v-heat:hover, .v-heat:focus-visible { stroke: var(--fg-strong); stroke-width: 1; outline: 0; }
+.v-spark { display: inline-block; vertical-align: middle; overflow: visible; }
+
 /* Infobulle de graphique */
 .v-tip { position: absolute; z-index: 5; pointer-events: none; padding: var(--space-2) var(--space-3); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-small); line-height: var(--leading-small); white-space: nowrap; transform: translate(-50%, calc(-100% - 10px)); opacity: 0; transition: opacity var(--duration); }
 .v-tip.is-visible { opacity: 1; }
@@ -67,3 +81,12 @@
 .v-hbar::before { content: ''; display: block; height: 100%; width: calc(var(--value, 0) * 1%); background: var(--mark); }
 .v-hbar--signal::before { background: var(--signal); }
 .v-hbar--strong::before { background: var(--fg-strong); }
+
+/* Barre de répartition : les parts d'un tout sur une seule ligne. Remplace le camembert.
+   <div class="v-share"><span style="--value: 83">Non-vie <b>83 %</b></span>…</div> */
+.v-share { display: flex; gap: 2px; min-width: 0; font-size: var(--text-micro); line-height: var(--leading-micro); text-transform: uppercase; letter-spacing: var(--track-label); color: var(--fg-soft); }
+.v-share > * { flex: var(--value, 1) 0 0; min-width: 0; padding-top: var(--space-2); border-top: 0.5rem solid var(--mark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.v-share > :nth-child(2) { border-top-color: var(--mark-3); }
+.v-share > :nth-child(3) { border-top-color: var(--mark-2); }
+.v-share > .is-signal { border-top-color: var(--signal); }
+.v-share b { margin-left: var(--space-2); font-weight: var(--weight-medium); color: var(--fg-strong); }

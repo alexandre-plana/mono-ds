@@ -71,8 +71,10 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-048 | Modale éditoriale : un seul titre, actions à droite | en vigueur |
 | D-049 | Modales portrait : le chiffre, l'étiquette, la colonne | adoptée, voir D-050 |
 | D-050 | La modale est portrait par défaut | remplacée par D-051 |
-| D-051 | La modale est excentrée à droite, minimale | en vigueur |
+| D-051 | La modale est excentrée à droite, minimale | amendée par D-053 |
 | D-052 | Sous une modale, la page reste lisible | en vigueur |
+| D-053 | La modale revient au centre | en vigueur |
+| D-054 | Graphiques : treemap, composition, nuage, matrice, tendance ; pas de camembert | en vigueur |
 
 ---
 
@@ -477,3 +479,19 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Décision** : voile à 30 %, hachures tous les 9 px. La page reste lisible ; ce sont les hachures seules qui disent qu'elle n'est plus interactive.
 - **Comparé** : 45 % / 7 px (encore trop éteint), 30 % / 9 px (retenu), 18 % / 11 px (la page concurrence la modale, surtout en papier).
 - **Limite** : le texte hachuré se lit mais ne se parcourt pas confortablement ; c'est voulu, la page est un contexte, plus une surface de travail.
+
+## D-053 — La modale revient au centre
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« ça complexifie pour rien ») · **Amende** : D-051
+- **Décision** : `.c-dialog` est de nouveau centrée, ancrée au tiers haut. Tout le reste de D-051 est gardé : 22 rem, hauteur du contenu, un titre, une phrase ou quelques champs, actions à droite. `--column` et `--large` sont centrées elles aussi.
+- **Raison** : le contexte reste lisible grâce au voile léger de D-052 ; excentrer n'apportait plus rien et ajoutait une règle de placement, une exception pour `--large` et une autre pour le téléphone.
+- **Bilan de la série D-046 à D-053** : ce qui a compté n'est pas la position mais trois retraits — plus de bandeau ni de filets, un seul titre, un fond qui laisse lire la page.
+
+## D-054 — Graphiques : treemap, composition, nuage, matrice, tendance ; pas de camembert
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : cinq graphiques s'ajoutent aux barres, courbes, arbre et carte : carte proportionnelle (treemap), barres empilées, nuage de points, matrice à paliers, courbe de tendance ; plus la barre de répartition en HTML.
+- **Treemap** : tuiles en ton bas (`--surface-2`), séparées par 2 px de fond, sans contour ; deux niveaux au plus, le groupe nommé au-dessus avec son total et sa part ; un groupe sur deux change de ton. Le chiffre porte le clair (V2). Le signal ne remplit jamais une tuile — elle dépasserait 1 % de l'écran : il marque le nom, la valeur et un carré de 6 px.
+- **Matrice** : cinq paliers pris dans les rôles existants (`--surface`, `--line-faint`, `--line`, `--line-strong`, `--fg-soft`), donc mesurés et symétriques entre thèmes ; pas de transparence.
+- **Refusé** (choix de Claude) : camembert, anneau, jauge circulaire — règle V9. On compare mal des angles, et un disque est la masse la plus lourde qu'on puisse poser sur une page. La barre de répartition et le treemap répondent à la même question.
+- **Limite** : trois séries au plus par ton dans les barres empilées ; au-delà, des petits multiples.

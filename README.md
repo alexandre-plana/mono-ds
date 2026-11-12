@@ -4,7 +4,7 @@ Design system monochrome, sobre et technique, pour les interfaces de données,
 les outils et les rapports. Treize gris, une seule couleur, des règles de
 composition — et un catalogue pour les réemployer.
 
-![Tableau de bord : une encre, des filets, et un seul fait en couleur](docs/captures/tableau-de-bord.png)
+![Écran de connexion](docs/captures/connexion.png)
 
 > MONO traite l'écran comme une page imprimée : une encre, un papier, des filets,
 > beaucoup de vide — et une seule couleur, gardée pour ce qui ne doit pas être manqué.
@@ -42,68 +42,54 @@ d'arbitrage sont dans [`docs/philosophie.md`](docs/philosophie.md).
 
 ## En images
 
-### Une couleur, et rarement
+### Une page, du texte, du vide
 
-Sur l'écran ci-dessus, le signal ne désigne qu'un fait : la branche en repli.
-Tout le reste se distingue par le ton, la graisse et le trait. Un écran sans
-aucune couleur est l'état normal du système.
+Un contour d'un pixel, un titre espacé, un tableau sans aucun filet. Le seul
+trait est celui de la ligne survolée ; la seule couleur, le fait à ne pas manquer.
 
-### Encre et papier
+![Une liste : onglets, fil d'Ariane, tableau sans filets](docs/captures/liste.png)
 
-Les deux thèmes partagent les mêmes rôles. Un bloc inversé, un seul par vue,
-porte la masse sombre sur le papier.
+### Les interactions
 
-![Rapport, thème papier](docs/captures/rapport-papier.png)
-
-### Le survol annonce, la modale hachure
-
-Un tableau n'a aucun filet : il en vient un sous la ligne survolée, terminé en
-flèche si le clic mène quelque part. « Aller à » se tape au clavier. Sous une
-modale, la page se hachure — en dessin technique, une zone hachurée est une
-zone exclue. Les deux thèmes s'échangent sans rien déplacer.
+Le survol annonce le clic. « Aller à » se tape au clavier. Sous une modale, la
+page se hachure mais reste lisible. Les deux thèmes s'échangent sans rien déplacer.
 
 ![Survol d'un tableau, « Aller à », modale, changement de thème](docs/captures/interactions.gif)
 
-### La modale se range à droite
+### La modale
 
-Une feuille étroite, en haut à droite de l'écran : un titre, une phrase, les
-actions. Elle laisse lisible, à gauche, ce sur quoi l'on travaillait.
+Un titre, une phrase, deux actions. Ni bandeau, ni croix, ni filet.
 
-| | |
-|---|---|
-| ![Confirmation, thème encre](docs/captures/modale.png) | ![Formulaire court, thème papier](docs/captures/modale-papier.png) |
+![Confirmation sur la page hachurée](docs/captures/modale.png)
 
-### Les images sont encrées
+### Les données
 
-Un dessin au trait du système entre tel quel. Une photo est ramenée au gris et
-fondue dans le ton de la page ; tramée si elle pèse encore.
+Marques en gris moyen, chiffres en clair, un seul fait en signal. Pas de
+camembert : une carte proportionnelle, ici en thème papier.
 
-![Fiches avec dessin, image encrée et image tramée, thème papier](docs/captures/images.png)
+![Carte proportionnelle des primes par produit, thème papier](docs/captures/treemap.png)
 
-### Une page d'entrée
+![Barres empilées par clientèle](docs/captures/composition.png)
 
-![Écran de connexion](docs/captures/connexion.png)
+![Matrice des appels par jour et par heure](docs/captures/matrice.png)
+
+### Les images
+
+Des photos sans rapport entre elles — studio, nuit, relevé scientifique —
+ramenées au gris et fondues dans le ton de la page : elles tiennent ensemble.
+
+![Collection de huit images encrées](docs/captures/images.png)
 
 ## Pour les applications
 
-Le système fournit aussi de quoi bâtir un outil complet. Toute page a un
-contour et repose sur un plan de travail uni ; l'écran ne défile jamais, c'est
-le contenu de la page qui défile.
+Le système fournit aussi de quoi bâtir un outil complet : onglets persistants,
+inspecteur attaché à sa page, valeurs modifiables en place, console, bureau à
+fenêtres. Le détail d'un élément s'ouvre dans la page, séparé par l'espace
+seul, jamais dans une modale.
 
-- **Onglets persistants et inspecteur.** La navigation s'écrit en mots. Le
-  détail d'un élément s'ouvre dans la page, séparé par l'espace seul, jamais
-  dans une modale. La ligne sélectionnée ne change que de contour.
+![Application à onglets, inspecteur attaché](docs/captures/application-onglets.png)
 
-  ![Application à onglets, inspecteur attaché](docs/captures/application-onglets.png)
-
-- **Collection et inspecteur épinglé.** Deux pages côte à côte sur le plan de
-  travail, valeurs modifiables en place.
-
-  ![Une collection et son inspecteur](docs/captures/collection.png)
-
-- **Bureau.** Fenêtres flottantes, aimantées, et barre des fenêtres.
-
-  ![Bureau à fenêtres flottantes](docs/captures/bureau.png)
+Sept écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
 
 ## En bref
 
