@@ -17,6 +17,12 @@
     ['exemples/connexion.html', 'Connexion'],
     ['exemples/bureau.html', 'Bureau'],
   ];
+  // Pistes de shell à l'étude : elles quitteront cette liste une fois le choix fait.
+  const PROPOSALS = [
+    ['exemples/shell-a.html', 'A · Ligne de tête'],
+    ['exemples/shell-b.html', 'B · Onglets de marge'],
+    ['exemples/shell-c.html', 'C · Feuillets'],
+  ];
   const here = location.pathname.replace(/\/$/, '/index.html');
   const isCurrent = (href) => here.endsWith('/catalogue/' + href) || here.endsWith('/' + href);
 
@@ -37,6 +43,7 @@
     const item = ([href, label], i) => `<a class="c-nav__item" href="${root}${href}"${isCurrent(href) ? ' aria-current="page"' : ''}><span>${String(i + 1).padStart(2, '0')}</span><span>${label}</span></a>`;
     let html = '<div class="c-nav__label">Catalogue</div>' + PAGES.map(item).join('');
     html += '<div class="c-nav__label">Exemples</div>' + EXAMPLES.map(item).join('');
+    html += '<div class="c-nav__label">Shell — à l\'étude</div>' + PROPOSALS.map(item).join('');
     const sections = [...document.querySelectorAll('.cat-section[id]')];
     if (sections.length > 1) {
       html += '<div class="c-nav__label">Sur cette page</div>' + sections.map((s) => `<a class="c-nav__item" href="#${s.id}"><span>—</span><span>${s.dataset.title || s.querySelector('.c-section-head span:nth-child(2)')?.textContent || s.id}</span></a>`).join('');

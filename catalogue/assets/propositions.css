@@ -1,0 +1,45 @@
+/* PROPOSITIONS DE SHELL — à l'étude, hors du système.
+   Ces styles (.p-) restent dans le catalogue tant qu'une piste n'est pas retenue ;
+   celle qui le sera entrera dans src/, les autres seront supprimées. */
+
+/* ---- A · Ligne de tête : le chemin est la navigation ------------------------------- */
+.p-path { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2) var(--space-3); text-transform: uppercase; letter-spacing: var(--track-title); font-size: var(--text-base); line-height: var(--leading-base); color: var(--fg-muted); }
+.p-path > .c-menu > summary, .p-path__home { appearance: none; background: none; border: 0; padding: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--fg-soft); cursor: pointer; border-bottom: var(--hairline) dotted transparent; transition: color var(--duration), border-color var(--duration); }
+.p-path > .c-menu > summary:hover, .p-path__home:hover, .p-path > .c-menu[open] > summary { color: var(--fg-strong); border-bottom-color: var(--fg-soft); }
+.p-path > .c-menu:last-of-type > summary { color: var(--fg-strong); }
+.p-path .c-menu__list { letter-spacing: 0; }
+.p-toc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8) var(--gutter); align-items: start; }
+@media (max-width: 900px) { .p-toc { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- B · Onglets de marge : la navigation vit sur le plan de travail ----------------- */
+.p-thumbdesk { padding-left: calc(var(--shell-inset) + 2.25rem); position: relative; }
+.p-thumbs { position: absolute; z-index: 2; left: var(--shell-inset); top: var(--shell-inset); width: calc(2.25rem + 1px); display: flex; flex-direction: column; gap: 2px; }
+.p-thumbs__gap { height: var(--space-4); }
+.p-thumbs__tab { position: relative; display: grid; place-content: center; height: 2.25rem; background: var(--bg); border: var(--hairline) solid var(--line-strong); color: var(--fg-muted); font-size: var(--text-micro); letter-spacing: var(--track-label); text-decoration: none; transition: color var(--duration); }
+.p-thumbs__tab:hover, .p-thumbs__tab:focus-visible { color: var(--fg-strong); }
+/* L'onglet courant s'ouvre sur la page : pas de bord droit, un trait de 2 px à gauche. */
+.p-thumbs__tab[aria-current] { border-right-color: var(--bg); border-left: var(--stroke) solid var(--selected-line); color: var(--fg); font-weight: var(--weight-medium); }
+.p-thumbs__label { position: absolute; left: 100%; top: -1px; height: 2.25rem; display: none; align-items: center; padding: 0 var(--space-4); background: var(--bg); border: var(--hairline) solid var(--line-strong); border-left: 0; color: var(--fg-strong); text-transform: uppercase; letter-spacing: var(--track-caps); white-space: nowrap; }
+.p-thumbs__tab:hover .p-thumbs__label, .p-thumbs__tab:focus-visible .p-thumbs__label { display: flex; }
+@media (max-width: 900px) {
+  .p-thumbdesk { padding-left: var(--shell-inset); padding-top: calc(var(--shell-inset) + 2.25rem); }
+  .p-thumbs { flex-direction: row; width: auto; right: var(--shell-inset); }
+  .p-thumbs__tab { width: 2.25rem; } .p-thumbs__gap { width: var(--space-3); height: auto; }
+  .p-thumbs__tab[aria-current] { border-right-color: var(--line-strong); border-bottom-color: var(--bg); border-left: var(--hairline) solid var(--line-strong); border-top: var(--stroke) solid var(--selected-line); }
+  .p-thumbs__label { display: none !important; }
+}
+
+/* ---- C · Feuillets : chaque niveau est une page, les précédentes restent sur la tranche -- */
+.p-sheets { grid-template-columns: var(--p-cols, 2.75rem 2.75rem minmax(0, 1fr)); gap: calc(var(--shell-inset) / 2); }
+.p-sheets > .p-spine { appearance: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-5); padding: var(--space-5) 0 var(--space-4); font: inherit; color: var(--fg-muted); text-decoration: none; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
+.p-spine:hover, .p-spine:focus-visible { color: var(--fg-strong); border-color: var(--fg-soft); }
+.p-spine__num { font-size: var(--text-micro); letter-spacing: var(--track-label); }
+.p-spine__title { writing-mode: vertical-rl; transform: rotate(180deg); text-transform: uppercase; letter-spacing: var(--track-title); font-size: var(--text-small); color: var(--fg-soft); white-space: nowrap; }
+.p-spine:hover .p-spine__title { color: var(--fg-strong); }
+.p-spine__foot { margin-top: auto; }
+@media (max-width: 900px) {
+  .p-sheets { grid-template-columns: minmax(0, 1fr) !important; }
+  .p-sheets > .p-spine { flex-direction: row; padding: var(--space-2) var(--space-4); min-height: 2.5rem; }
+  .p-spine__title { writing-mode: horizontal-tb; transform: none; }
+  .p-spine__foot { margin: 0 0 0 auto; }
+}
