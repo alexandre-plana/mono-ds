@@ -30,7 +30,7 @@ window.MonoConsole = (log, input, commands = {}) => {
       if (all[name]) all[name](args, print); else print(`Commande inconnue : « ${name} ». Saisir « aide ».`, 'error');
     } else if (e.key === 'ArrowUp' && history.length) { e.preventDefault(); cursor = Math.max(0, cursor - 1); input.value = history[cursor]; }
     else if (e.key === 'ArrowDown' && history.length) { e.preventDefault(); cursor = Math.min(history.length, cursor + 1); input.value = history[cursor] ?? ''; }
-    e.stopPropagation();
+    if (e.key !== 'Escape') e.stopPropagation();
   });
   return { print };
 };

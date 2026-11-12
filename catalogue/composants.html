@@ -693,6 +693,42 @@
               <div><dt>Accessibilité</dt><dd><code>&lt;nav aria-label&gt;</code> ; entrée courante en <code>aria-current="page"</code>.</dd></div>
             </dl>
           </div>
+          <div class="cat-sub" id="c-pathnav" data-search="composant">
+            <h3>Ligne de tête — .c-pathnav</h3>
+            <p>Le chemin jusqu'à l'écran courant, qui sert de navigation à toute l'application. Chaque segment est un menu de ses voisins ; le premier ouvre le sommaire. Elle prend la place du titre dans l'en-tête de page.</p>
+            <div class="cat-demo" data-code style="min-height: 11rem">
+              <nav class="c-pathnav" aria-label="Navigation">
+                <button class="c-pathnav__home" type="button" aria-expanded="false">Mono</button>
+                <span class="c-pathnav__sep" aria-hidden="true"></span>
+                <details class="c-menu c-pathnav__seg">
+                  <summary>Réseau<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
+                  <div class="c-menu__list" role="menu">
+                    <button class="c-menu__item" type="button" role="menuitem" aria-checked="true">Réseau</button>
+                    <button class="c-menu__item" type="button" role="menuitem">Pilotage</button>
+                    <button class="c-menu__item" type="button" role="menuitem">Système</button>
+                  </div>
+                </details>
+                <span class="c-pathnav__sep" aria-hidden="true"></span>
+                <details class="c-menu c-pathnav__seg" open>
+                  <summary>Agences<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
+                  <div class="c-menu__list" role="menu">
+                    <button class="c-menu__item" type="button" role="menuitem">Synthèse <span class="c-menu__hint">Chiffres clés</span></button>
+                    <button class="c-menu__item" type="button" role="menuitem" aria-checked="true">Agences <span class="c-menu__hint">412 points de vente</span></button>
+                    <button class="c-menu__item" type="button" role="menuitem">Branches <span class="c-menu__hint">4 régionales</span></button>
+                  </div>
+                </details>
+              </nav>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Comme unique navigation d'une application, dans <code>.c-masthead</code>, à la place du titre. Le dernier segment est le titre de l'écran.</dd></div>
+              <div><dt>Éviter</dt><dd>Avec un rail ou des onglets de navigation : il n'y a qu'un moyen de se déplacer. Plus de trois niveaux. Un segment sans voisins (l'écrire en texte simple).</dd></div>
+              <div><dt>Fil d'Ariane ou ligne de tête</dt><dd><code>.c-breadcrumb</code> situe une page dans un document et ne fait que remonter. <code>.c-pathnav</code> navigue : elle remonte, et passe aussi d'un voisin à l'autre.</dd></div>
+              <div><dt>Sommaire</dt><dd>Le premier segment remplace l'écran par le sommaire : une colonne par groupe, un <code>.c-index</code> par colonne, numérotation continue, une description par écran. Aucun composant propre.</dd></div>
+              <div><dt>États</dt><dd>Segment courant au ton fort. Survol ou ouverture : le segment passe au ton fort, son chevron aussi. Dans la liste, le voisin courant porte le trait de sélection.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;nav&gt;</code> ; chaque segment est un <code>&lt;details&gt;</code>, ouvrable au clavier sans script. Échap et clic extérieur ferment. Le bouton du sommaire porte <code>aria-expanded</code>.</dd></div>
+            </dl>
+          </div>
+
           <div class="cat-sub" id="fil-d-ariane-et-pagination" data-search="composant">
             <h3>Fil d'Ariane et pagination</h3>
             <div class="cat-demo" data-code>

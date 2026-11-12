@@ -83,21 +83,6 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .l-desk--app { height: 100vh; height: 100dvh; min-height: 0; }
 .l-desk--app > .l-shell { min-height: 0; overflow: hidden; display: grid; grid-template-rows: minmax(0, 1fr); }
 .l-desk--split { grid-template-columns: minmax(0, 1fr) var(--inspector); }
-/* Shell d'application : un rail de navigation et un volet de contenu, dans une même page.
-   Le haut du rail (.l-app__brand) a la hauteur de l'en-tête du volet : leurs filets s'alignent. */
-.l-app { display: grid; grid-template-columns: var(--rail, 15rem) minmax(0, 1fr); min-height: 0; min-width: 0; }
-.l-app__rail { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; border-right: var(--hairline) solid var(--line); }
-.l-app__brand { display: flex; align-items: center; min-height: 3rem; margin: var(--space-4) var(--space-5) 0; padding-bottom: var(--space-3); border-bottom: var(--hairline) solid var(--line); }
-.l-app__nav { padding: var(--space-6) var(--space-5); overflow-y: auto; min-height: 0; }
-.l-app__foot { padding: 0 var(--space-5); }
-.l-app__foot .c-statusbar { flex-wrap: nowrap; }
-@media (max-width: 900px) {
-  .l-app { grid-template-columns: minmax(0, 1fr); }
-  .l-app__rail { border-right: 0; border-bottom: var(--hairline) solid var(--line); }
-  .l-app__nav { padding-block: var(--space-4); }
-  .l-app__foot { display: none; }
-}
-
 /* Bureau : le plan de travail occupe tout l'écran, les fenêtres en sont les pages.
    .l-desk__area reçoit les fenêtres ; la barre des fenêtres est posée dessous. */
 .l-desk--os { height: 100vh; height: 100dvh; min-height: 0; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }

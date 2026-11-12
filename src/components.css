@@ -127,6 +127,21 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-nav__item[aria-current] { color: var(--fg); font-weight: var(--weight-bold); }
 .c-nav__item[aria-current]::after { content: ''; flex: 1; border-bottom: var(--hairline) solid var(--line-strong); transform: translateY(-0.2em); }
 
+/* Ligne de tête : le chemin, en tête de page, EST la navigation de l'application.
+   Chaque segment ouvre la liste de ses voisins ; le premier ouvre le sommaire.
+   Elle remplace le titre dans .c-masthead : où l'on est reste écrit en toutes lettres. */
+.c-pathnav { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2) var(--space-3); min-width: 0; text-transform: uppercase; letter-spacing: var(--track-title); font-size: var(--text-base); line-height: var(--leading-base); color: var(--fg-muted); }
+.c-pathnav__sep::before { content: '/'; }
+.c-pathnav__seg > summary, .c-pathnav__home { appearance: none; display: inline-flex; align-items: baseline; gap: var(--space-1); background: none; border: 0; padding: 0; margin: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--fg-soft); cursor: pointer; transition: color var(--duration); }
+.c-pathnav__seg > summary { list-style: none; }
+.c-pathnav__seg > summary::-webkit-details-marker { display: none; }
+.c-pathnav__seg > summary .c-icon { align-self: center; color: var(--fg-muted); margin-left: calc(var(--track-title) * -1 + var(--space-1)); }
+.c-pathnav__seg > summary:hover, .c-pathnav__home:hover, .c-pathnav__seg[open] > summary, .c-pathnav__home[aria-expanded="true"] { color: var(--fg-strong); }
+.c-pathnav__seg > summary:hover .c-icon, .c-pathnav__seg[open] > summary .c-icon { color: var(--fg-strong); }
+/* Le dernier segment dit où l'on est : c'est le titre de l'écran. */
+.c-pathnav__seg:last-of-type > summary { color: var(--fg-strong); }
+.c-pathnav .c-menu__list { letter-spacing: 0; text-transform: none; }
+
 .c-breadcrumb { display: flex; flex-wrap: wrap; gap: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
 .c-breadcrumb a { color: var(--fg-soft); text-decoration: none; }
 .c-breadcrumb a:hover { color: var(--fg-strong); }

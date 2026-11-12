@@ -60,9 +60,10 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   `<div class="cat-sub" id="c-nom" data-search="composant">` avec un `<h3>`, une
   démonstration `<div class="cat-demo" data-code>` et sa fiche `<dl class="cat-spec">`
   (Employer / Éviter / États / Accessibilité). Ajouter une ligne à `docs/composants.md`.
-- Nouvelle application : partir de `catalogue/exemples/application.html` (shell à
-  rail, fil d'Ariane, console, barre d'état) ; ne pas modifier les hauteurs de
-  `.l-app__brand`, `.c-masthead` et `.c-statusbar`, qui alignent les filets.
+- Nouvelle application : partir de `catalogue/exemples/application.html`. Deux
+  lignes fixes seulement : la ligne de tête (`.c-pathnav`, le chemin est la
+  navigation) et la barre d'état. Pas de rail, pas de barre d'outils permanente ;
+  console et aide sont des fenêtres ouvertes à la demande.
 - Le système reste en CSS pur. Les comportements (fenêtres, canevas, menus,
   console) vivent dans `catalogue/assets/` comme démonstrations ; seule la version
   bureau dépend d'une bibliothèque, interact.js, embarquée dans `assets/vendor/`.

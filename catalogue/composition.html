@@ -273,35 +273,37 @@
             </div>
           </div>
           <p class="cat-note">En application, le plan occupe exactement l'écran (<code>.l-desk--app</code>) et chaque page défile pour elle-même ; <code>.l-desk--split</code> pose la collection et l'inspecteur côte à côte. Une page est alors un volet (<code>.l-pane</code>) : en-tête fixe, corps défilant, barre d'état. Voir l'exemple <a href="exemples/collection.html">Collection et inspecteur</a>.</p>
-          <div class="cat-sub" id="l-app" data-search="rubrique">
-            <h3>Shell d'application — .l-app</h3>
-            <p>La base d'une application : une page, un rail de navigation, un volet de contenu. Le haut du rail a la hauteur de l'en-tête du volet, son pied celle de la barre d'état : les filets se prolongent d'un côté à l'autre. Le fil d'Ariane ouvre la barre du volet, à gauche ; les actions sont à droite. Gabarit à copier : <a href="exemples/application.html">exemples/application.html</a>.</p>
+          <div class="cat-sub" id="shell" data-search="rubrique">
+            <h3>Shell d'application — la ligne de tête</h3>
+            <p>Une application tient en une page et deux lignes fixes. En haut, la ligne de tête : le chemin jusqu'à l'écran courant, qui est aussi la navigation — chaque segment ouvre la liste de ses voisins, le premier ouvre le sommaire. En bas, la barre d'état. Entre les deux, tout est contenu. Il n'y a ni rail, ni barre d'outils permanente : une action vit avec ce qu'elle concerne. Gabarit à copier : <a href="exemples/application.html">exemples/application.html</a>.</p>
             <div class="cat-demo cat-demo--plain" data-code>
-              <div class="l-desk" style="min-height: 0; height: 17rem">
-                <div class="l-shell" style="display: grid">
-                  <div class="l-app" style="--rail: 11rem">
-                    <aside class="l-app__rail">
-                      <div class="l-app__brand"><span class="c-masthead__title">Mono</span></div>
-                      <nav class="c-nav l-app__nav" aria-label="Exemple">
-                        <a class="c-nav__item" href="#l-app"><span>01</span><span>Synthèse</span></a>
-                        <a class="c-nav__item" href="#l-app" aria-current="page"><span>02</span><span>Agences</span></a>
-                      </nav>
-                      <div class="l-app__foot"><div class="c-statusbar"><span>M. Delorme</span></div></div>
-                    </aside>
-                    <div class="l-pane">
-                      <div class="l-pane__head">
-                        <header class="c-masthead"><div class="c-masthead__title">Agences</div><div class="c-masthead__meta"><span>T3</span></div></header>
-                        <div class="l-pane__bar">
-                          <nav class="c-breadcrumb" aria-label="Fil d'Ariane"><a href="#l-app">Réseau</a><a href="#l-app">Branche Nord</a><span aria-current="page">Agences</span></nav>
-                        </div>
-                      </div>
-                      <div class="l-pane__body"></div>
-                      <div class="l-pane__foot"><div class="c-statusbar"><span class="c-status c-status--on">Connecté</span></div></div>
+              <div class="l-desk" style="min-height: 0; height: 15rem">
+                <div class="l-shell" style="display: grid; grid-template-rows: minmax(0, 1fr)">
+                  <div class="l-pane">
+                    <div class="l-pane__head">
+                      <header class="c-masthead">
+                        <nav class="c-pathnav" aria-label="Exemple">
+                          <button class="c-pathnav__home" type="button">Mono</button>
+                          <span class="c-pathnav__sep" aria-hidden="true"></span>
+                          <details class="c-menu c-pathnav__seg"><summary>Réseau<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary><div class="c-menu__list" role="menu"><button class="c-menu__item" type="button" role="menuitem" aria-checked="true">Réseau</button><button class="c-menu__item" type="button" role="menuitem">Pilotage</button></div></details>
+                          <span class="c-pathnav__sep" aria-hidden="true"></span>
+                          <details class="c-menu c-pathnav__seg"><summary>Agences<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary><div class="c-menu__list" role="menu"><button class="c-menu__item" type="button" role="menuitem">Synthèse</button><button class="c-menu__item" type="button" role="menuitem" aria-checked="true">Agences</button></div></details>
+                        </nav>
+                        <div class="c-masthead__meta"><span>T3</span></div>
+                      </header>
                     </div>
+                    <div class="l-pane__body"></div>
+                    <div class="l-pane__foot"><div class="c-statusbar"><span class="c-status c-status--on">M. Delorme</span><span class="c-statusbar__group"><span class="c-kbd">G</span> sommaire</span></div></div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="cat-rules">
+            <div class="cat-rule" id="regle-a1" data-search="regle"><span class="cat-rule__num">A1</span><h3>Deux lignes fixes</h3><p>La ligne de tête et la barre d'état. Toute autre région permanente — rail, barre d'outils, console — se paie en clarté : on ne l'ajoute pas.</p></div>
+            <div class="cat-rule" id="regle-a2" data-search="regle"><span class="cat-rule__num">A2</span><h3>Des mots, pas des signes</h3><p>La navigation s'écrit en toutes lettres. Où l'on est se lit dans le dernier segment ; où l'on peut aller, dans le sommaire, avec une description par écran.</p></div>
+            <div class="cat-rule" id="regle-a3" data-search="regle"><span class="cat-rule__num">A3</span><h3>Trois niveaux au plus</h3><p>Application, groupe, écran. Un quatrième niveau n'est pas un segment de plus : c'est le détail d'un élément, dans l'inspecteur.</p></div>
+            <div class="cat-rule" id="regle-a4" data-search="regle"><span class="cat-rule__num">A4</span><h3>Les outils viennent à la demande</h3><p>Console, aide, raccourcis : des fenêtres que l'on ouvre et que l'on referme, jamais des régions de la page.</p></div>
           </div>
           <p class="cat-note">En version bureau (<code>.l-desk--os</code>), il n'y a plus de page fixe : le plan de travail occupe tout l'écran, les fenêtres en sont les pages et la barre du bas les retrouve. Voir l'exemple <a href="exemples/bureau.html">Bureau</a>.</p>
           <div class="cat-rules">

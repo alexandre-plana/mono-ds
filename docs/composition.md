@@ -88,6 +88,26 @@ le plan : un fond hachuré, visible sur une bande de 24 px autour de la page.
 `.l-desk` est une grille : plusieurs `.l-shell` côte à côte sont séparés par la
 même bande hachurée.
 
+### Shell d'application : la ligne de tête
+
+Une application tient en une page et deux lignes fixes : en haut la ligne de tête
+(`.c-pathnav`, dans `.c-masthead`), en bas la barre d'état. Le chemin est la
+navigation : chaque segment ouvre la liste de ses voisins, le premier ouvre le
+sommaire, qui remplace l'écran. Gabarit : `catalogue/exemples/application.html`.
+
+- **A1 — Deux lignes fixes.** Ni rail, ni barre d'outils permanente, ni console
+  ancrée : une action vit avec le contenu qu'elle concerne.
+- **A2 — Des mots, pas des signes.** Où l'on est se lit dans le dernier segment ;
+  où l'on peut aller, dans le sommaire, avec une description par écran.
+- **A3 — Trois niveaux au plus** : application, groupe, écran. Le détail d'un
+  élément va dans l'inspecteur, pas dans un quatrième segment.
+- **A4 — Les outils viennent à la demande** : console, aide, raccourcis sont des
+  fenêtres, jamais des régions de la page.
+
+Deux autres pistes ont été prototypées et écartées : des onglets numérotés posés
+dans la marge (des numéros sans mots ne se lisent pas) et des pages empilées sur
+la tranche (texte vertical, largeur perdue à chaque niveau).
+
 ### Application : collection et inspecteur
 
 ```html

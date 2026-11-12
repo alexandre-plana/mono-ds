@@ -16,7 +16,6 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.l-desk` (sur `<body>`) | Plan de travail hachuré ; grille dont la gouttière sépare les pages |
 | `.l-shell` | La page : fond uni, contour d'un pixel, en retrait de `--shell-inset` |
 | `.l-desk--app`, `.l-desk--split` | Application : le plan occupe l'écran, chaque page défile seule ; deux pages côte à côte (collection + inspecteur, `--inspector`) |
-| `.l-app` (`__rail`, `__brand`, `__nav`, `__foot`) | Shell d'application : rail de navigation + volet, dans une même page. Gabarit : `catalogue/exemples/application.html` |
 | `.l-desk--os`, `.l-desk__area` | Version bureau : le plan occupe l'écran, les fenêtres en sont les pages |
 | `.l-splitter` | `role="separator"`, `.is-dragging` | La bande hachurée entre deux pages se saisit pour régler `--inspector` |
 | `.l-pane` (`__head`, `__bar`, `__body`, `__foot`) | Volet d'application : en-tête fixe, barre d'outils, corps défilant, pied |
@@ -69,7 +68,8 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-chip` | `[aria-pressed]`, `__count`, `disabled` | Filtres cumulables ; aucun actif = tout |
 | `.c-steps` | `__step`, `.is-done`, `[aria-current="step"]` | Parcours linéaire de 3 à 6 étapes : plein = fait, épais = en cours, tireté = à venir |
 | `.c-nav` | `__label`, `__item[aria-current]` | Menu numéroté |
-| `.c-breadcrumb`, `.c-pagination` | `[aria-current]` | — |
+| `.c-pathnav` | `__home`, `__sep`, `__seg` (`<details class="c-menu">`) | Ligne de tête : le chemin est la navigation de l'application. Trois niveaux au plus ; jamais avec un rail |
+| `.c-breadcrumb`, `.c-pagination` | `[aria-current]` | Le fil d'Ariane situe et remonte ; il ne navigue pas entre voisins |
 
 ## Saisie
 
