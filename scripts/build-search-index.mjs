@@ -27,7 +27,7 @@ const EXAMPLES = [
   ['exemples/bureau.html', 'Bureau', 'Version bureau : fenêtres flottantes déplaçables, redimensionnables et aimantées (interact.js), barre des fenêtres, canevas, menu contextuel à sous-menu.'],
   ['exemples/carte.html', 'Carte', 'Plan géographique dans le dessin du système : fond réel Natural Earth embarqué, monde entier, cadrages nommés, déplacement et échelle, graticule coté, barre d\'échelle, anneaux proportionnels.'],
   ['exemples/plan.html', 'Plan', 'Plan détaillé jusqu\'à la rue : courbes de niveau, eau, routes, rues, bâti, limites, noms, en calques que l\'on affiche ou masque. Tuiles OpenStreetMap (OpenFreeMap), altitudes Terrarium, MapLibre GL JS, feuille de style MONO.'],
-  ['exemples/planches.html', 'Planches', 'Quatre animations procédurales infinies, plein écran, nées d\'une graine de deux mots : Crêtes (relief qui dérive), Atlas (stations balayées sur un graticule), Arbre (arbre de décision qui pousse et se retire), Console (des commandes s\'écrivent, une figure se trace).'],
+  ['exemples/planches.html', 'Planches', 'Quatre animations procédurales infinies, plein écran, nées d\'une graine de deux mots : Crêtes (relief qui dérive), Atlas (stations balayées sur un graticule), Arbre (arbre de décision qui pousse et se retire), Console (des commandes s\'écrivent, un volume isométrique se découpe en blocs).'],
   ['exemples/kanban.html', 'Dossiers', 'Tableau de cartes (kanban) : quatre colonnes, glisser-déposer au pointeur et au clavier, création de carte, édition par l\'inspecteur, annulation de chaque geste.'],
   ['exemples/rapport.html', 'Rapport', 'Page éditoriale en thème papier : titre, prose, clé-valeur, tableau, courbes, et une figure cartographique dans un bloc inversé encre.'],
 ];

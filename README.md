@@ -137,7 +137,7 @@ de deux mots et porte un seul accent de couleur.
 
 ![Planche Arbre](docs/captures/planche-arbre.gif)
 
-**Console** — des commandes s'écrivent, une figure se trace. Graine « sel du nord ».
+**Console** — des commandes s'écrivent, un volume se découpe : une carte proportionnelle en perspective isométrique, dont certains blocs sont détaillés sur deux ou trois niveaux. Graine « sel du nord ».
 
 ![Planche Console](docs/captures/planche-console.gif)
 

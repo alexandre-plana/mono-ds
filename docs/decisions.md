@@ -85,8 +85,9 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-062 | Planches animées : une exception délimitée à « rien d'ornemental » | en vigueur |
 | D-063 | Variante d'accent : fort et flash | en vigueur |
 | D-064 | Tableau de cartes (kanban) | en vigueur |
-| D-065 | Planches : accent de couleur sur Crêtes, quatrième planche Console | en vigueur |
+| D-065 | Planches : accent de couleur sur Crêtes, quatrième planche Console | en vigueur, Console revue en D-067 |
 | D-066 | Logo : cinq propositions discrètes | proposée, choix à faire |
+| D-067 | Planche Console : un volume isométrique à blocs subdivisés | en vigueur |
 
 ---
 
@@ -622,3 +623,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Première série écartée** par le commanditaire : lettrage dessiné à traits épais, signes démonstratifs — « trop agressif » pour un système minimaliste, technique, aéré.
 - **Seconde série** (`catalogue/logo.html`) : le nom composé dans le caractère du système, à la taille d'un titre courant ; signes au trait d'un pixel ; quatre pixels de signal au plus. A le mot et le point · B la référence, entre parenthèses · C le filet et « 13 / 1 » · D le cadre de repères d'angle · E un pour cent.
 - **Avis de Claude** : A pour le mot-symbole, E pour le signe réduit (favicon). B est la plus fidèle au système mais n'a pas de forme courte.
+
+## D-067 — Planche Console : un volume isométrique à blocs subdivisés
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Revoit** : D-065 (Console)
+- **Décision** : la figure tracée par la console n'est plus une courbe mais une carte proportionnelle en volume, vue en perspective isométrique. Les commandes écrites la construisent : `diviser n` découpe la dalle en blocs, `élever` leur donne leur hauteur, `détailler B-2 niveau 2` subdivise un bloc — et pas les autres —, `détailler B-2.1 niveau 3` descend encore, `mesurer` désigne le sommet, `aplanir` remet la dalle à nu ; puis un autre volume vient.
+- **Lecture** : la surface dit la part, la hauteur dit la valeur, la finesse du découpage dit jusqu'où l'on a regardé. Un bloc détaillé cède la place à ses parts, qui partent de sa hauteur avant de prendre la leur.
+- **Dessin** : trois aplats pour les trois faces visibles (`--surface-2` dessus, `--surface` et `--bg` sur les côtés) — des tons, pas un dégradé ; arêtes d'un pixel dont le ton baisse avec le niveau ; dalle en pointillé, deux bords cotés ; un seul sommet en signal, avec sa ligne de rappel.
+- **Abandonné** : la courbe harmonique de D-065.

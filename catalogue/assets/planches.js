@@ -7,7 +7,7 @@
      01  Crêtes   un relief qui dérive, rangée après rangée       (la pochette de disque)
      02  Atlas    des stations sur un graticule, balayées         (la carte du rapport)
      03  Arbre    un arbre de décision qui pousse et se retire    (l'arbre du rapport)
-     04  Console  des commandes s'écrivent, une figure se trace     (l'étiquette technique)
+     04  Console  des commandes s'écrivent, un volume se découpe    (l'étiquette technique)
 
    Elles obéissent au système : aucune couleur écrite (les rôles du thème sont lus à chaque image),
    filets d'un pixel, pointillé pour les repères, tireté pour les relations, capitales espacées,
@@ -30,7 +30,7 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
 
   // ---- dessin : tons lus dans les rôles, traits posés sur le pixel
   let C = {}, W = 0, H = 0;
-  const tones = () => { const g = getComputedStyle(document.documentElement), v = (n) => g.getPropertyValue(n).trim(); C = { bg: v('--bg'), faint: v('--line-faint'), line: v('--line'), strong: v('--line-strong'), mark: v('--mark'), muted: v('--fg-muted'), soft: v('--fg-soft'), fg: v('--fg'), max: v('--fg-strong'), signal: v('--signal') }; C.fade = [C.max, C.soft, C.mark, C.strong, C.line, C.faint]; };
+  const tones = () => { const g = getComputedStyle(document.documentElement), v = (n) => g.getPropertyValue(n).trim(); C = { bg: v('--bg'), surface: v('--surface'), surface2: v('--surface-2'), faint: v('--line-faint'), line: v('--line'), strong: v('--line-strong'), mark: v('--mark'), muted: v('--fg-muted'), soft: v('--fg-soft'), fg: v('--fg'), max: v('--fg-strong'), signal: v('--signal') }; C.fade = [C.max, C.soft, C.mark, C.strong, C.line, C.faint]; };
   const px = (v) => Math.round(v) + 0.5;
   const seg = (x1, y1, x2, y2, color, dash) => { ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.setLineDash(dash || []); ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.setLineDash([]); };
   const text = (s, x, y, color, align = 'left', caps = true, halo = false) => { ctx.font = '11px "IBM Plex Mono", ui-monospace, monospace'; ctx.letterSpacing = caps ? '0.9px' : '0px'; if (caps) s = s.toUpperCase(); if (halo) { const w = ctx.measureText(s).width + 8, x0 = align === 'right' ? x - w + 4 : align === 'center' ? x - w / 2 : x - 4; ctx.fillStyle = C.bg; ctx.fillRect(Math.round(x0), Math.round(y - 11), Math.round(w), 15); } ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'alphabetic'; ctx.fillText(s, x, y); };
@@ -128,44 +128,76 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
   }
 
   // ---- 04 · Console
+  // Des commandes s'écrivent ; chacune agit sur un volume : une dalle que l'on divise en blocs, que
+  // l'on élève, puis dont on détaille certains blocs — et pas d'autres — sur deux ou trois niveaux.
+  // C'est une carte proportionnelle vue en perspective isométrique : la surface dit la part,
+  // la hauteur dit la valeur, la finesse du découpage dit jusqu'où l'on a regardé.
   function consoleScene(seed, seedText) {
-    let cycle = -1, S = null;
-    const build = (c) => {
-      const r = rng(seed + c * 104729), a = 2 + Math.floor(r() * 4), b = a + 1 + Math.floor(r() * 3), ph = r() * 3.14, d = 0.004 + r() * 0.01, turns = 14 + Math.floor(r() * 14), n = 2400, w = 0.15 + r() * 0.3, cc = 1 + Math.floor(r() * 6);
-      const pts = Array.from({ length: n }, (_, i) => { const th = (i / n) * turns * 6.2832, e = Math.exp(-d * th); return [(Math.sin(a * th + ph) * (1 - w) + Math.sin(cc * th) * w) * e, (Math.sin(b * th) * (1 - w) + Math.cos((cc + 1) * th + ph) * w) * e]; });
-      let len = 0; for (let i = 1; i < n; i++) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
-      const cmds = [[`graine "${seedText}"`, `${(seed + c).toString(16).padStart(8, '0')}`], [`onde a=${a} b=${b} phase=${fr(ph, 2)}`, `rapport ${a}:${b}`], [`amortir ${fr(d, 4)}`, `${turns} tours`], [`tracer ${fr(n)} points`, null], ['mesurer', `longueur ${fr(len, 1)} · amorti ${fr((1 - Math.exp(-d * turns * 6.2832)) * 100)} %`], ['effacer', 'planche vide']];
-      let t = 1.2; const tl = cmds.map(([cmd, out], i) => { const type = cmd.length / 13, run = i === 3 ? 20 : i === 5 ? 3.5 : 0.6, o = { cmd, out, t0: t, t1: t + type, t2: t + type + run }; t = o.t2 + 1.1; return o; });
-      return { pts, tl, n, a, b, span: t + 1.5 };
+    let cycle = -1, S = null, base = 0;
+    const ease = (x) => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+    const split = (r, node, n) => {            // découpe un bloc en n parts inégales, en alternant l'axe
+      const along = node.level % 2 === 0 ? 'x' : 'y', ws = Array.from({ length: n }, () => 0.5 + r()), sum = ws.reduce((a, b) => a + b, 0); let at = 0;
+      node.kids = ws.map((wt, k) => { const f = wt / sum, kid = { id: (node.id ? node.id + '.' : 'B-') + (k + 1), level: node.level + 1, x: along === 'x' ? node.x + at * node.w : node.x, y: along === 'y' ? node.y + at * node.d : node.y, w: along === 'x' ? node.w * f : node.w, d: along === 'y' ? node.d * f : node.d, h: Math.max(0.06, (node.h || 0.42) * (0.45 + r() * 1.05)), from: node.h || 0, kids: null }; at += f; return kid; });
+      return node.kids;
     };
-    let base = 0;
+    const build = (c) => {
+      const r = rng(seed + c * 104729), root = { id: '', level: 0, x: 0, y: 0, w: 1, d: 1, h: 0, kids: null }, ops = [];
+      const n1 = 3 + Math.floor(r() * 3); ops.push({ cmd: `graine "${seedText}"`, out: () => (seed + c).toString(16).padStart(8, '0'), run: 0.5, kind: 'plate' });
+      ops.push({ cmd: `diviser ${n1}`, out: () => `${n1} blocs`, run: 1.4, kind: 'split', node: root, kidsOf: split(r, root, n1) });
+      ops.push({ cmd: 'élever', out: () => `hauteur max. ${fr(Math.max(...root.kids.map((k) => k.h)) * 240)}`, run: 2.6, kind: 'raise' });
+      // on détaille certains blocs, pas tous : deux ou trois au niveau 2, puis un ou deux d'entre eux au niveau 3
+      const l1 = [...root.kids].sort((a, b) => b.w * b.d - a.w * a.d).slice(0, 2 + Math.floor(r() * 2)), deeper = [];
+      l1.forEach((b) => { const n = 2 + Math.floor(r() * 4), kids = split(r, b, n); deeper.push(...kids); ops.push({ cmd: `détailler ${b.id} niveau 2`, out: () => `${b.id} : ${n} blocs`, run: 2.2, kind: 'split', node: b, kidsOf: kids }); });
+      deeper.sort((a, b) => b.w * b.d - a.w * a.d).slice(0, 1 + Math.floor(r() * 2)).forEach((b) => { const n = 3 + Math.floor(r() * 4), kids = split(r, b, n); ops.push({ cmd: `détailler ${b.id} niveau 3`, out: () => `${b.id} : ${n} blocs`, run: 2.2, kind: 'split', node: b, kidsOf: kids }); });
+      const leaves = []; (function walk(nd) { nd.kids ? nd.kids.forEach(walk) : leaves.push(nd); })(root);
+      const peak = leaves.reduce((a, b) => (b.h > a.h ? b : a));
+      ops.push({ cmd: 'mesurer', out: () => `${leaves.length} blocs · ${Math.max(...leaves.map((l) => l.level))} niveaux · sommet ${peak.id}`, run: 6, kind: 'measure' });
+      ops.push({ cmd: 'aplanir', out: () => 'dalle nue', run: 2.4, kind: 'flat' });
+      let t = 1; ops.forEach((o) => { o.t0 = t; o.t1 = t + o.cmd.length / 13; o.t2 = o.t1 + o.run; t = o.t2 + 0.9; });
+      return { root, ops, peak, leaves, span: t + 0.8 };
+    };
     return (t) => {
       if (!S || t - base > S.span) { cycle++; base = S ? base + S.span : t; S = build(cycle); }
-      const u = t - base, m = Math.max(56, W * 0.06), colW = Math.min(440, W * 0.34), top = H * 0.14, side = Math.min(W - colW - 3 * m, H * 0.7), cx = m + colW + m + (W - colW - 3 * m) / 2, cy = top + side / 2, R = side / 2;
-      // la colonne de commandes
-      let y = top + 4; const draw = S.tl[3], erase = S.tl[5];
-      const prog = u < draw.t1 ? 0 : Math.min(1, (u - draw.t1) / (draw.t2 - draw.t1)), gone = u < erase.t1 ? 0 : Math.min(1, (u - erase.t1) / (erase.t2 - erase.t1));
-      S.tl.forEach((o, i) => {
+      const u = t - base, m = Math.max(56, W * 0.06), colW = Math.min(400, W * 0.3), top = H * 0.14;
+      // ---- la colonne de commandes
+      let y = top + 4;
+      S.ops.forEach((o) => {
         if (u < o.t0) return;
         const typed = o.cmd.slice(0, Math.floor(((u - o.t0) / (o.t1 - o.t0)) * o.cmd.length + 0.001)), live = u < o.t1;
         text('>', m, y, C.muted, 'left', false); text(typed, m + 16, y, live ? C.max : C.fg, 'left', false);
         if (live) sq(m + 16 + ctx.measureText(typed).width + 6, y - 4, 7, C.max);
-        y += 18;
-        if (u >= o.t1) { const out = i === 3 ? `${fr(Math.floor(prog * S.n))} / ${fr(S.n)}` : u >= o.t2 || i !== 5 ? o.out : `${fr(Math.floor((1 - gone) * S.n))} points`; text('→ ' + out, m + 16, y, C.soft, 'left', false); y += 26; }
+        y += 18; if (u >= o.t1) { text('→ ' + o.out(), m + 16, y, C.soft, 'left', false); y += 24; }
       });
-      if (u > S.tl[5].t2 + 0.3) { text('>', m, y, C.muted, 'left', false); sq(m + 22, y - 4, 7, C.max); }
-      // la planche : un cadre coté, la figure qui se trace, la plume en signal
-      corners(cx, cy, R + 12, C.soft);
-      for (let i = -2; i <= 2; i++) { const g = px(cx + (i * R) / 2), h2 = px(cy + (i * R) / 2); seg(g, cy + R + 14, g, cy + R + 19, C.strong); seg(cx - R - 19, h2, cx - R - 14, h2, C.strong); if (i) { seg(g, cy - R, g, cy + R, C.faint, [1, 5]); seg(cx - R, h2, cx + R, h2, C.faint, [1, 5]); } }
-      text(`a=${S.a}`, cx - R, cy + R + 34, C.muted); text(`b=${S.b}`, cx + R, cy + R + 34, C.muted, 'right');
-      const i0 = Math.floor(gone * S.n), i1 = Math.floor(prog * S.n);
-      if (i1 - i0 > 1) {
-        ctx.strokeStyle = C.soft; ctx.lineWidth = 1; ctx.setLineDash([]); ctx.beginPath();
-        for (let i = i0; i < i1; i++) { const x = cx + S.pts[i][0] * R * 0.94, yy = cy + S.pts[i][1] * R * 0.94; i === i0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy); }
-        ctx.stroke();
-        if (prog < 1 || gone > 0) { const q = S.pts[gone > 0 ? i0 : i1 - 1], hx = cx + q[0] * R * 0.94, hy = cy + q[1] * R * 0.94; sq(hx, hy, 5, C.signal); text(`${fr(q[0], 2)} · ${fr(q[1], 2)}`, hx + 10, hy - 8, C.signal, 'left', false, true); }
-      }
-      return [`rapport ${S.a}:${S.b}`, `${fr(Math.max(0, i1 - i0))} points`, `figure ${String(cycle + 1).padStart(3, '0')}`];
+      if (u > S.ops.at(-1).t2 + 0.2) { text('>', m, y, C.muted, 'left', false); sq(m + 22, y - 4, 7, C.max); }
+      // ---- le volume, en perspective isométrique
+      const op = (k) => S.ops.find((o) => o.kind === k), raise = ease((u - op('raise').t1) / op('raise').run), flat = 1 - ease((u - op('flat').t1) / op('flat').run), measured = u >= op('measure').t1 && u < op('flat').t1;
+      const ax = m + colW + m, aw = W - ax - m, ah = H * 0.72, sc = Math.min(aw / 1.75, ah / 1.25), cx = ax + aw / 2, cy = top + ah * 0.5, zs = sc * 0.62;
+      const P = (X, Y, Z) => [cx + (X - Y) * sc * 0.866, cy + (X + Y - 1) * sc * 0.5 - Z * zs];
+      const poly = (pts, fill, stroke, lw = 1) => { ctx.beginPath(); pts.forEach(([x, yy], k) => (k ? ctx.lineTo(x, yy) : ctx.moveTo(x, yy))); ctx.closePath(); if (fill) { ctx.fillStyle = fill; ctx.fill(); } if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.setLineDash([]); ctx.stroke(); } };
+      // la dalle : son contour en pointillé, et deux bords cotés
+      if (u >= S.ops[0].t1) { ctx.setLineDash([1, 4]); ctx.strokeStyle = C.strong; ctx.lineWidth = 1; ctx.beginPath(); [[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]].forEach(([X, Y], k) => { const q = P(X, Y, 0); k ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]); }); ctx.stroke(); ctx.setLineDash([]);
+        for (let k = 0; k <= 4; k++) { const a = P(k / 4, 1, 0), b = P(1, k / 4, 0); seg(a[0], a[1] + 6, a[0], a[1] + 11, C.strong); seg(b[0], b[1] + 6, b[0], b[1] + 11, C.strong); if (k % 2 === 0) { if (k < 4) text(String(k * 25), a[0] - 6, a[1] + 26, C.muted, 'right'); text(String(k * 25), b[0] + 6, b[1] + 26, C.muted); } } }
+      // les blocs visibles à cet instant : un bloc détaillé cède la place à ses parts, qui partent de sa hauteur
+      const shown = [];
+      (function walk(nd) {
+        const o = nd.kids && S.ops.find((x) => x.kidsOf === nd.kids);
+        if (o && u >= o.t1) { const g = ease((u - o.t1) / o.run); nd.kids.forEach((k) => { k.cur = (k.from + (k.h - k.from) * g); walk(k); }); }
+        else if (nd.level > 0) shown.push(nd);
+      })(S.root);
+      const edge = [null, C.soft, C.mark, C.strong];
+      // ordre de tracé : un bloc passe avant tous ceux qu'il ne peut pas cacher (il est derrière eux sur un axe)
+      const order = [], rest = [...shown], behind = (a, b) => a.x + a.w <= b.x + 1e-6 || a.y + a.d <= b.y + 1e-6;
+      while (rest.length) { let k = rest.findIndex((a) => !rest.some((b) => b !== a && behind(b, a) && !behind(a, b))); if (k < 0) k = 0; order.push(rest.splice(k, 1)[0]); }
+      order.forEach((b) => {
+        const g = 0.007, x0 = b.x + g, x1 = b.x + b.w - g, y0 = b.y + g, y1 = b.y + b.d - g, hz = (b.cur ?? b.h) * (b.level === 1 ? raise : 1) * (b.level > 1 || raise >= 1 ? 1 : 1) * flat * (b.level > 1 && raise < 1 ? raise : 1), st = edge[Math.min(3, b.level)], hot = measured && b === S.peak;
+        if (hz > 0.002) { poly([P(x0, y1, 0), P(x1, y1, 0), P(x1, y1, hz), P(x0, y1, hz)], C.bg, st); poly([P(x1, y0, 0), P(x1, y1, 0), P(x1, y1, hz), P(x1, y0, hz)], C.surface, st); }
+        const topF = [P(x0, y0, hz), P(x1, y0, hz), P(x1, y1, hz), P(x0, y1, hz)]; poly(topF, C.surface2, hot ? C.signal : st, hot ? 1.5 : 1);
+        b.top = P((x0 + x1) / 2, (y0 + y1) / 2, hz);
+      });
+      // les noms : seulement les blocs assez larges pour les porter
+      shown.forEach((b) => { if (b.w * b.d > 0.045 && (b.w - b.d) > -0.5 && Math.min(b.w, b.d) * sc > 44) text(b.id, b.top[0], b.top[1] + 4, measured && b === S.peak ? C.signal : C.muted, 'center', false); });
+      if (measured && S.peak.top) { const [hx, hy] = S.peak.top, lx = Math.min(W - m - 6, hx + 150), ly = Math.max(top - 6, hy - 70); sq(hx, hy - 12, 5, C.signal); ctx.strokeStyle = C.soft; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(hx + 6, hy - 18); ctx.lineTo(hx + 26, ly); ctx.lineTo(lx, ly); ctx.stroke(); text(`Sommet ${S.peak.id}`, lx, ly - 8, C.signal, 'right', true, true); text(`hauteur ${fr(S.peak.h * 240)} · niveau ${S.peak.level}`, lx, ly + 16, C.soft, 'right', true, true); }
+      return [`${shown.length} blocs`, `${Math.max(0, ...shown.map((b) => b.level))} niveaux`, `volume ${String(cycle + 1).padStart(3, '0')}`];
     };
   }
 
