@@ -88,6 +88,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-065 | Planches : accent de couleur sur Crêtes, quatrième planche Console | en vigueur, Console revue en D-067 |
 | D-066 | Logo : cinq propositions discrètes | proposée, choix à faire |
 | D-067 | Planche Console : un volume isométrique à blocs subdivisés | en vigueur |
+| D-068 | Console : découpage jusqu'au grain, états qui évoluent | en vigueur |
 
 ---
 
@@ -631,3 +632,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Lecture** : la surface dit la part, la hauteur dit la valeur, la finesse du découpage dit jusqu'où l'on a regardé. Un bloc détaillé cède la place à ses parts, qui partent de sa hauteur avant de prendre la leur.
 - **Dessin** : trois aplats pour les trois faces visibles (`--surface-2` dessus, `--surface` et `--bg` sur les côtés) — des tons, pas un dégradé ; arêtes d'un pixel dont le ton baisse avec le niveau ; dalle en pointillé, deux bords cotés ; un seul sommet en signal, avec sa ligne de rappel.
 - **Abandonné** : la courbe harmonique de D-065.
+
+## D-068 — Console : découpage jusqu'au grain, états qui évoluent
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« plus de finesse, certains blocs pas plus gros qu'une icône, couleur d'état évolutive ») · **Complète** : D-067
+- **Finesse** : un quatrième niveau. Deux ou trois blocs de niveau 3 sont quadrillés (`détailler B-3.1.2 niveau 4` → « 4 × 3 grains ») : des parts d'une quinzaine de pixels, la taille d'une icône. Le volume mêle ainsi de grands blocs nus et des zones très fines ; une quarantaine de blocs au lieu d'une douzaine.
+- **États** : une commande `surveiller`. Chaque grain porte une valeur lente qui lui est propre ; au-dessus d'un seuil il passe en alerte (arête du dessus en signal), plus haut il devient critique (dessus en aplat de signal), puis retombe. Le compte s'écrit en direct dans la console.
+- **Une seule couleur, un seul sens** : le signal ne dit plus que l'état. Le sommet désigné par `mesurer` passe au ton clair, sans rouge. Seuls les grains changent d'état : même en aplat, le rouge reste une très petite part de la planche.
+- **Colonne de commandes** : elle ne garde que les neuf dernières lignes.

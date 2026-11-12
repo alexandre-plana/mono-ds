@@ -135,6 +135,13 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
   function consoleScene(seed, seedText) {
     let cycle = -1, S = null, base = 0;
     const ease = (x) => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+    // Aux niveaux fins, le bloc est quadrillé : des parts qui peuvent ne pas dépasser la taille d'une icône.
+    const grid = (r, node, cols, rows) => {
+      const cut = (n) => { const ws = Array.from({ length: n }, () => 0.6 + r()), sum = ws.reduce((a, b) => a + b, 0); let at = 0; return ws.map((v) => { const o = [at, v / sum]; at += v / sum; return o; }); };
+      const cx = cut(cols), cy = cut(rows); node.kids = [];
+      cy.forEach(([y0, fy], j) => cx.forEach(([x0, fx], i) => node.kids.push({ id: `${node.id}.${j * cols + i + 1}`, level: node.level + 1, x: node.x + x0 * node.w, y: node.y + y0 * node.d, w: node.w * fx, d: node.d * fy, h: Math.max(0.04, node.h * (0.35 + r() * 1.2)), from: node.h, kids: null })));
+      return node.kids;
+    };
     const split = (r, node, n) => {            // découpe un bloc en n parts inégales, en alternant l'axe
       const along = node.level % 2 === 0 ? 'x' : 'y', ws = Array.from({ length: n }, () => 0.5 + r()), sum = ws.reduce((a, b) => a + b, 0); let at = 0;
       node.kids = ws.map((wt, k) => { const f = wt / sum, kid = { id: (node.id ? node.id + '.' : 'B-') + (k + 1), level: node.level + 1, x: along === 'x' ? node.x + at * node.w : node.x, y: along === 'y' ? node.y + at * node.d : node.y, w: along === 'x' ? node.w * f : node.w, d: along === 'y' ? node.d * f : node.d, h: Math.max(0.06, (node.h || 0.42) * (0.45 + r() * 1.05)), from: node.h || 0, kids: null }; at += f; return kid; });
@@ -148,10 +155,16 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
       // on détaille certains blocs, pas tous : deux ou trois au niveau 2, puis un ou deux d'entre eux au niveau 3
       const l1 = [...root.kids].sort((a, b) => b.w * b.d - a.w * a.d).slice(0, 2 + Math.floor(r() * 2)), deeper = [];
       l1.forEach((b) => { const n = 2 + Math.floor(r() * 4), kids = split(r, b, n); deeper.push(...kids); ops.push({ cmd: `détailler ${b.id} niveau 2`, out: () => `${b.id} : ${n} blocs`, run: 2.2, kind: 'split', node: b, kidsOf: kids }); });
-      deeper.sort((a, b) => b.w * b.d - a.w * a.d).slice(0, 1 + Math.floor(r() * 2)).forEach((b) => { const n = 3 + Math.floor(r() * 4), kids = split(r, b, n); ops.push({ cmd: `détailler ${b.id} niveau 3`, out: () => `${b.id} : ${n} blocs`, run: 2.2, kind: 'split', node: b, kidsOf: kids }); });
+      const finer = [];
+      deeper.sort((a, b) => b.w * b.d - a.w * a.d).slice(0, 2 + Math.floor(r() * 2)).forEach((b) => { const n = 3 + Math.floor(r() * 3), kids = split(r, b, n); finer.push(...kids); ops.push({ cmd: `détailler ${b.id} niveau 3`, out: () => `${b.id} : ${n} blocs`, run: 1.8, kind: 'split', node: b, kidsOf: kids }); });
+      // … et quelques-uns jusqu'au grain : un quadrillage de parts minuscules
+      finer.sort((a, b) => b.w * b.d - a.w * a.d).slice(0, 2 + Math.floor(r() * 2)).forEach((b) => { const cols = 2 + Math.floor(r() * 3), rows = 2 + Math.floor(r() * 3), kids = grid(r, b, cols, rows); ops.push({ cmd: `détailler ${b.id} niveau 4`, out: () => `${b.id} : ${cols} × ${rows} grains`, run: 1.8, kind: 'split', node: b, kidsOf: kids }); });
       const leaves = []; (function walk(nd) { nd.kids ? nd.kids.forEach(walk) : leaves.push(nd); })(root);
       const peak = leaves.reduce((a, b) => (b.h > a.h ? b : a));
-      ops.push({ cmd: 'mesurer', out: () => `${leaves.length} blocs · ${Math.max(...leaves.map((l) => l.level))} niveaux · sommet ${peak.id}`, run: 6, kind: 'measure' });
+      leaves.forEach((l, k) => { l.i = k; });
+      ops.push({ cmd: 'mesurer', out: () => `${leaves.length} blocs · ${Math.max(...leaves.map((l) => l.level))} niveaux · sommet ${peak.id}`, run: 3.5, kind: 'measure' });
+      // surveiller : l'état des grains évolue — veille, alerte (contour), critique (aplat) — et retombe
+      const watch = { cmd: 'surveiller', run: 14, kind: 'watch', alerts: 0, crit: 0 }; watch.out = () => `${watch.alerts} en alerte · ${watch.crit} critique${watch.crit > 1 ? 's' : ''}`; ops.push(watch);
       ops.push({ cmd: 'aplanir', out: () => 'dalle nue', run: 2.4, kind: 'flat' });
       let t = 1; ops.forEach((o) => { o.t0 = t; o.t1 = t + o.cmd.length / 13; o.t2 = o.t1 + o.run; t = o.t2 + 0.9; });
       return { root, ops, peak, leaves, span: t + 0.8 };
@@ -160,9 +173,9 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
       if (!S || t - base > S.span) { cycle++; base = S ? base + S.span : t; S = build(cycle); }
       const u = t - base, m = Math.max(56, W * 0.06), colW = Math.min(400, W * 0.3), top = H * 0.14;
       // ---- la colonne de commandes
-      let y = top + 4;
-      S.ops.forEach((o) => {
-        if (u < o.t0) return;
+      let y = top + 4; const live0 = S.ops.filter((o) => u >= o.t0), firstShown = Math.max(0, live0.length - 9);
+      S.ops.forEach((o, oi) => {
+        if (u < o.t0 || oi < firstShown) return;
         const typed = o.cmd.slice(0, Math.floor(((u - o.t0) / (o.t1 - o.t0)) * o.cmd.length + 0.001)), live = u < o.t1;
         text('>', m, y, C.muted, 'left', false); text(typed, m + 16, y, live ? C.max : C.fg, 'left', false);
         if (live) sq(m + 16 + ctx.measureText(typed).width + 6, y - 4, 7, C.max);
@@ -170,7 +183,7 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
       });
       if (u > S.ops.at(-1).t2 + 0.2) { text('>', m, y, C.muted, 'left', false); sq(m + 22, y - 4, 7, C.max); }
       // ---- le volume, en perspective isométrique
-      const op = (k) => S.ops.find((o) => o.kind === k), raise = ease((u - op('raise').t1) / op('raise').run), flat = 1 - ease((u - op('flat').t1) / op('flat').run), measured = u >= op('measure').t1 && u < op('flat').t1;
+      const op = (k) => S.ops.find((o) => o.kind === k), raise = ease((u - op('raise').t1) / op('raise').run), flat = 1 - ease((u - op('flat').t1) / op('flat').run), measured = u >= op('measure').t1 && u < op('watch').t1, W8 = op('watch'), watching = u >= W8.t1 && u < W8.t2; let alerts = 0, crit = 0;
       const ax = m + colW + m, aw = W - ax - m, ah = H * 0.72, sc = Math.min(aw / 1.75, ah / 1.25), cx = ax + aw / 2, cy = top + ah * 0.5, zs = sc * 0.62;
       const P = (X, Y, Z) => [cx + (X - Y) * sc * 0.866, cy + (X + Y - 1) * sc * 0.5 - Z * zs];
       const poly = (pts, fill, stroke, lw = 1) => { ctx.beginPath(); pts.forEach(([x, yy], k) => (k ? ctx.lineTo(x, yy) : ctx.moveTo(x, yy))); ctx.closePath(); if (fill) { ctx.fillStyle = fill; ctx.fill(); } if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.setLineDash([]); ctx.stroke(); } };
@@ -184,20 +197,23 @@ window.MonoPlanches = (canvas, { onInfo } = {}) => {
         if (o && u >= o.t1) { const g = ease((u - o.t1) / o.run); nd.kids.forEach((k) => { k.cur = (k.from + (k.h - k.from) * g); walk(k); }); }
         else if (nd.level > 0) shown.push(nd);
       })(S.root);
-      const edge = [null, C.soft, C.mark, C.strong];
+      const edge = [null, C.soft, C.mark, C.strong, C.strong];
       // ordre de tracé : un bloc passe avant tous ceux qu'il ne peut pas cacher (il est derrière eux sur un axe)
       const order = [], rest = [...shown], behind = (a, b) => a.x + a.w <= b.x + 1e-6 || a.y + a.d <= b.y + 1e-6;
       while (rest.length) { let k = rest.findIndex((a) => !rest.some((b) => b !== a && behind(b, a) && !behind(a, b))); if (k < 0) k = 0; order.push(rest.splice(k, 1)[0]); }
       order.forEach((b) => {
-        const g = 0.007, x0 = b.x + g, x1 = b.x + b.w - g, y0 = b.y + g, y1 = b.y + b.d - g, hz = (b.cur ?? b.h) * (b.level === 1 ? raise : 1) * (b.level > 1 || raise >= 1 ? 1 : 1) * flat * (b.level > 1 && raise < 1 ? raise : 1), st = edge[Math.min(3, b.level)], hot = measured && b === S.peak;
+        const g = 0.007, x0 = b.x + g, x1 = b.x + b.w - g, y0 = b.y + g, y1 = b.y + b.d - g, hz = (b.cur ?? b.h) * (b.level === 1 ? raise : 1) * (b.level > 1 || raise >= 1 ? 1 : 1) * flat * (b.level > 1 && raise < 1 ? raise : 1), st = edge[Math.min(4, b.level)], hot = measured && b === S.peak;
+        // l'état d'un grain : une valeur lente, propre à chacun ; au-dessus d'un seuil il alerte, plus haut il est critique
+        const small = b.w * b.d < 0.012, sv = watching && small ? noise(seed & 0xfff, b.i * 3.7 + 0.5, (u - W8.t1) * 0.3 + b.i * 0.61) * Math.min(1, (u - W8.t1) / 1.5, (W8.t2 - u) / 1.5) : 0, state = sv > 0.76 ? 2 : sv > 0.66 ? 1 : 0; if (state === 2) crit++; else if (state === 1) alerts++;
         if (hz > 0.002) { poly([P(x0, y1, 0), P(x1, y1, 0), P(x1, y1, hz), P(x0, y1, hz)], C.bg, st); poly([P(x1, y0, 0), P(x1, y1, 0), P(x1, y1, hz), P(x1, y0, hz)], C.surface, st); }
-        const topF = [P(x0, y0, hz), P(x1, y0, hz), P(x1, y1, hz), P(x0, y1, hz)]; poly(topF, C.surface2, hot ? C.signal : st, hot ? 1.5 : 1);
+        const topF = [P(x0, y0, hz), P(x1, y0, hz), P(x1, y1, hz), P(x0, y1, hz)]; poly(topF, state === 2 ? C.signal : C.surface2, state ? C.signal : hot ? C.max : st, hot ? 1.5 : 1);
         b.top = P((x0 + x1) / 2, (y0 + y1) / 2, hz);
       });
       // les noms : seulement les blocs assez larges pour les porter
-      shown.forEach((b) => { if (b.w * b.d > 0.045 && (b.w - b.d) > -0.5 && Math.min(b.w, b.d) * sc > 44) text(b.id, b.top[0], b.top[1] + 4, measured && b === S.peak ? C.signal : C.muted, 'center', false); });
-      if (measured && S.peak.top) { const [hx, hy] = S.peak.top, lx = Math.min(W - m - 6, hx + 150), ly = Math.max(top - 6, hy - 70); sq(hx, hy - 12, 5, C.signal); ctx.strokeStyle = C.soft; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(hx + 6, hy - 18); ctx.lineTo(hx + 26, ly); ctx.lineTo(lx, ly); ctx.stroke(); text(`Sommet ${S.peak.id}`, lx, ly - 8, C.signal, 'right', true, true); text(`hauteur ${fr(S.peak.h * 240)} · niveau ${S.peak.level}`, lx, ly + 16, C.soft, 'right', true, true); }
-      return [`${shown.length} blocs`, `${Math.max(0, ...shown.map((b) => b.level))} niveaux`, `volume ${String(cycle + 1).padStart(3, '0')}`];
+      shown.forEach((b) => { if (b.w * b.d > 0.045 && (b.w - b.d) > -0.5 && Math.min(b.w, b.d) * sc > 44) text(b.id, b.top[0], b.top[1] + 4, measured && b === S.peak ? C.max : C.muted, 'center', false); });
+      W8.alerts = alerts; W8.crit = crit;
+      if (measured && S.peak.top) { const [hx, hy] = S.peak.top, lx = Math.min(W - m - 6, hx + 150), ly = Math.max(top - 6, hy - 70); ctx.strokeStyle = C.soft; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(hx + 4, hy - 6); ctx.lineTo(hx + 26, ly); ctx.lineTo(lx, ly); ctx.stroke(); text(`Sommet ${S.peak.id}`, lx, ly - 8, C.max, 'right', true, true); text(`hauteur ${fr(S.peak.h * 240)} · niveau ${S.peak.level}`, lx, ly + 16, C.soft, 'right', true, true); }
+      return [`${shown.length} blocs`, `${Math.max(0, ...shown.map((b) => b.level))} niveaux`, watching ? `${alerts + crit} en alerte` : `volume ${String(cycle + 1).padStart(3, '0')}`];
     };
   }
 
