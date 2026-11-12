@@ -66,8 +66,9 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-043 | Tableau sans filets ; un filet sous la ligne survolée | en vigueur |
 | D-044 | Le survol annonce ce que fera le clic | en vigueur |
 | D-045 | Images : dessin du système, ou image brute encrée | en vigueur |
-| D-046 | La modale est une petite page, sans habillage | en vigueur |
+| D-046 | La modale est une petite page, sans habillage | amendée par D-048 |
 | D-047 | Le filet de survol d'une ligne cliquable dépasse à droite | en vigueur |
+| D-048 | Modale éditoriale : un seul titre, actions à droite | en vigueur |
 
 ---
 
@@ -427,3 +428,12 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Précise** : D-044
 - **Décision** : sous une ligne de tableau cliquable, le filet de survol se prolonge de 8 px dans la marge de droite avant sa pointe (`--cue-reach`). Les chiffres gardent leur axe ; seule la flèche sort.
 - **Garde-fou** : dans une zone qui défile en largeur (`.c-table-wrap`), rien ne dépasse, sinon la flèche créerait un défilement.
+
+## D-048 — Modale éditoriale : un seul titre, actions à droite
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Amende** : D-046
+- **Contexte** : la ligne de service de D-046 (nature · référence) au-dessus du titre faisait « presque deux titres », et les actions à gauche ne convainquaient pas.
+- **Décision** : un seul titre, en corps de titre (24 px), bas de casse. La ligne de service et le bouton « Fermer / Échap » disparaissent : Échap et « Annuler » ferment. La prose du corps passe en sans-serif de lecture (15 px), comme un chapeau de rapport. Le pied porte à gauche `__aside` (référence ou touche) et à droite les actions : « Annuler » discret, puis l'action principale tout au bout. Largeurs : 32 rem, `--small` 27 rem.
+- **Raison** : la lecture d'une modale descend du titre au texte et s'achève en bas à droite ; l'action qui conclut s'y trouve. C'est une exception assumée au « ferré à gauche », limitée au pied de la modale : le titre, le texte et les champs restent sur l'axe gauche.
+- **Ce qui reste de D-046** : fond et contour de la page, aucun filet intérieur, pas de croix, filet de défilement seulement si le contenu dépasse.
+- **Abandonné** : `__head`, `__close`.
