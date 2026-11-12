@@ -64,7 +64,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-button` | `--primary`, `--quiet`, `--signal`, `--large`, `disabled` | **Zéro ou un primaire par vue** : il conclut une tâche (connexion, formulaire, modale), jamais sur un écran de consultation. `--signal` = irréversible |
 | `.c-tabs` | `__tab[aria-selected]` | Vues d'un même objet |
 | `.c-segmented` | `__item[aria-pressed]` | 2 à 4 options exclusives ; actif = contour de 2 px |
-| `.c-menu` (`<details>`) | `__list`, `__label`, `__item` (`--signal`), `__hint`, `__sep` ; `--end`, `--up` | 3 à 7 actions secondaires. Jamais l'action principale ; pas de sous-menu dans un menu de bouton |
+| `.c-menu` (`<details>`) | `__list`, `__label`, `__item` (`--signal`), `__hint`, `__sep` (un espace, pas un trait) ; `--end`, `--up` | 3 à 7 actions secondaires. Jamais l'action principale ; pas de sous-menu dans un menu de bouton |
 | `.c-menu__list--context` | `--x`, `--y` ; `.c-menu__sub` (`--left`, `.is-open`) | Menu contextuel au clic droit ; un seul niveau de sous-menu. Aucune action ne doit exister seulement là |
 | `.c-chip` | `[aria-pressed]`, `__count`, `disabled` | Filtres cumulables ; aucun actif = tout |
 | `.c-steps` | `__step`, `.is-done`, `[aria-current="step"]` | Parcours linéaire de 3 à 6 étapes : plein = fait, épais = en cours, tireté = à venir |
@@ -124,6 +124,8 @@ ses actions sont ferrées à gauche, la principale en premier.
   l'action qui porte le clair.
 - **Modifiable = ligne pointillée sous la valeur**, pleine pendant la saisie.
 - **Ce qui vient de changer porte le clair** (`.is-fresh`), le temps de le voir.
+- **Un filet se mérite** (F4) : pas de trait sous les en-têtes de tableau, les
+  titres de groupe d'un menu ou d'une légende, ni sous une rangée d'onglets de vue.
 - **Inactif = tireté**, jamais une opacité réduite : le texte reste lisible.
 - **Survol = un cran de ton** ou une bordure qui s'éclaircit. Pas de déplacement.
 - **Focus clavier = contour de 2 px** en `--fg-strong`, décalé de 3 px. Jamais

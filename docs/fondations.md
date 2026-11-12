@@ -110,6 +110,16 @@ Base 4 px : `--space-1` (4) · 2 (8) · 3 (12) · 4 (16) · 5 (24) · 6 (32) · 
 - **F1 — Un pixel.** 2 à 4 px sont réservés à l'état actif et aux marques de données.
 - **F2 — Filet conducteur** entre un label et sa valeur éloignée (`.c-kv`, `.c-index`).
 - **F3 — Pas de cadre par défaut** : un filet au-dessus et de l'espace.
+- **F4 — Un filet se mérite.** Avant de tracer un trait, on essaie sans. Il ne
+  reste que s'il porte l'une de ces quatre choses :
+  - une **relation** — le filet conducteur entre un label et sa valeur, les filets
+    de ligne d'un tableau qui guident l'œil d'une colonne à l'autre ;
+  - une **limite de défilement** — sous un en-tête de page, au-dessus d'une barre
+    d'état, sous un en-tête de tableau figé : là où un contenu passe dessous ;
+  - une **somme** — le trait au-dessus d'un total ;
+  - le **contour d'un contrôle** ou d'une surface qui flotte.
+  Si la casse, le ton et l'espace disent déjà la même chose, le trait est en trop.
+  Jamais de filet vertical pour séparer (voir K8).
 
 ## Signes
 

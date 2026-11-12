@@ -60,6 +60,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-037 | Le bouton primaire conclut une tâche | en vigueur |
 | D-038 | L'inspecteur attaché à son onglet, épinglable | en vigueur |
 | D-039 | Pas de filet vertical entre deux régions d'une page | en vigueur |
+| D-040 | Un filet se mérite : revue de tous les traits | en vigueur |
 
 ---
 
@@ -323,3 +324,33 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Raison** : « le vide est un matériau » ; un filet vertical faisait de l'inspecteur un compartiment, alors qu'il n'est qu'une autre région de la même page.
 - **Conséquences** : D-038 reste en vigueur, seule sa séparation change. Le contraste avec l'état épinglé est plus net encore : de l'espace dans la page, des hachures hors de la page. Empilé sous la liste sur écran étroit, l'inspecteur garde un filet horizontal. Règle K8.
 - **À surveiller** : si une page porte un tableau très large dont la dernière colonne est du texte long, l'écart peut ne plus suffire ; la réponse est alors de réduire le tableau, pas de remettre un filet.
+
+## D-040 — Un filet se mérite : revue de tous les traits
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Contexte** : après D-039, la question s'est posée pour le trait sous les en-têtes de tableau, puis pour tous les composants. Une centaine de traits ont été passés en revue ; les candidats ont été comparés à l'écran, avec et sans.
+- **Critère** : un filet ne reste que s'il porte une relation, une limite de défilement, une somme, ou le contour d'un contrôle. Si la casse, le ton et l'espace disent déjà la même chose, il est retiré. Règle F4.
+
+| Trait | Verdict | Raison |
+|---|---|---|
+| Sous les en-têtes de tableau | **retiré** | Les micro-capitales grises distinguent déjà l'en-tête ; c'était le trait le plus fort de l'écran |
+| Sous l'en-tête de tableau figé | gardé, affaibli | Limite de défilement : les lignes passent dessous |
+| Sous chaque ligne de tableau | gardé | Relation : guide l'œil d'une colonne à l'autre. Sans eux, la lecture en largeur se perd (essayé) |
+| Au-dessus du total | gardé, et réparé | Somme. Il ne s'affichait pas : la bordure de la ligne précédente l'emportait |
+| Ligne de base des onglets de vue | **retiré** | Le trait de 2 px de l'onglet courant suffit |
+| Sous les titres de groupe du menu | **retiré** | Le titre est déjà en micro-capitales, suivi d'un espace |
+| Sous le titre de la légende | **retiré** | Idem. Écart assumé par rapport à la référence cartographique |
+| Séparateur de menu | **remplacé par un espace** | Le groupe se lit à l'écart ; l'action irréversible porte déjà le signal |
+| Sous les titres de groupe de « Aller à » et de la recherche | **retiré** | Idem menu |
+| Sous l'en-tête d'un objet du canevas | **retiré** | L'objet a déjà son contour |
+| Cloisons verticales de la barre des fenêtres | **retiré** | Filets verticaux (K8) ; l'espace sépare les trois groupes |
+| Sous l'en-tête de page, au-dessus de la barre d'état | gardé | Limite de défilement, et ligne commune à deux pages voisines |
+| Sous l'en-tête de section | gardé | C'est le filet de structure : un trait au-dessus de chaque région (F3) |
+| En-tête et pied de modale, de console, de fenêtre | gardé | Limite de défilement, ou zone que l'on saisit |
+| Filet de la fiche, des étapes, du dépliant, de `.c-stat--ruled` | gardé | Le filet est le composant |
+| Filets conducteurs (clé-valeur, index) | gardé | Relation |
+| Trait latéral de la note et de la notification | gardé | Ce n'est pas un séparateur : c'est la marque du composant, et le porteur du signal |
+| Contours des contrôles, de la page, des surfaces flottantes | gardé | Contour |
+
+- **Conséquences** : sur un écran de liste, le trait le plus fort n'est plus celui des en-têtes mais celui de la ligne sélectionnée — ce qui est le bon ordre.
+- **Non tranché** : le filet de piste des barres horizontales et de la jauge (il montre l'étendue de l'échelle) n'a pas été remis en cause.

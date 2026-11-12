@@ -106,8 +106,8 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-switch input:disabled { border-style: dashed; border-color: var(--line); cursor: not-allowed; }
 
 /* --- Onglets et sélecteur segmenté ----------------------------------------- */
-.c-tabs { display: flex; gap: var(--space-5); border-bottom: var(--hairline) solid var(--line); overflow-x: auto; }
-.c-tabs__tab { appearance: none; background: none; border: 0; border-bottom: var(--stroke) solid transparent; margin-bottom: -1px; padding: var(--space-2) 0 calc(var(--space-2) + 1px); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
+.c-tabs { display: flex; gap: var(--space-5); overflow-x: auto; }
+.c-tabs__tab { appearance: none; background: none; border: 0; border-bottom: var(--stroke) solid transparent; padding: var(--space-2) 0 calc(var(--space-2) + 1px); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
 .c-tabs__tab:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
 .c-tabs__tab[aria-selected="true"], .c-tabs__tab[aria-current="page"] { color: var(--fg); border-bottom-color: var(--selected-line); font-weight: var(--weight-medium); }
 
@@ -119,7 +119,7 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 
 /* --- Navigation ------------------------------------------------------------ */
 .c-nav { display: flex; flex-direction: column; }
-.c-nav__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); padding-bottom: var(--space-2); margin-bottom: var(--space-2); border-bottom: var(--hairline) solid var(--line); }
+.c-nav__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); margin-bottom: var(--space-2); }
 .c-nav__label:not(:first-child) { margin-top: var(--space-5); }
 .c-nav__item { display: flex; align-items: baseline; gap: var(--space-3); padding: 3px 0; color: var(--fg-soft); text-decoration: none; text-transform: uppercase; letter-spacing: var(--track-label); font-size: var(--text-small); line-height: var(--leading-base); transition: color var(--duration); }
 .c-nav__item span:first-child { color: var(--fg-muted); min-width: 2ch; }
@@ -179,7 +179,7 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-table caption { caption-side: top; text-align: left; padding-bottom: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
 .c-table th, .c-table td { padding: var(--space-2) var(--space-4) var(--space-2) 0; text-align: left; vertical-align: baseline; border-bottom: var(--hairline) solid var(--line-faint); }
 .c-table th:last-child, .c-table td:last-child { padding-right: 0; }
-.c-table thead th { font-size: var(--text-micro); font-weight: var(--weight-regular); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); border-bottom-color: var(--fg-soft); white-space: nowrap; }
+.c-table thead th { font-size: var(--text-micro); font-weight: var(--weight-regular); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); border-bottom-color: transparent; white-space: nowrap; }
 .c-table tbody th { font-weight: var(--weight-regular); color: var(--fg-strong); }
 .c-table td { color: var(--fg); }
 .c-table .is-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -198,9 +198,10 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-table__sort .c-icon { visibility: hidden; align-self: center; }
 th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-table__sort .c-icon, .c-table__sort:hover .c-icon, .c-table__sort:focus-visible .c-icon { visibility: visible; }
 .c-table th.is-num .c-table__sort { flex-direction: row-reverse; }
-/* En-tête figé : il reste en haut de la zone qui défile. Le filet est peint dans le fond,
-   car une bordure fusionnée ne suit pas une cellule collante. */
-.c-table--sticky thead th { position: sticky; top: 0; z-index: 1; border-bottom-color: transparent; background: linear-gradient(var(--fg-soft), var(--fg-soft)) left bottom / 100% 1px no-repeat var(--bg); }
+/* En-tête figé : il reste en haut de la zone qui défile. Ici le filet revient, parce qu'il a
+   une fonction — marquer où les lignes passent dessous. Il est peint dans le fond, car une
+   bordure fusionnée ne suit pas une cellule collante. */
+.c-table--sticky thead th { position: sticky; top: 0; z-index: 1; border-bottom-color: transparent; background: linear-gradient(var(--line), var(--line)) left bottom / 100% 1px no-repeat var(--bg); }
 /* Colonne de cases (sélection multiple) et bascule de ligne dépliable. */
 .c-table__check, .c-table__toggle { width: 1.75rem; min-width: 1.75rem; box-sizing: border-box; padding-right: var(--space-2) !important; }
 .c-table__check .c-check { min-height: 0; vertical-align: middle; }
@@ -221,6 +222,9 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-table tr.is-key > * { color: var(--fg-strong); font-weight: var(--weight-bold); }
 .c-table tr.is-muted > * { color: var(--fg-muted); }
 .c-table tfoot th, .c-table tfoot td { border-top: var(--hairline) solid var(--fg-soft); border-bottom: 0; color: var(--fg-strong); font-weight: var(--weight-bold); }
+/* Le trait de somme : seul filet fort du tableau, parce qu'il a un sens — ce qui suit est un total.
+   Il est porté par la dernière ligne du corps : en bordures fusionnées, c'est elle qui l'emporte. */
+.c-table tbody:has(+ tfoot) tr:last-child > * { border-bottom-color: var(--line-strong); }
 .c-table .is-signal { color: var(--signal); font-weight: var(--weight-bold); }
 .c-table--caps tbody th, .c-table--caps tbody td, .c-table--caps tfoot th, .c-table--caps tfoot td { text-transform: uppercase; letter-spacing: var(--track-label); font-size: var(--text-small); }
 .c-table--dense th, .c-table--dense td { padding-block: var(--space-1); }
@@ -265,7 +269,7 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 
 /* --- Légende : KEY / SCALE ------------------------------------------------------ */
 .c-key { display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-micro); line-height: var(--leading-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-soft); }
-.c-key__title { color: var(--fg-strong); padding-bottom: var(--space-2); border-bottom: var(--hairline) solid var(--fg-soft); margin-bottom: var(--space-1); }
+.c-key__title { color: var(--fg-strong); margin-bottom: var(--space-1); }
 .c-key__item { display: flex; align-items: center; gap: var(--space-3); }
 .c-key__swatch { flex: none; width: 1.5rem; height: 0; border-top: 3px solid var(--mark); }
 .c-key__swatch--2 { border-top-color: var(--mark-2); }
@@ -347,7 +351,7 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 .c-menu__sub:hover > .c-menu__item, .c-menu__sub:focus-within > .c-menu__item { background: var(--line-faint); color: var(--fg-strong); }
 .c-menu__sub--left > .c-menu__list { left: auto; right: calc(100% - 1px); }
 .c-menu--up .c-menu__list { top: auto; bottom: calc(100% + var(--space-1)); }
-.c-menu__sep { border: 0; border-top: var(--hairline) solid var(--line); margin: var(--space-1) 0; }
+.c-menu__sep { border: 0; height: 0; margin: var(--space-2) 0; }
 
 /* --- Dépliant et accordéon : <details class="c-disclosure"> ----------------------- */
 .c-disclosure { border-top: var(--hairline) solid var(--line); }
@@ -487,7 +491,7 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
    une fenêtre réduite a un contour tireté. */
 .c-taskbar { display: flex; align-items: stretch; gap: var(--space-4); min-height: 2.5rem; padding: 0 var(--space-3); background: var(--bg); border: var(--hairline) solid var(--line-strong); min-width: 0; }
 .c-taskbar__group { display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
-.c-taskbar__group--windows { flex: 1; overflow-x: auto; padding-inline: var(--space-4); border-inline: var(--hairline) solid var(--line); }
+.c-taskbar__group--windows { flex: 1; overflow-x: auto; padding-inline: var(--space-5); }
 .c-taskbar__item { appearance: none; display: inline-flex; align-items: center; gap: var(--space-2); height: 1.75rem; padding: 0 var(--space-3); background: none; border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); white-space: nowrap; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
 .c-taskbar__item:hover { color: var(--fg-strong); border-color: var(--fg-soft); }
 .c-taskbar__item[aria-pressed="true"] { border-top: var(--stroke) solid var(--selected-line); color: var(--fg); font-weight: var(--weight-medium); }
@@ -525,7 +529,7 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
 .c-canvas__plane { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; transform: translate(var(--x), var(--y)) scale(var(--z)); }
 .c-canvas__item { position: absolute; left: var(--ix, 0); top: var(--iy, 0); width: var(--iw, 16rem); display: flex; flex-direction: column; background: var(--bg); border: var(--hairline) solid var(--line-strong); cursor: grab; touch-action: none; user-select: none; }
 .c-canvas__item[aria-selected="true"] { border: var(--stroke) solid var(--selected-line); margin: -1px; }
-.c-canvas__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); padding: var(--space-2) var(--space-3); border-bottom: var(--hairline) solid var(--line-faint); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-canvas__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); padding: var(--space-2) var(--space-3) 0; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
 .c-canvas__head > :first-child { color: var(--fg-soft); }
 .c-canvas__body { padding: var(--space-3); min-width: 0; }
 
@@ -559,7 +563,7 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
 .c-palette__search { flex: none; padding: var(--space-2) var(--space-5); border-bottom: var(--hairline) solid var(--line); }
 .c-palette__search .c-search { border: 0; outline: 0; padding: 0; background: none; min-height: var(--control-height-large); }
 .c-palette__list { flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-2) 0 var(--space-4); }
-.c-palette__group { display: flex; justify-content: space-between; margin: var(--space-4) var(--space-5) var(--space-1); padding-bottom: var(--space-1); border-bottom: var(--hairline) solid var(--line); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-palette__group { display: flex; justify-content: space-between; margin: var(--space-4) var(--space-5) var(--space-1); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
 .c-palette__group > :first-child { color: var(--fg-soft); }
 .c-palette__item { appearance: none; width: 100%; display: grid; grid-template-columns: 5rem minmax(0, 1fr) max-content; column-gap: var(--space-4); align-items: baseline; padding: var(--space-2) var(--space-5) var(--space-2) calc(var(--space-5) - var(--stroke)); background: none; border: 0; border-left: var(--stroke) solid transparent; font: inherit; text-align: left; text-decoration: none; color: var(--fg); cursor: pointer; }
 .c-palette__item:hover { background: var(--surface-2); color: var(--fg); }

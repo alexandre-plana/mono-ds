@@ -318,7 +318,7 @@
 
           <div class="cat-sub" id="c-table" data-search="composant">
             <h3>Tableau — .c-table</h3>
-            <p>Filets horizontaux seulement. En-têtes en micro-capitales, chiffres à droite (<code>.is-num</code>), ligne clé en gras (<code>.is-key</code>). Une seule cellule peut porter le signal (<code>.is-signal</code>).</p>
+            <p>Un filet fin sous chaque ligne, pour suivre la lecture d'une colonne à l'autre, et rien d'autre : pas de trait sous les en-têtes, que leurs micro-capitales distinguent déjà. Le seul filet fort est celui du total, parce qu'il a un sens. En-têtes en micro-capitales, chiffres à droite (<code>.is-num</code>), ligne clé en gras (<code>.is-key</code>). Une seule cellule peut porter le signal (<code>.is-signal</code>).</p>
             <div class="cat-demo" data-code>
               <table class="c-table c-table--caps">
                 <caption>Primes — en milliers</caption>
@@ -515,7 +515,7 @@
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Plusieurs vues d'un même objet, de deux à six.</dd></div>
               <div><dt>Éviter</dt><dd>Pour des étapes ordonnées (préférer <code>.c-steps</code>) ou pour filtrer une liste (préférer <code>.c-chip</code>).</dd></div>
-              <div><dt>États</dt><dd>Actif : trait de 2 px en gris moyen, graisse 500 — pas de ton clair. C'est le contenu de la vue qui change et qui porte le clair. Survol : trait fin.</dd></div>
+              <div><dt>États</dt><dd>Actif : trait de 2 px en gris moyen, graisse 500 — pas de ton clair. Pas de ligne de base sous la rangée : le trait de l'onglet courant suffit. C'est le contenu de la vue qui change et qui porte le clair. Survol : trait fin.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>role="tablist"</code> / <code>tab</code> / <code>aria-selected</code>, ou des liens avec <code>aria-current="page"</code>.</dd></div>
             </dl>
           </div>
@@ -556,7 +556,7 @@
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Trois à sept actions secondaires sur un même objet, ou un choix parmi quelques options (<code>aria-checked</code>).</dd></div>
               <div><dt>Éviter</dt><dd>Pour y ranger l'action principale, pour deux actions seulement (deux boutons), pour une navigation (préférer <code>.c-nav</code>). Pas de sous-menu dans un menu de bouton : il est réservé au menu contextuel.</dd></div>
-              <div><dt>Variantes</dt><dd><code>--end</code> aligne la liste à droite · <code>__label</code> titre de groupe · <code>__sep</code> filet · <code>__hint</code> raccourci · <code>__item--signal</code> action irréversible, toujours en dernier.</dd></div>
+              <div><dt>Variantes</dt><dd><code>--end</code> aligne la liste à droite · <code>__label</code> titre de groupe · <code>__sep</code> espace entre deux groupes · <code>__hint</code> raccourci · <code>__item--signal</code> action irréversible, toujours en dernier.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>role="menu"</code> / <code>menuitem</code>. Échap et clic extérieur ferment ; le focus revient au bouton.</dd></div>
             </dl>
           </div>

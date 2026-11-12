@@ -40,7 +40,9 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
   s'aligne, pas le bord d'un cadre.
 - Aucun texte sous 11 px (capitales) / 12 px (bas de casse). Trois corps par écran.
 - Rayon 0, pas d'ombre, pas de dégradé. Filets de 1 px : plein = structure,
-  tireté = relation/inactif, pointillé = repère.
+  tireté = relation/inactif, pointillé = repère. Un filet se mérite : on essaie
+  d'abord sans. Il ne reste que pour une relation, une limite de défilement, une
+  somme ou le contour d'un contrôle ; jamais de filet vertical pour séparer.
 - Ferré à gauche, trois ou quatre axes verticaux, un tiers de la vue vide.
 - Dans un graphique : marques en `--mark` (gris moyen), valeurs en `--fg-strong`,
   séries distinguées par ton et trait, jamais par teinte.
