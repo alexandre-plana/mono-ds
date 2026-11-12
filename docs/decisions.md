@@ -82,6 +82,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-059 | Touche Z, saisie et archives : précisions | en vigueur |
 | D-060 | Carte géographique : fond réel embarqué, pas de tuiles | en vigueur, complétée par D-061 |
 | D-061 | Plan détaillé : tuiles vectorielles, relief en courbes, calques | en vigueur |
+| D-062 | Planches animées : une exception délimitée à « rien d'ornemental » | en vigueur |
 
 ---
 
@@ -574,3 +575,13 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Entorse assumée** : c'est le seul écran qui dépende de services en ligne et de bibliothèques lourdes (MapLibre : 800 Ko). Comme interact.js pour le bureau, elles restent dans `catalogue/assets/vendor/` et hors de `src/`.
 - **Limites** : noms en Noto Sans, seule police disponible en glyphes de carte ; disponibilité et conditions des services tiers à vérifier avant un usage en production ; mentions d'attribution obligatoires, placées dans la barre d'état.
 - **Environnement** : un environnement cloud « mono-ds » autorisant `tiles.openfreemap.org` a été créé pour pouvoir tester le rendu.
+
+## D-062 — Planches animées : une exception délimitée à « rien d'ornemental »
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« trois animations procédurales infinies, oniriques, contemplatives, graphiques, en plein écran »)
+- **Décision** : `exemples/planches.html` et `assets/planches.js`. Trois tableaux en canevas, sans dépendance, chacun tiré d'une référence d'origine : **Crêtes** (la pochette de disque : un relief en rangées qui dérive), **Atlas** (la carte du rapport : des stations sur un graticule, reliées par des tiretés, balayées par un méridien), **Arbre** (l'arbre de décision du rapport : il pousse, tient, se retire, et un autre vient).
+- **Graine** : deux mots tirés d'un petit lexique (« brume lente », « nacre du large »). La même graine redonne la même planche ; elle est affichée et portée par l'adresse. Espace en tire une autre.
+- **Données** : chaque planche produit des chiffres vrais de ce qu'elle montre (altitude du sommet, station dominante, nœuds et mots de l'arbre), affichés dans la barre d'état et, pour le fait désigné, sur la planche.
+- **Règles tenues** : aucune couleur écrite (rôles du thème relus à chaque image) ; filets d'un pixel ; pointillé pour les repères, tireté pour les relations ; capitales espacées ; un seul point en signal par planche ; aucune transparence — ce qui s'efface descend les tons un à un ; la page garde son contour.
+- **L'exception** : le système dit « rien d'ornemental, transitions de 120 ms, rien d'autre ». Les planches sont du mouvement pour lui-même. Elles sont admises parce qu'elles ne sont **pas une interface** : un écran à regarder (veille, accueil, projection), jamais un fond derrière du contenu ni une animation dans un composant. La règle des interfaces ne change pas.
+- **Garde-fous** : avec « réduire les animations », chaque planche est une image fixe ; le sommet désigné ne saute pas d'un pic à l'autre (il n'est lâché que pour un sommet nettement plus haut).

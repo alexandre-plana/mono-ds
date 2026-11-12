@@ -105,6 +105,18 @@ rôles du thème.
 
 ![Plan de Vizille à l'échelle de la rue, thème papier](docs/captures/plan-rue.png)
 
+### Les planches
+
+Trois animations procédurales, infinies, à regarder : un relief qui dérive, un
+atlas balayé, un arbre qui pousse. Chacune naît d'une graine de deux mots —
+ici « brume lente ».
+
+![Planche Crêtes, animée](docs/captures/planche-cretes.gif)
+
+| | |
+|---|---|
+| ![Planche Atlas](docs/captures/planche-atlas.png) | ![Planche Arbre](docs/captures/planche-arbre.png) |
+
 ### Les images
 
 Des photos sans rapport entre elles — studio, nuit, relevé scientifique —
@@ -121,7 +133,7 @@ seul, jamais dans une modale.
 
 ![Application à onglets, inspecteur attaché](docs/captures/application-onglets.png)
 
-Neuf écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
+Dix écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
 
 ## En bref
 
@@ -175,7 +187,7 @@ docs/               les règles
   composants.md     index des composants et de leurs variantes
   dataviz.md        règles et classes de visualisation
 catalogue/          le catalogue navigable (démonstrations + code)
-  exemples/         neuf écrans : carte, plan, tableau de bord, rapport, collection + inspecteur,
+  exemples/         dix écrans : carte, plan, planches, tableau de bord, rapport, collection + inspecteur,
                     connexion, bureau à fenêtres, et deux gabarits de shell à
                     copier : application.html (arborescente) et
                     application-modules.html (modules séparés)

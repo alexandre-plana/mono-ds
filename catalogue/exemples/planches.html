@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planches — exemple MONO</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+</head>
+<!-- Planches animées.
+     Trois tableaux procéduraux, infinis, à regarder : Crêtes, Atlas, Arbre. Chacun naît d'une
+     graine de deux mots ; la même graine redonne la même planche (elle est dans l'adresse).
+     Le dessin est celui du système — voir assets/planches.js. La page garde son contour ;
+     « F » la passe en plein écran, « Espace » tire une autre graine, 1 2 3 changent de planche.
+     Avec « réduire les animations », chaque planche est une image fixe. -->
+<body class="l-desk l-desk--app">
+
+  <div class="l-shell" id="page">
+    <div class="l-pane">
+      <div class="l-pane__head">
+        <header class="c-masthead">
+          <div class="c-masthead__title" id="title">Planche 01 — Crêtes</div>
+          <div class="c-masthead__meta"><span>Graine</span><span id="seed" class="t-strong"></span><a href="../index.html">Catalogue</a></div>
+        </header>
+      </div>
+
+      <main class="l-pane__body" style="padding: 0; overflow: hidden; background: none">
+        <canvas id="planche" style="display: block; flex: 1; min-height: 0; width: 100%" role="img" aria-label="Planche animée"></canvas>
+      </main>
+
+      <div class="l-pane__foot">
+        <div class="c-statusbar">
+          <span class="c-statusbar__group" role="group" aria-label="Planche" id="scenes" style="flex-wrap: wrap">
+            <button class="c-chip" type="button" data-scene="cretes" aria-pressed="true">01 Crêtes</button>
+            <button class="c-chip" type="button" data-scene="atlas" aria-pressed="false">02 Atlas</button>
+            <button class="c-chip" type="button" data-scene="arbre" aria-pressed="false">03 Arbre</button>
+          </span>
+          <span class="c-statusbar__group" id="info" style="white-space: normal"></span>
+          <span class="c-statusbar__group" style="margin-left: auto"><span class="c-kbd">Espace</span> autre graine</span>
+          <span class="c-statusbar__group"><span class="c-kbd">F</span> plein écran</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/planches.js"></script>
+  <script>
+    'use strict';
+    (() => {
+      const $ = (id) => document.getElementById(id), NAMES = { cretes: '01 — Crêtes', atlas: '02 — Atlas', arbre: '03 — Arbre' };
+      const planches = MonoPlanches($('planche'), { onInfo: ({ info }) => { $('info').textContent = info.join(' · '); } });
+      const go = (scene, seed) => {
+        const s = planches.start(scene, seed); $('seed').textContent = s; $('title').textContent = 'Planche ' + NAMES[planches.scene];
+        $('planche').setAttribute('aria-label', `Planche ${NAMES[planches.scene]}, graine « ${s} »`);
+        document.querySelectorAll('[data-scene]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.scene === planches.scene)));
+        history.replaceState(null, '', `#${planches.scene}/${encodeURIComponent(s)}`);
+      };
+      const [scene, seed] = decodeURIComponent(location.hash.slice(1)).split('/');
+      go(scene || 'cretes', seed);
+      $('scenes').addEventListener('click', (e) => { const b = e.target.closest('[data-scene]'); if (b) go(b.dataset.scene); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') { e.preventDefault(); go(planches.scene); }
+        else if (e.key === '1') go('cretes'); else if (e.key === '2') go('atlas'); else if (e.key === '3') go('arbre');
+        else if (e.key.toLowerCase() === 'f') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.(); }
+      });
+      $('planche').addEventListener('click', () => go(planches.scene));
+    })();
+  </script>
+</body>
+</html>
