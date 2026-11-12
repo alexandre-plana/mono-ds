@@ -68,7 +68,10 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-chip` | `[aria-pressed]`, `__count`, `disabled` | Filtres cumulables ; aucun actif = tout |
 | `.c-steps` | `__step`, `.is-done`, `[aria-current="step"]` | Parcours linéaire de 3 à 6 étapes : plein = fait, épais = en cours, tireté = à venir |
 | `.c-nav` | `__label`, `__item[aria-current]` | Menu numéroté |
-| `.c-pathnav` | `__home`, `__sep`, `__seg` (`<details class="c-menu">`) | Ligne de tête : le chemin est la navigation de l'application. Trois niveaux au plus ; jamais avec un rail |
+| `.c-pathnav` | `__home`, `__sep`, `__seg` (`<details class="c-menu">`) | Ligne de tête des applications arborescentes : le chemin est la navigation. Trois niveaux au plus |
+| `.c-mainnav` | `__brand`, `__item[aria-current]`, `__item--temp` | Ligne de tête des applications à modules séparés : les modules en toutes lettres, sept au plus. Jamais avec `.c-pathnav` |
+| `.c-plan` | `__group`, `__page[aria-current]`, `__head`, `__open`, `__desc`, `__foot`, `__figure`, `__beside` | Toutes les pages de l'application posées sur le plan de travail ; une page s'ouvre en grand ou se pose à côté |
+| `.c-palette` (`<dialog>`) | `__search`, `__list`, `__group`, `__item[aria-selected]`, `__type`, `__title`, `__desc`, `__hint`, `__foot` | « Aller à » : saut vers un écran, un objet ou une action. Vide, elle montre les récents puis la carte |
 | `.c-breadcrumb`, `.c-pagination` | `[aria-current]` | Le fil d'Ariane situe et remonte ; il ne navigue pas entre voisins |
 
 ## Saisie

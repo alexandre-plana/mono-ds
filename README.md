@@ -54,8 +54,9 @@ docs/               les règles
   dataviz.md        règles et classes de visualisation
 catalogue/          le catalogue navigable (démonstrations + code)
   exemples/         six écrans : tableau de bord, rapport, collection + inspecteur,
-                    connexion, bureau à fenêtres, et application.html — le
-                    gabarit de shell à copier pour démarrer
+                    connexion, bureau à fenêtres, et deux gabarits de shell à
+                    copier : application.html (arborescente) et
+                    application-modules.html (modules séparés)
   assets/vendor/    interact.js (MIT), pour la seule version bureau
 scripts/
   contrast.mjs      contrôle des contrastes des tokens

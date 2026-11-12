@@ -60,10 +60,14 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   `<div class="cat-sub" id="c-nom" data-search="composant">` avec un `<h3>`, une
   démonstration `<div class="cat-demo" data-code>` et sa fiche `<dl class="cat-spec">`
   (Employer / Éviter / États / Accessibilité). Ajouter une ligne à `docs/composants.md`.
-- Nouvelle application : partir de `catalogue/exemples/application.html`. Deux
-  lignes fixes seulement : la ligne de tête (`.c-pathnav`, le chemin est la
-  navigation) et la barre d'état. Pas de rail, pas de barre d'outils permanente ;
-  console et aide sont des fenêtres ouvertes à la demande.
+- Nouvelle application : choisir le gabarit selon sa forme. Arborescente (on
+  descend dans un arbre) : `catalogue/exemples/application.html`, le chemin est la
+  navigation (`.c-pathnav`). À modules séparés (on saute d'une partie à l'autre) :
+  `application-modules.html`, les modules en mots (`.c-mainnav`). Jamais les deux.
+  Dans les deux cas : deux lignes fixes seulement, pas de rail ; le plan (`.c-plan`),
+  la pose à côté et « Aller à » (`.c-palette`) servent aux déplacements hors de
+  l'ordre ; console et aide sont des fenêtres. La navigation s'écrit en mots :
+  ni numéros seuls, ni icônes seules, ni texte vertical.
 - Le système reste en CSS pur. Les comportements (fenêtres, canevas, menus,
   console) vivent dans `catalogue/assets/` comme démonstrations ; seule la version
   bureau dépend d'une bibliothèque, interact.js, embarquée dans `assets/vendor/`.

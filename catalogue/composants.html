@@ -720,12 +720,103 @@
               </nav>
             </div>
             <dl class="cat-spec">
-              <div><dt>Employer</dt><dd>Comme unique navigation d'une application, dans <code>.c-masthead</code>, à la place du titre. Le dernier segment est le titre de l'écran.</dd></div>
-              <div><dt>Éviter</dt><dd>Avec un rail ou des onglets de navigation : il n'y a qu'un moyen de se déplacer. Plus de trois niveaux. Un segment sans voisins (l'écrire en texte simple).</dd></div>
+              <div><dt>Employer</dt><dd>Comme navigation d'une application arborescente, où chaque écran a une place dans un arbre et où l'on travaille surtout à l'intérieur d'une branche. Dans <code>.c-masthead</code>, à la place du titre.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour une application à modules séparés entre lesquels on saute sans cesse : chaque saut coûterait deux clics (préférer <code>.c-mainnav</code>). Plus de trois niveaux. Un segment sans voisins, à écrire en texte simple.</dd></div>
               <div><dt>Fil d'Ariane ou ligne de tête</dt><dd><code>.c-breadcrumb</code> situe une page dans un document et ne fait que remonter. <code>.c-pathnav</code> navigue : elle remonte, et passe aussi d'un voisin à l'autre.</dd></div>
-              <div><dt>Sommaire</dt><dd>Le premier segment remplace l'écran par le sommaire : une colonne par groupe, un <code>.c-index</code> par colonne, numérotation continue, une description par écran. Aucun composant propre.</dd></div>
+              <div><dt>Plan</dt><dd>Le premier segment ouvre le plan (<code>.c-plan</code>) : toutes les pages de l'application, posées sur le plan de travail.</dd></div>
               <div><dt>États</dt><dd>Segment courant au ton fort. Survol ou ouverture : le segment passe au ton fort, son chevron aussi. Dans la liste, le voisin courant porte le trait de sélection.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;nav&gt;</code> ; chaque segment est un <code>&lt;details&gt;</code>, ouvrable au clavier sans script. Échap et clic extérieur ferment. Le bouton du sommaire porte <code>aria-expanded</code>.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-mainnav" data-search="composant">
+            <h3>Navigation par modules — .c-mainnav</h3>
+            <p>Les destinations de premier niveau écrites en toutes lettres dans la ligne de tête, toutes visibles, à un clic. Pour les applications dont les parties sont séparées et entre lesquelles on saute sans cesse. Le module courant ne change que de contour : un trait de 2 px posé sur le filet de l'en-tête.</p>
+            <div class="cat-demo" data-code>
+              <header class="c-masthead" style="align-items: center; min-height: 3rem; padding-bottom: var(--space-3)">
+                <nav class="c-mainnav" aria-label="Modules">
+                  <span class="c-mainnav__brand">Mono</span>
+                  <button class="c-mainnav__item" type="button"><i class="c-icon i-grid" aria-hidden="true"></i>Plan</button>
+                  <a class="c-mainnav__item" href="#c-mainnav">Synthèse</a>
+                  <a class="c-mainnav__item" href="#c-mainnav" aria-current="page">Agences</a>
+                  <a class="c-mainnav__item" href="#c-mainnav">Rapports</a>
+                  <a class="c-mainnav__item c-mainnav__item--temp" href="#c-mainnav">Réglages</a>
+                </nav>
+                <button class="c-button c-button--quiet" type="button">Aller à <span class="c-kbd" aria-hidden="true">/</span></button>
+              </header>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Une application à modules séparés — aucun n'est « sous » un autre — où l'on passe sans cesse de l'un à l'autre. Sept modules au plus, un mot chacun, dans un ordre qui ne change jamais.</dd></div>
+              <div><dt>Éviter</dt><dd>Avec la ligne de tête en chemin (<code>.c-pathnav</code>) : un seul moyen de se déplacer par application. Des icônes à la place des mots. Un module caché derrière « Plus ».</dd></div>
+              <div><dt>Lieu de passage</dt><dd><code>__item--temp</code> : un endroit atteint par un saut et qui n'est pas un module épinglé s'ajoute en bout de ligne, en tireté. Il disparaît quand on le quitte.</dd></div>
+              <div><dt>Profondeur</dt><dd>Quand on descend dans un module, un fil d'Ariane apparaît sous la ligne de tête ; il n'est pas là tant qu'on est au premier niveau.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;nav&gt;</code> de liens, module courant en <code>aria-current="page"</code>. Sur écran étroit la ligne défile horizontalement ; rien n'est masqué.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-plan" data-search="composant">
+            <h3>Plan — .c-plan</h3>
+            <p>La navigation des applications non linéaires. On recule d'un cran et l'on voit toutes les pages de l'application posées sur le plan de travail : les familles sont séparées par les hachures, chaque page porte son nom, ce qu'elle contient et son chiffre. Une page s'ouvre en grand — ou se pose à côté de celle où l'on travaille.</p>
+            <div class="cat-demo cat-demo--plain" data-code>
+              <div class="l-desk" style="min-height: 0">
+                <nav class="c-plan" aria-label="Plan de l'application">
+                  <div class="c-plan__group" role="group" aria-label="Réseau">
+                    <article class="c-plan__page" aria-current="page">
+                      <div class="c-plan__head"><span>Réseau</span><span>Vous êtes ici</span></div>
+                      <button class="c-plan__open" type="button">Agences</button>
+                      <span class="c-plan__desc">412 points de vente</span>
+                      <div class="c-plan__foot"><span class="c-plan__figure">412<small>agences</small></span></div>
+                    </article>
+                    <article class="c-plan__page">
+                      <div class="c-plan__head"><span>Réseau</span><span>03</span></div>
+                      <button class="c-plan__open" type="button">Branches</button>
+                      <span class="c-plan__desc">4 branches régionales</span>
+                      <div class="c-plan__foot"><span class="c-plan__figure">4<small>branches</small></span><button class="c-button c-button--quiet c-plan__beside" type="button"><i class="c-icon i-panel" aria-hidden="true"></i>À côté</button></div>
+                    </article>
+                  </div>
+                  <div class="c-plan__group" role="group" aria-label="Pilotage">
+                    <article class="c-plan__page">
+                      <div class="c-plan__head"><span>Pilotage</span><span>04</span></div>
+                      <button class="c-plan__open" type="button">Rapports</button>
+                      <span class="c-plan__desc">Annuel, trimestriels</span>
+                      <div class="c-plan__foot"><span class="c-plan__figure">6<small>rapports</small></span><button class="c-button c-button--quiet c-plan__beside" type="button"><i class="c-icon i-panel" aria-hidden="true"></i>À côté</button></div>
+                    </article>
+                  </div>
+                </nav>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Voir d'un coup tout ce que contient l'application, s'y repérer par l'emplacement autant que par le nom, et travailler sur deux pages à la fois. Il s'ouvre par « Plan » dans la ligne de tête, la touche <span class="c-kbd">G</span>, ou un clic sur les hachures.</dd></div>
+              <div><dt>Éviter</dt><dd>Plus d'une vingtaine de pages : au-delà, le plan ne se lit plus d'un regard. Changer la place des pages d'une fois sur l'autre — l'emplacement est une mémoire.</dd></div>
+              <div><dt>Poser à côté</dt><dd>Le bouton « À côté » ouvre la page dans une seconde feuille, à droite de la page courante, séparée par la bande hachurée. On lit l'une en travaillant sur l'autre ; « Ouvrir en grand » les échange. Une seule page à côté.</dd></div>
+              <div><dt>Anatomie</dt><dd><code>__group</code> (une famille) · <code>__page</code> : <code>__head</code> (famille, numéro ou « Vous êtes ici »), <code>__open</code> (le nom, qui est le bouton), <code>__desc</code>, <code>__foot</code> (<code>__figure</code>, <code>__beside</code>). <code>.c-plan</code> est un enfant direct de <code>.l-desk</code>.</dd></div>
+              <div><dt>États</dt><dd>Page courante : contour de 2 px, et « Vous êtes ici » à la place du numéro. Survol : contour d'un cran plus clair.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;nav&gt;</code> ; chaque nom est un <code>&lt;button&gt;</code> dont la zone couvre toute la miniature. Flèches pour parcourir, Entrée pour ouvrir, Maj + Entrée pour poser à côté, Échap pour revenir.</dd></div>
+              <div><dt>Script</dt><dd>Ouverture, fermeture et pose à côté reviennent à l'application ; voir <code>catalogue/assets/app-demo.js</code>.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-palette" data-search="composant">
+            <h3>Aller à — .c-palette</h3>
+            <p>Le saut direct : une recherche qui mène à n'importe quel écran, objet ou action. Vide, elle montre les lieux récents puis toute la carte de l'application. On n'a pas à savoir où une chose est rangée pour y aller.</p>
+            <div class="cat-demo cat-demo--plain" data-code>
+              <div class="c-dialog c-dialog--large c-palette" style="position: static; margin: 0; display: flex; flex-direction: column; width: 100%; max-width: 44rem">
+                <div class="c-palette__search"><label class="c-search c-search--large"><i class="c-icon i-search" aria-hidden="true"></i><input type="search" value="gren" aria-label="Aller à"><span class="c-kbd" aria-hidden="true">esc</span></label></div>
+                <div class="c-palette__list" role="listbox" aria-label="Destinations">
+                  <div class="c-palette__group"><span>Agences</span><span>1</span></div>
+                  <button class="c-palette__item" type="button" role="option" aria-selected="true"><span class="c-palette__type">Agence</span><span class="c-palette__main"><span class="c-palette__title">Grenoble Centre</span><span class="c-palette__desc">M. Delorme</span></span><span class="c-palette__hint">N-014</span></button>
+                  <div class="c-palette__group"><span>Actions</span><span>1</span></div>
+                  <button class="c-palette__item" type="button" role="option" aria-selected="false"><span class="c-palette__type">Action</span><span class="c-palette__main"><span class="c-palette__title">Exporter les agences</span><span class="c-palette__desc">Fichier CSV</span></span><span class="c-palette__hint"></span></button>
+                </div>
+                <div class="c-palette__foot"><span><span class="c-kbd">↑</span> <span class="c-kbd">↓</span> choisir</span><span><span class="c-kbd">↵</span> y aller</span><span>2 résultats</span></div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Dans toute application, quel que soit son shell : touche <span class="c-kbd">/</span>, ou « Aller à » à droite de la ligne de tête. Elle réunit écrans, objets et actions dans une seule recherche.</dd></div>
+              <div><dt>Éviter</dt><dd>Comme seul moyen d'atteindre quelque chose : tout ce qu'elle propose doit rester accessible autrement. Des résultats sans type : c'est le type (écran, agence, action) qui dit où l'on va atterrir.</dd></div>
+              <div><dt>États</dt><dd>Vide : récents, puis la carte complète. Saisie : résultats groupés par type, huit par groupe au plus. Aucun résultat : un état vide qui suggère quoi chercher.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;dialog&gt;</code> modal ; champ en <code>role="combobox"</code>, résultats en <code>listbox</code>, option active par <code>aria-activedescendant</code>, décompte annoncé. Flèches, Entrée, Échap.</dd></div>
+              <div><dt>Script</dt><dd>Recherche et récents reviennent à l'application ; voir <code>catalogue/assets/palette.js</code>.</dd></div>
             </dl>
           </div>
 

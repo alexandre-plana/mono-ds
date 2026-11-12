@@ -142,6 +142,20 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-pathnav__seg:last-of-type > summary { color: var(--fg-strong); }
 .c-pathnav .c-menu__list { letter-spacing: 0; text-transform: none; }
 
+/* Navigation par modules : les destinations de premier niveau, écrites en toutes lettres
+   dans la ligne de tête. Pour les applications dont les parties sont séparées et entre
+   lesquelles on saute sans cesse. Le module courant ne change que de contour : un trait
+   de 2 px posé sur le filet de l'en-tête. À placer dans .c-masthead. */
+.c-mainnav { flex: 1 1 0; align-self: stretch; display: flex; align-items: stretch; gap: var(--space-5); min-width: 0; overflow-x: auto; margin-bottom: calc(-1 * var(--space-3) - 1px); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-small); line-height: var(--leading-base); }
+.c-mainnav__home { display: inline-flex; align-items: center; padding-bottom: var(--space-3); margin-right: var(--space-3); letter-spacing: var(--track-title); font-size: var(--text-base); color: var(--fg-strong); text-decoration: none; white-space: nowrap; }
+.c-mainnav__item { appearance: none; display: inline-flex; align-items: center; padding: 0 0 calc(var(--space-3) - 1px); background: none; border: 0; border-bottom: var(--stroke) solid transparent; font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--fg-soft); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
+.c-mainnav__item:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
+/* Lieu de passage : un endroit hors des modules épinglés, atteint par un saut. Tireté = provisoire. */
+.c-mainnav__item--temp[aria-current] { border-bottom-style: dashed; }
+.c-mainnav__brand { display: inline-flex; align-items: center; padding-bottom: var(--space-3); margin-right: var(--space-2); letter-spacing: var(--track-title); font-size: var(--text-base); color: var(--fg-strong); white-space: nowrap; }
+.c-mainnav__item .c-icon { margin-right: var(--space-2); }
+.c-mainnav__item[aria-current] { color: var(--fg); font-weight: var(--weight-medium); border-bottom-color: var(--selected-line); }
+
 .c-breadcrumb { display: flex; flex-wrap: wrap; gap: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
 .c-breadcrumb a { color: var(--fg-soft); text-decoration: none; }
 .c-breadcrumb a:hover { color: var(--fg-strong); }
@@ -534,3 +548,50 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
 .c-doctabs__tab:hover { color: var(--fg-strong); }
 .c-doctabs__tab[aria-current], .c-doctabs__tab[aria-selected="true"] { border-top: var(--stroke) solid var(--selected-line); border-bottom-color: var(--bg); color: var(--fg); font-weight: var(--weight-medium); }
 .c-doctabs__tab--add { padding-inline: var(--space-2); }
+
+/* --- Aller à ------------------------------------------------------------------------------
+   Le saut direct : une recherche qui mène à n'importe quel écran, objet ou action, et qui,
+   vide, montre les lieux récents puis toute la carte de l'application. C'est la réponse à
+   la navigation non linéaire : on n'a pas à savoir où une chose est rangée pour y aller.
+   <dialog class="c-dialog c-dialog--large c-palette"> */
+.c-palette { padding: 0; }
+.c-palette__search { flex: none; padding: var(--space-2) var(--space-5); border-bottom: var(--hairline) solid var(--line); }
+.c-palette__search .c-search { border: 0; outline: 0; padding: 0; background: none; min-height: var(--control-height-large); }
+.c-palette__list { flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-2) 0 var(--space-4); }
+.c-palette__group { display: flex; justify-content: space-between; margin: var(--space-4) var(--space-5) var(--space-1); padding-bottom: var(--space-1); border-bottom: var(--hairline) solid var(--line); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-palette__group > :first-child { color: var(--fg-soft); }
+.c-palette__item { appearance: none; width: 100%; display: grid; grid-template-columns: 5rem minmax(0, 1fr) max-content; column-gap: var(--space-4); align-items: baseline; padding: var(--space-2) var(--space-5) var(--space-2) calc(var(--space-5) - var(--stroke)); background: none; border: 0; border-left: var(--stroke) solid transparent; font: inherit; text-align: left; text-decoration: none; color: var(--fg); cursor: pointer; }
+.c-palette__item:hover { background: var(--surface-2); color: var(--fg); }
+.c-palette__item[aria-selected="true"] { border-left-color: var(--selected-line); }
+.c-palette__type, .c-palette__hint { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); white-space: nowrap; }
+.c-palette__main { min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-4); }
+.c-palette__title { color: var(--fg-strong); font-weight: var(--weight-medium); }
+.c-palette__desc { color: var(--fg-soft); font-size: var(--text-small); }
+.c-palette__foot { flex: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); padding: var(--space-3) var(--space-5); border-top: var(--hairline) solid var(--line); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
+.c-palette .c-empty { margin: var(--space-4) var(--space-5); }
+@media (max-width: 640px) { .c-palette__item { grid-template-columns: minmax(0, 1fr); } .c-palette__type, .c-palette__hint { display: none; } }
+
+/* --- Plan ------------------------------------------------------------------------------
+   La navigation des applications non linéaires : on recule d'un cran et l'on voit toutes
+   les pages de l'application posées sur le plan de travail. Les familles sont séparées
+   par les hachures ; chaque page porte son nom, ce qu'elle contient et son chiffre.
+   Une page s'ouvre en grand, ou se pose À CÔTÉ de celle où l'on travaille.
+   .c-plan est un enfant direct de .l-desk, à la place des pages. */
+.c-plan { display: flex; flex-wrap: wrap; align-content: flex-start; align-items: flex-start; gap: calc(var(--shell-inset) * 2); min-height: 0; overflow-y: auto; }
+.c-plan__group { display: flex; flex-wrap: wrap; gap: calc(var(--shell-inset) / 2); min-width: 0; }
+.c-plan__page { position: relative; width: 18.5rem; max-width: 100%; min-height: 11.5rem; display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); background: var(--bg); border: var(--hairline) solid var(--line-strong); transition: border-color var(--duration); }
+.c-plan__page:hover, .c-plan__page:focus-within { border-color: var(--fg-soft); }
+/* Vous êtes ici : le contour seul. */
+.c-plan__page[aria-current] { border: var(--stroke) solid var(--selected-line); padding: calc(var(--space-4) - 1px); }
+.c-plan__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+/* Le titre est le bouton : toute la page miniature répond au clic. */
+.c-plan__open { appearance: none; background: none; border: 0; padding: 0; margin: var(--space-2) 0 0; font: inherit; font-size: var(--text-large); line-height: var(--leading-large); color: var(--fg-strong); text-align: left; cursor: pointer; }
+.c-plan__open::after { content: ''; position: absolute; inset: 0; }
+.c-plan__open:focus-visible { outline: 0; }
+.c-plan__page:has(.c-plan__open:focus-visible) { outline: var(--stroke) solid var(--fg-strong); outline-offset: 3px; }
+.c-plan__desc { color: var(--fg-soft); font-size: var(--text-small); line-height: var(--leading-base); }
+.c-plan__foot { margin-top: auto; padding-top: var(--space-3); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: var(--space-2) var(--space-3); }
+.c-plan__figure { font-size: var(--text-title); line-height: var(--leading-title); color: var(--fg); white-space: nowrap; }
+.c-plan__figure small { font-size: var(--text-micro); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-muted); margin-left: var(--space-2); }
+.c-plan__beside { position: relative; z-index: 1; min-height: 1.5rem; }
+@media (max-width: 640px) { .c-plan__group { width: 100%; } .c-plan__page { width: 100%; min-height: 0; } .c-plan__beside { display: none; } }

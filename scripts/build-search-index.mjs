@@ -21,7 +21,8 @@ const PAGES = [
 const EXAMPLES = [
   ['exemples/tableau-de-bord.html', 'Tableau de bord', 'Écran de pilotage en thème encre : chiffre héros, graphique en barres, tableau, statuts. Trois axes verticaux, un bouton primaire, un seul sens pour le signal.'],
   ['exemples/collection.html', 'Collection et inspecteur', 'Application en deux pages séparées par la bande hachurée : une collection en tableau, une ligne sélectionnée, son détail dans un inspecteur. Édition en place, indicateur d\'enregistrement, barre d\'état, raccourcis clavier.'],
-  ['exemples/application.html', 'Application — gabarit', 'Shell d\'application à copier comme base : ligne de tête (le chemin est la navigation), sommaire, barre d\'état, console en fenêtre à la demande.'],
+  ['exemples/application.html', 'Application — gabarit à chemin', 'Shell d\'application arborescente à copier : la ligne de tête est le chemin, chaque segment ouvre ses voisins. Plan, pose à côté, Aller à, console en fenêtre.'],
+  ['exemples/application-modules.html', 'Application — gabarit à modules', 'Shell d\'application non linéaire à copier : les modules en toutes lettres dans la ligne de tête, le plan de travail comme carte, deux pages côte à côte, Aller à.'],
   ['exemples/connexion.html', 'Connexion', 'Écran de connexion : formulaire ferré à gauche, erreurs de saisie, refus, indicateur pendant la vérification, état du service.'],
   ['exemples/bureau.html', 'Bureau', 'Version bureau : fenêtres flottantes déplaçables, redimensionnables et aimantées (interact.js), barre des fenêtres, canevas, menu contextuel à sous-menu.'],
   ['exemples/rapport.html', 'Rapport', 'Page éditoriale en thème papier : titre, prose, clé-valeur, tableau, courbes, et une figure cartographique dans un bloc inversé encre.'],

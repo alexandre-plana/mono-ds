@@ -88,25 +88,42 @@ le plan : un fond hachuré, visible sur une bande de 24 px autour de la page.
 `.l-desk` est une grille : plusieurs `.l-shell` côte à côte sont séparés par la
 même bande hachurée.
 
-### Shell d'application : la ligne de tête
+### Shell d'application
 
-Une application tient en une page et deux lignes fixes : en haut la ligne de tête
-(`.c-pathnav`, dans `.c-masthead`), en bas la barre d'état. Le chemin est la
-navigation : chaque segment ouvre la liste de ses voisins, le premier ouvre le
-sommaire, qui remplace l'écran. Gabarit : `catalogue/exemples/application.html`.
+Une application tient en une page et deux lignes fixes : en haut la ligne de tête,
+en bas la barre d'état. Ce que porte la ligne de tête dépend de la forme de
+l'application.
 
-- **A1 — Deux lignes fixes.** Ni rail, ni barre d'outils permanente, ni console
-  ancrée : une action vit avec le contenu qu'elle concerne.
-- **A2 — Des mots, pas des signes.** Où l'on est se lit dans le dernier segment ;
-  où l'on peut aller, dans le sommaire, avec une description par écran.
-- **A3 — Trois niveaux au plus** : application, groupe, écran. Le détail d'un
-  élément va dans l'inspecteur, pas dans un quatrième segment.
-- **A4 — Les outils viennent à la demande** : console, aide, raccourcis sont des
-  fenêtres, jamais des régions de la page.
+| Forme | Ligne de tête | Gabarit |
+|---|---|---|
+| Arborescente : on descend dans un arbre, on travaille dans une branche | Le chemin, `.c-pathnav` : chaque segment ouvre ses voisins | `catalogue/exemples/application.html` |
+| À modules séparés : on saute sans cesse d'une partie à l'autre | Les modules en toutes lettres, `.c-mainnav`, tous visibles | `catalogue/exemples/application-modules.html` |
 
-Deux autres pistes ont été prototypées et écartées : des onglets numérotés posés
-dans la marge (des numéros sans mots ne se lisent pas) et des pages empilées sur
-la tranche (texte vertical, largeur perdue à chaque niveau).
+Les deux partagent trois moyens de se déplacer hors de l'ordre :
+
+- **Le plan** (`.c-plan`, touche G, ou un clic sur les hachures) : on recule d'un
+  cran et l'on voit toutes les pages de l'application posées sur le plan de
+  travail, les familles séparées par les hachures.
+- **À côté** : depuis le plan, une page se pose à droite de celle où l'on
+  travaille (`.l-desk--split`). On lit l'une en agissant sur l'autre.
+- **Aller à** (`.c-palette`, touche /) : une recherche qui saute à un écran, un
+  objet ou une action, sans avoir à savoir où il est rangé.
+
+Règles :
+
+- **A1 — Deux lignes fixes.** Ni rail, ni barre d'outils permanente, ni console ancrée.
+- **A2 — Des mots, pas des signes.** Ni numéros seuls, ni icônes seules, ni texte
+  vertical : on sait où cliquer et ce qu'on va trouver.
+- **A3 — Un seul moyen principal** : le chemin ou les modules, jamais les deux.
+- **A4 — Le plan de travail est la carte.** Les pages y gardent leur place :
+  l'emplacement est une mémoire.
+- **A5 — Deux pages plutôt qu'un aller-retour.**
+- **A6 — Les outils viennent à la demande** : console, aide et raccourcis sont
+  des fenêtres.
+
+Pistes écartées : le rail de navigation (une région fixe de plus), les onglets
+numérotés en marge (on ne sait ni où cliquer ni à quoi correspondent les numéros)
+et les pages empilées sur la tranche (lecture verticale, largeur perdue).
 
 ### Application : collection et inspecteur
 

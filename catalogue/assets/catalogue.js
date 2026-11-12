@@ -13,7 +13,8 @@
     ['exemples/tableau-de-bord.html', 'Tableau de bord'],
     ['exemples/rapport.html', 'Rapport'],
     ['exemples/collection.html', 'Collection'],
-    ['exemples/application.html', 'Application'],
+    ['exemples/application.html', 'Application · chemin'],
+    ['exemples/application-modules.html', 'Application · modules'],
     ['exemples/connexion.html', 'Connexion'],
     ['exemples/bureau.html', 'Bureau'],
   ];

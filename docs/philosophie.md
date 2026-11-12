@@ -233,7 +233,7 @@ et le signal (2), on ne réduit pas le reste du tableau sous le plancher (1).
 | « Une bibliothèque d'icônes » | Une seconde main de dessin, arrondie ou trop grasse pour des filets d'un pixel | Un jeu propre de 49 signes, tracé comme les filets |
 | « D'autres éléments graphiques, pour enrichir » | Rien d'ornemental | Oui, s'ils ont un sens : six signes admis, quatre refusés (voir `fondations.md`) |
 | « Un menu au clic droit, avec des sous-menus » | Un sous-menu cache, et le clic droit ne se découvre pas | Oui, sur un seul niveau, et aucune action ne doit exister seulement là |
-| « Un rail de navigation à gauche, comme partout » | Une région fixe de plus, qui charge chaque écran pour un besoin ponctuel | La ligne de tête : le chemin est la navigation, le sommaire montre tout |
+| « Un rail de navigation à gauche, comme partout » | Une région fixe de plus, qui charge chaque écran pour un besoin ponctuel | Deux lignes fixes. La ligne de tête porte le chemin ou les modules, en mots ; le plan de travail sert de carte ; deux pages se posent côte à côte |
 | « Deux boutons pleins, les deux actions comptent » | Deux points focaux | Choisir ; l'autre est en contour |
 | « Un fond coloré pour l'alerte » | Le signal n'est jamais une surface | `.c-notice--signal` : un trait de 2 px et un mot |
 

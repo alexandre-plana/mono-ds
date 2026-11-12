@@ -3,42 +3,55 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Application — gabarit MONO</title>
+  <title>Application — chemin — gabarit MONO</title>
   <link rel="stylesheet" href="../../src/mono.css">
 </head>
-<!-- GABARIT D'APPLICATION — à copier comme point de départ.
+<!-- GABARIT D'APPLICATION, navigation par le CHEMIN — à copier comme point de départ.
 
-     Une page, deux lignes fixes, rien d'autre :
-       en haut   la ligne de tête (.c-pathnav) : le chemin est la navigation.
-                 Chaque segment ouvre la liste de ses voisins ; « Mono » ouvre le sommaire.
-       en bas    la barre d'état : qui est connecté, les raccourcis.
+     Pour une application arborescente : chaque écran a une place dans un arbre, et l'on
+     travaille surtout à l'intérieur d'une branche.
 
-     Pas de rail, pas de barre d'outils permanente : les actions vivent avec le contenu
-     qu'elles concernent. La console n'est pas une région de la page ; c'est une fenêtre
-     que l'on ouvre à la demande (touche C).
+       en haut   la ligne de tête (.c-pathnav) : le chemin est la navigation. Chaque segment
+                 ouvre la liste de ses voisins. À droite, ce qui n'est pas dans l'arbre :
+                 « Aller à » et le menu de l'utilisateur.
+       en bas    la barre d'état.
 
+     « Mono » (touche G, ou un clic sur les hachures) ouvre le plan : toutes les pages de
+     l'application posées sur le plan de travail, à ouvrir en grand ou à poser à côté.
+     « Aller à » (touche /) saute à n'importe quel écran, agence ou action, sans avoir à
+     savoir où c'est rangé. Vide, il montre les lieux récents puis toute la carte.
+
+     Si les parties de l'application sont séparées et que l'on saute sans cesse de l'une à
+     l'autre, partir plutôt de application-modules.html.
      Ce qui change d'un écran à l'autre est balisé « À REMPLACER ». -->
 <body class="l-desk l-desk--app">
- <div class="l-shell">
+ <div class="l-shell" id="page">
   <div class="l-pane">
 
     <div class="l-pane__head">
       <header class="c-masthead">
-        <!-- À REMPLACER : le chemin jusqu'à l'écran courant, et les voisins de chaque niveau -->
+        <!-- À REMPLACER : le chemin jusqu'à l'écran courant -->
         <nav class="c-pathnav" aria-label="Navigation">
-          <button class="c-pathnav__home" type="button" id="home" aria-expanded="false" aria-controls="toc">Mono</button>
+          <button class="c-pathnav__home" type="button" data-plan>Mono</button>
           <span class="c-pathnav__sep" aria-hidden="true"></span>
-          <details class="c-menu c-pathnav__seg" data-level="groupe">
-            <summary>Réseau<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
-            <div class="c-menu__list" role="menu"></div>
-          </details>
+          <details class="c-menu c-pathnav__seg" id="seg-group"><summary>Réseau<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary><div class="c-menu__list" role="menu"></div></details>
           <span class="c-pathnav__sep" aria-hidden="true"></span>
-          <details class="c-menu c-pathnav__seg" data-level="ecran">
-            <summary>Agences<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
-            <div class="c-menu__list" role="menu"></div>
-          </details>
+          <details class="c-menu c-pathnav__seg" id="seg-screen"><summary>Agences<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary><div class="c-menu__list" role="menu"></div></details>
+          <span class="c-pathnav__sep" id="sep-detail" aria-hidden="true" hidden></span>
+          <span class="t-strong" id="seg-detail" hidden></span>
         </nav>
-        <div class="c-masthead__meta"><span>Exercice 2026</span><span>T3</span></div>
+        <div class="l-cluster" style="--gap: var(--space-2); flex-wrap: nowrap">
+          <button class="c-button c-button--quiet" type="button" id="goto">Aller à <span class="c-kbd" aria-hidden="true">/</span></button>
+          <details class="c-menu c-menu--end" id="user">
+            <summary class="c-button c-button--quiet">M. Delorme<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
+            <div class="c-menu__list" role="menu">
+              <button class="c-menu__item" type="button" role="menuitem" data-open="Réglages">Réglages</button>
+              <button class="c-menu__item" type="button" role="menuitem" data-console>Console <span class="c-menu__hint">C</span></button>
+              <hr class="c-menu__sep">
+              <a class="c-menu__item" role="menuitem" href="connexion.html">Quitter</a>
+            </div>
+          </details>
+        </div>
       </header>
     </div>
 
@@ -46,7 +59,7 @@
       <!-- À REMPLACER : le contenu de l'écran. Son action principale vit ici, pas dans une barre. -->
       <div class="l-split" style="align-items: flex-end">
         <h1 class="t-title"><span id="hero">412</span> <span class="t-soft t-body" id="hero-label">agences</span></h1>
-        <button class="c-button c-button--primary" type="button"><i class="c-icon i-plus" aria-hidden="true"></i>Nouvelle agence</button>
+        <button class="c-button c-button--primary" type="button" id="action"><i class="c-icon i-plus" aria-hidden="true"></i><span>Nouvelle agence</span></button>
       </div>
       <div class="l-grid" style="align-items: start">
         <div class="c-stat c-stat--compact c-stat--ruled l-span-3"><span class="c-stat__label">Primes</span><span class="c-stat__value">1 780<small>M</small></span><span class="c-stat__note">+4,2 % sur un an</span></div>
@@ -54,32 +67,50 @@
         <div class="c-stat c-stat--compact c-stat--ruled l-span-3"><span class="c-stat__label">Service</span><span class="c-stat__value">98,4<small>%</small></span><span class="c-stat__note">Objectif 98 %</span></div>
         <div class="c-stat c-stat--compact c-stat--ruled l-span-3"><span class="c-stat__label">Ouvertures</span><span class="c-stat__value">3</span><span class="c-stat__note">Depuis janvier</span></div>
       </div>
-      <table class="c-table">
+      <table class="c-table" id="table">
         <thead><tr><th>Réf.</th><th>Agence</th><th>Responsable</th><th>État</th><th class="is-num">Primes (M)</th></tr></thead>
         <tbody>
-          <tr><td class="t-muted u-nowrap">N-011</td><th>Chambéry</th><td>A. Perrin</td><td><span class="c-status c-status--on">Actif</span></td><td class="is-num">7,9</td></tr>
-          <tr><td class="t-muted u-nowrap">N-014</td><th>Grenoble Centre</th><td>M. Delorme</td><td><span class="c-status c-status--on">Actif</span></td><td class="is-num">12,4</td></tr>
-          <tr><td class="t-muted u-nowrap">N-015</td><th>Voiron</th><td>S. Garcin</td><td><span class="c-status c-status--progress">En cours</span></td><td class="is-num">4,1</td></tr>
-          <tr><td class="t-muted u-nowrap">N-016</td><th>Vizille</th><td>L. Brun</td><td><span class="c-status c-status--critical">Fermeture</span></td><td class="is-num">0,9</td></tr>
+          <tr tabindex="0" data-ref="N-011"><td class="t-muted u-nowrap">N-011</td><th>Chambéry</th><td>A. Perrin</td><td><span class="c-status c-status--on">Actif</span></td><td class="is-num">7,9</td></tr>
+          <tr tabindex="0" data-ref="N-014"><td class="t-muted u-nowrap">N-014</td><th>Grenoble Centre</th><td>M. Delorme</td><td><span class="c-status c-status--on">Actif</span></td><td class="is-num">12,4</td></tr>
+          <tr tabindex="0" data-ref="N-015"><td class="t-muted u-nowrap">N-015</td><th>Voiron</th><td>S. Garcin</td><td><span class="c-status c-status--progress">En cours</span></td><td class="is-num">4,1</td></tr>
+          <tr tabindex="0" data-ref="N-016"><td class="t-muted u-nowrap">N-016</td><th>Vizille</th><td>L. Brun</td><td><span class="c-status c-status--critical">Fermeture</span></td><td class="is-num">0,9</td></tr>
         </tbody>
       </table>
-    </main>
-
-    <!-- Sommaire : il prend la place de l'écran. Toute l'application sur une page, avec des mots. -->
-    <main class="l-pane__body" id="toc" hidden>
-      <h1 class="t-title">Sommaire</h1>
-      <div class="l-grid" id="toc-grid" style="align-items: start"></div>
+      <dl class="c-kv c-kv--plain" id="detail" style="max-width: 30rem" hidden></dl>
     </main>
 
     <div class="l-pane__foot">
       <div class="c-statusbar">
-        <span class="c-statusbar__group"><span class="c-status c-status--on">M. Delorme</span> <span class="c-statusbar__group"><a href="connexion.html">Quitter</a></span></span>
-        <span class="c-statusbar__group"><span class="c-kbd">G</span> sommaire <span class="c-statusbar__group"><span class="c-kbd">C</span> console</span></span>
+        <span class="c-statusbar__group"><span class="c-status c-status--on">Connecté</span> <span class="c-statusbar__group">Exercice 2026 · T3</span></span>
+        <span class="c-statusbar__group"><span class="c-kbd">G</span> plan <span class="c-statusbar__group"><span class="c-kbd">/</span> aller à</span><span class="c-statusbar__group"><a href="../index.html">Catalogue</a></span></span>
       </div>
     </div>
 
   </div>
  </div>
+
+  <!-- Page posée à côté : une seconde page de l'application, lue pendant qu'on travaille sur la première. -->
+  <aside class="l-shell" id="beside" aria-label="Page posée à côté" hidden>
+    <div class="l-pane">
+      <div class="l-pane__head">
+        <header class="c-masthead">
+          <div class="c-masthead__title" id="beside-title"></div>
+          <div class="l-cluster" style="--gap: var(--space-1); flex-wrap: nowrap">
+            <button class="c-button c-button--quiet" type="button" id="beside-swap">Ouvrir en grand</button>
+            <button class="c-button c-button--quiet" type="button" id="beside-close" aria-label="Retirer la page d'à côté"><i class="c-icon i-close" aria-hidden="true"></i></button>
+          </div>
+        </header>
+      </div>
+      <div class="l-pane__body">
+        <h2 class="t-title"><span id="beside-hero"></span> <span class="t-soft t-body" id="beside-label"></span></h2>
+        <p class="t-soft" id="beside-desc" style="max-width: 46ch"></p>
+      </div>
+      <div class="l-pane__foot"><div class="c-statusbar"><span class="c-statusbar__group" id="beside-group"></span><span class="c-statusbar__group">Lecture</span></div></div>
+    </div>
+  </aside>
+
+  <!-- Plan : toutes les pages de l'application, posées sur le plan de travail. -->
+  <nav class="c-plan" id="plan" aria-label="Plan de l'application" hidden></nav>
 
   <!-- Console : une fenêtre flottante, ouverte à la demande. -->
   <section class="c-window c-window--resizable" id="console" role="dialog" aria-label="Console" hidden style="right: calc(3 * var(--shell-inset)); bottom: calc(4 * var(--shell-inset)); --window: 34rem; --window-height: 18rem">
@@ -99,66 +130,20 @@
   </section>
 
   <script src="../assets/console.js"></script>
+  <script src="../assets/palette.js"></script>
+  <script src="../assets/app-demo.js"></script>
   <script>
-    // Démonstration : la carte de l'application, et la navigation par la ligne de tête.
-    (() => {
-      'use strict';
-      const MAP = [
-        ['Réseau', [['Synthèse', 'Chiffres clés du trimestre', '5 190', 'millions de primes'], ['Agences', '412 points de vente', '412', 'agences'], ['Branches', '4 branches régionales', '4', 'branches']]],
-        ['Pilotage', [['Rapports', 'Annuel, trimestriels', '6', 'rapports'], ['Journal', 'Opérations et diagnostics', '128', 'entrées']]],
-        ['Système', [['Réglages', 'Comptes, droits, sources', '3', 'sources']]],
-      ];
-      const $ = (s) => document.querySelector(s);
-      const home = $('#home'), toc = $('#toc'), screen = $('#screen');
-      const [segGroup, segScreen] = document.querySelectorAll('.c-pathnav__seg');
-      const here = { group: 'Réseau', screen: 'Agences' };
-      const label = (seg, text) => { seg.querySelector('summary').firstChild.textContent = text; };
-
-      function render() {
-        const screens = MAP.find(([g]) => g === here.group)[1], current = screens.find(([s]) => s === here.screen) || screens[0];
-        here.screen = current[0];
-        label(segGroup, here.group); label(segScreen, here.screen);
-        segGroup.querySelector('.c-menu__list').innerHTML = MAP.map(([g]) => `<button class="c-menu__item" type="button" role="menuitem" data-group="${g}"${g === here.group ? ' aria-checked="true"' : ''}>${g}</button>`).join('');
-        segScreen.querySelector('.c-menu__list').innerHTML = screens.map(([s, d]) => `<button class="c-menu__item" type="button" role="menuitem" data-screen="${s}"${s === here.screen ? ' aria-checked="true"' : ''}>${s}<span class="c-menu__hint">${d}</span></button>`).join('');
-        $('#hero').textContent = current[2]; $('#hero-label').textContent = current[3];
-        document.title = `${here.screen} — ${here.group}`;
-      }
-      // Sommaire : trois colonnes, numérotation continue, un mot et une description par écran.
-      let n = 0;
-      $('#toc-grid').innerHTML = MAP.map(([g, screens]) => { const start = n; n += screens.length; return `<section class="l-span-4 l-stack" style="--gap: var(--space-4)"><h2 class="c-section-head"><span>${g}</span></h2><div class="c-index" style="counter-reset: idx ${start}">${screens.map(([s, d]) => `<a class="c-index__row" href="#" data-group="${g}" data-screen="${s}"><span class="c-index__title">${s}</span><span class="c-index__value">${d}</span></a>`).join('')}</div></section>`; }).join('');
-      const showToc = (on) => { toc.hidden = !on; screen.hidden = on; home.setAttribute('aria-expanded', String(on)); if (on) toc.querySelector('a').focus(); };
-      const closeMenus = (except) => document.querySelectorAll('.c-pathnav__seg[open]').forEach((m) => { if (m !== except) m.open = false; });
-
-      home.addEventListener('click', () => { closeMenus(); showToc(toc.hidden); });
-      document.addEventListener('click', (e) => {
-        const go = e.target.closest('[data-group], [data-screen]');
-        if (go) { e.preventDefault(); if (go.dataset.group) { here.group = go.dataset.group; if (!go.dataset.screen) here.screen = ''; } if (go.dataset.screen) here.screen = go.dataset.screen; render(); closeMenus(); showToc(false); return; }
-        closeMenus(e.target.closest('.c-pathnav__seg'));
-      });
-
-      // Console : une fenêtre, déplaçable par sa barre.
-      const win = $('#console'), out = MonoConsole($('#log'), $('#cmd'));
-      out.print('Session ouverte — M. Delorme'); out.print('412 agences chargées en 0,8 s');
-      out.print('Référentiel des branches : 2 entrées sans responsable', 'warn');
-      const toggleConsole = (open = win.hidden) => { win.hidden = !open; if (open) $('#cmd').focus(); };
-      $('#console-close').addEventListener('click', () => toggleConsole(false));
-      win.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggleConsole(false); });
-      (() => {
-        const bar = win.querySelector('.c-window__bar'); let start = null;
-        bar.addEventListener('pointerdown', (e) => { if (e.target.closest('button')) return; const r = win.getBoundingClientRect(); start = { dx: e.clientX - r.left, dy: e.clientY - r.top }; bar.setPointerCapture(e.pointerId); });
-        bar.addEventListener('pointermove', (e) => { if (!start) return; Object.assign(win.style, { left: Math.max(0, Math.min(innerWidth - win.offsetWidth, e.clientX - start.dx)) + 'px', top: Math.max(0, Math.min(innerHeight - win.offsetHeight, e.clientY - start.dy)) + 'px', right: 'auto', bottom: 'auto' }); });
-        bar.addEventListener('pointerup', () => { start = null; });
-      })();
-
-      document.addEventListener('keydown', (e) => {
-        if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
-        const k = e.key.toLowerCase();
-        if (k === 'g') { e.preventDefault(); closeMenus(); showToc(toc.hidden); }
-        else if (k === 'c') { e.preventDefault(); toggleConsole(); }
-        else if (e.key === 'Escape') { closeMenus(); showToc(false); }
-      });
-      render();
-    })();
+    MonoApp({
+      // Dessine la navigation propre à ce gabarit : les deux segments du chemin et leurs voisins.
+      renderNav(here, MAP, detail) {
+        const g = document.getElementById('seg-group'), s = document.getElementById('seg-screen');
+        g.querySelector('summary').firstChild.textContent = here.group; s.querySelector('summary').firstChild.textContent = here.screen;
+        g.querySelector('.c-menu__list').innerHTML = MAP.map(([name]) => `<button class="c-menu__item" type="button" role="menuitem" data-group="${name}"${name === here.group ? ' aria-checked="true"' : ''}>${name}</button>`).join('');
+        s.querySelector('.c-menu__list').innerHTML = MAP.find(([name]) => name === here.group)[1].map(([name, d]) => `<button class="c-menu__item" type="button" role="menuitem" data-screen="${name}"${name === here.screen ? ' aria-checked="true"' : ''}>${name}<span class="c-menu__hint">${d}</span></button>`).join('');
+        document.getElementById('seg-detail').textContent = detail ? detail.nom : '';
+        document.getElementById('seg-detail').hidden = document.getElementById('sep-detail').hidden = !detail;
+      },
+    });
   </script>
 </body>
 </html>
