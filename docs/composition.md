@@ -77,8 +77,9 @@ le plan : un fond uni, un ton plus sombre que la page, visible sur une bande de 
   seul ton, sans motif. Les hachures n'apparaissent qu'à un moment : sous une
   modale, où elles couvrent la page devenue hors d'atteinte. Jamais comme fond de
   page, de composant ou de graphique.
-- **K4 — Légères.** Traits d'un pixel à 135°, tous les 7 px, sur un voile au ton
-  du plan de travail (`.c-dialog::backdrop`).
+- **K4 — Lisible dessous.** Sous une modale, la page garde son contexte : le voile
+  est léger (30 %) et l'on peut encore la lire. Ce sont les hachures — un pixel, à
+  135°, tous les 9 px — qui disent qu'elle ne répond plus (`.c-dialog::backdrop`).
 
 - **K7 — Dans la page, ou hors de la page.** L'image dit à qui un contenu
   appartient. Séparé par l'espace seul (`.l-detail`), il est dans la page : il suit

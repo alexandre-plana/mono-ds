@@ -72,6 +72,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-049 | Modales portrait : le chiffre, l'étiquette, la colonne | adoptée, voir D-050 |
 | D-050 | La modale est portrait par défaut | remplacée par D-051 |
 | D-051 | La modale est excentrée à droite, minimale | en vigueur |
+| D-052 | Sous une modale, la page reste lisible | en vigueur |
 
 ---
 
@@ -468,3 +469,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Réserve de Claude** : `--column` à droite a la forme du tiroir supprimé en D-020. Elle s'en distingue par l'usage — un formulaire à valider, pas le détail d'un élément — mais la ressemblance est réelle ; à surveiller.
 - **Gardé de D-049** : `__stake` et les compositions « chiffre » et « étiquette », pour les cas où la phrase ne suffit pas.
 - **Non retenu pour l'instant** : la confirmation en place dans la ligne du tableau, que Claude recommandait ; elle reste une piste pour les actions qui ont une ligne d'origine.
+
+## D-052 — Sous une modale, la page reste lisible
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Précise** : D-041
+- **Contexte** : le fond de modale de D-041 (voile à 78 %, hachures tous les 7 px) éteignait presque la page. Or une modale excentrée (D-051) n'a de sens que si l'on voit encore ce sur quoi l'on agit.
+- **Décision** : voile à 30 %, hachures tous les 9 px. La page reste lisible ; ce sont les hachures seules qui disent qu'elle n'est plus interactive.
+- **Comparé** : 45 % / 7 px (encore trop éteint), 30 % / 9 px (retenu), 18 % / 11 px (la page concurrence la modale, surtout en papier).
+- **Limite** : le texte hachuré se lit mais ne se parcourt pas confortablement ; c'est voulu, la page est un contexte, plus une surface de travail.
