@@ -13,12 +13,12 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 
 | Classe | Rôle |
 |---|---|
-| `.l-desk` (sur `<body>`) | Plan de travail hachuré ; grille dont la gouttière sépare les pages |
+| `.l-desk` (sur `<body>`) | Plan de travail uni ; grille dont la gouttière sépare les pages |
 | `.l-shell` | La page : fond uni, contour d'un pixel, en retrait de `--shell-inset` |
 | `.l-desk--app`, `.l-desk--split` | Application : le plan occupe l'écran, chaque page défile seule ; deux pages côte à côte (collection + inspecteur, `--inspector`) |
 | `.l-desk--os`, `.l-desk__area` | Version bureau : le plan occupe l'écran, les fenêtres en sont les pages |
 | `.l-detail` (`__main`, `__aside`, `__head`, `.has-aside`) | Inspecteur attaché : dans la page, séparé par 64 px d'espace, sans filet vertical ; il suit son onglet. Épinglé, il sort à côté (`.l-desk--split`) |
-| `.l-splitter` | `role="separator"`, `.is-dragging` | La bande hachurée entre deux pages se saisit pour régler `--inspector` |
+| `.l-splitter` | `role="separator"`, `.is-dragging` | La bande de plan de travail entre deux pages se saisit pour régler `--inspector` |
 | `.l-pane` (`__head`, `__bar`, `__body`, `__foot`) | Volet d'application : en-tête fixe, barre d'outils, corps défilant, pied |
 | `.l-page` | Conteneur : largeur max. 1440 px, marges de page |
 | `.l-frame` | Pleine hauteur : en-tête / contenu / pied |
@@ -107,7 +107,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|---|
 | `.c-dialog` (`<dialog>`) | `__head`, `__title`, `__body`, `__actions`, `__aside` ; `--small`, `--large` | Tâche courte qui exige une réponse. Titre = verbe + objet ; le bouton principal répète le verbe |
 | `.c-dialog--small` (confirmation) | — | Irréversible uniquement. Pas de bouton fermer ; focus initial sur « Annuler » ; seul le bouton porte le signal |
-| `.c-window` | `__frame`, `__bar`, `__title`, `__actions`, `__body` (`--flush`) ; `--resizable`, `.is-active`, `.is-maximized`, `.is-minimized` ; `--window`, `--window-height` | Fenêtre flottante non modale : un outil gardé sous la main. Liseré hachuré, aucune ombre. Deux au plus |
+| `.c-window` | `__frame`, `__bar`, `__title`, `__actions`, `__body` (`--flush`) ; `--resizable`, `.is-active`, `.is-maximized`, `.is-minimized` ; `--window`, `--window-height` | Fenêtre flottante non modale : un outil gardé sous la main. Liseré de plan de travail, aucune ombre. Deux au plus |
 
 Deux natures : la modale interrompt (une seule à la fois, voile et filet), la
 fenêtre accompagne (elle ne bloque rien). Aucune ne porte d'ombre. Déplacement,

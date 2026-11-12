@@ -68,18 +68,18 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 
 /* --- Mise en page --------------------------------------------------------- */
 /* Plan de travail et page.
-   <body class="l-desk"> est le plan de travail : un fond hachuré, visible sur
+   <body class="l-desk"> est le plan de travail : un fond uni, un ton plus sombre que la page, visible sur
    20 à 24 px autour de la page. .l-shell est la page : fond uni, contour d'un
    pixel. Plusieurs .l-shell côte à côte (page + inspecteur) sont séparés par la
-   même bande hachurée, grâce à la gouttière de la grille.
-   Les hachures sont des traits nets d'un pixel : repeating-linear-gradient n'est
-   ici qu'un moyen de les tracer, il n'y a aucun dégradé visible. */
-.l-desk { min-height: 100vh; min-height: 100dvh; padding: var(--shell-inset); display: grid; gap: var(--shell-inset); align-content: stretch; background-color: var(--desk); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px); background-attachment: fixed; }
+   même bande de plan de travail, grâce à la gouttière de la grille.
+   Le plan de travail est uni : aucun motif. Les hachures sont réservées au fond des
+   modales (voir .c-dialog::backdrop). */
+.l-desk { min-height: 100vh; min-height: 100dvh; padding: var(--shell-inset); display: grid; gap: var(--shell-inset); align-content: stretch; background-color: var(--desk); }
 .l-shell { min-width: 0; background: var(--bg); border: var(--hairline) solid var(--line-strong); }
 .l-shell > .l-frame { min-height: calc(100vh - 2 * var(--shell-inset) - 2px); min-height: calc(100dvh - 2 * var(--shell-inset) - 2px); }
 /* Application : le plan occupe exactement l'écran, chaque page défile pour elle-même.
    --split pose deux pages côte à côte : la collection, puis l'inspecteur. La bande
-   hachurée entre les deux est la gouttière de la grille. */
+   de plan de travail entre les deux est la gouttière de la grille. */
 .l-desk--app { height: 100vh; height: 100dvh; min-height: 0; }
 .l-desk--app > .l-shell { min-height: 0; overflow: hidden; display: grid; grid-template-rows: minmax(0, 1fr); }
 .l-desk--split { grid-template-columns: minmax(0, 1fr) var(--inspector); }
@@ -115,7 +115,7 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .l-desk--tabs > .l-shell, .l-desk--tabs > .c-plan { grid-row: 2; }
 .l-desk--tabs > .c-plan { padding-top: var(--shell-inset); }
 
-/* Séparateur : la bande hachurée elle-même se saisit pour redimensionner l'inspecteur.
+/* Séparateur : la bande de plan de travail elle-même se saisit pour redimensionner l'inspecteur.
    <div class="l-splitter" role="separator" aria-orientation="vertical" tabindex="0"> entre les deux pages. */
 .l-desk--split:has(> .l-splitter) { grid-template-columns: minmax(0, 1fr) var(--shell-inset) var(--inspector); column-gap: 0; }
 .l-splitter { position: relative; cursor: col-resize; touch-action: none; }

@@ -252,7 +252,7 @@
               <div><dt>Débordement</dt><dd>Quand les onglets ne tiennent plus, ceux qui dépassent se rangent dans le menu « … », qui en donne le nombre. L'onglet courant reste toujours visible ; rien ne défile, rien ne rétrécit jusqu'à l'illisible.</dd></div>
               <div><dt>Anatomie</dt><dd><code>__tab</code> (<code>__label</code>, <code>__close</code> pour un onglet ouvert à la demande) · <code>__tab--tool</code> pour un outil à gauche, comme le plan · <code>__more</code> pour le menu de débordement. Dans un plan de travail <code>.l-desk--tabs</code>, la rangée occupe toute la largeur et toutes les pages commencent sur la même ligne, dessous.</dd></div>
               <div><dt>Inspecteur</dt><dd>Le détail d'une ligne sélectionnée se place <span class="t-strong">dans</span> la page de l'onglet, séparé par l'espace seul (<code>.l-detail</code>, 64 px, sans filet vertical) : il appartient à l'onglet, part avec lui et revient avec lui. C'est le cas général.</dd></div>
-              <div><dt>Épingler</dt><dd>Épingler l'inspecteur le sort de la page : il passe à côté, sur le plan de travail, séparé par les hachures, et reste là quand on change d'onglet. « Rattacher » le remet dans sa page. La rangée d'onglets s'arrête alors au bord de la page qu'elle gouverne.</dd></div>
+              <div><dt>Épingler</dt><dd>Épingler l'inspecteur le sort de la page : il passe à côté, sur le plan de travail, séparé par le plan de travail, et reste là quand on change d'onglet. « Rattacher » le remet dans sa page. La rangée d'onglets s'arrête alors au bord de la page qu'elle gouverne.</dd></div>
               <div><dt>Fil d'Ariane</dt><dd>Les onglets disent quelles pages sont ouvertes ; ils ne disent pas où l'on est dans la page. La ligne de tête de la page porte donc toujours le fil d'Ariane (<code>.c-breadcrumb--head</code>) : famille, page, détail.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>role="tablist"</code> / <code>tab</code> / <code>tabpanel</code>, <code>aria-selected</code>. Flèches gauche et droite passent d'un onglet à l'autre, Suppr ferme un onglet ouvert à la demande. Le menu de débordement annonce le nombre d'onglets qu'il contient.</dd></div>
               <div><dt>Script</dt><dd>État des onglets, persistance et débordement reviennent à l'application ; voir <code>catalogue/assets/tabs-demo.js</code>.</dd></div>
@@ -261,7 +261,7 @@
 
           <div class="cat-sub" id="l-splitter" data-search="composant">
             <h3>Séparateur — .l-splitter</h3>
-            <p>Entre deux pages, c'est la bande hachurée elle-même qui se saisit. Un court trait vertical en marque le milieu ; il s'allonge au survol. Aucune poignée ajoutée, aucun bouton.</p>
+            <p>Entre deux pages, c'est la bande de plan de travail elle-même qui se saisit. Un court trait vertical en marque le milieu ; il s'allonge au survol. Aucune poignée ajoutée, aucun bouton.</p>
             <div class="cat-demo cat-demo--plain" data-code>
               <div class="l-desk l-desk--split" style="min-height: 0; height: 9rem; --inspector: 32%">
                 <div class="l-shell"></div>
@@ -743,7 +743,7 @@
 
           <div class="cat-sub" id="c-plan" data-search="composant">
             <h3>Plan — .c-plan</h3>
-            <p>La navigation des applications non linéaires. On recule d'un cran et l'on voit toutes les pages de l'application posées sur le plan de travail : les familles sont séparées par les hachures, chaque page porte son nom, ce qu'elle contient et son chiffre. Une page s'ouvre en grand — ou se pose à côté de celle où l'on travaille.</p>
+            <p>La navigation des applications non linéaires. On recule d'un cran et l'on voit toutes les pages de l'application posées sur le plan de travail : les familles sont séparées par le plan de travail, chaque page porte son nom, ce qu'elle contient et son chiffre. Une page s'ouvre en grand — ou se pose à côté de celle où l'on travaille.</p>
             <div class="cat-demo cat-demo--plain" data-code>
               <div class="l-desk" style="min-height: 0">
                 <nav class="c-plan" aria-label="Plan de l'application">
@@ -773,9 +773,9 @@
               </div>
             </div>
             <dl class="cat-spec">
-              <div><dt>Employer</dt><dd>Voir d'un coup tout ce que contient l'application, s'y repérer par l'emplacement autant que par le nom, et travailler sur deux pages à la fois. Il s'ouvre par « Plan », à gauche des onglets ou dans la ligne de tête, la touche <span class="c-kbd">G</span>, ou un clic sur les hachures.</dd></div>
+              <div><dt>Employer</dt><dd>Voir d'un coup tout ce que contient l'application, s'y repérer par l'emplacement autant que par le nom, et travailler sur deux pages à la fois. Il s'ouvre par « Plan », à gauche des onglets ou dans la ligne de tête, la touche <span class="c-kbd">G</span>, ou un clic sur le plan de travail.</dd></div>
               <div><dt>Éviter</dt><dd>Plus d'une vingtaine de pages : au-delà, le plan ne se lit plus d'un regard. Changer la place des pages d'une fois sur l'autre — l'emplacement est une mémoire.</dd></div>
-              <div><dt>Poser à côté</dt><dd>Le bouton « À côté » ouvre la page dans une seconde feuille, à droite de la page courante, séparée par la bande hachurée. On lit l'une en travaillant sur l'autre ; « Ouvrir en grand » les échange. Une seule page à côté.</dd></div>
+              <div><dt>Poser à côté</dt><dd>Le bouton « À côté » ouvre la page dans une seconde feuille, à droite de la page courante, séparée par la bande de plan de travail. On lit l'une en travaillant sur l'autre ; « Ouvrir en grand » les échange. Une seule page à côté.</dd></div>
               <div><dt>Anatomie</dt><dd><code>__group</code> (une famille) · <code>__page</code> : <code>__head</code> (famille, numéro ou « Vous êtes ici »), <code>__open</code> (le nom, qui est le bouton), <code>__desc</code>, <code>__foot</code> (<code>__figure</code>, <code>__beside</code>). <code>.c-plan</code> est un enfant direct de <code>.l-desk</code>.</dd></div>
               <div><dt>États</dt><dd>Page courante : contour de 2 px, et « Vous êtes ici » à la place du numéro. Survol : contour d'un cran plus clair.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;nav&gt;</code> ; chaque nom est un <code>&lt;button&gt;</code> dont la zone couvre toute la miniature. Flèches pour parcourir, Entrée pour ouvrir, Maj + Entrée pour poser à côté, Échap pour revenir.</dd></div>
@@ -1040,7 +1040,7 @@
 
         <section class="cat-section" id="superpositions" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Superpositions</span><span class="c-section-head__aside">Modale, fenêtre, menu, canevas</span></h2>
-          <p class="cat-note">Deux natures. La modale interrompt : elle doit le mériter, il n'y en a qu'une à la fois, et elle se détache par un voile sombre et un filet. La fenêtre accompagne : elle ne bloque rien. Ni l'une ni l'autre ne porte d'ombre. Le détail d'un élément ne va dans aucune des deux : il va dans l'inspecteur.</p>
+          <p class="cat-note">Deux natures. La modale interrompt : elle doit le mériter, il n'y en a qu'une à la fois, et elle se détache par un filet, et hachure la page qu'elle bloque : en dessin technique, une zone hachurée est une zone exclue. La fenêtre accompagne : elle ne bloque rien. Ni l'une ni l'autre ne porte d'ombre. Le détail d'un élément ne va dans aucune des deux : il va dans l'inspecteur.</p>
 
           <div class="cat-sub" id="c-dialog" data-search="composant">
             <h3>Modale — .c-dialog</h3>
@@ -1143,7 +1143,7 @@
 
           <div class="cat-sub" id="c-window" data-search="composant">
             <h3>Fenêtre flottante — .c-window</h3>
-            <p>Une petite page posée par-dessus les autres, que l'on déplace par sa barre. Elle n'est pas modale : la page dessous reste utilisable. Elle ne porte aucune ombre ; elle emporte avec elle un liseré de plan de travail hachuré, comme toute page.</p>
+            <p>Une petite page posée par-dessus les autres, que l'on déplace par sa barre. Elle n'est pas modale : la page dessous reste utilisable. Elle ne porte aucune ombre ; elle emporte avec elle un liseré de plan de travail, une bande du ton le plus sombre, comme toute page.</p>
             <div class="cat-demo" data-code>
               <section class="c-window" style="position: relative" aria-label="Raccourcis">
                 <div class="c-window__frame">

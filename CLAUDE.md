@@ -29,7 +29,8 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
   contour : 2 px en `--selected-line`. Jamais de fond, jamais `--fg-strong` ni
   `--inverse-bg`. Le clair va au résultat de l'action, pas au contrôle.
 - Toute page est une `.l-shell` (contour d'un pixel) posée sur `<body class="l-desk">`
-  (plan de travail hachuré). Les hachures ne s'emploient nulle part ailleurs.
+  (plan de travail uni, sans motif). Les hachures sont réservées au fond des
+  modales : elles disent « hors d'atteinte » et n'apparaissent nulle part ailleurs.
 - Icônes : uniquement `<i class="c-icon i-nom">` du jeu maison (`src/icons.json`),
   à 16 ou 32 px. Aucune autre bibliothèque, aucun SVG d'icône en ligne.
 - Signes (`.g-`) : chacun a un sens unique ; deux signes différents par vue au plus.
@@ -77,7 +78,7 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   la page et le fil d'Ariane en tête. Jamais les deux. Un onglet doit garder l'état
   de sa page ; au débordement, menu « … ». L'inspecteur est attaché à son
   onglet : dans la page, séparé par l'espace seul (`.l-detail`, pas de filet vertical). Épinglé, il sort à côté,
-  séparé par les hachures, et ne dépend plus d'aucun onglet. Dans les deux cas : pas de rail ; le
+  séparé par le plan de travail, et ne dépend plus d'aucun onglet. Dans les deux cas : pas de rail ; le
   plan (`.c-plan`), la pose à côté et « Aller à » (`.c-palette`) servent aux
   déplacements hors de l'ordre ; console et aide sont des fenêtres. La navigation
   s'écrit en mots : ni numéros seuls, ni icônes seules, ni texte vertical.

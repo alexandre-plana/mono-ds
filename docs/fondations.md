@@ -12,7 +12,7 @@ s'emploient jamais directement** : un composant ne connaît que des rôles.
 
 | Rôle | Emploi | Encre | Papier | Contraste min. |
 |---|---|---|---|---|
-| `--desk` / `--hatch` | Plan de travail hachuré, autour de la page | tone-0 / tone-4 | `#CBCBC7` / `#B3B4B0` | décoratif |
+| `--desk` / `--hatch` | Plan de travail uni, autour de la page ; hachures du fond des modales | tone-0 / tone-4 | `#CBCBC7` / `#B3B4B0` | décoratif |
 | `--bg-sunken` | Creux : code, zones en retrait | tone-0 | `#CBCBC7` | — |
 | `--bg` | Fond de page | tone-1 | tone-10 | — |
 | `--surface` | Surface détachée, ligne survolée | tone-2 | tone-11 | — |
@@ -133,7 +133,7 @@ technique. Un signe n'entre dans le système que s'il a un sens, le même partou
 | Barre d'échelle | `.g-scale` (`--g-width`) | La valeur d'une longueur |
 | Crochets | `.g-bracket` | Une position dans une suite : `[ 6 / 12 ]` |
 | Ligne de rappel | `.g-callout` (`--signal`, `--g-len`) | Une annotation qui désigne un point |
-| Hachures | `.l-desk` | Ce qui n'est pas la page |
+| Hachures | `.c-dialog::backdrop` | Ce qui est hors d'atteinte : la page sous une modale, et rien d'autre |
 
 - **G1 — Un signe, un sens.** Les parenthèses (`.c-ref`) restent aux références,
   les crochets aux positions.

@@ -23,7 +23,7 @@ window.MonoApp = ({ renderNav }) => {
     const dl = $('#detail'); dl.hidden = !detail;
     if (detail) dl.innerHTML = `<div><dt>Branche</dt><dd>Nord</dd></div><div><dt>Responsable</dt><dd>${detail.resp}</dd></div><div><dt>Primes</dt><dd>${detail.primes} M</dd></div>`;
     document.title = `${detail ? detail.nom : here.screen} — ${here.group}`;
-    // La page d'à côté : la bande hachurée sépare les deux, comme partout.
+    // La page d'à côté : la bande de plan de travail sépare les deux, comme partout.
     const aside = $('#beside'); aside.hidden = !beside; document.body.classList.toggle('l-desk--split', !!beside);
     if (beside) { const [g, n, d, fig, lab] = find(beside); $('#beside-title').textContent = n; $('#beside-hero').textContent = fig; $('#beside-label').textContent = lab; $('#beside-desc').textContent = d + '.'; $('#beside-group').textContent = g; }
   }
@@ -82,7 +82,7 @@ window.MonoApp = ({ renderNav }) => {
   $('#beside-close').addEventListener('click', () => { beside = null; render(); });
   $('#beside-swap').addEventListener('click', () => { const was = here.screen; const next = beside; beside = was; goScreen(next); });
   document.addEventListener('click', (e) => {
-    // Un clic sur les hachures — le plan de travail lui-même — ouvre ou referme le plan.
+    // Un clic sur le plan de travail lui-même ouvre ou referme le plan.
     if (e.target === document.body || e.target === plan) { closeMenus(); showPlan(!planOpen()); return; }
     const t = e.target.closest('[data-plan], [data-beside], [data-group], [data-screen], [data-open], [data-console], tr[data-ref]');
     if (t) {

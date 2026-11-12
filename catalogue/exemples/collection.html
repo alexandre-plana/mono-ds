@@ -8,10 +8,10 @@
 </head>
 <!-- Collection + inspecteur.
      Deux pages sur le plan de travail : la collection à gauche, l'inspecteur à droite,
-     séparés par la bande hachurée. La ligne sélectionnée ne change que de contour ;
+     séparés par la bande de plan de travail. La ligne sélectionnée ne change que de contour ;
      ce qui porte le clair, c'est l'inspecteur — le résultat de la sélection — puis,
      après une modification, la cellule du tableau qui vient de changer.
-     Les en-têtes trient ; la bande hachurée entre les deux pages se glisse pour
+     Les en-têtes trient ; la bande de plan de travail entre les deux pages se glisse pour
      redimensionner l'inspecteur ; « ? » ouvre une fenêtre flottante.
      Aucune classe hors de src/ ; le script en bas de page n'est qu'une démonstration. -->
 <body class="l-desk l-desk--app l-desk--split">
@@ -268,7 +268,7 @@
         tbody.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest' });
       });
 
-      // Séparateur : la bande hachurée se glisse ; flèches gauche et droite au clavier.
+      // Séparateur : la bande de plan de travail se glisse ; flèches gauche et droite au clavier.
       const splitter = $('#splitter'), rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
       const setInspector = (px) => { const w = Math.max(20 * rem, Math.min(innerWidth * 0.5, px)); document.body.style.setProperty('--inspector', w + 'px'); splitter.setAttribute('aria-valuenow', Math.round(w)); };
       splitter.addEventListener('pointerdown', (e) => { splitter.setPointerCapture(e.pointerId); splitter.classList.add('is-dragging'); });

@@ -290,7 +290,11 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
    quand le contenu change de hauteur. */
 .c-dialog { padding: 0; margin-top: 12vh; width: min(32rem, calc(100vw - 2rem)); max-height: min(76vh, 44rem); background: var(--surface); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
 .c-dialog[open] { display: flex; flex-direction: column; }
-.c-dialog::backdrop { background: color-mix(in srgb, var(--tone-0) 72%, transparent); }
+/* Fond d'une modale : la page dessous est hachurée. En dessin technique, une zone hachurée est
+   une zone exclue — c'est exactement ce qu'elle est tant que la modale est ouverte. Les hachures
+   n'apparaissent nulle part ailleurs. (repeating-linear-gradient ne sert qu'à tracer des traits
+   nets d'un pixel : il n'y a aucun dégradé visible.) */
+.c-dialog::backdrop { background-color: color-mix(in srgb, var(--desk) 78%, transparent); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px); }
 .c-dialog--small { width: min(24rem, calc(100vw - 2rem)); }
 .c-dialog--large { width: min(48rem, calc(100vw - 2rem)); }
 .c-dialog__head { flex: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); min-height: 3rem; padding: 0 var(--space-3) 0 var(--space-5); border-bottom: var(--hairline) solid var(--line); }
@@ -460,8 +464,8 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
 /* --- Fenêtre flottante --------------------------------------------------------------
    Une petite page posée par-dessus les autres. Elle n'est pas modale : la page
    dessous reste utilisable. Elle ne se détache par aucune ombre : elle emporte avec
-   elle un liseré de plan de travail hachuré, comme toute page. */
-.c-window { position: fixed; z-index: 40; width: var(--window, 20rem); max-width: calc(100vw - 2 * var(--shell-inset)); padding: 0.375rem; background-color: var(--desk); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px); }
+   elle un liseré de plan de travail — une bande du ton le plus sombre — comme toute page. */
+.c-window { position: fixed; z-index: 40; width: var(--window, 20rem); max-width: calc(100vw - 2 * var(--shell-inset)); padding: 0.375rem; background-color: var(--desk); }
 .c-window__frame { background: var(--bg); border: var(--hairline) solid var(--line-strong); display: flex; flex-direction: column; max-height: min(70vh, 32rem); }
 .c-window__bar { flex: none; display: flex; align-items: center; gap: var(--space-2); min-height: 2rem; padding: 0 var(--space-1) 0 var(--space-3); border-bottom: var(--hairline) solid var(--line); color: var(--fg-muted); cursor: grab; user-select: none; touch-action: none; }
 .c-window__bar:active { cursor: grabbing; }
@@ -579,7 +583,7 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
 /* --- Plan ------------------------------------------------------------------------------
    La navigation des applications non linéaires : on recule d'un cran et l'on voit toutes
    les pages de l'application posées sur le plan de travail. Les familles sont séparées
-   par les hachures ; chaque page porte son nom, ce qu'elle contient et son chiffre.
+   par le plan de travail ; chaque page porte son nom, ce qu'elle contient et son chiffre.
    Une page s'ouvre en grand, ou se pose À CÔTÉ de celle où l'on travaille.
    .c-plan est un enfant direct de .l-desk, à la place des pages. */
 .c-plan { display: flex; flex-wrap: wrap; align-content: flex-start; align-items: flex-start; gap: calc(var(--shell-inset) * 2); min-height: 0; overflow-y: auto; }

@@ -41,8 +41,9 @@ widgets : un en-tête, un colophon, des axes, un point focal.
   douze colonnes, trois ou quatre axes verticaux, et des alignements au cordeau :
   une rangée partage sa première ligne de base, un axe est tenu par le texte.
 - *La feuille et le plan de travail* : la page a un bord — un contour d'un pixel —
-  et repose sur un plan hachuré, en retrait de l'écran. Les hachures ne
-  décorent pas, elles désignent ce qui n'est pas la page. C'est ce qui permettra
+  et repose sur un plan de travail uni, un ton plus sombre, en retrait de l'écran.
+  Les hachures ne décorent pas : elles couvrent la page sous une modale, et
+  désignent ce qui est hors d'atteinte. C'est ce qui permettra
   de poser à côté d'elle un inspecteur ou des fenêtres.
 - *Serait un écart* : un tableau de bord fait de tuiles interchangeables ; un
   contenu centré ; une page qui n'a pas de « haut à gauche ».
@@ -117,7 +118,7 @@ Le système possède peu de formes et chacune ne dit qu'une chose, partout :
 | Repères d'angle, règle, barre d'échelle, crochets, ligne de rappel | Une zone, une mesure, une longueur, une position, une annotation |
 | Épaisseur de 2 px et plus | L'actif, le sélectionné, la donnée |
 | Contour de 2 px en gris moyen, fond inchangé | Le sélectionné |
-| Hachures | Le plan de travail : ce qui n'est pas la page |
+| Hachures | Ce qui est hors d'atteinte : la page sous une modale. Jamais un fond permanent |
 | Capitales espacées | Le service : labels, légendes, titres courants |
 | Graisse 600 | Ce qui nomme |
 | Aplat clair | L'action primaire à faire — jamais un choix déjà fait |

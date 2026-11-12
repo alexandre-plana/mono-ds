@@ -66,21 +66,23 @@ part de pixels de la vue (1440 × 900) par `scripts/tonal-audit.mjs`.
 ## Cadre : page et plan de travail
 
 La page est une feuille posée sur un plan de travail. `<body class="l-desk">` est
-le plan : un fond hachuré, visible sur une bande de 24 px autour de la page.
+le plan : un fond uni, un ton plus sombre que la page, visible sur une bande de 24 px autour de la page.
 `.l-shell` est la page : fond uni, contour d'un pixel.
 
 - **K1 — Un contour, toujours.** Toute page a son contour. C'est le seul cadre
   systématique ; à l'intérieur, la règle reste le filet avant la boîte.
 - **K2 — Retrait constant.** `--shell-inset` : 24 px sur grand écran, 8 px sur
   téléphone, identique des quatre côtés et entre deux pages voisines.
-- **K3 — Hachures hors page seulement.** Jamais comme fond de composant, de
-  fiche ou de graphique : à l'intérieur de la page, un fond est uni.
-- **K4 — Légères.** Traits d'un pixel à 135°, tous les 7 px, à peine plus clairs
-  que le plan en encre, à peine plus sombres en papier.
+- **K3 — Le plan uni, les hachures sous la modale.** Le plan de travail est d'un
+  seul ton, sans motif. Les hachures n'apparaissent qu'à un moment : sous une
+  modale, où elles couvrent la page devenue hors d'atteinte. Jamais comme fond de
+  page, de composant ou de graphique.
+- **K4 — Légères.** Traits d'un pixel à 135°, tous les 7 px, sur un voile au ton
+  du plan de travail (`.c-dialog::backdrop`).
 
 - **K7 — Dans la page, ou hors de la page.** L'image dit à qui un contenu
   appartient. Séparé par l'espace seul (`.l-detail`), il est dans la page : il suit
-  son onglet. Séparé par les hachures (`.l-desk--split`), il est hors de la page : il
+  son onglet. Posé à côté, dans sa propre page à contour (`.l-desk--split`), il est hors de la page : il
   ne dépend d'aucun onglet, et la rangée d'onglets s'arrête avant lui. Un
   inspecteur est attaché par défaut ; on l'épingle pour le sortir, on le rattache
   pour le rentrer.
@@ -91,12 +93,12 @@ le plan : un fond hachuré, visible sur une bande de 24 px autour de la page.
 - **K5 — Les pages se répondent.** Deux pages voisines ont des en-têtes et des
   barres d'état de même hauteur : leurs filets tombent sur les mêmes lignes.
 - **K6 — À gauche la collection, à droite le détail.** L'inspecteur est permanent
-  et ne bloque rien ; la bande hachurée qui le sépare de la collection se saisit
+  et ne bloque rien ; la bande de plan de travail qui le sépare de la collection se saisit
   pour le redimensionner (`.l-splitter`). Le détail d'un élément ne s'ouvre jamais
   en modale.
 
 `.l-desk` est une grille : plusieurs `.l-shell` côte à côte sont séparés par la
-même bande hachurée.
+même bande de plan de travail.
 
 ### Shell d'application
 
@@ -111,9 +113,9 @@ l'application.
 
 Les deux partagent trois moyens de se déplacer hors de l'ordre :
 
-- **Le plan** (`.c-plan`, touche G, ou un clic sur les hachures) : on recule d'un
+- **Le plan** (`.c-plan`, touche G, ou un clic sur le plan de travail) : on recule d'un
   cran et l'on voit toutes les pages de l'application posées sur le plan de
-  travail, les familles séparées par les hachures.
+  travail, les familles séparées par le plan de travail.
 - **À côté** : depuis le plan, une page se pose à droite de celle où l'on
   travaille (`.l-desk--split`). On lit l'une en agissant sur l'autre.
 - **Aller à** (`.c-palette`, touche /) : une recherche qui saute à un écran, un

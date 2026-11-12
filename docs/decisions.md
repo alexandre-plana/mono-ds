@@ -33,7 +33,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-010 | La sélection en gris moyen, avec un fond | remplacée par D-011 |
 | D-011 | La sélection par le contour seul | en vigueur |
 | D-012 | Le focus clavier reste fort | en vigueur |
-| D-013 | Toute page a un contour et repose sur un plan hachuré | en vigueur |
+| D-013 | Toute page a un contour et repose sur un plan hachuré | amendée par D-041 |
 | D-014 | Alignements au cordeau | en vigueur |
 | D-015 | Travailler en force de proposition | en vigueur |
 | D-016 | Signes graphiques : admis s'ils ont un sens | en vigueur |
@@ -61,6 +61,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-038 | L'inspecteur attaché à son onglet, épinglable | en vigueur |
 | D-039 | Pas de filet vertical entre deux régions d'une page | en vigueur |
 | D-040 | Un filet se mérite : revue de tous les traits | en vigueur |
+| D-041 | Les hachures quittent le plan de travail pour le fond des modales | en vigueur |
 
 ---
 
@@ -144,7 +145,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 
 ## D-013 — Toute page a un contour et repose sur un plan hachuré
 
-- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Date** : 2026-11-12 · **Statut** : amendée par D-041 (le plan n'est plus hachuré ; contour et retrait restent) · **Demandée par** : le commanditaire
 - **Décision** : `.l-shell` (contour d'un pixel) posée sur `.l-desk` (fond hachuré), en retrait de 24 px. Les hachures ne s'emploient que hors de la page.
 - **Raison** : détacher le contenu, et préparer inspecteur et fenêtres.
 - **Conséquences** : c'est le seul cadre systématique ; à l'intérieur, la règle reste « le filet avant la boîte ».
@@ -354,3 +355,14 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 
 - **Conséquences** : sur un écran de liste, le trait le plus fort n'est plus celui des en-têtes mais celui de la ligne sélectionnée — ce qui est le bon ordre.
 - **Non tranché** : le filet de piste des barres horizontales et de la jauge (il montre l'étendue de l'échelle) n'a pas été remis en cause.
+
+## D-041 — Les hachures quittent le plan de travail pour le fond des modales
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Contexte** : depuis D-013, le plan de travail autour de chaque page était hachuré. Présentes en permanence sur tous les écrans, les hachures ne disaient plus rien et ajoutaient du bruit. Le fond des modales, lui, n'était qu'un voile sombre uni.
+- **Décision** : le plan de travail devient uni — le ton le plus sombre de la gamme, sans motif. Les hachures passent au fond des modales (`.c-dialog::backdrop`) : tant qu'une modale est ouverte, la page dessous est hachurée, sur un voile au ton du plan de travail (78 %).
+- **Raison** : en dessin technique, une zone hachurée est une zone exclue ; c'est exactement l'état d'une page sous une modale. Un motif qui n'apparaît qu'à ce moment redevient un signe, selon la logique de rareté du système.
+- **Écarté** : garder les deux emplois (le signe aurait eu deux sens) ; un flou d'arrière-plan (effet, pas un signe).
+- **Ce qui reste de D-013** : le contour d'un pixel de chaque page et son retrait de 24 px.
+- **Conséquences** : là où les décisions antérieures parlent de « hachures » entre deux pages (D-022, D-033, D-038, D-039), lire « bande de plan de travail » : deux pages se distinguent par leur double contour et la bande sombre entre elles. Le liseré des fenêtres flottantes (D-023) devient une bande unie. Un clic sur le plan de travail ouvre toujours le plan. Règles K3, K4, K7 et G1 réécrites.
+- **Vaut pour** : toutes les modales — dialogue, confirmation, « Aller à ».

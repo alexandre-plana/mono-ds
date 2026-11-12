@@ -4,7 +4,7 @@
    1. Un onglet = une page qui reste dans le document tant qu'il est ouvert. Son panneau est
       masqué, jamais détruit : filtre saisi, défilement et note en cours sont retrouvés.
    2. L'inspecteur est DANS la page (l'espace seul le sépare) : il appartient à son onglet et le
-      suit. Épinglé, il sort À CÔTÉ, hors de la page (les hachures le séparent), et ne dépend
+      suit. Épinglé, il sort À CÔTÉ, hors de la page (le plan de travail le sépare), et ne dépend
       plus d'aucun onglet. L'image dit donc toujours la vérité.
 
    Les contenus ci-dessous sont À REMPLACER par les écrans réels. */

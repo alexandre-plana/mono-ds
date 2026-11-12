@@ -107,7 +107,7 @@
   --inverse-fg: var(--tone-1);
   /* Sélection : un contour de 2 px en gris moyen, jamais un fond. */
   --selected-line: var(--tone-7);
-  /* Plan de travail : ce qui entoure la page. Hachures légères, plus claires que lui. */
+  /* Plan de travail : ce qui entoure la page, uni. --hatch ne sert qu'au fond des modales. */
   --desk: var(--tone-0);
   --hatch: var(--tone-4);
   --mark: var(--tone-7);
