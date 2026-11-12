@@ -222,10 +222,128 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-tooltip { display: inline-block; padding: var(--space-2) var(--space-3); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-small); line-height: var(--leading-small); max-width: 32ch; }
 .c-toast { display: inline-flex; align-items: baseline; gap: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); border-left: var(--stroke) solid var(--fg-strong); color: var(--fg-strong); font-size: var(--text-small); }
 .c-toast--signal { border-left-color: var(--signal); }
-.c-dialog { width: min(32rem, calc(100vw - 2rem)); padding: var(--space-5); background: var(--surface); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
+/* Modale : <dialog> natif. En-tête, corps défilant, actions ferrées à gauche.
+   Ancrée au tiers haut plutôt que centrée : le bord supérieur ne bouge pas
+   quand le contenu change de hauteur. */
+.c-dialog { padding: 0; margin-top: 12vh; width: min(32rem, calc(100vw - 2rem)); max-height: min(76vh, 44rem); background: var(--surface); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
+.c-dialog[open] { display: flex; flex-direction: column; }
 .c-dialog::backdrop { background: color-mix(in srgb, var(--tone-0) 72%, transparent); }
-.c-dialog__title { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-small); color: var(--fg-strong); padding-bottom: var(--space-3); margin-bottom: var(--space-4); border-bottom: var(--hairline) solid var(--line); }
-.c-dialog__actions { display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-5); }
+.c-dialog--small { width: min(24rem, calc(100vw - 2rem)); }
+.c-dialog--large { width: min(48rem, calc(100vw - 2rem)); }
+.c-dialog__head { flex: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); min-height: 3rem; padding: 0 var(--space-3) 0 var(--space-5); border-bottom: var(--hairline) solid var(--line); }
+.c-dialog__title { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-small); line-height: var(--leading-base); color: var(--fg-strong); font-weight: var(--weight-medium); }
+.c-dialog__body { flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); }
+.c-dialog__actions { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-top: var(--hairline) solid var(--line); }
+.c-dialog__aside { margin-left: auto; font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); }
+/* Tiroir : la même modale, accrochée au bord droit sur toute la hauteur. */
+.c-dialog--drawer { margin: 0 0 0 auto; width: min(28rem, calc(100vw - 3rem)); height: 100vh; height: 100dvh; max-height: none; border-width: 0 0 0 var(--hairline); }
+
+/* --- Fiche (carte) --------------------------------------------------------------
+   Une fiche n'est pas une boîte : c'est un filet, un en-tête, un contenu, un pied.
+   Le cadre (--boxed) est réservé aux fiches sélectionnables ou posées sur un fond
+   qui n'est pas celui de la page. Jamais de fiche dans une fiche. */
+.c-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-min, 16rem), 1fr)); gap: var(--space-7) var(--gutter); }
+.c-card { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; padding-top: var(--space-3); border-top: var(--hairline) solid var(--line); color: var(--fg); text-decoration: none; }
+.c-card__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-card__title { font-size: var(--text-large); line-height: var(--leading-large); color: var(--fg-strong); font-weight: var(--weight-regular); }
+.c-card__title--label { font-size: var(--text-base); line-height: var(--leading-base); text-transform: uppercase; letter-spacing: var(--track-label); font-weight: var(--weight-bold); }
+.c-card__body { color: var(--fg-soft); display: flex; flex-direction: column; gap: var(--space-3); }
+.c-card__media { background: var(--bg-sunken); aspect-ratio: 16 / 9; display: grid; place-items: center; color: var(--fg-muted); overflow: hidden; }
+.c-card__foot { margin-top: auto; padding-top: var(--space-3); display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-soft); }
+.c-card--boxed { padding: var(--space-4) var(--space-5) var(--space-5); border: var(--hairline) solid var(--line); }
+.c-card--surface { padding: var(--space-4) var(--space-5) var(--space-5); background: var(--surface); border-top-color: var(--line-strong); }
+.c-card--dashed { border-top-style: dashed; }
+.c-card--dashed.c-card--boxed { border-style: dashed; }
+/* Fiche cliquable : toute la fiche est le lien, le filet supérieur répond au survol. */
+a.c-card, .c-card--action { cursor: pointer; transition: border-color var(--duration), background var(--duration); }
+a.c-card:hover, .c-card--action:hover { border-top-color: var(--fg-strong); color: var(--fg); }
+a.c-card:hover .c-card__foot, .c-card--action:hover .c-card__foot { color: var(--fg-strong); }
+a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color: var(--fg-soft); border-top-color: var(--fg-strong); background: var(--surface); }
+/* Sélection : le filet passe à 2 px et au ton fort (F1 : l'épaisseur dit l'actif). */
+.c-card[aria-selected="true"], .c-card[aria-current], .c-card.is-selected { border-top: var(--stroke) solid var(--fg-strong); padding-top: calc(var(--space-3) - 1px); }
+.c-card--boxed[aria-selected="true"], .c-card--boxed[aria-current], .c-card--boxed.is-selected { border-color: var(--fg-soft); border-top-color: var(--fg-strong); padding-top: calc(var(--space-4) - 1px); }
+.c-card--signal { border-top-color: var(--signal); }
+.c-card--signal .c-card__head > :first-child { color: var(--signal); font-weight: var(--weight-medium); }
+
+/* --- Menu déroulant : <details class="c-menu"> ------------------------------------ */
+.c-menu { position: relative; display: inline-block; }
+.c-menu > summary { list-style: none; }
+.c-menu > summary::-webkit-details-marker { display: none; }
+.c-menu[open] > summary.c-button { border-color: var(--fg-strong); background: var(--surface-2); }
+.c-menu__list { position: absolute; z-index: 20; top: calc(100% + var(--space-1)); left: 0; min-width: 14rem; padding: var(--space-1) 0; background: var(--surface-2); border: var(--hairline) solid var(--line-strong); display: flex; flex-direction: column; }
+.c-menu--end .c-menu__list { left: auto; right: 0; }
+.c-menu__label { padding: var(--space-2) var(--space-3) var(--space-1); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
+.c-menu__item { appearance: none; display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-5); width: 100%; padding: 6px var(--space-3); background: none; border: 0; text-align: left; text-decoration: none; color: var(--fg); font-size: var(--text-small); line-height: var(--leading-base); white-space: nowrap; cursor: pointer; }
+.c-menu__item:hover, .c-menu__item:focus-visible { background: var(--line-faint); color: var(--fg-strong); outline-offset: -2px; }
+.c-menu__item[aria-checked="true"], .c-menu__item[aria-current] { color: var(--fg-strong); font-weight: var(--weight-bold); }
+.c-menu__item:disabled, .c-menu__item[aria-disabled="true"] { color: var(--fg-muted); cursor: not-allowed; background: none; }
+.c-menu__item--signal { color: var(--signal); }
+.c-menu__item--signal:hover { color: var(--signal); }
+.c-menu__hint { color: var(--fg-muted); font-size: var(--text-micro); font-weight: var(--weight-regular); }
+.c-menu__sep { border: 0; border-top: var(--hairline) solid var(--line); margin: var(--space-1) 0; }
+
+/* --- Dépliant et accordéon : <details class="c-disclosure"> ----------------------- */
+.c-disclosure { border-top: var(--hairline) solid var(--line); }
+.c-disclosure > summary { list-style: none; display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); padding: var(--space-3) 0; cursor: pointer; text-transform: uppercase; letter-spacing: var(--track-label); font-weight: var(--weight-medium); color: var(--fg); transition: color var(--duration); }
+.c-disclosure > summary::-webkit-details-marker { display: none; }
+.c-disclosure > summary::after { content: '+'; color: var(--fg-muted); font-weight: var(--weight-regular); }
+.c-disclosure[open] > summary::after { content: '−'; }
+.c-disclosure > summary:hover, .c-disclosure[open] > summary { color: var(--fg-strong); }
+.c-disclosure[open] > summary { font-weight: var(--weight-bold); }
+.c-disclosure__body { padding: 0 var(--space-6) var(--space-5) 0; color: var(--fg-soft); max-width: var(--measure); display: flex; flex-direction: column; gap: var(--space-3); }
+.c-accordion > .c-disclosure:last-child { border-bottom: var(--hairline) solid var(--line); }
+
+/* --- État vide --------------------------------------------------------------------
+   Ferré à gauche, contour tireté (le tireté dit le provisoire). Dit ce qui manque
+   et propose une seule issue. Pas d'illustration. */
+.c-empty { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); padding: var(--space-6); border: var(--hairline) dashed var(--line-strong); max-width: 40rem; }
+.c-empty--plain { border: 0; padding: 0; }
+.c-empty__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-empty__title { font-size: var(--text-large); line-height: var(--leading-large); color: var(--fg-strong); }
+.c-empty__text { color: var(--fg-soft); max-width: 52ch; }
+.c-empty__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
+
+/* --- Chargement --------------------------------------------------------------------
+   Trois moyens, du plus court au plus long : points de suspension, filet de
+   progression, gabarit. Aucun reflet animé, aucun cercle tournant. */
+.c-loader { display: inline-flex; align-items: baseline; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
+.c-loader::after { content: '...'; display: inline-block; width: 0; overflow: hidden; white-space: nowrap; animation: c-loader 1.2s steps(4, jump-none) infinite; }
+@keyframes c-loader { to { width: 3ch; } }
+.c-progress { position: relative; height: 3px; width: 100%; overflow: hidden; background: linear-gradient(var(--line-strong), var(--line-strong)) 0 50% / 100% 1px no-repeat; }
+.c-progress::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 24%; background: var(--fg-strong); animation: c-progress 1.6s linear infinite; }
+@keyframes c-progress { from { transform: translateX(-100%); } to { transform: translateX(420%); } }
+.c-skeleton { display: block; height: 0.5rem; width: var(--w, 100%); background: var(--line-faint); margin-block: 0.375rem; }
+.c-skeleton--title { height: 1rem; margin-block: 0.5rem; }
+.c-skeleton--block { height: var(--h, 6rem); margin: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .c-loader::after { animation: none; width: 3ch; }
+  .c-progress::before { animation: none; width: 100%; background: var(--line-strong); }
+}
+
+/* --- Recherche, filtre, touche ------------------------------------------------------ */
+.c-search { display: flex; align-items: center; gap: var(--space-3); min-height: var(--control-height); padding: 0 var(--space-3); border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); cursor: text; transition: border-color var(--duration), background var(--duration); }
+.c-search:hover { border-color: var(--fg-soft); }
+.c-search:focus-within { border-color: var(--fg-strong); background: var(--surface); outline: var(--hairline) solid var(--fg-strong); }
+.c-search input { appearance: none; flex: 1; min-width: 0; background: none; border: 0; outline: 0; padding: 0; color: var(--fg-strong); font-size: var(--text-base); line-height: var(--leading-base); }
+.c-search input::placeholder { color: var(--fg-muted); opacity: 1; }
+.c-search input::-webkit-search-cancel-button { appearance: none; }
+.c-search--large { min-height: var(--control-height-large); padding-inline: var(--space-4); }
+
+.c-kbd { display: inline-grid; place-content: center; min-width: 1.25rem; height: 1.25rem; padding: 0 var(--space-1); border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); font-family: var(--font-mono); font-size: var(--text-micro); line-height: 1; white-space: nowrap; }
+
+.c-chip { appearance: none; display: inline-flex; align-items: center; gap: var(--space-2); height: 1.5rem; padding: 0 var(--space-2); background: none; border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); font-size: var(--text-micro); line-height: 1; text-transform: uppercase; letter-spacing: var(--track-label); white-space: nowrap; cursor: pointer; transition: background var(--duration), color var(--duration), border-color var(--duration); }
+.c-chip:hover { border-color: var(--fg-strong); color: var(--fg-strong); }
+.c-chip[aria-pressed="true"] { background: var(--fg-soft); border-color: var(--fg-soft); color: var(--bg); font-weight: var(--weight-medium); }
+.c-chip__count { font-weight: var(--weight-regular); opacity: .8; }
+.c-chip:disabled { border-style: dashed; border-color: var(--line); color: var(--fg-muted); cursor: not-allowed; }
+
+/* --- Étapes -------------------------------------------------------------------------
+   Fait = filet plein · en cours = gras · à venir = tireté. */
+.c-steps { display: flex; gap: var(--space-3); counter-reset: step; text-transform: uppercase; letter-spacing: var(--track-label); font-size: var(--text-small); line-height: var(--leading-base); }
+.c-steps__step { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-2); border-top: var(--hairline) dashed var(--line-strong); color: var(--fg-muted); counter-increment: step; }
+.c-steps__step::before { content: counter(step, decimal-leading-zero); font-size: var(--text-micro); letter-spacing: var(--track-caps); }
+.c-steps__step.is-done { border-top-style: solid; border-top-color: var(--fg-soft); color: var(--fg-soft); }
+.c-steps__step[aria-current] { border-top: var(--stroke) solid var(--fg-strong); padding-top: calc(var(--space-2) - 1px); color: var(--fg-strong); font-weight: var(--weight-bold); }
 
 /* --- Code ------------------------------------------------------------------------ */
 .c-code { display: block; padding: var(--space-4); background: var(--bg-sunken); color: var(--fg-soft); font-size: var(--text-small); line-height: var(--leading-base); overflow-x: auto; white-space: pre; tab-size: 2; }

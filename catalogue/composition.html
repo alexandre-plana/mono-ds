@@ -12,13 +12,15 @@
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
       <div class="c-masthead__meta">
-        <span>Composition</span><span>v0.1</span>
+        <span>Composition</span><span>v0.2</span>
         <span class="c-segmented" role="group" aria-label="Thème">
           <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
           <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
         </span>
       </div>
     </header>
+
+    <div id="cat-search" class="cat-search" role="search"></div>
 
     <div class="l-rail cat-rail">
       <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
@@ -29,7 +31,7 @@
           <p class="cat-lede">Un écran se compose comme une page imprimée : des masses de ton, des axes, du vide. Les composants viennent après.</p>
         </section>
 
-        <section class="cat-section" id="masses">
+        <section class="cat-section" id="masses" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Masses tonales</span><span class="c-section-head__aside">À l'échelle réelle</span></h2>
           <p class="cat-note">Tout écran se répartit en quatre masses. La bande ci-dessous montre leurs proportions réelles, mesurées sur le tableau de bord d'exemple : le fond occupe presque tout, et c'est ce déséquilibre qui rend lisible le peu de clair qui reste.</p>
           <div class="cat-masses" role="img" aria-label="Fond 94,7 %, trame 4,3 %, éclat 0,6 %, signal 0,3 %">
@@ -45,12 +47,12 @@
             <div class="c-stat c-stat--compact c-stat--ruled"><span class="c-stat__label">Signal</span><span class="c-stat__value">≤ 1<small>%</small></span><span class="c-stat__note">Le plus souvent zéro. Jamais une surface.</span></div>
           </div>
           <div class="cat-rules">
-            <div class="cat-rule"><span class="cat-rule__num">M1</span><h3>L'éclat est rare</h3><p>Le ton le plus clair ne s'emploie qu'en trait ou en glyphe : du texte, un point, un filet. La seule surface claire admise est le bouton primaire.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">M2</span><h3>Les aplats sont moyens</h3><p>Toute surface de plus de quelques centaines de pixels — barre, aire, segment actif — prend un gris moyen. Plus une forme est grande, plus son ton se rapproche du fond.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">M3</span><h3>Un bloc inversé, un tiers au plus</h3><p>Un panneau du thème opposé peut porter une figure. Il est unique sur la vue et n'en couvre pas plus du tiers ; l'éclat mesuré monte alors jusqu'à 35 %.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">M4</span><h3>Répartir, ne pas empiler</h3><p>Les éléments clairs se répondent en diagonale ou en triangle. Jamais tous dans le même quart d'écran : la page pencherait.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">M5</span><h3>Plisser les yeux</h3><p>Écran flouté, on doit voir un seul point clair, deux ou trois nappes grises, et le reste uni. Si tout scintille, il y a trop de <code>--fg-strong</code>.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">M6</span><h3>Mesurer</h3><p><code>scripts/tonal-audit.mjs</code> capture un écran et chiffre ces masses, le vide et la présence de noir ou de blanc purs.</p></div>
+            <div class="cat-rule" id="regle-m1" data-search="regle"><span class="cat-rule__num">M1</span><h3>L'éclat est rare</h3><p>Le ton le plus clair ne s'emploie qu'en trait ou en glyphe : du texte, un point, un filet. La seule surface claire admise est le bouton primaire.</p></div>
+            <div class="cat-rule" id="regle-m2" data-search="regle"><span class="cat-rule__num">M2</span><h3>Les aplats sont moyens</h3><p>Toute surface de plus de quelques centaines de pixels — barre, aire, segment actif — prend un gris moyen. Plus une forme est grande, plus son ton se rapproche du fond.</p></div>
+            <div class="cat-rule" id="regle-m3" data-search="regle"><span class="cat-rule__num">M3</span><h3>Un bloc inversé, un tiers au plus</h3><p>Un panneau du thème opposé peut porter une figure. Il est unique sur la vue et n'en couvre pas plus du tiers ; l'éclat mesuré monte alors jusqu'à 35 %.</p></div>
+            <div class="cat-rule" id="regle-m4" data-search="regle"><span class="cat-rule__num">M4</span><h3>Répartir, ne pas empiler</h3><p>Les éléments clairs se répondent en diagonale ou en triangle. Jamais tous dans le même quart d'écran : la page pencherait.</p></div>
+            <div class="cat-rule" id="regle-m5" data-search="regle"><span class="cat-rule__num">M5</span><h3>Plisser les yeux</h3><p>Écran flouté, on doit voir un seul point clair, deux ou trois nappes grises, et le reste uni. Si tout scintille, il y a trop de <code>--fg-strong</code>.</p></div>
+            <div class="cat-rule" id="regle-m6" data-search="regle"><span class="cat-rule__num">M6</span><h3>Mesurer</h3><p><code>scripts/tonal-audit.mjs</code> capture un écran et chiffre ces masses, le vide et la présence de noir ou de blanc purs.</p></div>
           </div>
           <pre class="c-code">node scripts/tonal-audit.mjs catalogue/exemples/tableau-de-bord.html
 
@@ -63,12 +65,12 @@
   ok   Blanc pur                    0.00 %   = 0</pre>
         </section>
 
-        <section class="cat-section" id="equilibre">
+        <section class="cat-section" id="equilibre" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Équilibre</span></h2>
 
           <div class="cat-pair">
-            <div class="cat-verdict">
-              <div class="cat-verdict__mark">C1 — Peu d'axes</div>
+            <div class="cat-verdict" id="c1" data-search="regle">
+              <h3 class="cat-verdict__mark">C1 — Peu d'axes</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-axis" style="left:8%"></i><i class="w-axis" style="left:38%"></i><i class="w-axis" style="left:72%"></i>
                 <i class="w-strong" style="left:8%;top:12%;width:18%"></i>
@@ -82,8 +84,8 @@
               </div>
               <p>Tous les blocs s'accrochent à trois ou quatre axes verticaux, pris sur la grille. Chaque bord gauche répété devient une ligne invisible qui tient la page.</p>
             </div>
-            <div class="cat-verdict cat-verdict--dont">
-              <div class="cat-verdict__mark">À éviter — un axe par bloc</div>
+            <div class="cat-verdict cat-verdict--dont" id="a-eviter-un-axe-par-bloc" data-search="regle">
+              <h3 class="cat-verdict__mark">À éviter — un axe par bloc</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-strong" style="left:8%;top:12%;width:18%"></i>
                 <i class="w-text" style="left:12%;top:24%;width:22%"></i><i class="w-text" style="left:10%;top:29%;width:16%"></i><i class="w-text" style="left:15%;top:34%;width:20%"></i>
@@ -99,8 +101,8 @@
           </div>
 
           <div class="cat-pair">
-            <div class="cat-verdict">
-              <div class="cat-verdict__mark">C2 — Grappes et silences</div>
+            <div class="cat-verdict" id="c2" data-search="regle">
+              <h3 class="cat-verdict__mark">C2 — Grappes et silences</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-strong" style="left:8%;top:12%;width:16%"></i>
                 <i class="w-text" style="left:8%;top:20%;width:24%"></i><i class="w-text" style="left:8%;top:24%;width:20%"></i><i class="w-text" style="left:8%;top:28%;width:22%"></i><i class="w-text" style="left:8%;top:32%;width:14%"></i>
@@ -111,8 +113,8 @@
               </div>
               <p>Dense à l'intérieur d'un groupe (4 à 8 px), très large entre deux groupes (48 à 96 px). Un tiers de l'écran au moins reste vide, d'un seul tenant si possible.</p>
             </div>
-            <div class="cat-verdict cat-verdict--dont">
-              <div class="cat-verdict__mark">À éviter — remplissage uniforme</div>
+            <div class="cat-verdict cat-verdict--dont" id="a-eviter-remplissage-uniforme" data-search="regle">
+              <h3 class="cat-verdict__mark">À éviter — remplissage uniforme</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-strong" style="left:8%;top:10%;width:16%"></i>
                 <i class="w-text" style="left:8%;top:22%;width:24%"></i><i class="w-text" style="left:8%;top:34%;width:20%"></i><i class="w-text" style="left:8%;top:46%;width:22%"></i><i class="w-text" style="left:8%;top:58%;width:14%"></i><i class="w-text" style="left:8%;top:70%;width:22%"></i><i class="w-text" style="left:8%;top:82%;width:18%"></i>
@@ -126,8 +128,8 @@
           </div>
 
           <div class="cat-pair">
-            <div class="cat-verdict">
-              <div class="cat-verdict__mark">C3 — Un point focal</div>
+            <div class="cat-verdict" id="c3" data-search="regle">
+              <h3 class="cat-verdict__mark">C3 — Un point focal</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-text" style="left:8%;top:12%;width:12%"></i>
                 <i class="w-light" style="left:8%;top:19%;width:20%;height:9%"></i>
@@ -139,8 +141,8 @@
               </div>
               <p>Un seul élément porte le ton le plus clair en aplat ou en grand corps : ici le chiffre héros. Le graphique reste en gris moyen, l'action secondaire en contour.</p>
             </div>
-            <div class="cat-verdict cat-verdict--dont">
-              <div class="cat-verdict__mark">À éviter — tout est important</div>
+            <div class="cat-verdict cat-verdict--dont" id="a-eviter-tout-est-important" data-search="regle">
+              <h3 class="cat-verdict__mark">À éviter — tout est important</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-light" style="left:8%;top:12%;width:20%;height:9%"></i>
                 <i class="w-light" style="left:8%;top:28%;width:16%;height:9%"></i>
@@ -154,8 +156,8 @@
           </div>
 
           <div class="cat-pair">
-            <div class="cat-verdict">
-              <div class="cat-verdict__mark">C4 — Contrepoids</div>
+            <div class="cat-verdict" id="c4" data-search="regle">
+              <h3 class="cat-verdict__mark">C4 — Contrepoids</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-strong" style="left:8%;top:10%;width:30%"></i>
                 <i class="w-text" style="left:8%;top:22%;width:20%"></i><i class="w-text" style="left:8%;top:26%;width:16%"></i><i class="w-text" style="left:8%;top:30%;width:18%"></i><i class="w-text" style="left:8%;top:34%;width:14%"></i>
@@ -165,8 +167,8 @@
               </div>
               <p>La masse principale part du haut à gauche ; un élément petit mais marqué — sceau, folio, clé, action — lui répond en bas à droite. Le vide entre les deux est la composition.</p>
             </div>
-            <div class="cat-verdict cat-verdict--dont">
-              <div class="cat-verdict__mark">À éviter — centré, symétrique</div>
+            <div class="cat-verdict cat-verdict--dont" id="a-eviter-centre-symetrique" data-search="regle">
+              <h3 class="cat-verdict__mark">À éviter — centré, symétrique</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-strong" style="left:35%;top:14%;width:30%"></i>
                 <i class="w-text" style="left:38%;top:26%;width:24%"></i><i class="w-text" style="left:41%;top:30%;width:18%"></i><i class="w-text" style="left:39%;top:34%;width:22%"></i><i class="w-text" style="left:43%;top:38%;width:14%"></i>
@@ -178,8 +180,8 @@
           </div>
 
           <div class="cat-pair">
-            <div class="cat-verdict">
-              <div class="cat-verdict__mark">C5 — Filets, pas de boîtes</div>
+            <div class="cat-verdict" id="c5" data-search="regle">
+              <h3 class="cat-verdict__mark">C5 — Filets, pas de boîtes</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-rule" style="left:8%;top:14%;width:26%"></i><i class="w-strong" style="left:8%;top:20%;width:12%"></i><i class="w-text" style="left:8%;top:27%;width:20%"></i><i class="w-text" style="left:8%;top:31%;width:16%"></i>
                 <i class="w-rule" style="left:38%;top:14%;width:26%"></i><i class="w-strong" style="left:38%;top:20%;width:12%"></i><i class="w-text" style="left:38%;top:27%;width:20%"></i><i class="w-text" style="left:38%;top:31%;width:14%"></i>
@@ -190,8 +192,8 @@
               </div>
               <p>Un filet au-dessus de chaque groupe et de l'espace autour. Les régions se lisent sans qu'aucune ne soit enfermée.</p>
             </div>
-            <div class="cat-verdict cat-verdict--dont">
-              <div class="cat-verdict__mark">À éviter — cartes partout</div>
+            <div class="cat-verdict cat-verdict--dont" id="a-eviter-cartes-partout" data-search="regle">
+              <h3 class="cat-verdict__mark">À éviter — cartes partout</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-box" style="left:6%;top:10%;width:28%;height:30%"></i><i class="w-strong" style="left:9%;top:17%;width:12%"></i><i class="w-text" style="left:9%;top:25%;width:20%"></i><i class="w-text" style="left:9%;top:30%;width:16%"></i>
                 <i class="w-box" style="left:36%;top:10%;width:28%;height:30%"></i><i class="w-strong" style="left:39%;top:17%;width:12%"></i><i class="w-text" style="left:39%;top:25%;width:20%"></i><i class="w-text" style="left:39%;top:30%;width:14%"></i>
@@ -205,8 +207,8 @@
           </div>
 
           <div class="cat-pair">
-            <div class="cat-verdict">
-              <div class="cat-verdict__mark">C6 — Le signal désigne</div>
+            <div class="cat-verdict" id="c6" data-search="regle">
+              <h3 class="cat-verdict__mark">C6 — Le signal désigne</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-strong" style="left:8%;top:12%;width:22%"></i><i class="w-text" style="left:8%;top:18%;width:16%"></i>
                 <i class="w-block" style="left:8%;top:48%;width:5%;height:22%"></i><i class="w-block" style="left:16%;top:42%;width:5%;height:28%"></i><i class="w-block" style="left:24%;top:36%;width:5%;height:34%"></i><i class="w-block" style="left:32%;top:30%;width:5%;height:40%"></i><i class="w-signal-block" style="left:40%;top:40%;width:5%;height:30%"></i>
@@ -216,8 +218,8 @@
               </div>
               <p>Une barre et la ligne de tableau qui lui correspond : deux occurrences, un seul fait. L'œil y va d'abord, puis lit le reste en gris.</p>
             </div>
-            <div class="cat-verdict cat-verdict--dont">
-              <div class="cat-verdict__mark">À éviter — la couleur décore</div>
+            <div class="cat-verdict cat-verdict--dont" id="a-eviter-la-couleur-decore" data-search="regle">
+              <h3 class="cat-verdict__mark">À éviter — la couleur décore</h3>
               <div class="cat-wire" aria-hidden="true">
                 <i class="w-signal-block" style="left:0;top:0;width:100%;height:7%"></i>
                 <i class="w-strong" style="left:8%;top:14%;width:22%"></i><i class="w-signal-block" style="left:8%;top:20%;width:16%;height:2px"></i>
@@ -231,7 +233,7 @@
           </div>
         </section>
 
-        <section class="cat-section" id="methode">
+        <section class="cat-section" id="methode" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Méthode</span><span class="c-section-head__aside">Composer un écran</span></h2>
           <div class="c-index" style="max-width: 52rem">
             <div class="c-index__row"><span class="c-index__title">Nommer le point focal</span><span class="c-index__value">Une phrase : ce que l'écran doit dire</span></div>
@@ -244,18 +246,19 @@
             <div class="c-index__row"><span class="c-index__title">Mesurer</span><span class="c-index__value">contrast.mjs · tonal-audit.mjs</span></div>
           </div>
           <div class="cat-rules">
-            <div class="cat-rule"><span class="cat-rule__num">C7</span><h3>Ferré à gauche</h3><p>Texte et blocs s'alignent à gauche ; seuls les chiffres en colonne s'alignent à droite. Rien n'est centré, hormis un glyphe dans son contrôle.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">C8</span><h3>Cadre de page</h3><p>Un en-tête à titre espacé en haut, un colophon en bas, les mêmes marges des quatre côtés. Entre les deux, la page est libre.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">C9</span><h3>Marges généreuses</h3><p>La marge extérieure vaut au moins deux gouttières. Un contenu qui touche le bord de l'écran perd son statut de page.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">C10</span><h3>Ligne courte</h3><p>68 caractères au plus pour la prose, 46 pour un chapeau. Une colonne de texte n'occupe jamais toute la largeur.</p></div>
+            <div class="cat-rule" id="regle-c7" data-search="regle"><span class="cat-rule__num">C7</span><h3>Ferré à gauche</h3><p>Texte et blocs s'alignent à gauche ; seuls les chiffres en colonne s'alignent à droite. Rien n'est centré, hormis un glyphe dans son contrôle.</p></div>
+            <div class="cat-rule" id="regle-c8" data-search="regle"><span class="cat-rule__num">C8</span><h3>Cadre de page</h3><p>Un en-tête à titre espacé en haut, un colophon en bas, les mêmes marges des quatre côtés. Entre les deux, la page est libre.</p></div>
+            <div class="cat-rule" id="regle-c9" data-search="regle"><span class="cat-rule__num">C9</span><h3>Marges généreuses</h3><p>La marge extérieure vaut au moins deux gouttières. Un contenu qui touche le bord de l'écran perd son statut de page.</p></div>
+            <div class="cat-rule" id="regle-c10" data-search="regle"><span class="cat-rule__num">C10</span><h3>Ligne courte</h3><p>68 caractères au plus pour la prose, 46 pour un chapeau. Une colonne de texte n'occupe jamais toute la largeur.</p></div>
           </div>
         </section>
 
       </main>
     </div>
 
-    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.1</span></footer>
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.2</span></footer>
   </div>
+  <script src="assets/search-index.js"></script>
   <script src="assets/catalogue.js"></script>
 </body>
 </html>

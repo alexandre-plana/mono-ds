@@ -12,7 +12,7 @@
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
       <div class="c-masthead__meta">
-        <span>Composants</span><span>v0.1</span>
+        <span>Composants</span><span>v0.2</span>
         <span class="c-segmented" role="group" aria-label="Thème">
           <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
           <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
@@ -20,19 +20,21 @@
       </div>
     </header>
 
+    <div id="cat-search" class="cat-search" role="search"></div>
+
     <div class="l-rail cat-rail">
       <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
       <main class="cat-main">
 
         <section class="cat-intro">
           <h1 class="t-spaced t-large">Composants</h1>
-          <p class="cat-lede">Chaque composant est montré avec son code réel : l'extrait affiché est le DOM de la démonstration.</p>
+          <p class="cat-lede">Chaque composant est montré avec son code réel, puis décrit : quand l'employer, quand l'éviter, ses états, son accessibilité.</p>
         </section>
 
-        <section class="cat-section" id="structure">
+        <section class="cat-section" id="structure" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Structure</span></h2>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-masthead" data-search="composant">
             <h3>En-tête de page — .c-masthead</h3>
             <p>Titre espacé à gauche, métadonnées à droite, un filet dessous. Un seul par écran.</p>
             <div class="cat-demo" data-code>
@@ -41,9 +43,14 @@
                 <div class="c-masthead__meta"><span>Exercice 2026</span><span>T3</span></div>
               </header>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>En haut de chaque écran : le nom de ce que l'on regarde, puis le contexte (période, date de mise à jour).</dd></div>
+              <div><dt>Éviter</dt><dd>Un logo, une navigation complète ou des actions : l'en-tête nomme, il ne commande pas. Jamais deux en-têtes.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;header&gt;</code> ; le titre peut être un <code>h1</code> si l'écran n'en a pas d'autre.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-section-head" data-search="composant">
             <h3>En-tête de section — .c-section-head</h3>
             <p>Numéro, titre, note facultative à droite. Il ouvre chaque région d'un écran.</p>
             <div class="cat-demo" data-code>
@@ -53,9 +60,14 @@
                 <span class="c-section-head__aside">En milliers</span>
               </h2>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Ouvrir chaque région d'un écran. Le numéro donne l'ordre de lecture ; la note à droite précise l'unité ou le périmètre.</dd></div>
+              <div><dt>Éviter</dt><dd>Plus de deux niveaux de titres sur un écran. Pas d'en-tête pour un bloc d'une seule ligne.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Un vrai titre (<code>h2</code>, <code>h3</code>) ; le numéro est lu avec le titre.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-colophon" data-search="composant">
             <h3>Colophon — .c-colophon</h3>
             <p>Pied d'écran : références, folio, source. C'est le contrepoids discret de l'en-tête.</p>
             <div class="cat-demo" data-code>
@@ -64,9 +76,13 @@
                 <span>76 / 120</span>
               </footer>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Source, folio, référence, date : ce qui authentifie l'écran sans devoir être lu.</dd></div>
+              <div><dt>Éviter</dt><dd>Des liens de navigation ou une action. Rien qui doive être vu.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-panel" data-search="composant">
             <h3>Panneau — .c-panel</h3>
             <p>À n'employer que pour détacher un contenu du flux. <code>data-theme</code> sur un panneau l'inverse : c'est la plus grande masse claire permise sur un écran encre, une seule par vue.</p>
             <div class="cat-demo" data-code>
@@ -85,13 +101,118 @@
                 </div>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Détacher un contenu du flux : aperçu, encart, figure sur thème opposé.</dd></div>
+              <div><dt>Éviter</dt><dd>Grouper par défaut — un filet et de l'espace suffisent. Jamais de panneau dans un panneau ; un seul bloc inversé par vue, un tiers de l'écran au plus.</dd></div>
+              <div><dt>Variantes</dt><dd><code>--surface</code> un cran plus clair · <code>--sunken</code> en creux · <code>--dashed</code> provisoire · <code>--flush</code> sans marge intérieure · <code>data-theme</code> inversé.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-card" data-search="composant">
+            <h3>Fiche — .c-card</h3>
+            <p>La « carte » du système. Ce n'est pas une boîte : c'est un filet supérieur, un en-tête de service, un titre, un contenu et un pied. Les fiches d'une même grille partagent la même anatomie, dans le même ordre.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-cards">
+                <article class="c-card">
+                  <div class="c-card__head"><span>Agence</span><span>N-014</span></div>
+                  <h4 class="c-card__title">Grenoble Centre</h4>
+                  <div class="c-card__body">
+                    <dl class="c-kv c-kv--plain">
+                      <div><dt>Primes</dt><dd>12,4 M</dd></div>
+                      <div><dt>Effectif</dt><dd>18</dd></div>
+                    </dl>
+                  </div>
+                  <div class="c-card__foot"><span class="c-status c-status--on">Actif</span><span>Maj 14:02</span></div>
+                </article>
+                <article class="c-card">
+                  <div class="c-card__head"><span>Agence</span><span>N-015</span></div>
+                  <h4 class="c-card__title">Voiron</h4>
+                  <div class="c-card__body">
+                    <dl class="c-kv c-kv--plain">
+                      <div><dt>Primes</dt><dd>4,1 M</dd></div>
+                      <div><dt>Effectif</dt><dd>6</dd></div>
+                    </dl>
+                  </div>
+                  <div class="c-card__foot"><span class="c-status c-status--progress">En cours</span><span>Maj 13:40</span></div>
+                </article>
+                <article class="c-card c-card--signal">
+                  <div class="c-card__head"><span>Agence</span><span>N-016</span></div>
+                  <h4 class="c-card__title">Vizille</h4>
+                  <div class="c-card__body">
+                    <dl class="c-kv c-kv--plain">
+                      <div><dt>Primes</dt><dd>0,9 M</dd></div>
+                      <div><dt>Effectif</dt><dd>2</dd></div>
+                    </dl>
+                  </div>
+                  <div class="c-card__foot"><span class="c-status c-status--critical">Fermeture</span><span>Maj 09:12</span></div>
+                </article>
+              </div>
+            </div>
+            <p>Fiches cliquables : la fiche entière est le lien (<code>&lt;a class="c-card"&gt;</code>). Le filet répond au survol ; la sélection l'épaissit à 2 px. <code>--boxed</code> encadre les fiches d'un choix, <code>--dashed</code> marque l'emplacement vide.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-cards" style="--card-min: 14rem">
+                <a class="c-card c-card--boxed" href="#c-card" aria-current="true">
+                  <div class="c-card__head"><span>Modèle</span><span>01</span></div>
+                  <h4 class="c-card__title c-card__title--label">Synthèse</h4>
+                  <div class="c-card__body">Une page, les chiffres clés et un graphique.</div>
+                  <div class="c-card__foot"><span>Sélectionné</span><span>→</span></div>
+                </a>
+                <a class="c-card c-card--boxed" href="#c-card">
+                  <div class="c-card__head"><span>Modèle</span><span>02</span></div>
+                  <h4 class="c-card__title c-card__title--label">Rapport détaillé</h4>
+                  <div class="c-card__body">Toutes les branches, tableaux complets.</div>
+                  <div class="c-card__foot"><span>Choisir</span><span>→</span></div>
+                </a>
+                <a class="c-card c-card--boxed c-card--dashed" href="#c-card">
+                  <div class="c-card__head"><span>Modèle</span><span>—</span></div>
+                  <h4 class="c-card__title c-card__title--label">Nouveau modèle</h4>
+                  <div class="c-card__body">Partir d'une page blanche.</div>
+                  <div class="c-card__foot"><span>Créer</span><span>+</span></div>
+                </a>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Anatomie</dt><dd><code>__head</code> (catégorie à gauche, référence à droite) · <code>__title</code> · <code>__body</code> · <code>__media</code> facultatif · <code>__foot</code> (état à gauche, métadonnée ou flèche à droite). Aucune partie n'est obligatoire, l'ordre l'est.</dd></div>
+              <div><dt>Employer</dt><dd>Une collection d'objets de même nature, que l'on compare ou parmi lesquels on choisit : agences, rapports, modèles.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour habiller un contenu unique (un filet suffit), pour des données tabulaires (préférer <code>.c-table</code>), et toute fiche dans une fiche. Pas de bouton primaire dans une fiche : une action au plus, en pied.</dd></div>
+              <div><dt>Variantes</dt><dd><code>--boxed</code> cadre · <code>--surface</code> fond détaché · <code>--dashed</code> emplacement vide · <code>--signal</code> une seule par vue · <code>__title--label</code> titre en capitales.</dd></div>
+              <div><dt>États</dt><dd>Survol : filet supérieur au ton fort. Sélection (<code>aria-current</code>, <code>aria-selected</code>) : filet de 2 px. Jamais d'élévation ni de déplacement.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;article&gt;</code> avec un titre <code>h3</code>/<code>h4</code> ; cliquable : un seul <code>&lt;a&gt;</code> englobant, sans autre contrôle à l'intérieur.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-disclosure" data-search="composant">
+            <h3>Dépliant et accordéon — .c-disclosure</h3>
+            <p>Un <code>&lt;details&gt;</code> natif. Le filet supérieur porte la ligne, le signe + / − dit l'état. Plusieurs dépliants empilés dans <code>.c-accordion</code> forment un accordéon.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-accordion" style="max-width: 40rem">
+                <details class="c-disclosure" open>
+                  <summary>Périmètre</summary>
+                  <div class="c-disclosure__body">Le rapport couvre les quatre branches régionales et leurs 1 204 agences à la clôture de l'exercice.</div>
+                </details>
+                <details class="c-disclosure">
+                  <summary>Méthode de calcul</summary>
+                  <div class="c-disclosure__body">Les primes sont comptées brutes de réassurance, en milliers.</div>
+                </details>
+                <details class="c-disclosure">
+                  <summary>Sources</summary>
+                  <div class="c-disclosure__body">Comptabilité générale, référentiel du réseau.</div>
+                </details>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Un contenu secondaire que la plupart des lecteurs n'ouvriront pas : méthode, détail, aide.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour cacher une information nécessaire à la décision, ou pour raccourcir une page qui devrait être réorganisée.</dd></div>
+              <div><dt>États</dt><dd>Fermé : graisse 500. Ouvert : graisse 600 et signe −. Pas d'animation de hauteur.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Natif : clavier et lecteurs d'écran sans script. L'attribut <code>name</code> partagé rend l'accordéon exclusif.</dd></div>
+            </dl>
           </div>
         </section>
 
-        <section class="cat-section" id="listes">
+        <section class="cat-section" id="listes" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Listes &amp; données</span></h2>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-kv" data-search="composant">
             <h3>Clé-valeur — .c-kv</h3>
             <p>Label gras, filet conducteur, valeur maigre. La colonne des valeurs forme un axe vertical : l'aligner sur la grille. <code>.c-kv--plain</code> garde la casse d'origine.</p>
             <div class="cat-demo" data-code>
@@ -101,9 +222,14 @@
                 <div><dt>Mixage</dt><dd>P. Francis</dd></div>
               </dl>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Une fiche d'identité : de trois à huit paires courtes.</dd></div>
+              <div><dt>Éviter</dt><dd>Des valeurs de plus de deux lignes, ou plus de huit paires (préférer un tableau).</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;dl&gt;</code> ; chaque paire dans un <code>&lt;div&gt;</code> contenant <code>dt</code> et <code>dd</code>.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-index" data-search="composant">
             <h3>Index — .c-index</h3>
             <p>Liste numérotée automatiquement, titre à gauche, valeur à droite. Sommaire, liste de pistes, classement.</p>
             <div class="cat-demo" data-code>
@@ -114,9 +240,14 @@
                 <div class="c-index__row"><span class="c-index__title">Piste de Santa Fe</span><span class="c-index__value">4:50</span></div>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Sommaire, classement, liste de pistes : un titre et une seule valeur par ligne.</dd></div>
+              <div><dt>Éviter</dt><dd>Plus d'une valeur par ligne (préférer un tableau). Ne pas numéroter à la main : le compteur est automatique.</dd></div>
+              <div><dt>États</dt><dd>Ligne cliquable (<code>&lt;a class="c-index__row"&gt;</code>) : le filet conducteur s'éclaircit au survol.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-table" data-search="composant">
             <h3>Tableau — .c-table</h3>
             <p>Filets horizontaux seulement. En-têtes en micro-capitales, chiffres à droite (<code>.is-num</code>), ligne clé en gras (<code>.is-key</code>). Une seule cellule peut porter le signal (<code>.is-signal</code>).</p>
             <div class="cat-demo" data-code>
@@ -134,9 +265,15 @@
                 </tfoot>
               </table>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Des données à comparer sur plusieurs colonnes. Les unités vont dans la légende ou l'en-tête, pas dans chaque cellule.</dd></div>
+              <div><dt>Éviter</dt><dd>Filets verticaux, lignes zébrées, fond d'en-tête. Plus d'une cellule en signal. Du texte centré.</dd></div>
+              <div><dt>États</dt><dd>Survol : la ligne passe sur <code>--surface</code>. <code>tr.is-key</code> ligne commentée · <code>tr.is-muted</code> ligne provisoire · <code>tfoot</code> total.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;caption&gt;</code>, <code>&lt;th&gt;</code> d'en-tête et de ligne. Envelopper dans <code>.c-table-wrap</code> pour le défilement horizontal en étroit.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-stat" data-search="composant">
             <h3>Chiffre clé — .c-stat</h3>
             <p>Label, valeur, note. Un seul <code>--hero</code> par écran ; les autres en taille normale ou <code>--compact</code>.</p>
             <div class="cat-demo" data-code>
@@ -158,9 +295,14 @@
                 </div>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Un indicateur que l'on doit pouvoir lire à trois mètres. L'unité est petite et accolée ; la note donne la comparaison.</dd></div>
+              <div><dt>Éviter</dt><dd>Plus de quatre chiffres clés côte à côte, deux <code>--hero</code> sur un écran, une valeur en signal sans raison énoncée.</dd></div>
+              <div><dt>Variantes</dt><dd><code>--hero</code> 48 px, le point focal · défaut 32 px · <code>--compact</code> 24 px · <code>--ruled</code> filet supérieur pour une rangée.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-key" data-search="composant">
             <h3>Légende — .c-key</h3>
             <p>Bloc « clé » posé dans un coin libre de la figure. Elle nomme les formes, pas les couleurs.</p>
             <div class="cat-demo" data-code>
@@ -172,13 +314,17 @@
                 <div class="c-key__item"><span class="c-key__swatch c-key__swatch--signal"></span>Appel abouti</div>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Quand l'étiquetage direct ne suffit pas. Dans un vide de la figure, de préférence en bas.</dd></div>
+              <div><dt>Éviter</dt><dd>Un cadre autour, plus de cinq entrées, une entrée par teinte : la clé nomme des formes.</dd></div>
+            </dl>
           </div>
         </section>
 
-        <section class="cat-section" id="actions">
+        <section class="cat-section" id="actions" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Actions</span></h2>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-button" data-search="composant">
             <h3>Bouton — .c-button</h3>
             <p>Le primaire est un bloc inversé : la tache la plus claire de l'écran. <span class="t-strong">Un seul par vue.</span> Le bouton signal est réservé à l'irréversible. L'inactif se reconnaît à son contour tireté, pas à une opacité.</p>
             <div class="cat-demo" data-code>
@@ -199,9 +345,16 @@
                 </button>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Déclencher une action. Le libellé est un verbe, deux mots au plus.</dd></div>
+              <div><dt>Éviter</dt><dd>Deux primaires sur une vue. Un bouton pour naviguer (un lien). Le signal pour une action courante. Une icône seule sans <code>aria-label</code>.</dd></div>
+              <div><dt>Hiérarchie</dt><dd><code>--primary</code> une fois par vue · défaut (contour) pour le reste · <code>--quiet</code> pour l'action tertiaire ou dans une ligne · <code>--signal</code> pour l'irréversible.</dd></div>
+              <div><dt>États</dt><dd>Survol : bordure au ton fort et fond d'un cran. Inactif : contour tireté, texte encore lisible. Focus : contour de 2 px.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;button type&gt;</code> ; 32 px de haut au moins, 40 px en <code>--large</code> sur écran tactile.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-tabs" data-search="composant">
             <h3>Onglets — .c-tabs</h3>
             <div class="cat-demo" data-code>
               <div class="c-tabs" role="tablist" aria-label="Période">
@@ -210,9 +363,15 @@
                 <button class="c-tabs__tab" type="button" role="tab" aria-selected="false">Agences</button>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Plusieurs vues d'un même objet, de deux à six.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour des étapes ordonnées (préférer <code>.c-steps</code>) ou pour filtrer une liste (préférer <code>.c-chip</code>).</dd></div>
+              <div><dt>États</dt><dd>Actif : texte au ton fort et trait de 2 px. Survol : trait fin.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="tablist"</code> / <code>tab</code> / <code>aria-selected</code>, ou des liens avec <code>aria-current="page"</code>.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-segmented" data-search="composant">
             <h3>Sélecteur segmenté — .c-segmented</h3>
             <p>Deux à quatre options exclusives. L'option active est remplie en gris moyen, pas en clair : elle ne concurrence pas le bouton primaire.</p>
             <div class="cat-demo" data-code>
@@ -222,13 +381,60 @@
                 <button class="c-segmented__item" type="button" aria-pressed="false">Année</button>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Changer le mode d'affichage d'une même donnée : échelle, unité, densité.</dd></div>
+              <div><dt>Éviter</dt><dd>Plus de quatre options, des libellés de plus d'un mot, un emploi comme groupe de boutons d'action.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="group"</code> avec <code>aria-label</code> ; chaque option en <code>aria-pressed</code>.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-menu" data-search="composant">
+            <h3>Menu déroulant — .c-menu</h3>
+            <p>Une liste d'actions attachée à un bouton. Surface d'un cran plus claire, bordure d'un pixel, aucune ombre : c'est le filet qui la détache.</p>
+            <div class="cat-demo" data-code style="min-height: 15rem">
+              <details class="c-menu">
+                <summary class="c-button">Exporter</summary>
+                <div class="c-menu__list" role="menu">
+                  <div class="c-menu__label">Format</div>
+                  <button class="c-menu__item" type="button" role="menuitem">Tableau CSV <span class="c-menu__hint">⌘ E</span></button>
+                  <button class="c-menu__item" type="button" role="menuitem">Document PDF</button>
+                  <button class="c-menu__item" type="button" role="menuitem" disabled>Image — indisponible</button>
+                  <hr class="c-menu__sep">
+                  <button class="c-menu__item c-menu__item--signal" type="button" role="menuitem">Supprimer l'export</button>
+                </div>
+              </details>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Trois à sept actions secondaires sur un même objet, ou un choix parmi quelques options (<code>aria-checked</code>).</dd></div>
+              <div><dt>Éviter</dt><dd>Pour y ranger l'action principale, pour deux actions seulement (deux boutons), pour une navigation (préférer <code>.c-nav</code>), et tout sous-menu.</dd></div>
+              <div><dt>Variantes</dt><dd><code>--end</code> aligne la liste à droite · <code>__label</code> titre de groupe · <code>__sep</code> filet · <code>__hint</code> raccourci · <code>__item--signal</code> action irréversible, toujours en dernier.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="menu"</code> / <code>menuitem</code>. Échap et clic extérieur ferment ; le focus revient au bouton.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-chip" data-search="composant">
+            <h3>Filtre — .c-chip</h3>
+            <p>Un bouton bascule compact, pour filtrer une liste. Actif : rempli en gris moyen, comme le segment actif. Le compteur est facultatif.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-2)">
+                <button class="c-chip" type="button" aria-pressed="true">Non-vie <span class="c-chip__count">812</span></button>
+                <button class="c-chip" type="button" aria-pressed="false">Vie <span class="c-chip__count">392</span></button>
+                <button class="c-chip" type="button" aria-pressed="false">Provisoire <span class="c-chip__count">14</span></button>
+                <button class="c-chip" type="button" disabled>Archivé <span class="c-chip__count">0</span></button>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Des critères cumulables sur une liste ou un tableau. Aucun filtre actif signifie « tout ».</dd></div>
+              <div><dt>Éviter</dt><dd>Pour des options exclusives (préférer <code>.c-segmented</code>) ou pour étiqueter sans interaction (préférer <code>.c-tag</code>).</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;button aria-pressed&gt;</code> ; le groupe porte un <code>aria-label</code>.</dd></div>
+            </dl>
           </div>
         </section>
 
-        <section class="cat-section" id="saisie">
+        <section class="cat-section" id="saisie" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">04</span><span>Saisie</span></h2>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-field" data-search="composant">
             <h3>Champ — .c-field</h3>
             <p>Label toujours visible au-dessus, en micro-capitales. L'erreur est dite par un texte et un glyphe ; le signal ne fait que la désigner.</p>
             <div class="cat-demo" data-code>
@@ -260,9 +466,15 @@
                 </label>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Toute saisie. Le label est toujours visible ; l'aide précise le format attendu avant l'erreur.</dd></div>
+              <div><dt>Éviter</dt><dd>Un texte indicatif à la place du label. Une erreur dite par la seule bordure. Un astérisque : écrire « Requis » ou « Facultatif ».</dd></div>
+              <div><dt>États</dt><dd>Survol, focus (bordure forte, surface d'un cran), invalide (<code>aria-invalid</code> : filet signal à gauche et message), inactif (tireté).</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;label&gt;</code> englobant ; l'erreur est liée par <code>aria-describedby</code>.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-check" data-search="composant">
             <h3>Case, radio, interrupteur — .c-check / .c-switch</h3>
             <p>Formes pleines, sans coche : carré pour le choix multiple, rond pour le choix unique, curseur carré pour l'état immédiat.</p>
             <div class="cat-demo" data-code>
@@ -274,12 +486,38 @@
                 <label class="c-switch"><input type="checkbox" role="switch" checked><span>Actualisation</span></label>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Case : plusieurs choix. Radio : un seul parmi deux à cinq. Interrupteur : un réglage qui s'applique immédiatement.</dd></div>
+              <div><dt>Éviter</dt><dd>Un interrupteur dans un formulaire à valider (une case). Plus de cinq radios (une liste déroulante).</dd></div>
+              <div><dt>Accessibilité</dt><dd>Contrôles natifs ; le libellé fait partie de la zone cliquable. <code>role="switch"</code> sur l'interrupteur.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-search" data-search="composant">
+            <h3>Recherche et touche — .c-search / .c-kbd</h3>
+            <p>Un champ précédé d'une loupe, suivi de son raccourci. C'est le champ placé en haut de ce catalogue.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-stack" style="max-width: 32rem">
+                <label class="c-search c-search--large">
+                  <svg class="c-icon c-icon--small" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="m16 16 5 5"/></svg>
+                  <input type="search" placeholder="Rechercher une agence" aria-label="Rechercher une agence">
+                  <span class="c-kbd">/</span>
+                </label>
+                <span class="t-small t-muted"><span class="c-kbd">↑</span> <span class="c-kbd">↓</span> naviguer &nbsp; <span class="c-kbd">↵</span> ouvrir &nbsp; <span class="c-kbd">esc</span> fermer</span>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Une recherche par page au plus, en tête de la région qu'elle filtre. <code>--large</code> (40 px) quand elle est l'entrée principale de l'écran.</dd></div>
+              <div><dt>Éviter</dt><dd>Un bouton « Rechercher » à côté : la saisie filtre à la frappe. Pas de champ de recherche pour moins de dix éléments.</dd></div>
+              <div><dt>États</dt><dd>Focus : bordure au ton fort et surface d'un cran. Résultats nuls : dire ce qui a été cherché et proposer d'élargir.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;label&gt;</code> englobant, <code>aria-label</code> sur le champ, nombre de résultats annoncé par une zone <code>aria-live</code>.</dd></div>
+            </dl>
           </div>
         </section>
 
-        <section class="cat-section" id="navigation">
+        <section class="cat-section" id="navigation" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">05</span><span>Navigation</span></h2>
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-nav" data-search="composant">
             <h3>Menu — .c-nav</h3>
             <p>Liste numérotée ; l'entrée courante passe en gras et tire un filet jusqu'au bord. C'est le menu de ce catalogue.</p>
             <div class="cat-demo" data-code>
@@ -290,8 +528,13 @@
                 <a class="c-nav__item" href="#navigation"><span>03</span><span>Résultats</span></a>
               </nav>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>La navigation principale d'un outil ou d'un document, de trois à neuf entrées.</dd></div>
+              <div><dt>Éviter</dt><dd>Plus de deux niveaux. Des icônes devant chaque entrée.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;nav aria-label&gt;</code> ; entrée courante en <code>aria-current="page"</code>.</dd></div>
+            </dl>
           </div>
-          <div class="cat-sub">
+          <div class="cat-sub" id="fil-d-ariane-et-pagination" data-search="composant">
             <h3>Fil d'Ariane et pagination</h3>
             <div class="cat-demo" data-code>
               <div class="l-split">
@@ -311,13 +554,36 @@
                 </nav>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Fil d'Ariane : situer une page à plus de deux niveaux de profondeur. Pagination : au-delà de cinquante lignes.</dd></div>
+              <div><dt>Éviter</dt><dd>Un fil d'Ariane sur une page de premier niveau. Une pagination pour moins de deux pages.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;nav aria-label&gt;</code> ; position courante en <code>aria-current</code> ; flèches avec <code>aria-label</code>.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-steps" data-search="composant">
+            <h3>Étapes — .c-steps</h3>
+            <p>Les trois styles de filet racontent l'avancement : plein pour le fait, épais pour l'en-cours, tireté pour l'à-venir.</p>
+            <div class="cat-demo" data-code>
+              <ol class="c-steps" aria-label="Clôture">
+                <li class="c-steps__step is-done">Collecte</li>
+                <li class="c-steps__step is-done">Contrôle</li>
+                <li class="c-steps__step" aria-current="step">Validation</li>
+                <li class="c-steps__step">Publication</li>
+              </ol>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Un parcours linéaire de trois à six étapes dont l'ordre est imposé.</dd></div>
+              <div><dt>Éviter</dt><dd>Comme navigation libre (préférer <code>.c-tabs</code>) ou pour un pourcentage (préférer <code>.c-meter</code>).</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;ol&gt;</code>, étape courante en <code>aria-current="step"</code>. L'état est porté par le filet et la graisse, jamais par une teinte.</dd></div>
+            </dl>
           </div>
         </section>
 
-        <section class="cat-section" id="etats">
+        <section class="cat-section" id="etats" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">06</span><span>États &amp; retours</span></h2>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-status" data-search="composant">
             <h3>Statut — .c-status</h3>
             <p>L'état se lit à la forme du glyphe et au mot. Il n'existe ni vert ni orange : seul « critique » reçoit le signal.</p>
             <div class="cat-demo" data-code>
@@ -330,9 +596,14 @@
                 <span class="c-status c-status--critical">Critique</span>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>L'état d'un objet, en un mot. La forme du glyphe suffit à le reconnaître : plein, demi, vide, tireté, losange, carré.</dd></div>
+              <div><dt>Éviter</dt><dd>Une teinte par état. Plus d'un statut <code>--critical</code> par vue sans qu'ils désignent le même fait.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Le mot est toujours présent : le glyphe est décoratif.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-tag" data-search="composant">
             <h3>Étiquette et référence — .c-tag / .c-ref</h3>
             <div class="cat-demo" data-code>
               <div class="l-cluster" style="--gap: var(--space-5)">
@@ -342,9 +613,13 @@
                 <span class="c-ref">WAP375CD</span>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Étiquette : une métadonnée courte et non interactive. Référence : un identifiant technique, entre parenthèses.</dd></div>
+              <div><dt>Éviter</dt><dd>Une étiquette cliquable (préférer <code>.c-chip</code>). Plus de trois étiquettes sur une même ligne.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-meter" data-search="composant">
             <h3>Jauge — .c-meter</h3>
             <p>Un filet fin pour l'étendue, un segment épais pour la valeur.</p>
             <div class="cat-demo" data-code>
@@ -353,9 +628,14 @@
                 <div class="c-meter c-meter--signal" style="--value: 96" role="meter" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100" aria-label="Quota"></div>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Une part d'un tout connu. Toujours accompagnée de sa valeur en chiffres.</dd></div>
+              <div><dt>Éviter</dt><dd>Une jauge sans chiffre, ou plusieurs jauges à comparer (préférer <code>.v-hbars</code>).</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="meter"</code> avec <code>aria-valuenow</code>, <code>min</code>, <code>max</code> et un <code>aria-label</code>.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="c-notice" data-search="composant">
             <h3>Note — .c-notice</h3>
             <div class="cat-demo" data-code>
               <div class="l-stack">
@@ -369,10 +649,16 @@
                 </div>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Une précision ou une alerte attachée à une région, qui reste affichée.</dd></div>
+              <div><dt>Éviter</dt><dd>Un fond coloré, une icône, un bouton de fermeture. Une seule note <code>--signal</code> par vue.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="alert"</code> si la note apparaît à la suite d'une action.</dd></div>
+            </dl>
           </div>
 
-          <div class="cat-sub">
-            <h3>Infobulle, notification, dialogue</h3>
+          <div class="cat-sub" id="c-tooltip" data-search="composant">
+            <h3>Infobulle et notification — .c-tooltip / .c-toast</h3>
+            <p>Deux messages brefs posés au-dessus de la page. L'infobulle précise un élément ; la notification confirme une action et propose au plus une suite.</p>
             <div class="cat-demo" data-code>
               <div class="l-cluster" style="--gap: var(--space-6); align-items: flex-start">
                 <span class="c-tooltip" role="tooltip">Agences ouvertes au 31 décembre.</span>
@@ -380,22 +666,180 @@
                   <span>Export terminé</span>
                   <button class="c-button c-button--quiet" type="button">Ouvrir</button>
                 </div>
-                <button class="c-button" type="button" onclick="document.getElementById('demo-dialog').showModal()">Ouvrir le dialogue</button>
-                <dialog class="c-dialog" id="demo-dialog">
-                  <h3 class="c-dialog__title">Supprimer l'agence</h3>
-                  <p>Cette action retire l'agence et son historique. Elle est irréversible.</p>
-                  <form method="dialog" class="c-dialog__actions">
-                    <button class="c-button" type="submit">Annuler</button>
-                    <button class="c-button c-button--signal" type="submit">Supprimer</button>
-                  </form>
-                </dialog>
+                <div class="c-toast c-toast--signal" role="alert">
+                  <span>Échec de la synchronisation</span>
+                  <button class="c-button c-button--quiet" type="button">Réessayer</button>
+                </div>
               </div>
             </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Infobulle : une précision de moins de quinze mots. Notification : le résultat d'une action que l'utilisateur vient de lancer.</dd></div>
+              <div><dt>Éviter</dt><dd>Une information indispensable dans une infobulle ; une erreur de saisie dans une notification (elle va sous le champ) ; plus d'une notification à la fois.</dd></div>
+              <div><dt>Placement</dt><dd>Notification en bas à gauche, sur l'axe de la marge. Elle disparaît seule après 6 s, sauf <code>--signal</code>, qui attend une réponse.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="status"</code> pour une confirmation, <code>role="alert"</code> pour un échec. L'infobulle s'ouvre aussi au focus.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-empty" data-search="composant">
+            <h3>État vide — .c-empty</h3>
+            <p>Ce qui s'affiche quand il n'y a rien. Ferré à gauche comme le reste, contour tireté — le tireté dit le provisoire. Il nomme ce qui manque et propose une seule issue. Aucune illustration.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-empty">
+                <span class="c-empty__label">Aucun résultat</span>
+                <div class="c-empty__title">Aucune agence ne correspond à « Vizile »</div>
+                <p class="c-empty__text">Vérifiez l'orthographe ou retirez le filtre « Vie » pour élargir la recherche aux 1 204 agences.</p>
+                <div class="c-empty__actions">
+                  <button class="c-button" type="button">Retirer les filtres</button>
+                </div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Liste, tableau ou figure sans donnée : première utilisation, recherche infructueuse, filtre trop étroit, erreur de chargement.</dd></div>
+              <div><dt>Éviter</dt><dd>Un message générique (« Rien à afficher »), un ton enjoué, une illustration, et de centrer le bloc dans la zone vide.</dd></div>
+              <div><dt>Variantes</dt><dd><code>--plain</code> sans contour, à l'intérieur d'un panneau ou d'une fiche. Le bouton est secondaire, sauf si créer le premier objet est l'action principale de l'écran.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-loader" data-search="composant">
+            <h3>Chargement — .c-loader / .c-progress / .c-skeleton</h3>
+            <p>Trois moyens selon la durée. Sous une seconde : rien. Jusqu'à quelques secondes : les points de suspension ou le filet de progression. Au-delà, ou pour une page entière : le gabarit, qui réserve la place du contenu. Ni cercle tournant ni reflet animé.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <div class="l-span-4 l-stack">
+                  <span class="c-loader" role="status">Chargement</span>
+                  <div class="c-progress" role="progressbar" aria-label="Chargement en cours"></div>
+                </div>
+                <div class="l-span-8" aria-hidden="true">
+                  <span class="c-skeleton c-skeleton--title" style="--w: 40%"></span>
+                  <span class="c-skeleton" style="--w: 92%"></span>
+                  <span class="c-skeleton" style="--w: 78%"></span>
+                  <span class="c-skeleton" style="--w: 85%"></span>
+                </div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd><code>.c-loader</code> à côté de l'élément qui se charge · <code>.c-progress</code> sous un en-tête, durée inconnue (<code>.c-meter</code> si elle est connue) · <code>.c-skeleton</code> à la place exacte des lignes à venir.</dd></div>
+              <div><dt>Éviter</dt><dd>Un voile sur toute la page, un gabarit qui ne ressemble pas au contenu final, un indicateur qui dure sans message après dix secondes.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="status"</code> sur le libellé ; gabarit en <code>aria-hidden</code>. Mouvement réduit : les animations s'arrêtent, le libellé reste.</dd></div>
+            </dl>
           </div>
         </section>
 
-        <section class="cat-section" id="icones">
-          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Icônes</span><span class="c-section-head__aside">Grille 24 · trait 1,25</span></h2>
+        <section class="cat-section" id="superpositions" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Superpositions</span><span class="c-section-head__aside">Modale, tiroir</span></h2>
+          <p class="cat-note">Une superposition interrompt : elle doit le mériter. Elle se détache par un voile sombre et un filet, jamais par une ombre. Une seule à la fois, jamais l'une sur l'autre.</p>
+
+          <div class="cat-sub" id="c-dialog" data-search="composant">
+            <h3>Modale — .c-dialog</h3>
+            <p>Un <code>&lt;dialog&gt;</code> natif en trois parties : en-tête (titre et fermeture), corps défilant, actions. Les actions sont ferrées à gauche, la principale en premier. La modale est ancrée au tiers haut de l'écran : son bord supérieur ne bouge pas quand le contenu change de hauteur.</p>
+            <div class="cat-demo" data-code>
+              <button class="c-button" type="button" onclick="document.getElementById('demo-dialog').showModal()">Modifier l'agence</button>
+              <dialog class="c-dialog" id="demo-dialog" aria-labelledby="demo-dialog-title">
+                <div class="c-dialog__head">
+                  <h3 class="c-dialog__title" id="demo-dialog-title">Modifier l'agence</h3>
+                  <button class="c-button c-button--quiet" type="button" aria-label="Fermer" onclick="this.closest('dialog').close()">
+                    <svg class="c-icon c-icon--small" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+                  </button>
+                </div>
+                <form method="dialog" style="display: contents">
+                  <div class="c-dialog__body">
+                    <label class="c-field">
+                      <span class="c-field__label">Nom</span>
+                      <input class="c-input" type="text" value="Grenoble Centre">
+                    </label>
+                    <label class="c-field">
+                      <span class="c-field__label">Branche</span>
+                      <select class="c-select"><option>Nord</option><option>Centre</option></select>
+                    </label>
+                  </div>
+                  <div class="c-dialog__actions">
+                    <button class="c-button c-button--primary" type="submit">Enregistrer</button>
+                    <button class="c-button" type="submit">Annuler</button>
+                    <span class="c-dialog__aside">N-014</span>
+                  </div>
+                </form>
+              </dialog>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Anatomie</dt><dd><code>__head</code> (<code>__title</code> + bouton fermer) · <code>__body</code> (défile seul) · <code>__actions</code> (principale, secondaire, puis <code>__aside</code> à droite pour une référence).</dd></div>
+              <div><dt>Employer</dt><dd>Une tâche courte et autonome qui exige une réponse avant de continuer : modifier un objet, confirmer une action irréversible.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour informer (préférer <code>.c-notice</code> ou <code>.c-toast</code>), pour un formulaire de plus de cinq champs (une page), pour consulter un détail sans quitter la liste (un tiroir). Jamais de modale ouverte depuis une modale.</dd></div>
+              <div><dt>Titre et actions</dt><dd>Le titre est un verbe et son objet (« Modifier l'agence »). Le bouton principal reprend ce verbe, jamais « OK ». Deux actions, trois au plus.</dd></div>
+              <div><dt>Tailles</dt><dd><code>--small</code> 24 rem · défaut 32 rem · <code>--large</code> 48 rem. Hauteur limitée à 76 % de l'écran.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>showModal()</code> piège le focus et rend la page inerte ; Échap ferme ; <code>aria-labelledby</code> pointe le titre ; le focus revient à l'élément déclencheur.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-dialog--small" data-search="composant">
+            <h3>Confirmation — .c-dialog--small</h3>
+            <p>La forme la plus courte de la modale, pour l'irréversible. Elle dit ce qui sera perdu, en une phrase, et nomme l'objet. Le signal n'est porté que par le bouton : c'est le seul rouge de l'écran.</p>
+            <div class="cat-demo" data-code>
+              <button class="c-button c-button--signal" type="button" onclick="document.getElementById('demo-confirm').showModal()">Supprimer l'agence</button>
+              <dialog class="c-dialog c-dialog--small" id="demo-confirm" aria-labelledby="demo-confirm-title">
+                <div class="c-dialog__head">
+                  <h3 class="c-dialog__title" id="demo-confirm-title">Supprimer l'agence</h3>
+                </div>
+                <form method="dialog" style="display: contents">
+                  <div class="c-dialog__body">
+                    <p><span class="t-strong">Grenoble Centre</span> et ses 14 mois d'historique seront supprimés. Cette action est irréversible.</p>
+                  </div>
+                  <div class="c-dialog__actions">
+                    <button class="c-button c-button--signal" type="submit">Supprimer</button>
+                    <button class="c-button" type="submit" autofocus>Annuler</button>
+                  </div>
+                </form>
+              </dialog>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Suppression, écrasement, envoi définitif. Uniquement quand l'action ne peut pas être annulée après coup.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour une action annulable : l'exécuter et proposer « Annuler » dans une notification. Pas de case « Ne plus demander ».</dd></div>
+              <div><dt>Règles</dt><dd>Pas de bouton fermer : il faut choisir. Le focus initial est sur « Annuler ». Le bouton d'action répète le verbe du titre.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-dialog--drawer" data-search="composant">
+            <h3>Tiroir — .c-dialog--drawer</h3>
+            <p>La même modale, accrochée au bord droit sur toute la hauteur. Elle montre le détail d'un objet sans quitter la liste d'où il vient.</p>
+            <div class="cat-demo" data-code>
+              <button class="c-button" type="button" onclick="document.getElementById('demo-drawer').showModal()">Voir l'agence</button>
+              <dialog class="c-dialog c-dialog--drawer" id="demo-drawer" aria-labelledby="demo-drawer-title">
+                <div class="c-dialog__head">
+                  <h3 class="c-dialog__title" id="demo-drawer-title">Agence <span class="c-ref">N-014</span></h3>
+                  <button class="c-button c-button--quiet" type="button" aria-label="Fermer" onclick="this.closest('dialog').close()">
+                    <svg class="c-icon c-icon--small" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+                  </button>
+                </div>
+                <div class="c-dialog__body" style="gap: var(--space-6)">
+                  <div class="c-stat">
+                    <span class="c-stat__label">Primes 2026</span>
+                    <span class="c-stat__value">12,4<small>M</small></span>
+                    <span class="c-stat__note">+6,1 % sur un an</span>
+                  </div>
+                  <dl class="c-kv">
+                    <div><dt>Nom</dt><dd>Grenoble Centre</dd></div>
+                    <div><dt>Branche</dt><dd>Nord</dd></div>
+                    <div><dt>Effectif</dt><dd>18</dd></div>
+                    <div><dt>Ouverture</dt><dd>2011</dd></div>
+                  </dl>
+                  <div class="c-notice"><span class="c-notice__label">Note</span><span>Montants provisoires jusqu'à la clôture.</span></div>
+                </div>
+                <div class="c-dialog__actions">
+                  <button class="c-button" type="button">Modifier</button>
+                  <span class="c-dialog__aside">Maj 14:02</span>
+                </div>
+              </dialog>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Consulter ou ajuster un élément d'une liste, d'un tableau ou d'une carte, en gardant le contexte visible à gauche.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour une navigation principale, pour un contenu qui mérite sa page, et côté gauche : la gauche appartient à la structure, la droite au détail.</dd></div>
+              <div><dt>Règles</dt><dd>Largeur 28 rem. Pas de bouton primaire si le tiroir ne fait que montrer. Ouvrir un autre élément remplace le contenu, sans refermer.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Identique à la modale : focus piégé, Échap, retour du focus à la ligne d'origine.</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="cat-section" id="icones" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">08</span><span>Icônes</span><span class="c-section-head__aside">Grille 24 · trait 1,25</span></h2>
           <p class="cat-note">Tracé linéaire, extrémités rondes, sans remplissage. Une icône accompagne un mot ou le remplace dans un contrôle étroit ; elle n'est jamais décorative. <code>.c-icon</code> hérite de la couleur du texte.</p>
           <div class="cat-icons">
             <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg><figcaption>Ajouter</figcaption></figure>
@@ -420,8 +864,9 @@
       </main>
     </div>
 
-    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.1</span></footer>
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.2</span></footer>
   </div>
+  <script src="assets/search-index.js"></script>
   <script src="assets/catalogue.js"></script>
   <script>
     // Démonstrations : onglets et segments réagissent au clic.
@@ -433,6 +878,10 @@
       const item = e.target.closest('.c-segmented__item'); if (!item) return;
       group.querySelectorAll('.c-segmented__item').forEach((t) => t.setAttribute('aria-pressed', String(t === item)));
     }));
+    document.querySelectorAll('.cat-demo .c-chip').forEach((chip) => chip.addEventListener('click', () => chip.setAttribute('aria-pressed', String(chip.getAttribute('aria-pressed') !== 'true'))));
+    // Menu : Échap et clic extérieur ferment, le focus revient au bouton.
+    document.addEventListener('click', (e) => document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item')) m.open = false; }));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-menu[open]').forEach((m) => { m.open = false; m.querySelector('summary').focus(); }); });
   </script>
 </body>
 </html>

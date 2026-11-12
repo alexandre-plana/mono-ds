@@ -31,6 +31,8 @@ a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; 
 a:hover { text-decoration-color: var(--fg-strong); color: var(--fg-strong); }
 ::selection { background: var(--inverse-bg); color: var(--inverse-fg); }
 :focus-visible { outline: var(--stroke) solid var(--fg-strong); outline-offset: 3px; }
+/* Surlignage : ton fort et filet, jamais un aplat de couleur. */
+mark { background: none; color: var(--fg-strong); font-weight: var(--weight-bold); border-bottom: var(--hairline) solid var(--fg-soft); }
 hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 
 /* --- Styles de texte ------------------------------------------------------

@@ -41,6 +41,7 @@ src/
   fonts.css, fonts/ IBM Plex Mono et Sans (SIL OFL 1.1)
   mono.css          point d'entrée
 docs/               les règles
+  philosophie.md    le pourquoi : convictions, budgets, arbitrages, tests d'écart
   principes.md      les 8 principes et la liste de contrôle d'un écran
   fondations.md     tons, rôles, signal, typographie, espace, filets
   composition.md    masses tonales, équilibre, méthode
@@ -50,9 +51,25 @@ catalogue/          le catalogue navigable (démonstrations + code)
   exemples/         deux écrans composés avec le seul système
 scripts/
   contrast.mjs      contrôle des contrastes des tokens
+  build-search-index.mjs  index de la recherche du catalogue
   tonal-audit.mjs   mesure des masses tonales d'un écran
 reference/
   maquette-v1.html  la maquette d'origine, conservée pour mémoire
+```
+
+## Recherche du catalogue
+
+Le champ en haut de chaque page (touche `/`) cherche dans toutes les rubriques :
+règles, composants, tokens, classes. Plusieurs mots sont tous requis ;
+`"expression exacte"`, `-exclure`, `.c-classe`, `--token` et les codes de règle
+(`S2`, `C4`) sont reconnus ; les filtres par rubrique et par type se cumulent.
+`?q=…` dans l'adresse préremplit la recherche.
+
+L'index est un fichier généré. Après toute modification d'une page du catalogue
+ou de `src/tokens.css` :
+
+```bash
+npm run build:search
 ```
 
 ## Contrôles
@@ -65,10 +82,15 @@ npm run check:contrast
 node scripts/tonal-audit.mjs catalogue/exemples/tableau-de-bord.html
 ```
 
+```bash
+npm run check:search
+```
+
 Le premier vérifie chaque paire texte/fond des deux thèmes et refuse tout noir ou
 blanc pur. Le second capture un écran et chiffre la part de fond, de gris moyens,
 d'éclat et de signal, ainsi que le vide ; il demande Playwright
-(`npm i -D playwright && npx playwright install chromium`).
+(`npm i -D playwright && npx playwright install chromium`). Le troisième échoue si
+l'index de recherche n'est plus à jour.
 
 ## Écarts par rapport à la maquette d'origine
 

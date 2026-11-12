@@ -5,7 +5,10 @@ Langue du projet : français (documentation, catalogue, commentaires).
 
 ## Avant de créer ou modifier une UI
 
-Lire `docs/principes.md` (liste de contrôle) et `docs/composition.md` (masses
+Lire d'abord `docs/philosophie.md` : les convictions, les budgets par vue, l'ordre
+d'arbitrage et les tests d'écart. En cas de doute ou de demande qui contredit le
+système, c'est ce document qui tranche — voir sa table « Demandes fréquentes ».
+Puis `docs/principes.md` (liste de contrôle) et `docs/composition.md` (masses
 tonales, squelette d'écran). `docs/composants.md` liste les classes disponibles ;
 le code de chaque composant est visible dans `catalogue/composants.html`.
 
@@ -15,7 +18,9 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
   `src/tokens.css`. Les composants consomment les rôles (`--bg`, `--fg`, `--line`…).
 - Une seule couleur : `--signal`. Moins de 1 % de l'écran, un seul sens par écran,
   jamais décorative, toujours doublée d'une forme ou d'un mot. Pas de vert/orange/bleu.
-- Un seul bouton `--primary`, un seul `.c-stat--hero`, un seul bloc inversé par vue.
+- Un seul bouton `--primary`, un seul `.c-stat--hero`, un seul bloc inversé, une
+  seule superposition (modale ou tiroir) par vue.
+- Une fiche (`.c-card`) est un filet, pas une boîte ; jamais de fiche dans une fiche.
 - Aucun texte sous 11 px (capitales) / 12 px (bas de casse). Trois corps par écran.
 - Rayon 0, pas d'ombre, pas de dégradé. Filets de 1 px : plein = structure,
   tireté = relation/inactif, pointillé = repère.
@@ -28,14 +33,20 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
 ```bash
 node scripts/contrast.mjs
 node scripts/tonal-audit.mjs <page.html ou url>   # nécessite Playwright
+node scripts/build-search-index.mjs --check       # index de recherche à jour ?
 ```
 
 Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du catalogue).
 
 ## Étendre le système
 
-- Nouveau composant : dans `src/components.css`, préfixe `.c-`, rôles sémantiques
-  uniquement ; ajouter une démonstration `<div class="cat-demo" data-code>` dans
-  `catalogue/composants.html` et une ligne dans `docs/composants.md`.
+- Nouveau composant : passer les sept tests d'écart, puis l'écrire dans
+  `src/components.css` (préfixe `.c-`, rôles sémantiques uniquement). Dans
+  `catalogue/composants.html`, ajouter un bloc
+  `<div class="cat-sub" id="c-nom" data-search="composant">` avec un `<h3>`, une
+  démonstration `<div class="cat-demo" data-code>` et sa fiche `<dl class="cat-spec">`
+  (Employer / Éviter / États / Accessibilité). Ajouter une ligne à `docs/composants.md`.
+- Après toute modification du catalogue ou des tokens : `node scripts/build-search-index.mjs`.
+  Tout élément `data-search` doit porter un `id` et contenir un titre.
 - Nouvelle paire texte/fond : l'ajouter à `scripts/contrast.mjs`.
 - Les classes `.cat-` et `.w-` habillent le catalogue : ne pas les employer ailleurs.

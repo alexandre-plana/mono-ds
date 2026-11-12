@@ -12,13 +12,15 @@
     <header class="c-masthead">
       <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
       <div class="c-masthead__meta">
-        <span>Visualisations</span><span>v0.1</span>
+        <span>Visualisations</span><span>v0.2</span>
         <span class="c-segmented" role="group" aria-label="Thème">
           <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
           <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
         </span>
       </div>
     </header>
+
+    <div id="cat-search" class="cat-search" role="search"></div>
 
     <div class="l-rail cat-rail">
       <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
@@ -29,21 +31,21 @@
           <p class="cat-lede">Un graphique est une page comme une autre : gris moyens pour les marques, clair pour les chiffres, signal pour l'exception.</p>
         </section>
 
-        <section class="cat-section" id="regles">
+        <section class="cat-section" id="regles" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Règles</span></h2>
           <div class="cat-rules">
-            <div class="cat-rule"><span class="cat-rule__num">V1</span><h3>Marques en gris moyen</h3><p>Barres et aires prennent <code>--mark</code>, pas le ton le plus clair. Une grande surface claire écrase les chiffres qui la commentent.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">V2</span><h3>Le chiffre est le clair</h3><p>Valeurs en <code>--fg-strong</code>, posées directement sur la marque. Étiqueter tout quand la place existe, sinon le maximum, le dernier et l'exception.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">V3</span><h3>Une donnée en signal</h3><p>Le signal désigne le point dont parle le titre. Une marque, parfois une série ; jamais une catégorie parmi d'autres.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">V4</span><h3>Séries par ton et par trait</h3><p>Trois séries au plus : clair plein, moyen plein, moyen tireté. Au-delà, des petits multiples. Jamais de teinte par série.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">V5</span><h3>Grille pointillée</h3><p>Les repères sont pointillés et discrets ; seul l'axe de base est plein. Aucun cadre autour du graphique.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">V6</span><h3>Titre, unité, source</h3><p>Chaque figure porte un titre qui dit le constat, une ligne d'unité en micro-capitales et, dessous, sa source.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">V7</span><h3>Légende en clé</h3><p>Étiquetage direct d'abord. La clé nomme les formes et se loge dans un vide de la figure, jamais dans un cadre.</p></div>
-            <div class="cat-rule"><span class="cat-rule__num">V8</span><h3>Plat et droit</h3><p>Ni dégradé, ni ombre, ni arrondi, ni 3D. Un seul axe vertical par graphique. Le texte ne descend jamais sous 11 px.</p></div>
+            <div class="cat-rule" id="regle-v1" data-search="regle"><span class="cat-rule__num">V1</span><h3>Marques en gris moyen</h3><p>Barres et aires prennent <code>--mark</code>, pas le ton le plus clair. Une grande surface claire écrase les chiffres qui la commentent.</p></div>
+            <div class="cat-rule" id="regle-v2" data-search="regle"><span class="cat-rule__num">V2</span><h3>Le chiffre est le clair</h3><p>Valeurs en <code>--fg-strong</code>, posées directement sur la marque. Étiqueter tout quand la place existe, sinon le maximum, le dernier et l'exception.</p></div>
+            <div class="cat-rule" id="regle-v3" data-search="regle"><span class="cat-rule__num">V3</span><h3>Une donnée en signal</h3><p>Le signal désigne le point dont parle le titre. Une marque, parfois une série ; jamais une catégorie parmi d'autres.</p></div>
+            <div class="cat-rule" id="regle-v4" data-search="regle"><span class="cat-rule__num">V4</span><h3>Séries par ton et par trait</h3><p>Trois séries au plus : clair plein, moyen plein, moyen tireté. Au-delà, des petits multiples. Jamais de teinte par série.</p></div>
+            <div class="cat-rule" id="regle-v5" data-search="regle"><span class="cat-rule__num">V5</span><h3>Grille pointillée</h3><p>Les repères sont pointillés et discrets ; seul l'axe de base est plein. Aucun cadre autour du graphique.</p></div>
+            <div class="cat-rule" id="regle-v6" data-search="regle"><span class="cat-rule__num">V6</span><h3>Titre, unité, source</h3><p>Chaque figure porte un titre qui dit le constat, une ligne d'unité en micro-capitales et, dessous, sa source.</p></div>
+            <div class="cat-rule" id="regle-v7" data-search="regle"><span class="cat-rule__num">V7</span><h3>Légende en clé</h3><p>Étiquetage direct d'abord. La clé nomme les formes et se loge dans un vide de la figure, jamais dans un cadre.</p></div>
+            <div class="cat-rule" id="regle-v8" data-search="regle"><span class="cat-rule__num">V8</span><h3>Plat et droit</h3><p>Ni dégradé, ni ombre, ni arrondi, ni 3D. Un seul axe vertical par graphique. Le texte ne descend jamais sous 11 px.</p></div>
           </div>
         </section>
 
-        <section class="cat-section" id="barres">
+        <section class="cat-section" id="barres" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Barres</span></h2>
           <figure class="v-figure">
             <div>
@@ -55,7 +57,7 @@
           </figure>
           <p class="cat-note">Les étiquettes d'abscisse passent sur deux rangs quand la place manque. La dernière barre porte le signal parce que le commentaire porte sur elle : le premier repli de la série.</p>
 
-          <div class="cat-sub">
+          <div class="cat-sub" id="v-hbars" data-search="rubrique">
             <h3>Barres horizontales — .v-hbars</h3>
             <p>En HTML pur, pour un classement court. Un filet de base, un segment gris, la valeur à droite.</p>
             <div class="cat-demo" data-code>
@@ -69,7 +71,7 @@
           </div>
         </section>
 
-        <section class="cat-section" id="courbes">
+        <section class="cat-section" id="courbes" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Courbes</span></h2>
           <figure class="v-figure">
             <div>
@@ -82,7 +84,7 @@
           <p class="cat-note">La série principale est claire et pleine, la seconde en gris moyen, la référence en tireté. Les noms sont posés en bout de courbe : pas de légende séparée.</p>
         </section>
 
-        <section class="cat-section" id="arbre">
+        <section class="cat-section" id="arbre" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">04</span><span>Arbre</span></h2>
           <div class="l-grid">
             <figure class="v-figure l-span-9">
@@ -104,7 +106,7 @@
           <p class="cat-note">Les liens sont pointillés pour laisser la lecture aux barres. Le signal marque les seules issues utiles : les appels qui aboutissent à une personne.</p>
         </section>
 
-        <section class="cat-section" id="carte">
+        <section class="cat-section" id="carte" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">05</span><span>Carte</span></h2>
           <div class="l-grid">
             <figure class="v-figure l-span-9">
@@ -129,8 +131,9 @@
       </main>
     </div>
 
-    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.1</span></footer>
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.2</span></footer>
   </div>
+  <script src="assets/search-index.js"></script>
   <script src="assets/catalogue.js"></script>
   <script src="assets/charts.js"></script>
   <script src="assets/demo-data.js"></script>

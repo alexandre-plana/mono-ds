@@ -5,6 +5,9 @@ des pochettes de disques, des rapports annuels et de la cartographie imprimée :
 du monospace clair sur un fond d'encre, des filets d'un pixel, beaucoup de vide,
 et une seule couleur qui ne sert qu'à désigner.
 
+Le raisonnement derrière ces principes — et la manière de trancher quand ils
+ne suffisent pas — est dans [`philosophie.md`](philosophie.md).
+
 | | Principe | En pratique |
 |---|---|---|
 | P1 | **Monochrome d'abord** | Tout écran fonctionne en gris seuls. La couleur est ajoutée en dernier, à un seul endroit. |

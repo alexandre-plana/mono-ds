@@ -81,3 +81,39 @@ html { scroll-behavior: smooth; scroll-padding-top: var(--space-6); }
 .cat-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: var(--space-5) var(--space-3); }
 .cat-icons figure { display: flex; flex-direction: column; gap: var(--space-3); color: var(--fg); }
 .cat-icons figcaption { font-size: var(--text-micro); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-soft); }
+
+/* Fiche de spécification d'un composant */
+.cat-spec { display: grid; grid-template-columns: 8rem minmax(0, 1fr); column-gap: var(--space-5); max-width: 56rem; border-top: var(--hairline) solid var(--line-faint); }
+.cat-spec > div { display: contents; }
+.cat-spec dt, .cat-spec dd { padding-block: var(--space-2); border-bottom: var(--hairline) solid var(--line-faint); }
+.cat-spec dt { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-base); color: var(--fg-muted); }
+.cat-spec dd { color: var(--fg-soft); }
+@media (max-width: 640px) { .cat-spec { grid-template-columns: 1fr; } .cat-spec dt { border-bottom: 0; padding-bottom: 0; } .cat-spec dd { padding-top: 0; } }
+
+/* Cible d'un lien profond : une flèche devant le titre, sans autre effet. */
+.cat-sub:target > h3::before, .cat-rule:target > h3::before, .cat-verdict:target > h3::before { content: '→ '; color: var(--fg-soft); }
+.cat-sub, .cat-rule, .cat-verdict { scroll-margin-top: var(--space-6); }
+
+/* Recherche du catalogue */
+.cat-search { position: relative; margin-top: var(--space-5); }
+.cat-search__panel { position: absolute; z-index: 50; top: calc(100% + var(--space-1)); left: 0; right: 0; max-height: min(70vh, 40rem); display: flex; flex-direction: column; background: var(--surface); border: var(--hairline) solid var(--line-strong); }
+.cat-search__panel[hidden] { display: none; }
+.cat-search__filters { flex: none; display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4) var(--space-4) var(--space-3); border-bottom: var(--hairline) solid var(--line); }
+.cat-search__group { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.cat-search__group > .t-micro { min-width: 5.5rem; color: var(--fg-muted); }
+.cat-search__status { flex: none; padding: var(--space-3) var(--space-4) 0; color: var(--fg-muted); }
+.cat-search__status:empty { display: none; }
+.cat-search__results { flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-2) 0 var(--space-3); }
+.cat-search__results .c-empty { padding: var(--space-4); }
+.cat-search__heading { display: flex; justify-content: space-between; margin: var(--space-3) var(--space-4) var(--space-1); padding-bottom: var(--space-1); border-bottom: var(--hairline) solid var(--line); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
+.cat-search__heading > :first-child { color: var(--fg-strong); }
+.cat-search__help { flex: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); padding: var(--space-3) var(--space-4); border-top: var(--hairline) solid var(--line); color: var(--fg-muted); text-transform: none; letter-spacing: var(--track-label); }
+.cat-result { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) max-content; column-gap: var(--space-4); align-items: baseline; padding: var(--space-2) var(--space-4); text-decoration: none; color: var(--fg); border-left: var(--stroke) solid transparent; }
+.cat-result:hover, .cat-result[aria-selected="true"] { background: var(--surface-2); color: var(--fg); }
+.cat-result[aria-selected="true"] { border-left-color: var(--fg-strong); }
+.cat-result__type, .cat-result__where { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); white-space: nowrap; }
+.cat-result__main { display: flex; flex-direction: column; min-width: 0; }
+.cat-result__title { color: var(--fg-strong); text-transform: uppercase; letter-spacing: var(--track-label); font-weight: var(--weight-medium); }
+.cat-result__code { color: var(--fg-muted); font-weight: var(--weight-regular); margin-right: var(--space-3); }
+.cat-result__text { color: var(--fg-soft); font-size: var(--text-small); line-height: var(--leading-base); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 640px) { .cat-result { grid-template-columns: 1fr; } .cat-result__where { display: none; } .cat-result__text { white-space: normal; } .cat-search__help { display: none; } }
