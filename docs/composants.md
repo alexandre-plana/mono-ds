@@ -17,6 +17,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.l-shell` | La page : fond uni, contour d'un pixel, en retrait de `--shell-inset` |
 | `.l-desk--app`, `.l-desk--split` | Application : le plan occupe l'écran, chaque page défile seule ; deux pages côte à côte (collection + inspecteur, `--inspector`) |
 | `.l-desk--os`, `.l-desk__area` | Version bureau : le plan occupe l'écran, les fenêtres en sont les pages |
+| `.l-detail` (`__main`, `__aside`, `__head`, `.has-aside`) | Inspecteur attaché : dans la page, séparé par un filet ; il suit son onglet. Épinglé, il sort à côté (`.l-desk--split`) |
 | `.l-splitter` | `role="separator"`, `.is-dragging` | La bande hachurée entre deux pages se saisit pour régler `--inspector` |
 | `.l-pane` (`__head`, `__bar`, `__body`, `__foot`) | Volet d'application : en-tête fixe, barre d'outils, corps défilant, pied |
 | `.l-page` | Conteneur : largeur max. 1440 px, marges de page |
@@ -60,7 +61,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 
 | Composant | Éléments et variantes | Règle d'emploi |
 |---|---|---|
-| `.c-button` | `--primary`, `--quiet`, `--signal`, `--large`, `disabled` | **Un seul primaire par vue.** `--signal` = irréversible |
+| `.c-button` | `--primary`, `--quiet`, `--signal`, `--large`, `disabled` | **Zéro ou un primaire par vue** : il conclut une tâche (connexion, formulaire, modale), jamais sur un écran de consultation. `--signal` = irréversible |
 | `.c-tabs` | `__tab[aria-selected]` | Vues d'un même objet |
 | `.c-segmented` | `__item[aria-pressed]` | 2 à 4 options exclusives ; actif = contour de 2 px |
 | `.c-menu` (`<details>`) | `__list`, `__label`, `__item` (`--signal`), `__hint`, `__sep` ; `--end`, `--up` | 3 à 7 actions secondaires. Jamais l'action principale ; pas de sous-menu dans un menu de bouton |

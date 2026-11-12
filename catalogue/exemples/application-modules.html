@@ -21,9 +21,13 @@
                      À droite, « Aller à » et le menu de l'utilisateur.
        en bas        la barre d'état.
 
-     À CÔTÉ : une seconde page, hors des onglets. On y inspecte une ligne (un clic dans un
-     tableau) ou l'on y pose une autre page (depuis le plan). Elle ne dépend d'aucun onglet :
-     changer d'onglet ne la change pas. Les onglets ne coiffent que la page de gauche.
+     L'INSPECTEUR est DANS la page, séparé par un filet : il montre le détail de la ligne
+     sélectionnée et appartient à son onglet. Changer d'onglet l'emporte ; y revenir le
+     retrouve. C'est le cas général.
+
+     ÉPINGLER le sort de la page : il passe à côté, sur le plan de travail, séparé par les
+     hachures, et reste là quand on change d'onglet. C'est un geste volontaire, pour garder
+     un contenu sous les yeux en travaillant ailleurs. « Rattacher » le remet dans sa page.
 
      « Plan » (touche G, ou un clic sur les hachures) montre toutes les pages de
      l'application ; une page s'y ouvre en onglet ou se pose à côté.
@@ -74,22 +78,23 @@
     </div>
   </div>
 
-  <!-- À côté : une seconde page, HORS des onglets. Elle montre ce que l'on a inspecté ou posé
-       là, et ne change pas quand on change d'onglet : on la remplace ou on la ferme soi-même. -->
-  <aside class="l-shell" id="side" aria-label="À côté" hidden>
+  <!-- Épinglé : une seconde page, HORS des onglets. On n'y arrive que par un geste volontaire —
+       épingler l'inspecteur, ou poser une page depuis le plan. Ce qui est ici ne change pas
+       quand on change d'onglet : on le rattache, on le remplace ou on le ferme soi-même. -->
+  <aside class="l-shell" id="side" aria-label="Épinglé" hidden>
     <div class="l-pane">
       <div class="l-pane__head">
         <header class="c-masthead">
-          <div class="c-masthead__title">À côté</div>
+          <div class="c-masthead__title" id="side-label">Épinglé</div>
           <div class="l-cluster" style="--gap: var(--space-1); flex-wrap: nowrap">
-            <button class="c-button c-button--quiet" type="button" id="side-open">Ouvrir en onglet</button>
-            <button class="c-button c-button--quiet" type="button" id="side-close" aria-label="Fermer la page d'à côté"><i class="c-icon i-close" aria-hidden="true"></i></button>
+            <button class="c-button c-button--quiet" type="button" id="side-attach"><i class="c-icon i-pin" aria-hidden="true"></i>Rattacher</button>
+            <button class="c-button c-button--quiet" type="button" id="side-close" aria-label="Fermer"><i class="c-icon i-close" aria-hidden="true"></i></button>
           </div>
         </header>
       </div>
-      <div class="l-pane__body" id="side-body" aria-live="polite"></div>
+      <div class="l-pane__body" id="side-body"></div>
       <span class="u-hidden" id="side-title"></span>
-      <div class="l-pane__foot"><div class="c-statusbar"><span class="c-statusbar__group">Vient de <a href="#" id="side-origin"></a></span><span class="c-statusbar__group">Indépendant des onglets</span></div></div>
+      <div class="l-pane__foot"><div class="c-statusbar"><span class="c-statusbar__group">Vient de <a href="#" id="side-origin"></a></span><button class="c-button c-button--quiet" type="button" id="side-open" style="min-height: 1.5rem; padding: 0">Ouvrir en onglet</button></div></div>
     </div>
   </aside>
 

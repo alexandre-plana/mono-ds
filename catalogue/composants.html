@@ -251,7 +251,8 @@
               <div><dt>Persistance</dt><dd>C'est la promesse d'un onglet : la page n'est pas rechargée quand on y revient. Filtre saisi, ligne ouverte, position de défilement, saisie en cours sont conservés tant que l'onglet est ouvert. Une application qui ne peut pas tenir cette promesse ne doit pas employer d'onglets.</dd></div>
               <div><dt>Débordement</dt><dd>Quand les onglets ne tiennent plus, ceux qui dépassent se rangent dans le menu « … », qui en donne le nombre. L'onglet courant reste toujours visible ; rien ne défile, rien ne rétrécit jusqu'à l'illisible.</dd></div>
               <div><dt>Anatomie</dt><dd><code>__tab</code> (<code>__label</code>, <code>__close</code> pour un onglet ouvert à la demande) · <code>__tab--tool</code> pour un outil à gauche, comme le plan · <code>__more</code> pour le menu de débordement. Dans un plan de travail <code>.l-desk--tabs</code>, la rangée occupe toute la largeur et toutes les pages commencent sur la même ligne, dessous.</dd></div>
-              <div><dt>À côté</dt><dd>Une page posée à côté — ce que l'on inspecte, ou une autre page — n'appartient à aucun onglet : changer d'onglet ne la change pas. La rangée d'onglets s'arrête donc au bord de la page qu'elle gouverne ; au-dessus de la page d'à côté il n'y a que le plan de travail. Un détail qui doit suivre l'onglet se place dans la page, pas à côté.</dd></div>
+              <div><dt>Inspecteur</dt><dd>Le détail d'une ligne sélectionnée se place <span class="t-strong">dans</span> la page de l'onglet, séparé par un filet (<code>.l-detail</code>) : il appartient à l'onglet, part avec lui et revient avec lui. C'est le cas général.</dd></div>
+              <div><dt>Épingler</dt><dd>Épingler l'inspecteur le sort de la page : il passe à côté, sur le plan de travail, séparé par les hachures, et reste là quand on change d'onglet. « Rattacher » le remet dans sa page. La rangée d'onglets s'arrête alors au bord de la page qu'elle gouverne.</dd></div>
               <div><dt>Fil d'Ariane</dt><dd>Les onglets disent quelles pages sont ouvertes ; ils ne disent pas où l'on est dans la page. La ligne de tête de la page porte donc toujours le fil d'Ariane (<code>.c-breadcrumb--head</code>) : famille, page, détail.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>role="tablist"</code> / <code>tab</code> / <code>tabpanel</code>, <code>aria-selected</code>. Flèches gauche et droite passent d'un onglet à l'autre, Suppr ferme un onglet ouvert à la demande. Le menu de débordement annonce le nombre d'onglets qu'il contient.</dd></div>
               <div><dt>Script</dt><dd>État des onglets, persistance et débordement reviennent à l'application ; voir <code>catalogue/assets/tabs-demo.js</code>.</dd></div>
@@ -468,7 +469,7 @@
 
           <div class="cat-sub" id="c-button" data-search="composant">
             <h3>Bouton — .c-button</h3>
-            <p>Le primaire est un bloc inversé : la tache la plus claire de l'écran. <span class="t-strong">Un seul par vue.</span> Le bouton signal est réservé à l'irréversible. L'inactif se reconnaît à son contour tireté, pas à une opacité.</p>
+            <p>Le primaire est un bloc inversé : la tache la plus claire de l'écran. <span class="t-strong">Il conclut une tâche — se connecter, enregistrer, confirmer — et il n'y en a qu'un.</span> Un écran où l'on consulte n'en a pas : « Nouvelle agence » ou « Exporter » y sont des boutons à contour, pour laisser le clair au contenu. Le bouton signal est réservé à l'irréversible. L'inactif se reconnaît à son contour tireté, pas à une opacité.</p>
             <div class="cat-demo" data-code>
               <div class="l-cluster">
                 <button class="c-button c-button--primary" type="button">Enregistrer</button>
@@ -489,8 +490,8 @@
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Déclencher une action. Le libellé est un verbe, deux mots au plus.</dd></div>
-              <div><dt>Éviter</dt><dd>Deux primaires sur une vue. Un bouton pour naviguer (un lien). Le signal pour une action courante. Une icône seule sans <code>aria-label</code>.</dd></div>
-              <div><dt>Hiérarchie</dt><dd><code>--primary</code> une fois par vue · défaut (contour) pour le reste · <code>--quiet</code> pour l'action tertiaire ou dans une ligne · <code>--signal</code> pour l'irréversible.</dd></div>
+              <div><dt>Éviter</dt><dd>Deux primaires sur une vue. Un primaire sur un écran de consultation, où rien ne conclut une tâche. Un bouton pour naviguer (un lien). Le signal pour une action courante. Une icône seule sans <code>aria-label</code>.</dd></div>
+              <div><dt>Hiérarchie</dt><dd><code>--primary</code> zéro ou une fois par vue : seulement quand l'écran existe pour accomplir une action (formulaire, connexion, modale) · défaut (contour) pour le reste · <code>--quiet</code> pour l'action tertiaire ou dans une ligne · <code>--signal</code> pour l'irréversible.</dd></div>
               <div><dt>États</dt><dd>Survol : bordure au ton fort et fond d'un cran. Inactif : contour tireté, texte encore lisible. Focus clavier : contour de 2 px.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;button type&gt;</code> ; 32 px de haut au moins, 40 px en <code>--large</code> sur écran tactile.</dd></div>
             </dl>

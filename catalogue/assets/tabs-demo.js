@@ -3,8 +3,9 @@
    Deux règles tiennent tout :
    1. Un onglet = une page qui reste dans le document tant qu'il est ouvert. Son panneau est
       masqué, jamais détruit : filtre saisi, défilement et note en cours sont retrouvés.
-   2. Ce qui est HORS de la page ne dépend pas de l'onglet. La page d'à côté — ce que l'on
-      inspecte, ou une autre page posée là — reste telle quelle quand on change d'onglet.
+   2. L'inspecteur est DANS la page (un filet le sépare) : il appartient à son onglet et le
+      suit. Épinglé, il sort À CÔTÉ, hors de la page (les hachures le séparent), et ne dépend
+      plus d'aucun onglet. L'image dit donc toujours la vérité.
 
    Les contenus ci-dessous sont À REMPLACER par les écrans réels. */
 'use strict';
@@ -37,21 +38,30 @@
     el.className = 'l-pane__body'; el.id = 'panel-' + slug(t.id); el.setAttribute('role', 'tabpanel'); el.dataset.tab = t.id;
     if (t.agence) el.innerHTML = fiche(t.agence) + note('Note sur ' + t.agence.nom, 'Conservée avec l\'onglet');
     else if (t.id === 'Agences') {
-      el.innerHTML = `<div class="l-split" style="align-items: flex-end"><h1 class="t-title"><span data-count></span> <span class="t-soft t-body">agences affichées</span></h1><button class="c-button c-button--primary" type="button"><i class="c-icon i-plus" aria-hidden="true"></i>Nouvelle agence</button></div>
+      el.innerHTML = `<div class="l-detail"><div class="l-detail__main"><div class="l-split" style="align-items: flex-end"><h1 class="t-title"><span data-count></span> <span class="t-soft t-body">agences affichées</span></h1><button class="c-button" type="button"><i class="c-icon i-plus" aria-hidden="true"></i>Nouvelle agence</button></div>
         <label class="c-search" style="max-width: 22rem"><i class="c-icon i-search" aria-hidden="true"></i><input type="search" placeholder="Filtrer les agences" aria-label="Filtrer les agences" autocomplete="off"></label>
-        <table class="c-table"><thead><tr><th>Réf.</th><th>Agence</th><th>Responsable</th><th>État</th><th class="is-num">Primes (M)</th></tr></thead><tbody></tbody></table>`;
+        <table class="c-table"><thead><tr><th>Réf.</th><th>Agence</th><th>Responsable</th><th>État</th><th class="is-num">Primes (M)</th></tr></thead><tbody></tbody></table></div>
+        <aside class="l-detail__aside" aria-label="Inspecteur" hidden></aside></div>`;
       $('input', el).addEventListener('input', drawAgences);
     } else el.innerHTML = `<h1 class="t-title">${t.fig} <span class="t-soft t-body">${t.label}</span></h1><p class="t-soft" style="max-width: 46ch">${t.desc}.</p>${note('Note de la page ' + t.name, 'Conservée avec l\'onglet')}`;
     $('#panels').appendChild(el); panels.set(t.id, el);
     if (t.id === 'Agences') drawAgences();
     return el;
   }
-  // La ligne inspectée garde son contour tant qu'elle est à côté, même si l'on a changé d'onglet entre-temps.
+  // La ligne inspectée porte le contour : c'est l'inspecteur de CET onglet qui en dépend.
   function drawAgences() {
     const el = panels.get('Agences'); if (!el) return;
     const q = norm($('input', el).value), rows = AGENCES.filter((a) => !q || norm(a.nom + a.ref + a.resp).includes(q));
-    $('tbody', el).innerHTML = rows.map((a) => `<tr tabindex="0" data-ref="${a.ref}" aria-selected="${side?.kind === 'agence' && side.id === a.ref}"><td class="t-muted u-nowrap">${a.ref}</td><th>${a.nom}</th><td>${a.resp}</td><td><span class="c-status ${a.cls}">${a.etat}</span></td><td class="is-num">${a.primes}</td></tr>`).join('');
+    $('tbody', el).innerHTML = rows.map((a) => `<tr tabindex="0" data-ref="${a.ref}" aria-selected="${el.dataset.inspect === a.ref}"><td class="t-muted u-nowrap">${a.ref}</td><th>${a.nom}</th><td>${a.resp}</td><td><span class="c-status ${a.cls}">${a.etat}</span></td><td class="is-num">${a.primes}</td></tr>`).join('');
     $('[data-count]', el).textContent = rows.length;
+  }
+  // Inspecteur attaché : dans le panneau de l'onglet, donc conservé et masqué avec lui.
+  function inspect(ref, keep) {
+    const el = panels.get('Agences') || build(tab('Agences')), box = $('.l-detail__aside', el), a = AGENCES.find((x) => x.ref === ref);
+    if (a && el.dataset.inspect !== ref) box.innerHTML = `<div class="l-detail__head"><span class="t-micro">Inspecteur</span><span class="l-cluster" style="--gap: var(--space-1); flex-wrap: nowrap"><button class="c-button c-button--quiet" type="button" data-pin="${a.ref}"><i class="c-icon i-pin" aria-hidden="true"></i>Épingler</button><button class="c-button c-button--quiet" type="button" data-uninspect aria-label="Fermer l'inspecteur"><i class="c-icon i-close" aria-hidden="true"></i></button></span></div>${fiche(a)}${note('Note sur ' + a.nom, 'Suit l\'onglet')}`;
+    if (a && keep) $('textarea', box).value = keep;
+    el.dataset.inspect = a ? ref : ''; box.hidden = !a; $('.l-detail', el).classList.toggle('has-aside', !!a);
+    drawAgences();
   }
 
   // ---- rangée d'onglets, avec débordement dans le menu « … »
@@ -81,13 +91,13 @@
     panels.forEach((p) => { p.hidden = p !== el; });
     el.setAttribute('aria-labelledby', 'tab-' + slug(id)); el.scrollTop = +(el.dataset.scroll || 0);
     if (planOpen()) showPlan(false);
-    renderSide(); renderTabs(); renderHead();          // la page d'à côté n'est PAS touchée par le changement d'onglet
+    renderSide(); renderTabs(); renderHead();          // ce qui est épinglé n'est PAS touché par le changement d'onglet
   }
   function openPage(id) { if (!tab(id)) tabs.push({ ...PAGES.find((p) => p.id === id), pinned: false }); if (side?.kind === 'page' && side.id === id) side = null; activate(id); }
   function openAgence(a) { const id = 'agence:' + a.ref; if (!tab(id)) tabs.push({ id, name: a.nom, family: 'Réseau', agence: a, pinned: false }); activate(id); }
   function closeTab(id) { const i = tabs.findIndex((t) => t.id === id); if (i < 0 || tabs[i].pinned) return; tabs.splice(i, 1); panels.get(id)?.remove(); panels.delete(id); if (current === id) activate(tabs[Math.max(0, i - 1)].id); else renderTabs(); }
 
-  // ---- à côté : global. Remplacé par un nouveau contenu, ou fermé à la main ; jamais par un changement d'onglet.
+  // ---- épinglé : global, hors de la page. On n'y arrive que par un geste volontaire.
   const plan = $('#plan'), page = $('#page'), planOpen = () => !plan.hidden;
   let sideKey = null;
   function renderSide() {
@@ -95,8 +105,8 @@
     aside.hidden = !on; document.body.classList.toggle('l-desk--split', on);
     const key = side ? side.kind + ':' + side.id : null;
     if (side && key !== sideKey) {          // on ne redessine que si le contenu change : sa saisie en cours est conservée
-      if (side.kind === 'agence') { const a = AGENCES.find((x) => x.ref === side.id); $('#side-title').textContent = a.nom; $('#side-body').innerHTML = fiche(a) + note('Note sur ' + a.nom, 'Conservée tant que la fiche est à côté'); $('#side-origin').textContent = 'Agences'; $('#side-origin').dataset.tab = 'Agences'; }
-      else { const p = PAGES.find((x) => x.id === side.id); $('#side-title').textContent = p.name; $('#side-body').innerHTML = `<h2 class="t-title">${p.fig} <span class="t-soft t-body">${p.label}</span></h2><p class="t-soft" style="max-width: 46ch">${p.desc}.</p>`; $('#side-origin').textContent = p.family; delete $('#side-origin').dataset.tab; }
+      if (side.kind === 'agence') { const a = AGENCES.find((x) => x.ref === side.id); $('#side-title').textContent = a.nom; $('#side-label').textContent = 'Épinglé'; $('#side-attach').hidden = false; $('#side-body').innerHTML = fiche(a) + note('Note sur ' + a.nom, 'Reste quand on change d\'onglet'); if (side.keep) $('#side-body textarea').value = side.keep; $('#side-origin').textContent = 'Agences'; $('#side-origin').dataset.tab = 'Agences'; }
+      else { const p = PAGES.find((x) => x.id === side.id); $('#side-title').textContent = p.name; $('#side-label').textContent = 'À côté'; $('#side-attach').hidden = true; $('#side-body').innerHTML = `<h2 class="t-title">${p.fig} <span class="t-soft t-body">${p.label}</span></h2><p class="t-soft" style="max-width: 46ch">${p.desc}.</p>`; $('#side-origin').textContent = p.family; delete $('#side-origin').dataset.tab; }
     }
     sideKey = key; drawAgences();
   }
@@ -120,8 +130,8 @@
   win.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggleConsole(false); });
   const palette = MonoPalette({ entries: [
     ...PAGES.map((p) => ({ type: 'Écran', title: p.name, desc: p.desc, group: p.family, hint: p.family, go: () => openPage(p.id) })),
-    // Une agence trouvée par son nom s'inspecte à côté, comme si l'on avait cliqué sa ligne : on ne quitte pas l'onglet où l'on est.
-    ...AGENCES.map((a) => ({ type: 'Agence', title: a.nom, desc: a.resp, hint: a.ref, keywords: a.ref, go: () => setSide({ kind: 'agence', id: a.ref }) })),
+    // Aller à une agence, c'est y aller : on passe sur l'onglet Agences et on l'inspecte là, dans son contexte.
+    ...AGENCES.map((a) => ({ type: 'Agence', title: a.nom, desc: a.resp, hint: a.ref, keywords: a.ref, go: () => { activate('Agences'); inspect(a.ref); } })),
     { type: 'Action', title: 'Voir le plan', desc: 'Toutes les pages de l\'application', hint: 'G', go: () => showPlan(true) },
     { type: 'Action', title: 'Ouvrir la console', desc: 'Journal et commandes', hint: 'C', go: () => toggleConsole(true) },
   ] });
@@ -131,17 +141,21 @@
   $('#goto').addEventListener('click', () => palette.open());
   $('#plan-open').addEventListener('click', () => showPlan(!planOpen()));
   $('#side-close').addEventListener('click', () => setSide(null));
+  // Rattacher : la fiche épinglée retourne dans sa page, avec ce qu'on y avait écrit.
+  $('#side-attach').addEventListener('click', () => { const s = side, keep = $('#side-body textarea')?.value; side = null; activate('Agences'); inspect(s.id, keep); });
   $('#side-open').addEventListener('click', () => { const s = side; side = null; s.kind === 'agence' ? openAgence(AGENCES.find((a) => a.ref === s.id)) : openPage(s.id); });
   document.addEventListener('click', (e) => {
     if (e.target === document.body || e.target === plan) { closeMenus(); showPlan(!planOpen()); return; }
-    const t = e.target.closest('[data-close], [data-tab], [data-open], [data-beside], [data-console], tr[data-ref]');
+    const t = e.target.closest('[data-close], [data-tab], [data-open], [data-beside], [data-pin], [data-uninspect], [data-console], tr[data-ref]');
     if (t) {
       if (t.dataset.close) closeTab(t.dataset.close);
       else if (t.dataset.tab) { e.preventDefault(); activate(t.dataset.tab); }
       else if (t.dataset.open) openPage(t.dataset.open);
       else if (t.dataset.beside) setSide({ kind: 'page', id: t.dataset.beside });
       else if (t.dataset.console !== undefined) toggleConsole(true);
-      else if (t.matches('tr[data-ref]')) setSide({ kind: 'agence', id: t.dataset.ref });   // inspecter = poser à côté
+      else if (t.dataset.pin) { const keep = $('.l-detail__aside textarea', panels.get('Agences'))?.value; inspect(null); setSide({ kind: 'agence', id: t.dataset.pin, keep }); }   // épingler = sortir de la page
+      else if (t.dataset.uninspect !== undefined) inspect(null);
+      else if (t.matches('tr[data-ref]')) inspect(t.dataset.ref);                 // inspecter = dans la page, avec l'onglet
       closeMenus(); return;
     }
     closeMenus(e.target.closest('.c-menu'));
@@ -159,7 +173,7 @@
     if (e.key === '/') { e.preventDefault(); closeMenus(); palette.open(); }
     else if (k === 'g') { e.preventDefault(); closeMenus(); showPlan(!planOpen()); }
     else if (k === 'c') { e.preventDefault(); toggleConsole(); }
-    else if (e.key === 'Escape') { closeMenus(); if (planOpen()) showPlan(false); }
+    else if (e.key === 'Escape') { closeMenus(); if (planOpen()) showPlan(false); else if (current === 'Agences' && panels.get('Agences').dataset.inspect) inspect(null); }
   });
   new ResizeObserver(() => renderTabs()).observe(bar);
   activate(current);

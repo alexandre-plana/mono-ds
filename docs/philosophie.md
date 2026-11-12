@@ -165,7 +165,7 @@ Par vue, c'est-à-dire par écran visible sans défilement.
 |---|---|---|
 | Signal | Un fait, moins de 1 % de la surface — le plus souvent zéro | Conviction 4 |
 | Éclat (ton opposé au fond) | 3 % au plus, et jamais pour un état sélectionné | Convictions 2, 3, 8 |
-| Bouton primaire | 1 | Seul aplat clair autorisé |
+| Bouton primaire | 0 ou 1 — seulement quand l'écran existe pour accomplir une action | Seul aplat clair autorisé ; sur un écran de consultation, le clair va au contenu |
 | Chiffre héros | 1 | C'est le point focal |
 | Bloc inversé | 1, un tiers de la vue au plus | Seule grande masse du ton opposé |
 | Corps de texte | 3 | La hiérarchie passe par la graisse et le ton |

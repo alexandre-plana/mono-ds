@@ -56,7 +56,9 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-033 | Le plan de travail comme carte, et les pages côte à côte | en vigueur |
 | D-034 | Des onglets assumés, persistants, avec fil d'Ariane | en vigueur |
 | D-035 | Tenir ce journal | en vigueur |
-| D-036 | Ce qui est hors de la page ne dépend pas de l'onglet | en vigueur |
+| D-036 | Ce qui est hors de la page ne dépend pas de l'onglet | remplacée par D-038 |
+| D-037 | Le bouton primaire conclut une tâche | en vigueur |
+| D-038 | L'inspecteur attaché à son onglet, épinglable | en vigueur |
 
 ---
 
@@ -286,9 +288,28 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 
 ## D-036 — Ce qui est hors de la page ne dépend pas de l'onglet
 
-- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (problème relevé), solution proposée
+- **Date** : 2026-11-12 · **Statut** : remplacée par D-038 · **Demandée par** : le commanditaire (problème relevé), solution proposée
+- **Pourquoi remplacée** : le principe tient (l'image dit à qui un contenu appartient), mais le comportement par défaut était le mauvais : garder une fiche en changeant d'onglet est le cas minoritaire.
 - **Contexte** : avec des onglets au-dessus de la page, l'inspecteur est dessiné à côté, hors de la page. On s'attend donc à ce qu'il reste en l'état quand on change d'onglet — or il montrait le détail d'une ligne de l'onglet quitté.
 - **Décision** : l'image fait foi. Il n'y a qu'un emplacement « à côté », global : il reçoit ce que l'on inspecte (un clic sur une ligne) ou une page posée là depuis le plan. Il ne change pas quand on change d'onglet ; on le remplace par un autre contenu ou on le ferme soi-même. Il dit d'où vient ce qu'il montre (« Vient de Agences ») et permet de l'ouvrir en onglet.
 - **Conséquences** : la rangée d'onglets s'arrête au bord de la page qu'elle gouverne ; au-dessus de la page d'à côté il n'y a que le plan de travail. La ligne inspectée garde son contour tant que sa fiche est à côté. Inspecteur et « page à côté » (D-033) deviennent un seul mécanisme. « Aller à » une agence l'inspecte à côté, sans quitter l'onglet courant — ce qui lève l'incohérence notée après D-034. La descente dans l'onglet (liste → détail dans la même page) est retirée du gabarit.
 - **Alternative non retenue** : placer l'inspecteur dans la page, séparé de la liste par un filet, pour qu'il suive l'onglet. Elle reste la bonne réponse quand un détail n'a aucun sens hors de sa liste ; elle n'a pas été retenue comme règle générale parce qu'elle renonce à la séparation par les hachures et à l'usage non linéaire (garder une fiche sous les yeux en travaillant ailleurs).
 - **Règle** : K7 dans `composition.md`.
+
+## D-037 — Le bouton primaire conclut une tâche
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« pourquoi ce bouton est blanc ? »)
+- **Contexte** : la règle initiale autorisait un bouton primaire — un aplat clair — par vue. Appliquée à un écran de liste, elle donnait à « Nouvelle agence » la tache la plus claire de l'écran, devant le chiffre et le tableau.
+- **Décision** : le primaire est réservé aux écrans qui existent pour accomplir une action — connexion, formulaire, modale. Zéro sur un écran de consultation ; un au plus ailleurs.
+- **Raison** : la même que D-011 — le clair va à ce que l'écran doit faire voir, pas à un contrôle.
+- **Conséquences** : « Nouvelle agence » et « Exporter » passent en bouton à contour dans les gabarits et le tableau de bord. La connexion et les modales gardent leur primaire.
+
+## D-038 — L'inspecteur attaché à son onglet, épinglable
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Contexte** : D-036 rendait l'emplacement « à côté » global. Cohérent avec l'image, mais ce n'est pas le cas majoritaire : le plus souvent l'inspecteur montre le détail de ce que l'on vient de sélectionner, et doit suivre son onglet.
+- **Décision** : par défaut l'inspecteur est attaché. Il est dessiné **dans** la page, séparé de son contenu par un filet (`.l-detail`) ; il part et revient avec l'onglet. **Épingler** le sort de la page : il passe à côté, séparé par les hachures, et reste quand on change d'onglet. **Rattacher** le remet dans sa page, avec ce qu'on y avait saisi.
+- **Raison** : l'image dit toujours la vérité — un filet : c'est dans la page ; des hachures : c'est dehors — et le geste rare (garder sous les yeux) devient volontaire.
+- **Conséquences** : la rangée d'onglets ne se raccourcit que lorsqu'un contenu est épinglé. « Aller à » une agence mène à l'onglet Agences et l'y inspecte. Une page posée depuis le plan reste à côté : elle est épinglée par nature. Règle K7 réécrite.
+- **Limite connue** : un seul contenu épinglé à la fois ; en épingler un autre remplace le premier sans avertissement.
+- **Non concerné** : l'écran « collection + inspecteur » sans onglets, où il n'y a qu'un seul contexte et où l'inspecteur reste une page séparée par les hachures.

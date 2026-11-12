@@ -21,7 +21,8 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
   `src/tokens.css`. Les composants consomment les rôles (`--bg`, `--fg`, `--line`…).
 - Une seule couleur : `--signal`. Moins de 1 % de l'écran, un seul sens par écran,
   jamais décorative, toujours doublée d'une forme ou d'un mot. Pas de vert/orange/bleu.
-- Un seul bouton `--primary`, un seul `.c-stat--hero`, un seul bloc inversé, une
+- Le bouton `--primary` conclut une tâche (connexion, formulaire, modale) : zéro sur
+  un écran de consultation, un au plus ailleurs. Un seul `.c-stat--hero`, un seul bloc inversé, une
   seule modale par vue. Le détail d'un élément va dans l'inspecteur, pas dans une modale.
 - Une fiche (`.c-card`) est un filet, pas une boîte ; jamais de fiche dans une fiche.
 - Un élément sélectionné (onglet, filtre, segment, fiche, ligne) ne change que de
@@ -72,8 +73,9 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   navigation (`.c-pathnav`). À parties séparées (on saute de l'une à l'autre) :
   `application-modules.html`, des onglets persistants (`.c-doctabs`) au-dessus de
   la page et le fil d'Ariane en tête. Jamais les deux. Un onglet doit garder l'état
-  de sa page ; au débordement, menu « … ». Ce qui est posé à côté de la page est
-  hors des onglets : cela ne change pas quand on change d'onglet. Dans les deux cas : pas de rail ; le
+  de sa page ; au débordement, menu « … ». L'inspecteur est attaché à son
+  onglet : dans la page, séparé par un filet (`.l-detail`). Épinglé, il sort à côté,
+  séparé par les hachures, et ne dépend plus d'aucun onglet. Dans les deux cas : pas de rail ; le
   plan (`.c-plan`), la pose à côté et « Aller à » (`.c-palette`) servent aux
   déplacements hors de l'ordre ; console et aide sont des fenêtres. La navigation
   s'écrit en mots : ni numéros seuls, ni icônes seules, ni texte vertical.
