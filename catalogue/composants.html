@@ -408,7 +408,8 @@
             </div>
             <dl class="cat-spec">
               <div><dt>Tri</dt><dd><code>aria-sort</code> sur le <code>th</code>, bouton <code>.c-table__sort</code>. Chevron haut : croissant ; chevron bas : décroissant. Les autres colonnes triables ne montrent leur icône qu'au survol. Une seule colonne triée à la fois ; un clic inverse le sens.</dd></div>
-              <div><dt>En-tête figé</dt><dd><code>.c-table--sticky</code>, dans une zone qui défile. À partir d'une quinzaine de lignes.</dd></div>
+              <div><dt>En-tête figé</dt><dd><code>.c-table--sticky</code>, dans une zone qui défile. À partir d'une quinzaine de lignes. Fond plein, pas de filet.</dd></div>
+              <div><dt>Filets</dt><dd>Aucun entre les lignes : l'interligne et les axes de colonnes suffisent. Au survol, un filet se pose sous la ligne pointée, comme une règle. Sans pointeur (écran tactile), les filets discrets reviennent d'eux-mêmes ; <code>.c-table--ruled</code> les impose pour un tableau large, dense ou destiné à l'impression. Le trait de somme reste.</dd></div>
               <div><dt>Sélection multiple</dt><dd>Colonne <code>.c-table__check</code>. Une ligne cochée ne change pas d'aspect : la case suffit. Ce qui se voit, c'est la barre <code>.c-bulkbar</code> et son décompte, qui remplacent la barre d'outils.</dd></div>
               <div><dt>Ligne dépliable</dt><dd>Bouton <code>.c-table__expand</code> avec <code>aria-expanded</code>, suivi d'une ligne <code>tr.c-table__detail</code>. Le détail s'aligne sur la colonne de titre : <code>--controls</code> donne le nombre de colonnes de contrôle qui la précèdent.</dd></div>
               <div><dt>Éviter</dt><dd>Cocher et inspecter avec le même geste : cocher prépare une action groupée, cliquer la ligne l'ouvre dans l'inspecteur. Ligne dépliable et inspecteur sur le même écran : choisir l'un. Plus de deux actions dans la barre groupée.</dd></div>

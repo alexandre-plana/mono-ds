@@ -91,11 +91,23 @@ le plan : un fond uni, un ton plus sombre que la page, visible sur une bande de 
   vertical. Les filets horizontaux qui s'arrêtent net et un axe de texte propre
   suffisent. Empilées sur écran étroit, elles reprennent un filet horizontal.
 - **K5 — Les pages se répondent.** Deux pages voisines ont des en-têtes et des
-  barres d'état de même hauteur : leurs filets tombent sur les mêmes lignes.
+  barres d'état de même hauteur : leurs textes tombent sur les mêmes lignes.
 - **K6 — À gauche la collection, à droite le détail.** L'inspecteur est permanent
   et ne bloque rien ; la bande de plan de travail qui le sépare de la collection se saisit
   pour le redimensionner (`.l-splitter`). Le détail d'un élément ne s'ouvre jamais
   en modale.
+
+### Défilement
+
+Puisque la page a un contour, elle ne peut pas glisser hors de l'écran. Elle tient
+dans l'écran, et c'est ce qu'elle contient qui défile.
+
+- **S1 — L'écran ne défile jamais.** Le plan de travail occupe exactement l'écran et la page y tient entière, contour compris. C'est le contenu de la page qui défile, à l'intérieur de son contour : le cadre ne bouge pas.
+- **S2 — Une seule zone défile.** Par page et par axe. Dans une application, c'est le corps du volet (`.l-pane__body`) ; dans un document, c'est la page (`.l-shell`). Jamais une zone défilante dans une autre sur le même axe : ni tableau à hauteur fixe dans un volet, ni liste dans une fiche.
+- **S3 — Ce qui situe reste en place.** En-tête, onglets, fil d'Ariane, barre d'état et en-tête de tableau figé ne défilent pas. Un filet n'apparaît sous l'en-tête que lorsque du contenu est passé dessous, au-dessus de la barre d'état que lorsqu'il en reste : au repos, aucun trait.
+- **S4 — Jamais de travers.** La page ne défile pas à l'horizontale. Seuls un tableau trop large (`.c-table-wrap`), une rangée d'onglets et le canevas le peuvent, chacun pour lui-même.
+- **S5 — Une barre d'un trait.** 4 px, carrée, au ton des filets, sans piste ni flèches ; elle s'éclaircit quand on la saisit. Sa place est réservée dans la marge : le contenu ne bouge pas quand elle apparaît.
+- **S6 — Deux exceptions.** Sur téléphone, la page reprend le défilement naturel de l'écran, sur une seule colonne. À l'impression, tout se déroule. Dans les deux cas le contour suit le contenu.
 
 `.l-desk` est une grille : plusieurs `.l-shell` côte à côte sont séparés par la
 même bande de plan de travail.

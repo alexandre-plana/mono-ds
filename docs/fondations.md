@@ -15,9 +15,9 @@ s'emploient jamais directement** : un composant ne connaît que des rôles.
 | `--desk` / `--hatch` | Plan de travail uni, autour de la page ; hachures du fond des modales | tone-0 / tone-4 | `#CBCBC7` / `#B3B4B0` | décoratif |
 | `--bg-sunken` | Creux : code, zones en retrait | tone-0 | `#CBCBC7` | — |
 | `--bg` | Fond de page | tone-1 | tone-10 | — |
-| `--surface` | Surface détachée, ligne survolée | tone-2 | tone-11 | — |
+| `--surface` | Surface détachée | tone-2 | tone-11 | — |
 | `--surface-2` | Survol de contrôle, infobulle | tone-3 | tone-12 | — |
-| `--line-faint` | Filet de rang | tone-4 | `#C2C2BE` | décoratif |
+| `--line-faint` | Filet de rang (`.c-table--ruled`, écran tactile) | tone-4 | `#C2C2BE` | décoratif |
 | `--line` | Filet de structure | tone-5 | `#A9AAA7` | décoratif |
 | `--line-strong` | Bordure de contrôle | tone-6 | `#77787A` | 3 : 1 |
 | `--fg-muted` | Texte tertiaire : unités, folios | tone-7 | `#57585A` | 4,5 : 1 |

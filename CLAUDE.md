@@ -45,6 +45,12 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
   d'abord sans. Il ne reste que pour une relation, une limite de défilement, une
   somme ou le contour d'un contrôle ; jamais de filet vertical pour séparer.
 - Ferré à gauche, trois ou quatre axes verticaux, un tiers de la vue vide.
+- L'écran ne défile jamais : la page tient dans l'écran et c'est son contenu qui
+  défile (corps du volet dans une application, la page dans un document). Une seule
+  zone défilante par page et par axe, jamais imbriquée. Téléphone et impression :
+  défilement naturel. La barre de défilement est celle du système (4 px, carrée).
+- Tableau : aucun filet entre les lignes ; un filet sous la ligne survolée ;
+  `.c-table--ruled` seulement pour un tableau large, dense ou imprimé.
 - Dans un graphique : marques en `--mark` (gris moyen), valeurs en `--fg-strong`,
   séries distinguées par ton et trait, jamais par teinte.
 

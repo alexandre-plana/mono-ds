@@ -177,13 +177,18 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 /* --- Tableau ----------------------------------------------------------------- */
 .c-table { width: 100%; border-collapse: collapse; font-size: var(--text-base); line-height: var(--leading-base); }
 .c-table caption { caption-side: top; text-align: left; padding-bottom: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
-.c-table th, .c-table td { padding: var(--space-2) var(--space-4) var(--space-2) 0; text-align: left; vertical-align: baseline; border-bottom: var(--hairline) solid var(--line-faint); }
+/* Aucun filet entre les lignes : l'interligne et les axes de colonnes suffisent à lire. Le filet
+   vient au survol, sous la ligne pointée — une règle que l'on pose pour suivre une rangée. Sans
+   pointeur (écran tactile) ou sur demande (--ruled), les filets discrets reviennent. */
+.c-table th, .c-table td { padding: var(--space-2) var(--space-4) var(--space-2) 0; text-align: left; vertical-align: baseline; border-bottom: var(--hairline) solid transparent; }
+.c-table--ruled tbody > tr > * { border-bottom-color: var(--line-faint); }
+@media (hover: none) { .c-table tbody > tr > * { border-bottom-color: var(--line-faint); } }
 .c-table th:last-child, .c-table td:last-child { padding-right: 0; }
 .c-table thead th { font-size: var(--text-micro); font-weight: var(--weight-regular); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); border-bottom-color: transparent; white-space: nowrap; }
 .c-table tbody th { font-weight: var(--weight-regular); color: var(--fg-strong); }
 .c-table td { color: var(--fg); }
 .c-table .is-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.c-table tbody tr:hover > * { background: var(--surface); }
+.c-table tbody tr:not([aria-selected="true"]):hover > * { border-bottom-color: var(--line-strong); }
 /* Ligne sélectionnable : toute la ligne répond. Sélection = deux filets de 2 px, dessus et dessous ;
    le contour reste ouvert sur les côtés pour que le texte garde son axe. */
 .c-table tr[tabindex] { cursor: pointer; }
@@ -198,10 +203,8 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-table__sort .c-icon { visibility: hidden; align-self: center; }
 th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-table__sort .c-icon, .c-table__sort:hover .c-icon, .c-table__sort:focus-visible .c-icon { visibility: visible; }
 .c-table th.is-num .c-table__sort { flex-direction: row-reverse; }
-/* En-tête figé : il reste en haut de la zone qui défile. Ici le filet revient, parce qu'il a
-   une fonction — marquer où les lignes passent dessous. Il est peint dans le fond, car une
-   bordure fusionnée ne suit pas une cellule collante. */
-.c-table--sticky thead th { position: sticky; top: 0; z-index: 1; border-bottom-color: transparent; background: linear-gradient(var(--line), var(--line)) left bottom / 100% 1px no-repeat var(--bg); }
+/* En-tête figé : il reste en haut de la zone qui défile, sur un fond plein, sans filet. */
+.c-table--sticky thead th { position: sticky; top: 0; z-index: 1; background: var(--bg); }
 /* Colonne de cases (sélection multiple) et bascule de ligne dépliable. */
 .c-table__check, .c-table__toggle { width: 1.75rem; min-width: 1.75rem; box-sizing: border-box; padding-right: var(--space-2) !important; }
 .c-table__check .c-check { min-height: 0; vertical-align: middle; }
@@ -211,7 +214,7 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 /* Détail d'une ligne dépliée : il s'aligne sur la colonne de titre, pas sur la bascule. */
 /* --controls : nombre de colonnes de contrôle (case, bascule) placées avant le titre. */
 .c-table tr.c-table__detail > td { padding: var(--space-3) 0 var(--space-5) calc(1.75rem * var(--controls, 1)); color: var(--fg-soft); }
-.c-table tr.c-table__detail:hover > * { background: none; }
+.c-table tr.c-table__detail > *, .c-table tr.c-table__detail:hover > * { border-bottom-color: transparent; }
 .c-table tr.is-open > * { border-bottom-color: transparent; }
 
 /* Barre d'actions groupées : elle prend la place de la barre d'outils dès qu'une ligne est cochée. */

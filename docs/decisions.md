@@ -60,8 +60,10 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-037 | Le bouton primaire conclut une tâche | en vigueur |
 | D-038 | L'inspecteur attaché à son onglet, épinglable | en vigueur |
 | D-039 | Pas de filet vertical entre deux régions d'une page | en vigueur |
-| D-040 | Un filet se mérite : revue de tous les traits | en vigueur |
+| D-040 | Un filet se mérite : revue de tous les traits | en vigueur, précisée par D-042 et D-043 |
 | D-041 | Les hachures quittent le plan de travail pour le fond des modales | en vigueur |
+| D-042 | L'écran ne défile jamais ; barre de défilement d'un trait | en vigueur |
+| D-043 | Tableau sans filets ; un filet sous la ligne survolée | en vigueur |
 
 ---
 
@@ -366,3 +368,22 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Ce qui reste de D-013** : le contour d'un pixel de chaque page et son retrait de 24 px.
 - **Conséquences** : là où les décisions antérieures parlent de « hachures » entre deux pages (D-022, D-033, D-038, D-039), lire « bande de plan de travail » : deux pages se distinguent par leur double contour et la bande sombre entre elles. Le liseré des fenêtres flottantes (D-023) devient une bande unie. Un clic sur le plan de travail ouvre toujours le plan. Règles K3, K4, K7 et G1 réécrites.
 - **Vaut pour** : toutes les modales — dialogue, confirmation, « Aller à ».
+
+## D-042 — L'écran ne défile jamais ; barre de défilement d'un trait
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Contexte** : les applications défilaient déjà dans leurs volets, mais les documents (rapport, tableau de bord, catalogue) faisaient défiler l'écran entier : le contour de la page sortait de l'écran. Les barres de défilement étaient celles du navigateur.
+- **Décision** : `.l-desk` occupe exactement l'écran ; la page y tient entière et c'est son contenu qui défile — `.l-pane__body` dans une application, `.l-shell` dans un document. Une seule zone défilante par page et par axe, jamais imbriquée (règles S1 à S6). Barre de défilement commune : 4 px, carrée, au ton des filets, sans piste, dans une gouttière de 10 px (`--scrollbar`) réservée dans la marge du volet.
+- **Raison** : une page à contour qui glisse hors de l'écran contredit son propre cadre. Et ce qui situe (titre, onglets, état) doit rester sous les yeux.
+- **Filets de défilement** : le filet sous l'en-tête de page et celui au-dessus de la barre d'état, gardés en D-040 comme « limites de défilement », n'apparaissent plus que lorsqu'il y a effectivement du contenu passé dessous ou restant dessous. Au repos, aucun trait. Réalisé en CSS pur (deux fonds, l'un fixe, l'autre attaché au contenu). Le filet de l'en-tête de tableau figé est retiré : son fond plein suffit.
+- **Exceptions** : sous 900 px de large, défilement naturel de l'écran (barre d'adresse escamotable, geste habituel, une seule colonne) ; à l'impression, tout se déroule.
+- **Écarté** : faire défiler l'écran pour les documents seulement (deux modèles à apprendre) ; une barre masquée qui n'apparaît qu'au survol (on ne sait plus qu'il reste du contenu).
+- **Limite connue** : la gouttière réservée ne vaut que pour les navigateurs à barre stylable (Chrome, Edge, Safari). Firefox reçoit la barre fine standard, au même ton.
+
+## D-043 — Tableau sans filets ; un filet sous la ligne survolée
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : `.c-table` ne trace plus aucun filet entre ses lignes. Au survol, un filet d'un pixel se pose sous la ligne pointée. Le fond de survol (`--surface`) disparaît.
+- **Raison** : suite de D-040. Avec un interligne constant et des colonnes ferrées, les filets de rang ne servaient qu'à suivre une ligne de l'œil ; ce service n'est utile que pour la ligne qu'on lit. Le survol par un fond contredisait aussi l'esprit de D-012 (un état ne change pas de fond).
+- **Garde-fous** (proposés par Claude) : sans pointeur (`hover: none`, écrans tactiles), les filets discrets reviennent d'eux-mêmes, faute de quoi rien n'aide à suivre une rangée. `.c-table--ruled` les impose pour un tableau large, dense ou imprimé.
+- **Ce qui reste** : le trait de somme avant le pied, les deux filets de 2 px de la ligne sélectionnée, le contour de focus.

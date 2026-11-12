@@ -51,7 +51,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|---|
 | `.c-kv` (`<dl>` de `<div><dt><dd>`) | `--plain` | Label gras, filet conducteur, valeur maigre |
 | `.c-index` | `__row`, `__title`, `__value` | Numérotation automatique ; sommaire, classement |
-| `.c-table` | `--caps`, `--dense`, `.is-num`, `tr.is-key`, `tr.is-muted`, `.is-signal`, `.c-table-wrap`, `tr[tabindex][aria-selected]`, `__sort` + `th[aria-sort]`, `--sticky`, `__check`, `__expand` + `tr.c-table__detail` | Filets horizontaux seuls ; une cellule signal au plus |
+| `.c-table` | `--caps`, `--dense`, `.is-num`, `tr.is-key`, `tr.is-muted`, `.is-signal`, `.c-table-wrap`, `tr[tabindex][aria-selected]`, `__sort` + `th[aria-sort]`, `--sticky`, `__check`, `__expand` + `tr.c-table__detail`, `--ruled` | Aucun filet entre les lignes ; un filet sous la ligne survolée ; `--ruled` pour un tableau large ou imprimé ; une cellule signal au plus |
 | `.c-bulkbar` | `__count`, `__actions` | Remplace la barre d'outils dès qu'une ligne est cochée ; deux actions au plus |
 | `.c-stat` | `__label`, `__value` (+ `<small>` unité), `__note`, `--hero`, `--compact`, `--ruled` | Un seul `--hero` par écran |
 | `.c-key` | `__title`, `__item`, `__swatch` (`--2`, `--3`, `--line`, `--dashed`, `--dotted`, `--dot`, `--ring`, `--signal`) | Nomme les formes ; se loge dans un vide |

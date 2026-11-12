@@ -66,6 +66,15 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .t-bold    { font-weight: var(--weight-bold); }
 .t-right   { text-align: right; }
 
+/* --- Barre de défilement ---------------------------------------------------
+   Un trait de 4 px, carré, au ton des filets, sans piste ni flèches. Elle s'éclaircit
+   quand on la saisit. Partout la même : page, volet, modale, console. */
+::-webkit-scrollbar { width: var(--scrollbar); height: var(--scrollbar); }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line-strong); background-clip: content-box; border: 3px solid transparent; }
+::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active { background-color: var(--fg-soft); }
+@supports not selector(::-webkit-scrollbar) { * { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; } }
+
 /* --- Mise en page --------------------------------------------------------- */
 /* Plan de travail et page.
    <body class="l-desk"> est le plan de travail : un fond uni, un ton plus sombre que la page, visible sur
@@ -74,18 +83,20 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
    même bande de plan de travail, grâce à la gouttière de la grille.
    Le plan de travail est uni : aucun motif. Les hachures sont réservées au fond des
    modales (voir .c-dialog::backdrop). */
-.l-desk { min-height: 100vh; min-height: 100dvh; padding: var(--shell-inset); display: grid; gap: var(--shell-inset); align-content: stretch; background-color: var(--desk); }
-.l-shell { min-width: 0; background: var(--bg); border: var(--hairline) solid var(--line-strong); }
-.l-shell > .l-frame { min-height: calc(100vh - 2 * var(--shell-inset) - 2px); min-height: calc(100dvh - 2 * var(--shell-inset) - 2px); }
+/* Défilement : l'écran ne défile jamais. Le plan de travail occupe exactement l'écran et
+   la page y tient entière, contour compris ; c'est le contenu de la page qui défile.
+   Sur téléphone et à l'impression, la page reprend le défilement naturel (voir plus bas). */
+.l-desk { height: 100vh; height: 100dvh; grid-template-rows: minmax(0, 1fr); padding: var(--shell-inset); display: grid; gap: var(--shell-inset); align-content: stretch; background-color: var(--desk); }
+.l-shell { min-width: 0; min-height: 0; overflow: auto; background: var(--bg); border: var(--hairline) solid var(--line-strong); }
+.l-shell > .l-frame { min-height: 100%; }
 /* Application : le plan occupe exactement l'écran, chaque page défile pour elle-même.
    --split pose deux pages côte à côte : la collection, puis l'inspecteur. La bande
    de plan de travail entre les deux est la gouttière de la grille. */
-.l-desk--app { height: 100vh; height: 100dvh; min-height: 0; }
-.l-desk--app > .l-shell { min-height: 0; overflow: hidden; display: grid; grid-template-rows: minmax(0, 1fr); }
+.l-desk--app > .l-shell { overflow: hidden; display: grid; grid-template-rows: minmax(0, 1fr); }
 .l-desk--split { grid-template-columns: minmax(0, 1fr) var(--inspector); }
 /* Bureau : le plan de travail occupe tout l'écran, les fenêtres en sont les pages.
    .l-desk__area reçoit les fenêtres ; la barre des fenêtres est posée dessous. */
-.l-desk--os { height: 100vh; height: 100dvh; min-height: 0; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
+.l-desk--os { grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; }
 .l-desk__area { position: relative; min-height: 0; min-width: 0; overflow: clip; }
 .l-desk__area > .c-window { position: absolute; }
 
@@ -123,20 +134,40 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .l-splitter:hover::before, .l-splitter:focus-visible::before, .l-splitter.is-dragging::before { background: var(--fg-soft); height: 3rem; }
 .l-splitter:focus-visible { outline-offset: -2px; }
 @media (max-width: 900px) {
-  .l-desk--app { height: auto; min-height: 100dvh; }
+  .l-desk { height: auto; min-height: 100dvh; grid-template-rows: none; }
+  .l-shell { overflow: visible; }
+  .l-shell > .l-frame { min-height: calc(100dvh - 2 * var(--shell-inset) - 2px); }
   .l-desk--split, .l-desk--split:has(> .l-splitter) { grid-template-columns: minmax(0, 1fr); row-gap: var(--shell-inset); }
   .l-splitter { display: none; }
   .l-desk--app > .l-shell { overflow: visible; }
+  .l-pane__body { background: none; }
+}
+@media print {
+  .l-desk { height: auto; }
+  .l-shell, .l-desk--app > .l-shell, .l-pane__body { overflow: visible; }
 }
 /* Volet : en-tête fixe, corps défilant, pied fixe. Les trois partagent la même marge. */
 .l-pane { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); grid-auto-rows: auto; min-height: 0; min-width: 0; }
 .l-pane__head { padding: var(--space-4) var(--pane-pad) 0; display: flex; flex-direction: column; gap: var(--space-5); }
 /* Deux volets voisins ont des en-têtes de même hauteur : leurs filets tombent sur la même ligne. */
-.l-pane__head > .c-masthead { align-items: center; min-height: 3rem; padding-bottom: var(--space-3); }
+.l-pane__head > .c-masthead { align-items: center; min-height: 3rem; padding-bottom: var(--space-3); border-bottom: 0; }
 @media (max-width: 640px) { .l-pane__head > .c-masthead { align-items: flex-start; } }
 .l-pane__bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3) var(--space-4); min-height: var(--control-height); }
-.l-pane__body { padding: var(--space-6) var(--pane-pad); overflow: auto; min-height: 0; display: flex; flex-direction: column; gap: var(--space-7); }
+/* Le corps défile seul. Un filet n'apparaît en haut que lorsque du contenu est passé sous
+   l'en-tête, en bas que lorsqu'il en reste sous la barre d'état : c'est une limite de
+   défilement, il n'existe que s'il y a défilement. Deux fonds : le filet tient au cadre,
+   un cache au ton de la page suit le contenu et le découvre dès qu'on défile. */
+.l-pane__body { --_w: calc(100% - 2 * var(--pane-pad)); padding: var(--space-6) var(--pane-pad); overflow: auto; min-height: 0; display: flex; flex-direction: column; gap: var(--space-7);
+  background:
+    linear-gradient(var(--bg), var(--bg)) local 0 0 / 100% 1px no-repeat,
+    linear-gradient(var(--bg), var(--bg)) local 0 100% / 100% 1px no-repeat,
+    linear-gradient(var(--line), var(--line)) scroll var(--pane-pad) 0 / var(--_w) 1px no-repeat,
+    linear-gradient(var(--line), var(--line)) scroll var(--pane-pad) 100% / var(--_w) 1px no-repeat; }
+/* La barre de défilement a sa place réservée dans la marge de droite : qu'elle soit là ou non,
+   le contenu garde la même largeur et reste d'aplomb avec l'en-tête et la barre d'état. */
+@supports selector(::-webkit-scrollbar) { .l-pane__body { scrollbar-gutter: stable; padding-right: calc(var(--pane-pad) - var(--scrollbar)); } }
 .l-pane__foot { padding: 0 var(--pane-pad); }
+.l-pane__foot > .c-statusbar { border-top: 0; }
 
 
 .l-page { max-width: var(--page-max); margin-inline: auto; padding: var(--space-6) var(--page-margin) var(--space-7); }
@@ -190,7 +221,7 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 
 /* Bureau sur petit écran : plus de fenêtres libres, elles s'empilent en pleine largeur. */
 @media (max-width: 760px) {
-  .l-desk--os { height: auto; min-height: 100dvh; overflow: visible; }
+  .l-desk--os { height: auto; min-height: 100dvh; grid-template-rows: minmax(0, 1fr) auto; overflow: visible; }
   .l-desk__area { display: grid; gap: var(--shell-inset); align-content: start; }
   .l-desk__area > .c-window { position: static; width: 100% !important; height: 24rem !important; max-width: none; }
 }
