@@ -1,0 +1,69 @@
+/* ==========================================================================
+   MONO — Visualisation de données (.v-)
+   Classes à poser sur des éléments SVG. Aucun dégradé, aucune ombre.
+   Les marques sont en gris MOYEN : c'est le texte qui porte le clair,
+   et le signal qui porte l'exception.
+   ========================================================================== */
+
+.v-chart { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--font-mono); }
+.v-figure { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; position: relative; }
+.v-figure__title { font-size: var(--text-large); line-height: var(--leading-large); color: var(--fg-strong); }
+.v-figure__caption { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-soft); }
+.v-figure__source { font-size: var(--text-micro); line-height: var(--leading-micro); text-transform: uppercase; letter-spacing: var(--track-label); color: var(--fg-muted); }
+
+/* Structure */
+.v-axis { stroke: var(--fg-soft); stroke-width: 1; fill: none; shape-rendering: crispEdges; }
+.v-tick { stroke: var(--line-strong); stroke-width: 1; shape-rendering: crispEdges; }
+.v-grid { stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 1 4; fill: none; }
+.v-grid--solid { stroke: var(--line-faint); stroke-dasharray: none; shape-rendering: crispEdges; }
+.v-graticule { stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 1 5; stroke-linecap: round; fill: none; }
+
+/* Marques pleines (barres, aires, nœuds) */
+.v-mark { fill: var(--mark); }
+.v-mark--2 { fill: var(--mark-2); }
+.v-mark--3 { fill: var(--mark-3); }
+.v-mark--strong { fill: var(--fg-strong); }
+.v-mark--signal { fill: var(--signal); }
+.v-mark--ghost { fill: none; stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 3 3; }
+.v-mark.is-dimmed { fill: var(--line); }
+.v-mark[tabindex]:focus-visible, .v-hit:focus-visible { outline: 1px solid var(--fg-strong); outline-offset: 2px; }
+
+/* Marques linéaires (courbes, liens) */
+.v-line { fill: none; stroke: var(--fg-strong); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+.v-line--2 { stroke: var(--mark); }
+.v-line--3 { stroke: var(--mark); stroke-dasharray: 5 4; }
+.v-line--signal { stroke: var(--signal); }
+.v-link { fill: none; stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 1 3; }
+.v-link--solid { stroke-dasharray: none; }
+.v-bar-line { stroke: var(--mark-2); stroke-width: 4; stroke-linecap: butt; }
+
+/* Points et anneaux */
+.v-dot { fill: var(--fg-strong); }
+.v-dot--soft { fill: var(--mark); }
+.v-dot--signal { fill: var(--signal); }
+.v-ring { fill: none; stroke: var(--fg-strong); stroke-width: 1.25; }
+.v-ring--signal { stroke: var(--signal); }
+.v-halo { fill: var(--bg); }
+
+/* Texte */
+.v-label { fill: var(--fg-soft); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.v-label--muted { fill: var(--fg-muted); }
+.v-label--strong { fill: var(--fg-strong); font-weight: 500; }
+.v-label--signal { fill: var(--signal); font-weight: 600; }
+.v-value { fill: var(--fg-strong); font-size: 11px; font-weight: 500; }
+.v-value--signal { fill: var(--signal); font-weight: 600; }
+.v-hit { fill: transparent; cursor: default; }
+
+/* Infobulle de graphique */
+.v-tip { position: absolute; z-index: 5; pointer-events: none; padding: var(--space-2) var(--space-3); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-small); line-height: var(--leading-small); white-space: nowrap; transform: translate(-50%, calc(-100% - 10px)); opacity: 0; transition: opacity var(--duration); }
+.v-tip.is-visible { opacity: 1; }
+.v-tip span { color: var(--fg-soft); margin-right: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-label); font-size: var(--text-micro); }
+
+/* Barres horizontales en HTML : <div class="v-hbar" style="--value: 62"> */
+.v-hbars { display: grid; grid-template-columns: max-content minmax(0, 1fr) max-content; column-gap: var(--space-4); row-gap: var(--space-2); align-items: center; font-size: var(--text-small); }
+.v-hbars__label { text-transform: uppercase; letter-spacing: var(--track-label); color: var(--fg); }
+.v-hbars__value { text-align: right; color: var(--fg-strong); }
+.v-hbar { height: 0.5rem; background: linear-gradient(var(--line), var(--line)) 0 100% / 100% 1px no-repeat; }
+.v-hbar::before { content: ''; display: block; height: 100%; width: calc(var(--value, 0) * 1%); background: var(--mark); }
+.v-hbar--signal::before { background: var(--signal); }
+.v-hbar--strong::before { background: var(--fg-strong); }

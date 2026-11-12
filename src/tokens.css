@@ -1,0 +1,134 @@
+/* ==========================================================================
+   MONO — Tokens
+   Trois niveaux : tons bruts → rôles sémantiques (par thème) → échelles.
+   Les composants ne consomment QUE les rôles sémantiques, jamais les tons bruts.
+   Vérification des contrastes : node scripts/contrast.mjs
+   ========================================================================== */
+
+:root {
+  /* --- Tons bruts : 13 gris, du plus sombre au plus clair. --------------
+     Ni noir pur (#000) ni blanc pur (#fff) : la gamme s'arrête avant.
+     Les sombres tirent très légèrement vers le froid, les clairs vers le chaud,
+     comme une encre sur un papier non couché. */
+  --tone-0: #131415;
+  --tone-1: #191a1b;
+  --tone-2: #1f2021;
+  --tone-3: #27282a;
+  --tone-4: #333436;
+  --tone-5: #47484a;
+  --tone-6: #6c6d6f;
+  --tone-7: #929393;
+  --tone-8: #a5a6a4;
+  --tone-9: #c1c2bf;
+  --tone-10: #d6d6d2;
+  --tone-11: #e2e2dd;
+  --tone-12: #e9e9e5;
+
+  /* --- Signal : l'unique couleur du système. --------------------------- */
+  --signal-on-dark: #ea4f63;
+  --signal-on-light: #ad1f37;
+
+  /* --- Typographie ------------------------------------------------------ */
+  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-sans: 'IBM Plex Sans', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --text-micro: 0.6875rem;   /* 11px — plancher absolu, capitales uniquement */
+  --text-small: 0.75rem;     /* 12px — labels, légendes */
+  --text-base: 0.8125rem;    /* 13px — données, interface */
+  --text-medium: 0.9375rem;  /* 15px — texte courant long */
+  --text-large: 1.125rem;    /* 18px — sous-titres */
+  --text-title: 1.5rem;      /* 24px — titres de section */
+  --text-display: 2rem;      /* 32px — titres d'écran */
+  --text-hero: 3rem;         /* 48px — chiffre ou titre unique */
+
+  --leading-micro: 1rem;     /* 16 */
+  --leading-small: 1rem;     /* 16 */
+  --leading-base: 1.25rem;   /* 20 */
+  --leading-medium: 1.5rem;  /* 24 */
+  --leading-large: 1.75rem;  /* 28 */
+  --leading-title: 2rem;     /* 32 */
+  --leading-display: 2.5rem; /* 40 */
+  --leading-hero: 3.5rem;    /* 56 */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 600;
+
+  --track-none: 0;
+  --track-label: 0.06em;  /* capitales courantes */
+  --track-caps: 0.14em;   /* micro-capitales */
+  --track-title: 0.32em;  /* titres espacés */
+
+  /* --- Espacements : base 4px ------------------------------------------ */
+  --space-1: 0.25rem;  /* 4 */
+  --space-2: 0.5rem;   /* 8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 3rem;     /* 48 */
+  --space-8: 4rem;     /* 64 */
+  --space-9: 6rem;     /* 96 */
+  --space-10: 8rem;    /* 128 */
+
+  /* --- Structure -------------------------------------------------------- */
+  --hairline: 1px;
+  --stroke: 2px;
+  --radius: 0;
+  --control-height: 2rem;        /* 32 */
+  --control-height-large: 2.5rem;/* 40 */
+  --measure: 68ch;               /* longueur de ligne maximale */
+  --page-max: 1440px;
+  --page-margin: clamp(1.25rem, 4vw, 4rem);
+  --gutter: var(--space-5);
+  --duration: 120ms;
+}
+
+/* --- Thème ENCRE (défaut) : clair sur sombre ---------------------------- */
+:root,
+[data-theme="encre"] {
+  color-scheme: dark;
+  --bg: var(--tone-1);
+  --bg-sunken: var(--tone-0);
+  --surface: var(--tone-2);
+  --surface-2: var(--tone-3);
+  --line-faint: var(--tone-4);
+  --line: var(--tone-5);
+  --line-strong: var(--tone-6);
+  --fg-muted: var(--tone-7);
+  --fg-soft: var(--tone-8);
+  --fg: var(--tone-9);
+  --fg-strong: var(--tone-11);
+  --inverse-bg: var(--tone-10);
+  --inverse-bg-hover: var(--tone-12);
+  --inverse-fg: var(--tone-1);
+  --mark: var(--tone-7);
+  --mark-2: var(--tone-9);
+  --mark-3: var(--tone-6);
+  --signal: var(--signal-on-dark);
+  --on-signal: var(--tone-0);
+}
+
+/* --- Thème PAPIER : sombre sur clair ------------------------------------ */
+[data-theme="papier"] {
+  color-scheme: light;
+  --bg: var(--tone-10);
+  --bg-sunken: #cbcbc7;
+  --surface: var(--tone-11);
+  --surface-2: var(--tone-12);
+  --line-faint: #c2c2be;
+  --line: #a9aaa7;
+  --line-strong: #77787a;
+  --fg-muted: #57585a;
+  --fg-soft: var(--tone-5);
+  --fg: var(--tone-3);
+  --fg-strong: var(--tone-1);
+  --inverse-bg: var(--tone-2);
+  --inverse-bg-hover: var(--tone-4);
+  --inverse-fg: var(--tone-10);
+  --mark: #6f7072;
+  --mark-2: var(--tone-4);
+  --mark-3: #77787a;
+  --signal: var(--signal-on-light);
+  --on-signal: var(--tone-12);
+}

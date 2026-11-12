@@ -1,0 +1,237 @@
+/* ==========================================================================
+   MONO — Composants (.c-)
+   Règles communes : angles droits, filets d'1px, aucun dégradé, aucune ombre.
+   Plein = structure · tireté = relation, inactif · pointillé = repère.
+   Le signal n'apparaît que dans les variantes explicitement nommées « signal ».
+   ========================================================================== */
+
+/* --- Filets ---------------------------------------------------------------- */
+.c-rule { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; width: 100%; }
+.c-rule--strong { border-top-color: var(--fg-soft); }
+.c-rule--faint { border-top-color: var(--line-faint); }
+.c-rule--dashed { border-top-style: dashed; }
+.c-rule--dotted { border-top-style: dotted; border-top-color: var(--line-strong); }
+
+/* --- En-tête de page et colophon ------------------------------------------- */
+.c-masthead { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-5); padding-bottom: var(--space-4); border-bottom: var(--hairline) solid var(--line); }
+.c-masthead__title { text-transform: uppercase; letter-spacing: var(--track-title); color: var(--fg-strong); font-size: var(--text-base); }
+.c-masthead__meta { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); display: flex; gap: var(--space-5); white-space: nowrap; }
+.c-colophon { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-5); padding-top: var(--space-4); border-top: var(--hairline) solid var(--line); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+@media (max-width: 640px) { .c-masthead, .c-colophon { flex-direction: column; align-items: flex-start; gap: var(--space-2); } .c-masthead__meta { flex-wrap: wrap; white-space: normal; gap: var(--space-3); } }
+
+/* --- En-tête de section : numéro + titre + filet --------------------------- */
+.c-section-head { display: flex; align-items: baseline; gap: var(--space-4); padding-bottom: var(--space-3); border-bottom: var(--hairline) solid var(--line); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-small); line-height: var(--leading-base); color: var(--fg-strong); }
+.c-section-head__num { color: var(--fg-muted); letter-spacing: var(--track-label); min-width: 2ch; }
+.c-section-head__aside { margin-left: auto; color: var(--fg-muted); font-size: var(--text-micro); }
+
+/* --- Référence entre parenthèses : ( WAP375CD ) ---------------------------- */
+.c-ref { white-space: nowrap; letter-spacing: var(--track-label); color: var(--fg-soft); }
+.c-ref::before { content: '( '; color: var(--fg-muted); }
+.c-ref::after { content: ' )'; color: var(--fg-muted); }
+
+/* --- Clé-valeur à filet conducteur : LABEL ___ VALEUR ---------------------- */
+.c-kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 0; row-gap: var(--space-1); text-transform: uppercase; letter-spacing: var(--track-label); }
+.c-kv > div { display: contents; }
+.c-kv dt { font-weight: var(--weight-bold); color: var(--fg-strong); display: flex; align-items: baseline; gap: var(--space-2); }
+.c-kv dt::after { content: ''; flex: 1; min-width: var(--space-6); border-bottom: var(--hairline) solid var(--line-strong); transform: translateY(-0.2em); margin-right: var(--space-2); }
+.c-kv dd { color: var(--fg); min-width: 0; }
+.c-kv--plain { text-transform: none; letter-spacing: 0; }
+.c-kv--plain dt { font-weight: var(--weight-regular); color: var(--fg-soft); }
+.c-kv--plain dd { color: var(--fg-strong); }
+
+/* --- Index : liste numérotée, filet conducteur, valeur alignée à droite ---- */
+.c-index { display: flex; flex-direction: column; counter-reset: idx; }
+.c-index__row { display: flex; align-items: baseline; gap: var(--space-2); padding-block: 2px; counter-increment: idx; color: var(--fg); }
+.c-index__row::before { content: counter(idx, decimal-leading-zero); color: var(--fg-muted); min-width: 3ch; }
+.c-index__title { text-transform: uppercase; letter-spacing: var(--track-label); font-weight: var(--weight-medium); color: var(--fg-strong); }
+.c-index__row::after { content: ''; order: 1; flex: 1; min-width: var(--space-5); border-bottom: var(--hairline) solid var(--line); transform: translateY(-0.2em); }
+.c-index__value { order: 2; color: var(--fg-soft); }
+a.c-index__row { text-decoration: none; }
+a.c-index__row:hover::after { border-bottom-color: var(--fg-strong); }
+a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
+
+/* --- Bouton ----------------------------------------------------------------
+   Un seul bouton primaire (bloc inversé) par vue : c'est la tache la plus
+   claire de l'écran, elle désigne l'action. */
+.c-button { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--control-height); padding: 0 var(--space-4); border: var(--hairline) solid var(--line-strong); background: transparent; color: var(--fg-strong); font-size: var(--text-micro); line-height: 1; font-weight: var(--weight-medium); text-transform: uppercase; letter-spacing: var(--track-caps); text-decoration: none; white-space: nowrap; cursor: pointer; transition: background var(--duration), border-color var(--duration), color var(--duration); }
+.c-button:hover { border-color: var(--fg-strong); background: var(--surface-2); color: var(--fg-strong); }
+.c-button:active { background: var(--line-faint); }
+.c-button--primary { background: var(--inverse-bg); border-color: var(--inverse-bg); color: var(--inverse-fg); }
+.c-button--primary:hover { background: var(--inverse-bg-hover); border-color: var(--inverse-bg-hover); color: var(--inverse-fg); }
+.c-button--primary:active { background: var(--fg-soft); border-color: var(--fg-soft); }
+.c-button--quiet { border-color: transparent; color: var(--fg); padding-inline: var(--space-2); }
+.c-button--quiet:hover { border-color: transparent; }
+.c-button--signal { border-color: var(--signal); color: var(--signal); }
+.c-button--signal:hover { background: var(--signal); border-color: var(--signal); color: var(--on-signal); }
+.c-button--large { min-height: var(--control-height-large); padding-inline: var(--space-5); }
+.c-button:disabled, .c-button[aria-disabled="true"] { border-style: dashed; border-color: var(--line); background: transparent; color: var(--fg-muted); cursor: not-allowed; }
+.c-button svg { width: 1rem; height: 1rem; }
+
+/* --- Champs ---------------------------------------------------------------- */
+.c-field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.c-field__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-soft); display: flex; justify-content: space-between; gap: var(--space-3); }
+.c-field__hint { font-size: var(--text-small); line-height: var(--leading-small); color: var(--fg-muted); }
+.c-field__error { font-size: var(--text-small); line-height: var(--leading-small); color: var(--fg-strong); display: flex; gap: var(--space-2); }
+.c-field__error::before { content: '▲'; color: var(--signal); font-size: 0.75em; }
+
+.c-input, .c-select, .c-textarea { width: 100%; min-height: var(--control-height); padding: 5px var(--space-3); background: transparent; border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-base); line-height: var(--leading-base); transition: border-color var(--duration), background var(--duration); }
+.c-input::placeholder, .c-textarea::placeholder { color: var(--fg-muted); opacity: 1; }
+.c-input:hover, .c-select:hover, .c-textarea:hover { border-color: var(--fg-soft); }
+.c-input:focus-visible, .c-select:focus-visible, .c-textarea:focus-visible { border-color: var(--fg-strong); outline-offset: 0; outline-width: 1px; background: var(--surface); }
+.c-input:disabled, .c-select:disabled, .c-textarea:disabled { border-style: dashed; border-color: var(--line); color: var(--fg-muted); cursor: not-allowed; }
+.c-input[aria-invalid="true"], .c-select[aria-invalid="true"], .c-textarea[aria-invalid="true"] { border-color: var(--signal); box-shadow: inset 2px 0 0 var(--signal); }
+.c-textarea { min-height: 6rem; resize: vertical; }
+.c-select { appearance: none; padding-right: var(--space-6); cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, var(--fg-soft) 50%, var(--fg-soft) calc(50% + 1px), transparent calc(50% + 1px)), linear-gradient(-45deg, transparent 50%, var(--fg-soft) 50%, var(--fg-soft) calc(50% + 1px), transparent calc(50% + 1px)); background-size: 5px 5px, 5px 5px; background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%; background-repeat: no-repeat; }
+.c-select option { background: var(--surface); color: var(--fg-strong); }
+
+/* Case, radio, interrupteur : formes pleines, pas de coche dessinée. */
+.c-check { display: inline-flex; align-items: center; gap: var(--space-3); cursor: pointer; color: var(--fg); min-height: 1.5rem; }
+.c-check input { appearance: none; flex: none; width: 0.875rem; height: 0.875rem; margin: 0; border: var(--hairline) solid var(--line-strong); background: transparent; display: grid; place-content: center; cursor: pointer; transition: border-color var(--duration); }
+.c-check input[type="radio"] { border-radius: 50%; }
+.c-check input::before { content: ''; width: 0.375rem; height: 0.375rem; background: var(--fg-strong); border-radius: inherit; transform: scale(0); transition: transform var(--duration); }
+.c-check input:checked { border-color: var(--fg-strong); }
+.c-check input:checked::before { transform: scale(1); }
+.c-check input:checked + span { color: var(--fg-strong); }
+.c-check:hover input { border-color: var(--fg-strong); }
+.c-check input:disabled { border-style: dashed; border-color: var(--line); cursor: not-allowed; }
+.c-check input:disabled + span { color: var(--fg-muted); }
+
+.c-switch { display: inline-flex; align-items: center; gap: var(--space-3); cursor: pointer; color: var(--fg); min-height: 1.5rem; }
+.c-switch input { appearance: none; flex: none; position: relative; width: 2rem; height: 1rem; margin: 0; border: var(--hairline) solid var(--line-strong); background: transparent; cursor: pointer; transition: border-color var(--duration), background var(--duration); }
+.c-switch input::before { content: ''; position: absolute; top: 2px; left: 2px; width: calc(1rem - 6px); height: calc(1rem - 6px); background: var(--fg-muted); transition: transform var(--duration), background var(--duration); }
+.c-switch input:checked { border-color: var(--fg-strong); }
+.c-switch input:checked::before { background: var(--fg-strong); transform: translateX(1rem); }
+.c-switch input:checked + span { color: var(--fg-strong); }
+.c-switch input:disabled { border-style: dashed; border-color: var(--line); cursor: not-allowed; }
+
+/* --- Onglets et sélecteur segmenté ----------------------------------------- */
+.c-tabs { display: flex; gap: var(--space-5); border-bottom: var(--hairline) solid var(--line); overflow-x: auto; }
+.c-tabs__tab { appearance: none; background: none; border: 0; border-bottom: var(--stroke) solid transparent; margin-bottom: -1px; padding: var(--space-2) 0 calc(var(--space-2) + 1px); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
+.c-tabs__tab:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
+.c-tabs__tab[aria-selected="true"], .c-tabs__tab[aria-current="page"] { color: var(--fg-strong); border-bottom-color: var(--fg-strong); font-weight: var(--weight-medium); }
+
+.c-segmented { display: inline-flex; border: var(--hairline) solid var(--line-strong); }
+.c-segmented__item { appearance: none; background: none; border: 0; border-right: var(--hairline) solid var(--line-strong); min-height: calc(var(--control-height) - 2px); padding: 0 var(--space-3); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); cursor: pointer; transition: background var(--duration), color var(--duration); }
+.c-segmented__item:last-child { border-right: 0; }
+.c-segmented__item:hover { color: var(--fg-strong); background: var(--surface-2); }
+.c-segmented__item[aria-pressed="true"], .c-segmented__item[aria-checked="true"] { background: var(--fg-soft); color: var(--bg); font-weight: var(--weight-medium); }
+
+/* --- Navigation ------------------------------------------------------------ */
+.c-nav { display: flex; flex-direction: column; }
+.c-nav__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); padding-bottom: var(--space-2); margin-bottom: var(--space-2); border-bottom: var(--hairline) solid var(--line); }
+.c-nav__label:not(:first-child) { margin-top: var(--space-5); }
+.c-nav__item { display: flex; align-items: baseline; gap: var(--space-3); padding: 3px 0; color: var(--fg-soft); text-decoration: none; text-transform: uppercase; letter-spacing: var(--track-label); font-size: var(--text-small); line-height: var(--leading-base); transition: color var(--duration); }
+.c-nav__item span:first-child { color: var(--fg-muted); min-width: 2ch; }
+.c-nav__item:hover { color: var(--fg-strong); }
+.c-nav__item[aria-current] { color: var(--fg-strong); font-weight: var(--weight-bold); }
+.c-nav__item[aria-current]::after { content: ''; flex: 1; border-bottom: var(--hairline) solid var(--fg-soft); transform: translateY(-0.2em); }
+
+.c-breadcrumb { display: flex; flex-wrap: wrap; gap: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
+.c-breadcrumb a { color: var(--fg-soft); text-decoration: none; }
+.c-breadcrumb a:hover { color: var(--fg-strong); }
+.c-breadcrumb > * + *::before { content: '/'; margin-right: var(--space-2); color: var(--fg-muted); }
+.c-breadcrumb [aria-current] { color: var(--fg-strong); }
+
+.c-pagination { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-small); }
+.c-pagination a, .c-pagination span { min-width: 1.75rem; height: 1.75rem; display: grid; place-content: center; padding-inline: var(--space-1); text-decoration: none; color: var(--fg-soft); border: var(--hairline) solid transparent; }
+.c-pagination a:hover { border-color: var(--line-strong); color: var(--fg-strong); }
+.c-pagination [aria-current] { border-color: var(--fg-soft); color: var(--fg-strong); font-weight: var(--weight-medium); }
+
+/* --- Étiquette et statut -----------------------------------------------------
+   Le statut se lit par la FORME du glyphe et par le mot, jamais par la teinte.
+   Seul « critique » reçoit le signal. */
+.c-tag { display: inline-flex; align-items: center; gap: var(--space-2); height: 1.25rem; padding: 0 var(--space-2); border: var(--hairline) solid var(--line-strong); color: var(--fg); font-size: var(--text-micro); line-height: 1; text-transform: uppercase; letter-spacing: var(--track-label); white-space: nowrap; }
+.c-tag--solid { background: var(--fg-soft); border-color: var(--fg-soft); color: var(--bg); font-weight: var(--weight-medium); }
+.c-tag--dashed { border-style: dashed; color: var(--fg-soft); }
+
+.c-status { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-micro); line-height: var(--leading-micro); text-transform: uppercase; letter-spacing: var(--track-label); color: var(--fg); white-space: nowrap; }
+.c-status::before { content: ''; flex: none; width: 0.5rem; height: 0.5rem; border: var(--hairline) solid var(--fg-soft); border-radius: 50%; }
+.c-status--on::before { background: var(--fg-strong); border-color: var(--fg-strong); }
+.c-status--off { color: var(--fg-muted); }
+.c-status--off::before { border-color: var(--fg-muted); border-style: dashed; }
+.c-status--progress::before { background: linear-gradient(90deg, var(--fg-soft) 50%, transparent 50%); }
+.c-status--warning::before { border-radius: 0; background: var(--fg-strong); border-color: var(--fg-strong); transform: rotate(45deg) scale(.85); }
+.c-status--critical { color: var(--fg-strong); font-weight: var(--weight-medium); }
+.c-status--critical::before { border-radius: 0; background: var(--signal); border-color: var(--signal); }
+
+/* --- Tableau ----------------------------------------------------------------- */
+.c-table { width: 100%; border-collapse: collapse; font-size: var(--text-base); line-height: var(--leading-base); }
+.c-table caption { caption-side: top; text-align: left; padding-bottom: var(--space-3); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
+.c-table th, .c-table td { padding: var(--space-2) var(--space-4) var(--space-2) 0; text-align: left; vertical-align: baseline; border-bottom: var(--hairline) solid var(--line-faint); }
+.c-table th:last-child, .c-table td:last-child { padding-right: 0; }
+.c-table thead th { font-size: var(--text-micro); font-weight: var(--weight-regular); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); border-bottom-color: var(--fg-soft); white-space: nowrap; }
+.c-table tbody th { font-weight: var(--weight-regular); color: var(--fg-strong); }
+.c-table td { color: var(--fg); }
+.c-table .is-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.c-table tbody tr:hover > * { background: var(--surface); }
+.c-table tr.is-key > * { color: var(--fg-strong); font-weight: var(--weight-bold); }
+.c-table tr.is-muted > * { color: var(--fg-muted); }
+.c-table tfoot th, .c-table tfoot td { border-top: var(--hairline) solid var(--fg-soft); border-bottom: 0; color: var(--fg-strong); font-weight: var(--weight-bold); }
+.c-table .is-signal { color: var(--signal); font-weight: var(--weight-bold); }
+.c-table--caps tbody th, .c-table--caps tbody td, .c-table--caps tfoot th, .c-table--caps tfoot td { text-transform: uppercase; letter-spacing: var(--track-label); font-size: var(--text-small); }
+.c-table--dense th, .c-table--dense td { padding-block: var(--space-1); }
+.c-table-wrap { overflow-x: auto; }
+
+/* --- Chiffre clé ------------------------------------------------------------- */
+.c-stat { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.c-stat__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-soft); }
+.c-stat__value { font-size: var(--text-display); line-height: var(--leading-display); color: var(--fg-strong); letter-spacing: -0.02em; white-space: nowrap; }
+.c-stat__value small { font-size: var(--text-base); letter-spacing: 0; color: var(--fg-soft); margin-left: var(--space-1); }
+.c-stat__note { font-size: var(--text-small); line-height: var(--leading-small); color: var(--fg-muted); }
+.c-stat--hero .c-stat__value { font-size: var(--text-hero); line-height: var(--leading-hero); }
+.c-stat--compact .c-stat__value { font-size: var(--text-title); line-height: var(--leading-title); }
+.c-stat--ruled { padding-top: var(--space-3); border-top: var(--hairline) solid var(--line); }
+
+/* --- Jauge : filet fin + segment épais ---------------------------------------- */
+.c-meter { position: relative; height: 3px; width: 100%; background: linear-gradient(var(--line-strong), var(--line-strong)) 0 50% / 100% 1px no-repeat; }
+.c-meter::before { content: ''; position: absolute; inset: 0 auto 0 0; width: calc(var(--value, 0) * 1%); background: var(--fg-strong); }
+.c-meter--signal::before { background: var(--signal); }
+
+/* --- Panneau ------------------------------------------------------------------
+   Préférer un filet à une boîte. Le panneau sert quand un contenu doit être
+   détaché du flux (aperçu, encart, zone inversée). */
+.c-panel { border: var(--hairline) solid var(--line); padding: var(--space-5); min-width: 0; }
+.c-panel--surface { background: var(--surface); border-color: var(--line-faint); }
+.c-panel--sunken { background: var(--bg-sunken); border-color: transparent; }
+.c-panel--dashed { border-style: dashed; }
+.c-panel--flush { padding: 0; }
+.c-panel[data-theme] { border-color: transparent; }
+.c-panel__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); margin-bottom: var(--space-4); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
+
+/* --- Note et alerte ------------------------------------------------------------ */
+.c-notice { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--space-4); padding: var(--space-3) 0 var(--space-3) var(--space-4); border-left: var(--stroke) solid var(--fg-soft); color: var(--fg); }
+.c-notice__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-base); color: var(--fg-strong); font-weight: var(--weight-medium); }
+.c-notice--signal { border-left-color: var(--signal); }
+.c-notice--signal .c-notice__label { color: var(--signal); }
+
+/* --- Légende : KEY / SCALE ------------------------------------------------------ */
+.c-key { display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-micro); line-height: var(--leading-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-soft); }
+.c-key__title { color: var(--fg-strong); padding-bottom: var(--space-2); border-bottom: var(--hairline) solid var(--fg-soft); margin-bottom: var(--space-1); }
+.c-key__item { display: flex; align-items: center; gap: var(--space-3); }
+.c-key__swatch { flex: none; width: 1.5rem; height: 0; border-top: 3px solid var(--mark); }
+.c-key__swatch--2 { border-top-color: var(--mark-2); }
+.c-key__swatch--3 { border-top-color: var(--mark-3); }
+.c-key__swatch--line { border-top: var(--hairline) solid var(--fg-soft); }
+.c-key__swatch--dashed { border-top: var(--hairline) dashed var(--fg-soft); }
+.c-key__swatch--dotted { border-top: var(--hairline) dotted var(--fg-soft); }
+.c-key__swatch--dot { width: 0.375rem; height: 0.375rem; border: 0; border-radius: 50%; background: var(--fg-strong); margin-inline: 0.5625rem; }
+.c-key__swatch--ring { width: 0.625rem; height: 0.625rem; border: var(--hairline) solid var(--fg-strong); border-radius: 50%; margin-inline: 0.4375rem; }
+.c-key__swatch--signal { width: 0.375rem; height: 0.375rem; border: 0; border-radius: 50%; background: var(--signal); margin-inline: 0.5625rem; }
+
+/* --- Infobulle, notification, dialogue ------------------------------------------ */
+.c-tooltip { display: inline-block; padding: var(--space-2) var(--space-3); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-small); line-height: var(--leading-small); max-width: 32ch; }
+.c-toast { display: inline-flex; align-items: baseline; gap: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); border-left: var(--stroke) solid var(--fg-strong); color: var(--fg-strong); font-size: var(--text-small); }
+.c-toast--signal { border-left-color: var(--signal); }
+.c-dialog { width: min(32rem, calc(100vw - 2rem)); padding: var(--space-5); background: var(--surface); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
+.c-dialog::backdrop { background: color-mix(in srgb, var(--tone-0) 72%, transparent); }
+.c-dialog__title { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-small); color: var(--fg-strong); padding-bottom: var(--space-3); margin-bottom: var(--space-4); border-bottom: var(--hairline) solid var(--line); }
+.c-dialog__actions { display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-5); }
+
+/* --- Code ------------------------------------------------------------------------ */
+.c-code { display: block; padding: var(--space-4); background: var(--bg-sunken); color: var(--fg-soft); font-size: var(--text-small); line-height: var(--leading-base); overflow-x: auto; white-space: pre; tab-size: 2; }
+code { font-family: var(--font-mono); }
+:not(pre) > code { color: var(--fg-strong); padding: 1px 4px; background: var(--surface-2); font-size: 0.92em; }
+
+/* --- Icône : trait 1.25, extrémités rondes, grille 24 ---------------------------- */
+.c-icon { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.c-icon--small { width: 1rem; height: 1rem; stroke-width: 1.5; }

@@ -1,0 +1,113 @@
+/* ==========================================================================
+   MONO — Base : reset, typographie, mise en page
+   Préfixes : .t- texte · .l- mise en page · .u- utilitaires
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: var(--leading-base);
+  font-weight: var(--weight-regular);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'zero' 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+/* Un bloc thémé (ex. panneau papier dans une page encre) repeint son fond. */
+[data-theme] { background: var(--bg); color: var(--fg); }
+
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd, ol, ul { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+ol, ul { list-style: none; }
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; border-radius: 0; }
+a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.3em; text-decoration-color: var(--line-strong); transition: text-decoration-color var(--duration); }
+a:hover { text-decoration-color: var(--fg-strong); color: var(--fg-strong); }
+::selection { background: var(--inverse-bg); color: var(--inverse-fg); }
+:focus-visible { outline: var(--stroke) solid var(--fg-strong); outline-offset: 3px; }
+hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
+
+/* --- Styles de texte ------------------------------------------------------
+   La hiérarchie se fait par graisse, casse, interlettrage et ton — peu par
+   le corps. Trois corps maximum par écran. */
+.t-hero    { font-size: var(--text-hero); line-height: var(--leading-hero); color: var(--fg-strong); font-weight: var(--weight-regular); letter-spacing: -0.02em; }
+.t-display { font-size: var(--text-display); line-height: var(--leading-display); color: var(--fg-strong); font-weight: var(--weight-regular); letter-spacing: -0.01em; }
+.t-title   { font-size: var(--text-title); line-height: var(--leading-title); color: var(--fg-strong); font-weight: var(--weight-regular); }
+.t-large   { font-size: var(--text-large); line-height: var(--leading-large); color: var(--fg-strong); }
+.t-body    { font-size: var(--text-base); line-height: var(--leading-base); }
+.t-prose   { font-family: var(--font-sans); font-size: var(--text-medium); line-height: var(--leading-medium); max-width: var(--measure); font-variant-numeric: normal; }
+.t-prose p + p { margin-top: var(--space-4); }
+.t-small   { font-size: var(--text-small); line-height: var(--leading-small); }
+
+/* Titre espacé : le « D A N D Y   B R O W N » des références. */
+.t-spaced  { text-transform: uppercase; letter-spacing: var(--track-title); margin-right: calc(var(--track-title) * -1); color: var(--fg-strong); font-size: var(--text-base); line-height: var(--leading-base); }
+.t-spaced.t-large { font-size: var(--text-large); line-height: var(--leading-large); }
+/* Label : capitales, graisse forte — nomme une valeur. */
+.t-label   { text-transform: uppercase; letter-spacing: var(--track-label); font-weight: var(--weight-bold); color: var(--fg-strong); }
+/* Micro : capitales de service — légendes, unités, folios. Jamais sous 11px. */
+.t-micro   { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-soft); }
+.t-caps    { text-transform: uppercase; letter-spacing: var(--track-label); }
+.t-num     { font-variant-numeric: tabular-nums; }
+
+.t-strong  { color: var(--fg-strong); }
+.t-soft    { color: var(--fg-soft); }
+.t-muted   { color: var(--fg-muted); }
+.t-signal  { color: var(--signal); }
+.t-medium  { font-weight: var(--weight-medium); }
+.t-bold    { font-weight: var(--weight-bold); }
+.t-right   { text-align: right; }
+
+/* --- Mise en page --------------------------------------------------------- */
+.l-page { max-width: var(--page-max); margin-inline: auto; padding: var(--space-6) var(--page-margin) var(--space-7); }
+
+/* Grille 12 colonnes. Poser les blocs sur peu d'axes verticaux (≤ 4). */
+.l-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--space-6); }
+.l-span-1 { grid-column: span 1; } .l-span-2 { grid-column: span 2; } .l-span-3 { grid-column: span 3; }
+.l-span-4 { grid-column: span 4; } .l-span-5 { grid-column: span 5; } .l-span-6 { grid-column: span 6; }
+.l-span-7 { grid-column: span 7; } .l-span-8 { grid-column: span 8; } .l-span-9 { grid-column: span 9; }
+.l-span-10 { grid-column: span 10; } .l-span-11 { grid-column: span 11; } .l-span-12 { grid-column: span 12; }
+.l-start-2 { grid-column-start: 2; } .l-start-3 { grid-column-start: 3; } .l-start-4 { grid-column-start: 4; }
+.l-start-5 { grid-column-start: 5; } .l-start-6 { grid-column-start: 6; } .l-start-7 { grid-column-start: 7; }
+.l-start-8 { grid-column-start: 8; } .l-start-9 { grid-column-start: 9; } .l-start-10 { grid-column-start: 10; }
+@media (max-width: 1000px) {
+  .l-grid > [class*="l-span-"] { grid-column: span 6; }
+  .l-grid > .l-span-7, .l-grid > .l-span-8, .l-grid > .l-span-9, .l-grid > .l-span-10, .l-grid > .l-span-11, .l-grid > .l-span-12 { grid-column: span 12; }
+}
+@media (max-width: 640px) {
+  .l-grid > [class*="l-span-"] { grid-column: span 12; }
+}
+
+/* Pile verticale. --gap règle l'intervalle ; les variantes fixent le rythme. */
+/* --gap est réinitialisé à chaque pile : une pile imbriquée n'hérite pas de sa parente. */
+.l-stack { --gap: var(--space-4); display: flex; flex-direction: column; gap: var(--gap); }
+.l-stack--tight { --gap: var(--space-2); }
+.l-stack--loose { --gap: var(--space-6); }
+.l-stack--section { --gap: var(--space-8); }
+/* Grappe horizontale qui passe à la ligne. */
+.l-cluster { --gap: var(--space-3); display: flex; flex-wrap: wrap; align-items: center; gap: var(--gap); }
+/* Deux extrémités d'une même ligne. */
+.l-split { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); }
+/* Rail latéral + contenu. */
+.l-rail { display: grid; grid-template-columns: var(--rail, 14rem) minmax(0, 1fr); column-gap: var(--space-7); }
+@media (max-width: 900px) { .l-rail { grid-template-columns: 1fr; row-gap: var(--space-6); } }
+/* Cadre plein écran : en-tête / contenu / pied. */
+.l-frame { min-height: 100vh; min-height: 100dvh; display: grid; grid-template-rows: auto 1fr auto; }
+
+/* --- Utilitaires ---------------------------------------------------------- */
+.u-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.u-nowrap { white-space: nowrap; }
+.u-end { margin-left: auto; }
+.u-sunken { background: var(--bg-sunken); }
+.u-surface { background: var(--surface); }
+/* Grain de papier, optionnel, à poser sur <body>. */
+.u-grain::before { content: ''; position: fixed; inset: 0; z-index: 100; pointer-events: none; opacity: .5; mix-blend-mode: soft-light; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr" data-theme="papier">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rapport annuel — exemple MONO</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+</head>
+<body>
+  <!-- Exemple éditorial en thème papier. La figure est un panneau encre : c'est la seule
+       grande masse sombre de la page, posée à droite en contrepoids du texte. -->
+  <div class="l-page l-frame">
+    <header class="c-masthead">
+      <div class="c-masthead__title">Rapport annuel 2026</div>
+      <div class="c-masthead__meta"><span>Chapitre 04</span><span>Réseau</span></div>
+    </header>
+
+    <main class="l-grid" style="padding-block: var(--space-8); row-gap: var(--space-8); align-content: start">
+
+      <article class="l-span-5 l-stack" style="--gap: var(--space-6)">
+        <nav class="c-breadcrumb" aria-label="Fil d'Ariane"><a href="#">Rapport</a><a href="#">Réseau</a><span aria-current="page">Implantation</span></nav>
+        <h1 class="t-display">Un réseau dense au nord, clairsemé ailleurs</h1>
+        <div class="t-prose">
+          <p>Le groupe compte 1 204 agences à la clôture de l'exercice, soit dix-huit de plus qu'un an plus tôt. Cette progression masque une répartition très inégale : la branche régionale du nord en concentre à elle seule plus du tiers.</p>
+          <p>Les ouvertures de l'année se sont faites pour l'essentiel dans le centre, où la densité restait la plus faible au regard de la population couverte.</p>
+        </div>
+        <dl class="c-kv" style="max-width: 26rem">
+          <div><dt>Agences</dt><dd>1 204</dd></div>
+          <div><dt>Ouvertures</dt><dd>23</dd></div>
+          <div><dt>Fermetures</dt><dd>5</dd></div>
+          <div><dt>Branches</dt><dd>4 régionales</dd></div>
+        </dl>
+      </article>
+
+      <div class="c-panel l-span-7" data-theme="encre" style="padding: var(--space-6)">
+        <figure class="v-figure">
+          <div>
+            <div class="v-figure__title">La branche nord concentre le tiers des agences</div>
+            <div class="v-figure__caption">Agences par branche régionale</div>
+          </div>
+          <div id="map" data-label="Carte à graticule des branches régionales : Nord 412 agences, Centre 331, Sud 284, Ouest 177."></div>
+          <div class="l-split" style="align-items: flex-end">
+            <div class="c-key" style="min-width: 14rem">
+              <div class="c-key__title">Clé</div>
+              <div class="c-key__item"><span class="c-key__swatch c-key__swatch--ring"></span>Nombre d'agences</div>
+              <div class="c-key__item"><span class="c-key__swatch c-key__swatch--signal"></span>Branche principale</div>
+            </div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </div>
+        </figure>
+      </div>
+
+      <section class="l-span-5 l-stack" style="--gap: var(--space-5)">
+        <h2 class="c-section-head"><span class="c-section-head__num">4.1</span><span>Par branche</span><span class="c-section-head__aside">Agences</span></h2>
+        <table class="c-table c-table--caps">
+          <thead><tr><th>Branche</th><th class="is-num">2025</th><th class="is-num">2026</th><th class="is-num">Part</th></tr></thead>
+          <tbody>
+            <tr class="is-key"><th>Nord</th><td class="is-num">409</td><td class="is-num">412</td><td class="is-num">34,2 %</td></tr>
+            <tr><th>Centre</th><td class="is-num">318</td><td class="is-num">331</td><td class="is-num">27,5 %</td></tr>
+            <tr><th>Sud</th><td class="is-num">283</td><td class="is-num">284</td><td class="is-num">23,6 %</td></tr>
+            <tr><th>Ouest</th><td class="is-num">176</td><td class="is-num">177</td><td class="is-num">14,7 %</td></tr>
+          </tbody>
+          <tfoot><tr><th>Total</th><td class="is-num">1 186</td><td class="is-num">1 204</td><td class="is-num">100 %</td></tr></tfoot>
+        </table>
+      </section>
+
+      <figure class="v-figure l-span-7">
+        <h2 class="c-section-head"><span class="c-section-head__num">4.2</span><span>Activité des branches</span><span class="c-section-head__aside">Indice base 100</span></h2>
+        <div id="lines" data-label="Indices mensuels des branches non-vie, vie et marché sur douze mois."></div>
+      </figure>
+    </main>
+
+    <footer class="c-colophon">
+      <span>76 &nbsp; Rapport annuel — Réseau &nbsp;·&nbsp; <a href="../index.html">catalogue Mono</a></span>
+      <span>Données de démonstration <span class="c-ref">RA-2026-04</span></span>
+    </footer>
+  </div>
+  <script src="../assets/charts.js"></script>
+  <script src="../assets/demo-data.js"></script>
+  <script>
+    const agences = MonoDemo.agences.map((p) => ({ ...p, value: { Nord: 412, Centre: 331, Sud: 284, Ouest: 177 }[p.name] }));
+    MonoCharts.graticule('#map', { lon: [13, 19], lat: [49, 53], points: agences, height: 340, maxValue: 412 });
+    MonoCharts.lines('#lines', { labels: MonoDemo.mois, series: MonoDemo.indices, steps: 6, height: 240 });
+  </script>
+</body>
+</html>

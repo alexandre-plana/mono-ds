@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Observatoire du réseau — exemple MONO</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+</head>
+<body>
+  <!-- Exemple d'écran composé uniquement avec le système : aucune classe hors de src/.
+       Trois axes verticaux (col. 1, 4, 10). Un point focal : le chiffre héros.
+       Un bloc inversé : « Exporter ». Un sens pour le signal : le repli de la branche vie. -->
+  <div class="l-page l-frame">
+    <header class="c-masthead">
+      <div class="c-masthead__title">Observatoire du réseau</div>
+      <div class="c-masthead__meta"><span>Exercice 2026</span><span>T3</span><span>Mis à jour 14:02</span></div>
+    </header>
+
+    <main class="l-grid" style="padding-block: var(--space-7) var(--space-8); row-gap: var(--space-8); align-content: start">
+
+      <section class="l-span-3 l-stack" style="--gap: var(--space-7)" aria-label="Synthèse">
+        <div class="c-stat c-stat--hero">
+          <span class="c-stat__label">Primes totales</span>
+          <span class="c-stat__value">5 190<small>M</small></span>
+          <span class="c-stat__note">−3,2 % sur un an</span>
+        </div>
+        <dl class="c-kv">
+          <div><dt>Non-vie</dt><dd>4 285 M</dd></div>
+          <div><dt>Vie</dt><dd>905 M</dd></div>
+          <div><dt>Agences</dt><dd>1 204</dd></div>
+          <div><dt>Service</dt><dd>98,4 %</dd></div>
+        </dl>
+        <div class="l-cluster">
+          <button class="c-button c-button--primary" type="button">Exporter</button>
+          <button class="c-button" type="button">Comparer</button>
+        </div>
+      </section>
+
+      <figure class="v-figure l-span-6">
+        <div>
+          <div class="v-figure__title">Premier repli après vingt-trois ans de hausse</div>
+          <div class="v-figure__caption">Primes totales du groupe — en millions</div>
+        </div>
+        <div id="chart" data-label="Primes totales par année de 2003 à 2026. Maximum 5 364 en 2025, repli à 5 190 en 2026."></div>
+      </figure>
+
+      <aside class="l-span-3 l-stack" style="--gap: var(--space-7)">
+        <div class="c-notice c-notice--signal" style="grid-template-columns: 1fr; row-gap: var(--space-1)">
+          <span class="c-notice__label">Branche vie</span>
+          <span>Collecte en recul de 44,9 % : premier repli du total depuis 2003.</span>
+        </div>
+        <div class="l-stack">
+          <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Régions</span><span class="c-section-head__aside">Agences</span></h2>
+          <div class="v-hbars">
+            <span class="v-hbars__label">Nord</span><div class="v-hbar" style="--value: 92"></div><span class="v-hbars__value">412</span>
+            <span class="v-hbars__label">Centre</span><div class="v-hbar" style="--value: 74"></div><span class="v-hbars__value">331</span>
+            <span class="v-hbars__label">Sud</span><div class="v-hbar" style="--value: 63"></div><span class="v-hbars__value">284</span>
+            <span class="v-hbars__label">Ouest</span><div class="v-hbar" style="--value: 39"></div><span class="v-hbars__value">177</span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="l-span-9 l-stack" style="--gap: var(--space-5)">
+        <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Branches</span><span class="c-section-head__aside">En milliers</span></h2>
+        <div class="c-table-wrap">
+          <table class="c-table c-table--caps">
+            <thead>
+              <tr><th>Branche</th><th>État</th><th class="is-num">2025</th><th class="is-num">2026</th><th class="is-num">Dynamique</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>Non-vie — particuliers</th><td><span class="c-status c-status--on">Clos</span></td><td class="is-num">2 104 380</td><td class="is-num">2 398 112</td><td class="is-num">114,0 %</td></tr>
+              <tr><th>Non-vie — entreprises</th><td><span class="c-status c-status--on">Clos</span></td><td class="is-num">1 619 361</td><td class="is-num">1 887 335</td><td class="is-num">116,5 %</td></tr>
+              <tr><th>Vie</th><td><span class="c-status c-status--critical">Repli</span></td><td class="is-num">1 640 244</td><td class="is-num">904 503</td><td class="is-num is-signal">55,1 %</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><th>Total</th><td></td><td class="is-num">5 363 985</td><td class="is-num">5 189 950</td><td class="is-num">96,8 %</td></tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+
+      <aside class="l-span-3 l-stack" style="--gap: var(--space-5)">
+        <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Sources</span></h2>
+        <dl class="c-kv c-kv--plain">
+          <div><dt>Comptabilité</dt><dd><span class="c-status c-status--on">À jour</span></dd></div>
+          <div><dt>Réseau</dt><dd><span class="c-status c-status--progress">En cours</span></dd></div>
+          <div><dt>Marché</dt><dd><span class="c-status c-status--off">Hors ligne</span></dd></div>
+        </dl>
+      </aside>
+    </main>
+
+    <footer class="c-colophon">
+      <span>Exemple — <a href="../index.html">catalogue Mono</a></span>
+      <span>Données de démonstration <span class="c-ref">OBS-2026-T3</span></span>
+    </footer>
+  </div>
+  <script src="../assets/charts.js"></script>
+  <script src="../assets/demo-data.js"></script>
+  <script>
+    MonoCharts.bars('#chart', { data: MonoDemo.primes, unit: 'M', steps: 6, height: 320, labelAll: false });
+  </script>
+</body>
+</html>

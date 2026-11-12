@@ -1,0 +1,14 @@
+{
+  "name": "mono-ds",
+  "version": "0.1.0",
+  "description": "Design system monochrome, sobre et technique.",
+  "private": true,
+  "type": "module",
+  "style": "src/mono.css",
+  "files": ["src", "docs"],
+  "scripts": {
+    "serve": "python3 -m http.server 8080",
+    "check:contrast": "node scripts/contrast.mjs",
+    "check:tones": "node scripts/tonal-audit.mjs"
+  }
+}

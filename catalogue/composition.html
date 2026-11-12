@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONO — Composition</title>
+  <link rel="stylesheet" href="../src/mono.css">
+  <link rel="stylesheet" href="assets/catalogue.css">
+</head>
+<body data-root="./">
+  <div class="l-page">
+    <header class="c-masthead">
+      <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
+      <div class="c-masthead__meta">
+        <span>Composition</span><span>v0.1</span>
+        <span class="c-segmented" role="group" aria-label="Thème">
+          <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
+          <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
+        </span>
+      </div>
+    </header>
+
+    <div class="l-rail cat-rail">
+      <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
+      <main class="cat-main">
+
+        <section class="cat-intro">
+          <h1 class="t-spaced t-large">Composition</h1>
+          <p class="cat-lede">Un écran se compose comme une page imprimée : des masses de ton, des axes, du vide. Les composants viennent après.</p>
+        </section>
+
+        <section class="cat-section" id="masses">
+          <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Masses tonales</span><span class="c-section-head__aside">À l'échelle réelle</span></h2>
+          <p class="cat-note">Tout écran se répartit en quatre masses. La bande ci-dessous montre leurs proportions réelles, mesurées sur le tableau de bord d'exemple : le fond occupe presque tout, et c'est ce déséquilibre qui rend lisible le peu de clair qui reste.</p>
+          <div class="cat-masses" role="img" aria-label="Fond 94,7 %, trame 4,3 %, éclat 0,6 %, signal 0,3 %">
+            <div style="flex: 94.7; background: var(--bg-sunken)"></div>
+            <div style="flex: 4.3; background: var(--mark)"></div>
+            <div style="flex: 0.6; background: var(--fg-strong)"></div>
+            <div style="flex: 0.3; background: var(--signal)"></div>
+          </div>
+          <div class="cat-masses-legend">
+            <div class="c-stat c-stat--compact c-stat--ruled"><span class="c-stat__label">Fond</span><span class="c-stat__value">≥ 88<small>%</small></span><span class="c-stat__note">Fond, creux, surfaces. La masse qui porte tout le reste.</span></div>
+            <div class="c-stat c-stat--compact c-stat--ruled"><span class="c-stat__label">Trame</span><span class="c-stat__value">2 – 10<small>%</small></span><span class="c-stat__note">Gris moyens : filets, texte secondaire, marques de données.</span></div>
+            <div class="c-stat c-stat--compact c-stat--ruled"><span class="c-stat__label">Éclat</span><span class="c-stat__value">≤ 3<small>%</small></span><span class="c-stat__note">Le ton opposé au fond : titres, chiffres, action primaire.</span></div>
+            <div class="c-stat c-stat--compact c-stat--ruled"><span class="c-stat__label">Signal</span><span class="c-stat__value">≤ 1<small>%</small></span><span class="c-stat__note">Le plus souvent zéro. Jamais une surface.</span></div>
+          </div>
+          <div class="cat-rules">
+            <div class="cat-rule"><span class="cat-rule__num">M1</span><h3>L'éclat est rare</h3><p>Le ton le plus clair ne s'emploie qu'en trait ou en glyphe : du texte, un point, un filet. La seule surface claire admise est le bouton primaire.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">M2</span><h3>Les aplats sont moyens</h3><p>Toute surface de plus de quelques centaines de pixels — barre, aire, segment actif — prend un gris moyen. Plus une forme est grande, plus son ton se rapproche du fond.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">M3</span><h3>Un bloc inversé, un tiers au plus</h3><p>Un panneau du thème opposé peut porter une figure. Il est unique sur la vue et n'en couvre pas plus du tiers ; l'éclat mesuré monte alors jusqu'à 35 %.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">M4</span><h3>Répartir, ne pas empiler</h3><p>Les éléments clairs se répondent en diagonale ou en triangle. Jamais tous dans le même quart d'écran : la page pencherait.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">M5</span><h3>Plisser les yeux</h3><p>Écran flouté, on doit voir un seul point clair, deux ou trois nappes grises, et le reste uni. Si tout scintille, il y a trop de <code>--fg-strong</code>.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">M6</span><h3>Mesurer</h3><p><code>scripts/tonal-audit.mjs</code> capture un écran et chiffre ces masses, le vide et la présence de noir ou de blanc purs.</p></div>
+          </div>
+          <pre class="c-code">node scripts/tonal-audit.mjs catalogue/exemples/tableau-de-bord.html
+
+  ok   Fond dominant               94.74 %   ≥ 88 %
+  ok   Trame (gris moyens)          4.32 %   ≤ 10 %
+  ok   Éclat (ton opposé)           0.62 %   ≤ 3 %
+  ok   Signal                       0.32 %   ≤ 1 %
+  ok   Vide (cellules de 24 px)    63.65 %   ≥ 33 %
+  ok   Noir pur                     0.00 %   = 0
+  ok   Blanc pur                    0.00 %   = 0</pre>
+        </section>
+
+        <section class="cat-section" id="equilibre">
+          <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Équilibre</span></h2>
+
+          <div class="cat-pair">
+            <div class="cat-verdict">
+              <div class="cat-verdict__mark">C1 — Peu d'axes</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-axis" style="left:8%"></i><i class="w-axis" style="left:38%"></i><i class="w-axis" style="left:72%"></i>
+                <i class="w-strong" style="left:8%;top:12%;width:18%"></i>
+                <i class="w-text" style="left:8%;top:24%;width:22%"></i><i class="w-text" style="left:8%;top:29%;width:16%"></i><i class="w-text" style="left:8%;top:34%;width:20%"></i>
+                <i class="w-strong" style="left:38%;top:12%;width:14%"></i>
+                <i class="w-block" style="left:38%;top:24%;width:26%;height:30%"></i>
+                <i class="w-text" style="left:72%;top:12%;width:14%"></i><i class="w-text" style="left:72%;top:24%;width:18%"></i><i class="w-text" style="left:72%;top:29%;width:12%"></i>
+                <i class="w-rule" style="left:8%;top:68%;width:56%"></i>
+                <i class="w-text" style="left:8%;top:76%;width:20%"></i><i class="w-text" style="left:38%;top:76%;width:20%"></i>
+                <i class="w-text" style="left:72%;top:76%;width:14%"></i>
+              </div>
+              <p>Tous les blocs s'accrochent à trois ou quatre axes verticaux, pris sur la grille. Chaque bord gauche répété devient une ligne invisible qui tient la page.</p>
+            </div>
+            <div class="cat-verdict cat-verdict--dont">
+              <div class="cat-verdict__mark">À éviter — un axe par bloc</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-strong" style="left:8%;top:12%;width:18%"></i>
+                <i class="w-text" style="left:12%;top:24%;width:22%"></i><i class="w-text" style="left:10%;top:29%;width:16%"></i><i class="w-text" style="left:15%;top:34%;width:20%"></i>
+                <i class="w-strong" style="left:43%;top:9%;width:14%"></i>
+                <i class="w-block" style="left:35%;top:22%;width:26%;height:30%"></i>
+                <i class="w-text" style="left:69%;top:15%;width:14%"></i><i class="w-text" style="left:74%;top:27%;width:18%"></i><i class="w-text" style="left:66%;top:33%;width:12%"></i>
+                <i class="w-rule" style="left:5%;top:66%;width:61%"></i>
+                <i class="w-text" style="left:18%;top:78%;width:20%"></i><i class="w-text" style="left:47%;top:74%;width:20%"></i>
+                <i class="w-text" style="left:77%;top:80%;width:14%"></i>
+              </div>
+              <p>Des retraits et des centrages au cas par cas : aucun bord ne se répète, l'œil ne trouve pas de structure et lit chaque bloc isolément.</p>
+            </div>
+          </div>
+
+          <div class="cat-pair">
+            <div class="cat-verdict">
+              <div class="cat-verdict__mark">C2 — Grappes et silences</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-strong" style="left:8%;top:12%;width:16%"></i>
+                <i class="w-text" style="left:8%;top:20%;width:24%"></i><i class="w-text" style="left:8%;top:24%;width:20%"></i><i class="w-text" style="left:8%;top:28%;width:22%"></i><i class="w-text" style="left:8%;top:32%;width:14%"></i>
+                <i class="w-strong" style="left:8%;top:62%;width:12%"></i>
+                <i class="w-text" style="left:8%;top:70%;width:22%"></i><i class="w-text" style="left:8%;top:74%;width:18%"></i><i class="w-text" style="left:8%;top:78%;width:20%"></i>
+                <i class="w-strong" style="left:56%;top:62%;width:12%"></i>
+                <i class="w-text" style="left:56%;top:70%;width:24%"></i><i class="w-text" style="left:56%;top:74%;width:16%"></i><i class="w-text" style="left:56%;top:78%;width:20%"></i>
+              </div>
+              <p>Dense à l'intérieur d'un groupe (4 à 8 px), très large entre deux groupes (48 à 96 px). Un tiers de l'écran au moins reste vide, d'un seul tenant si possible.</p>
+            </div>
+            <div class="cat-verdict cat-verdict--dont">
+              <div class="cat-verdict__mark">À éviter — remplissage uniforme</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-strong" style="left:8%;top:10%;width:16%"></i>
+                <i class="w-text" style="left:8%;top:22%;width:24%"></i><i class="w-text" style="left:8%;top:34%;width:20%"></i><i class="w-text" style="left:8%;top:46%;width:22%"></i><i class="w-text" style="left:8%;top:58%;width:14%"></i><i class="w-text" style="left:8%;top:70%;width:22%"></i><i class="w-text" style="left:8%;top:82%;width:18%"></i>
+                <i class="w-strong" style="left:40%;top:10%;width:12%"></i>
+                <i class="w-text" style="left:40%;top:22%;width:22%"></i><i class="w-text" style="left:40%;top:34%;width:18%"></i><i class="w-text" style="left:40%;top:46%;width:20%"></i><i class="w-text" style="left:40%;top:58%;width:16%"></i><i class="w-text" style="left:40%;top:70%;width:22%"></i><i class="w-text" style="left:40%;top:82%;width:14%"></i>
+                <i class="w-strong" style="left:70%;top:10%;width:12%"></i>
+                <i class="w-text" style="left:70%;top:22%;width:20%"></i><i class="w-text" style="left:70%;top:34%;width:16%"></i><i class="w-text" style="left:70%;top:46%;width:22%"></i><i class="w-text" style="left:70%;top:58%;width:18%"></i><i class="w-text" style="left:70%;top:70%;width:14%"></i><i class="w-text" style="left:70%;top:82%;width:20%"></i>
+              </div>
+              <p>Le même intervalle partout : plus de groupes, plus de respiration, plus d'ordre de lecture. Étirer le contenu pour « occuper » l'écran est toujours une erreur.</p>
+            </div>
+          </div>
+
+          <div class="cat-pair">
+            <div class="cat-verdict">
+              <div class="cat-verdict__mark">C3 — Un point focal</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-text" style="left:8%;top:12%;width:12%"></i>
+                <i class="w-light" style="left:8%;top:19%;width:20%;height:9%"></i>
+                <i class="w-text" style="left:8%;top:34%;width:14%"></i>
+                <i class="w-block" style="left:40%;top:30%;width:4%;height:34%"></i><i class="w-block" style="left:47%;top:38%;width:4%;height:26%"></i><i class="w-block" style="left:54%;top:22%;width:4%;height:42%"></i><i class="w-block" style="left:61%;top:44%;width:4%;height:20%"></i><i class="w-block" style="left:68%;top:34%;width:4%;height:30%"></i>
+                <i class="w-rule" style="left:40%;top:64%;width:34%"></i>
+                <i class="w-text" style="left:8%;top:76%;width:18%"></i><i class="w-text" style="left:8%;top:81%;width:14%"></i>
+                <i class="w-box" style="left:80%;top:76%;width:12%;height:7%"></i>
+              </div>
+              <p>Un seul élément porte le ton le plus clair en aplat ou en grand corps : ici le chiffre héros. Le graphique reste en gris moyen, l'action secondaire en contour.</p>
+            </div>
+            <div class="cat-verdict cat-verdict--dont">
+              <div class="cat-verdict__mark">À éviter — tout est important</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-light" style="left:8%;top:12%;width:20%;height:9%"></i>
+                <i class="w-light" style="left:8%;top:28%;width:16%;height:9%"></i>
+                <i class="w-light" style="left:40%;top:30%;width:4%;height:34%"></i><i class="w-light" style="left:47%;top:38%;width:4%;height:26%"></i><i class="w-light" style="left:54%;top:22%;width:4%;height:42%"></i><i class="w-light" style="left:61%;top:44%;width:4%;height:20%"></i><i class="w-light" style="left:68%;top:34%;width:4%;height:30%"></i>
+                <i class="w-rule" style="left:40%;top:64%;width:34%"></i>
+                <i class="w-light" style="left:8%;top:76%;width:14%;height:7%"></i><i class="w-light" style="left:26%;top:76%;width:14%;height:7%"></i>
+                <i class="w-light" style="left:80%;top:76%;width:12%;height:7%"></i>
+              </div>
+              <p>Barres claires, trois boutons pleins, deux chiffres héros : l'éclat dépasse 10 %, l'écran éblouit et plus rien ne ressort.</p>
+            </div>
+          </div>
+
+          <div class="cat-pair">
+            <div class="cat-verdict">
+              <div class="cat-verdict__mark">C4 — Contrepoids</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-strong" style="left:8%;top:10%;width:30%"></i>
+                <i class="w-text" style="left:8%;top:22%;width:20%"></i><i class="w-text" style="left:8%;top:26%;width:16%"></i><i class="w-text" style="left:8%;top:30%;width:18%"></i><i class="w-text" style="left:8%;top:34%;width:14%"></i>
+                <i class="w-text" style="left:44%;top:22%;width:20%"></i><i class="w-text" style="left:44%;top:26%;width:14%"></i>
+                <i class="w-text" style="left:8%;top:84%;width:10%"></i><i class="w-text" style="left:8%;top:88%;width:14%"></i>
+                <i class="w-box" style="left:82%;top:76%;width:10%;height:15%;border-radius:50%"></i>
+              </div>
+              <p>La masse principale part du haut à gauche ; un élément petit mais marqué — sceau, folio, clé, action — lui répond en bas à droite. Le vide entre les deux est la composition.</p>
+            </div>
+            <div class="cat-verdict cat-verdict--dont">
+              <div class="cat-verdict__mark">À éviter — centré, symétrique</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-strong" style="left:35%;top:14%;width:30%"></i>
+                <i class="w-text" style="left:38%;top:26%;width:24%"></i><i class="w-text" style="left:41%;top:30%;width:18%"></i><i class="w-text" style="left:39%;top:34%;width:22%"></i><i class="w-text" style="left:43%;top:38%;width:14%"></i>
+                <i class="w-box" style="left:45%;top:48%;width:10%;height:15%;border-radius:50%"></i>
+                <i class="w-text" style="left:42%;top:72%;width:16%"></i><i class="w-text" style="left:44%;top:76%;width:12%"></i>
+              </div>
+              <p>La symétrie centrale fige la page et supprime les axes de lecture. Le système est ferré à gauche, asymétrique, équilibré par le vide.</p>
+            </div>
+          </div>
+
+          <div class="cat-pair">
+            <div class="cat-verdict">
+              <div class="cat-verdict__mark">C5 — Filets, pas de boîtes</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-rule" style="left:8%;top:14%;width:26%"></i><i class="w-strong" style="left:8%;top:20%;width:12%"></i><i class="w-text" style="left:8%;top:27%;width:20%"></i><i class="w-text" style="left:8%;top:31%;width:16%"></i>
+                <i class="w-rule" style="left:38%;top:14%;width:26%"></i><i class="w-strong" style="left:38%;top:20%;width:12%"></i><i class="w-text" style="left:38%;top:27%;width:20%"></i><i class="w-text" style="left:38%;top:31%;width:14%"></i>
+                <i class="w-rule" style="left:68%;top:14%;width:24%"></i><i class="w-strong" style="left:68%;top:20%;width:12%"></i><i class="w-text" style="left:68%;top:27%;width:18%"></i><i class="w-text" style="left:68%;top:31%;width:16%"></i>
+                <i class="w-rule" style="left:8%;top:60%;width:84%"></i>
+                <i class="w-text" style="left:8%;top:68%;width:30%"></i><i class="w-text" style="left:8%;top:74%;width:26%"></i><i class="w-text" style="left:8%;top:80%;width:28%"></i>
+                <i class="w-text" style="left:78%;top:68%;width:14%"></i><i class="w-text" style="left:80%;top:74%;width:12%"></i><i class="w-text" style="left:79%;top:80%;width:13%"></i>
+              </div>
+              <p>Un filet au-dessus de chaque groupe et de l'espace autour. Les régions se lisent sans qu'aucune ne soit enfermée.</p>
+            </div>
+            <div class="cat-verdict cat-verdict--dont">
+              <div class="cat-verdict__mark">À éviter — cartes partout</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-box" style="left:6%;top:10%;width:28%;height:30%"></i><i class="w-strong" style="left:9%;top:17%;width:12%"></i><i class="w-text" style="left:9%;top:25%;width:20%"></i><i class="w-text" style="left:9%;top:30%;width:16%"></i>
+                <i class="w-box" style="left:36%;top:10%;width:28%;height:30%"></i><i class="w-strong" style="left:39%;top:17%;width:12%"></i><i class="w-text" style="left:39%;top:25%;width:20%"></i><i class="w-text" style="left:39%;top:30%;width:14%"></i>
+                <i class="w-box" style="left:66%;top:10%;width:28%;height:30%"></i><i class="w-strong" style="left:69%;top:17%;width:12%"></i><i class="w-text" style="left:69%;top:25%;width:18%"></i><i class="w-text" style="left:69%;top:30%;width:16%"></i>
+                <i class="w-box" style="left:6%;top:46%;width:88%;height:44%"></i>
+                <i class="w-box" style="left:9%;top:52%;width:82%;height:32%"></i>
+                <i class="w-text" style="left:12%;top:60%;width:30%"></i><i class="w-text" style="left:12%;top:67%;width:26%"></i><i class="w-text" style="left:12%;top:74%;width:28%"></i>
+              </div>
+              <p>Chaque contenu dans son cadre, des cadres dans des cadres : la trame grise gonfle, les bords se multiplient et le contenu passe derrière son contenant.</p>
+            </div>
+          </div>
+
+          <div class="cat-pair">
+            <div class="cat-verdict">
+              <div class="cat-verdict__mark">C6 — Le signal désigne</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-strong" style="left:8%;top:12%;width:22%"></i><i class="w-text" style="left:8%;top:18%;width:16%"></i>
+                <i class="w-block" style="left:8%;top:48%;width:5%;height:22%"></i><i class="w-block" style="left:16%;top:42%;width:5%;height:28%"></i><i class="w-block" style="left:24%;top:36%;width:5%;height:34%"></i><i class="w-block" style="left:32%;top:30%;width:5%;height:40%"></i><i class="w-signal-block" style="left:40%;top:40%;width:5%;height:30%"></i>
+                <i class="w-rule" style="left:8%;top:70%;width:40%"></i>
+                <i class="w-text" style="left:62%;top:44%;width:20%"></i><i class="w-text" style="left:62%;top:50%;width:24%"></i><i class="w-text" style="left:62%;top:56%;width:18%"></i>
+                <i class="w-signal" style="left:58%;top:55.2%"></i>
+              </div>
+              <p>Une barre et la ligne de tableau qui lui correspond : deux occurrences, un seul fait. L'œil y va d'abord, puis lit le reste en gris.</p>
+            </div>
+            <div class="cat-verdict cat-verdict--dont">
+              <div class="cat-verdict__mark">À éviter — la couleur décore</div>
+              <div class="cat-wire" aria-hidden="true">
+                <i class="w-signal-block" style="left:0;top:0;width:100%;height:7%"></i>
+                <i class="w-strong" style="left:8%;top:14%;width:22%"></i><i class="w-signal-block" style="left:8%;top:20%;width:16%;height:2px"></i>
+                <i class="w-signal-block" style="left:8%;top:48%;width:5%;height:22%"></i><i class="w-signal-block" style="left:16%;top:42%;width:5%;height:28%"></i><i class="w-signal-block" style="left:24%;top:36%;width:5%;height:34%"></i><i class="w-signal-block" style="left:32%;top:30%;width:5%;height:40%"></i><i class="w-signal-block" style="left:40%;top:40%;width:5%;height:30%"></i>
+                <i class="w-rule" style="left:8%;top:70%;width:40%"></i>
+                <i class="w-text" style="left:62%;top:44%;width:20%"></i><i class="w-text" style="left:62%;top:50%;width:24%"></i><i class="w-text" style="left:62%;top:56%;width:18%"></i>
+                <i class="w-signal-block" style="left:62%;top:76%;width:14%;height:7%"></i>
+              </div>
+              <p>Bandeau, liens, toutes les barres, le bouton : la couleur devient une identité. Elle ne peut plus rien signaler, et la règle du 1 % est dépassée dix fois.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="methode">
+          <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Méthode</span><span class="c-section-head__aside">Composer un écran</span></h2>
+          <div class="c-index" style="max-width: 52rem">
+            <div class="c-index__row"><span class="c-index__title">Nommer le point focal</span><span class="c-index__value">Une phrase : ce que l'écran doit dire</span></div>
+            <div class="c-index__row"><span class="c-index__title">Choisir trois axes</span><span class="c-index__value">Sur la grille de 12 — ex. col. 1, 4, 10</span></div>
+            <div class="c-index__row"><span class="c-index__title">Former les grappes</span><span class="c-index__value">Serré dedans, 48 à 96 px dehors</span></div>
+            <div class="c-index__row"><span class="c-index__title">Réserver le vide</span><span class="c-index__value">Un tiers de la vue, d'un seul tenant</span></div>
+            <div class="c-index__row"><span class="c-index__title">Poser les tons</span><span class="c-index__value">Gris moyens d'abord, éclat ensuite</span></div>
+            <div class="c-index__row"><span class="c-index__title">Placer le contrepoids</span><span class="c-index__value">À l'opposé de la masse principale</span></div>
+            <div class="c-index__row"><span class="c-index__title">Décider du signal</span><span class="c-index__value">Un fait, ou aucun</span></div>
+            <div class="c-index__row"><span class="c-index__title">Mesurer</span><span class="c-index__value">contrast.mjs · tonal-audit.mjs</span></div>
+          </div>
+          <div class="cat-rules">
+            <div class="cat-rule"><span class="cat-rule__num">C7</span><h3>Ferré à gauche</h3><p>Texte et blocs s'alignent à gauche ; seuls les chiffres en colonne s'alignent à droite. Rien n'est centré, hormis un glyphe dans son contrôle.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">C8</span><h3>Cadre de page</h3><p>Un en-tête à titre espacé en haut, un colophon en bas, les mêmes marges des quatre côtés. Entre les deux, la page est libre.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">C9</span><h3>Marges généreuses</h3><p>La marge extérieure vaut au moins deux gouttières. Un contenu qui touche le bord de l'écran perd son statut de page.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">C10</span><h3>Ligne courte</h3><p>68 caractères au plus pour la prose, 46 pour un chapeau. Une colonne de texte n'occupe jamais toute la largeur.</p></div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.1</span></footer>
+  </div>
+  <script src="assets/catalogue.js"></script>
+</body>
+</html>

@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101112">
+  <meta name="description" content="Design system monochrome, minimal et éditorial, inspiré de la typographie technique et de la visualisation de données.">
+  <title>Design System — Monochrome / Éditorial</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --black: #101112;
+      --carbon: #191a1b;
+      --graphite: #272829;
+      --stone: #898a88;
+      --mist: #bfc0bc;
+      --chalk: #deded9;
+      --subtle: #676967;
+      --rule: rgba(220, 222, 216, .36);
+      --rule-soft: rgba(220, 222, 216, .18);
+      --rule-faint: rgba(220, 222, 216, .095);
+      --mono: 'IBM Plex Mono', 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+      --sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --space: 8px;
+      --outer: clamp(22px, 3.7vw, 66px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--black); color: var(--mist); font-family: var(--mono); font-size: 12px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    body::before { content: ''; pointer-events: none; position: fixed; inset: 0; z-index: 20; opacity: .13; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E"); }
+    ::selection { background: var(--chalk); color: var(--black); }
+    :focus-visible { outline: 1px solid var(--chalk); outline-offset: 4px; }
+    a { color: inherit; text-decoration: none; }
+    button, select { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; }
+    .page { max-width: 1690px; margin: auto; padding: 24px var(--outer) 55px; }
+
+    .micro { text-transform: uppercase; letter-spacing: .16em; font-size: 10px; line-height: 1.6; }
+    .muted { color: var(--stone); }
+    .very-muted { color: var(--subtle); }
+    .rule { border-color: var(--rule); }
+    .site-header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--rule); padding: 0 0 17px; }
+    .brand { font-size: clamp(17px, 1.55vw, 23px); letter-spacing: .46em; line-height: 1.25; color: var(--chalk); font-weight: 400; white-space: nowrap; }
+    .version { font-size: 10px; letter-spacing: .22em; color: var(--mist); white-space: nowrap; }
+    .header-line { display: inline-block; width: 40px; border-top: 1px solid var(--rule); vertical-align: middle; margin: 0 13px 3px; }
+
+    .overview { display: grid; grid-template-columns: 25% 19% minmax(0, 1fr); border-bottom: 1px solid var(--rule); padding: 20px 0 20px; min-height: 160px; }
+    .overview-intro { padding: 21px 32px 12px 0; border-right: 1px solid var(--rule); }
+    .overview-intro p { font-family: var(--sans); font-size: clamp(13px, 1vw, 16px); line-height: 1.58; max-width: 280px; color: var(--chalk); margin: 0; font-weight: 400; }
+    .overview-nav { border-right: 1px solid var(--rule); padding: 0 22px 0 30px; }
+    .overview-nav ol { margin: 0; padding: 0; list-style: none; }
+    .overview-nav li { line-height: 1.73; }
+    .overview-nav a { display: flex; gap: 19px; align-items: baseline; font-size: 10px; color: var(--mist); transition: color .2s; }
+    .overview-nav a:hover { color: #fff; }
+    .overview-nav span { color: var(--stone); font-variant-numeric: tabular-nums; }
+    .overview-principles { padding-left: 30px; }
+    .section-label { display: flex; align-items: baseline; gap: 27px; padding-bottom: 10px; color: var(--chalk); font-size: 13px; letter-spacing: .24em; text-transform: uppercase; line-height: 1.2; font-weight: 400; }
+    .section-label .num { letter-spacing: .06em; min-width: 22px; }
+    .section-label.wide { letter-spacing: .33em; }
+    .principles-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); padding-top: 19px; }
+    .principle { padding: 0 20px; border-right: 1px solid var(--rule-soft); }
+    .principle:first-child { padding-left: 4px; }
+    .principle:last-child { border-right: 0; padding-right: 0; }
+    .principle h3 { font-size: 12px; color: var(--chalk); margin: 0 0 8px; font-weight: 400; letter-spacing: .06em; }
+    .principle p { font-size: 10px; line-height: 1.55; color: var(--stone); margin: 0; max-width: 145px; }
+
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid var(--rule); }
+    .pair > .module:first-child { border-right: 1px solid var(--rule); padding-right: 28px; }
+    .pair > .module:last-child { padding-left: 28px; }
+    .module { padding: 15px 0 24px; min-width: 0; }
+    .module .section-label { margin-bottom: 17px; }
+    .content-rule { border-top: 1px solid var(--rule); }
+
+    .type-layout { display: grid; grid-template-columns: 1fr 1fr; column-gap: 25px; }
+    .type-samples { display: grid; gap: 13px; padding-right: 17px; border-right: 1px solid var(--rule-soft); }
+    .type-sample { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 17px; align-items: center; }
+    .type-aa { font-family: var(--mono); font-size: 57px; font-weight: 400; letter-spacing: -.08em; line-height: 1.05; color: var(--chalk); }
+    .type-aa.sans { font-family: var(--sans); font-weight: 300; letter-spacing: -.07em; }
+    .type-description { border-left: 1px solid var(--rule-soft); padding: 4px 0 4px 17px; }
+    .type-description strong { font-size: 12px; font-weight: 400; color: var(--chalk); display: block; margin-bottom: 4px; }
+    .type-description small { font-size: 8.5px; line-height: 1.5; display: block; letter-spacing: .12em; color: var(--stone); text-transform: uppercase; }
+    .type-table { display: grid; align-content: center; padding-left: 2px; }
+    .type-row { display: grid; grid-template-columns: 45px 66px 1fr; align-items: baseline; border-bottom: 1px solid var(--rule-soft); padding: 3px 0; gap: 10px; font-size: 10px; line-height: 1.5; white-space: nowrap; }
+    .type-row:last-child { border-bottom: 0; }
+    .type-row span:nth-child(1) { color: var(--chalk); }
+    .type-row span:nth-child(2) { color: var(--mist); }
+    .type-row span:nth-child(3) { color: var(--stone); }
+
+    .color-layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .9fr); gap: 20px; }
+    .swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; }
+    .swatch { appearance: none; border: 0; background: transparent; text-align: left; padding: 0; min-width: 0; color: inherit; }
+    .swatch-block { display: block; height: 88px; border: 1px solid var(--rule-soft); transition: outline-color .2s; }
+    .swatch:hover .swatch-block { outline: 1px solid var(--chalk); outline-offset: 3px; }
+    .swatch-name { display: block; color: var(--chalk); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; margin-top: 10px; white-space: nowrap; }
+    .swatch-hex { display: block; font-size: 9px; color: var(--stone); letter-spacing: .06em; }
+    .color-legend { border-left: 1px solid var(--rule-soft); padding-left: 20px; display: grid; align-content: center; gap: 13px; }
+    .legend-row { display: flex; align-items: center; gap: 9px; color: var(--stone); font-size: 9px; text-transform: uppercase; letter-spacing: .045em; line-height: 1.45; }
+    .legend-row b { min-width: 88px; font-weight: 400; color: var(--mist); }
+    .legend-row .dash { display: inline-block; width: 14px; border-top: 1px solid var(--rule); flex: none; }
+
+    .grid-spacing-layout { display: grid; grid-template-columns: 1.15fr 1fr; gap: 33px; }
+    .column-demo { padding-right: 30px; border-right: 1px solid var(--rule-soft); }
+    .grid-schematic { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0; height: 72px; border: 1px solid var(--rule-soft); }
+    .grid-schematic span { border-right: 1px dotted var(--rule); }
+    .grid-schematic span:last-child { border-right: 0; }
+    .schematic-label { color: var(--stone); font-size: 9px; margin-top: 9px; letter-spacing: .12em; }
+    .spacing-caption { font-size: 9px; color: var(--stone); text-transform: uppercase; letter-spacing: .12em; margin: 0 0 10px; }
+    .spacing-blocks { height: 77px; display: flex; align-items: end; justify-content: space-between; gap: 8px; }
+    .spacing-item { display: flex; flex-direction: column; justify-content: end; align-items: center; height: 100%; gap: 7px; color: var(--stone); font-size: 9px; }
+    .spacing-item i { width: var(--size); height: var(--size); background: linear-gradient(135deg, #a1a29f, #5d5f5d); display: block; opacity: .88; }
+
+    .elements { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; padding-top: 3px; }
+    .element { text-align: center; min-width: 0; }
+    .element svg { display: block; width: 100%; height: 65px; margin-bottom: 6px; overflow: visible; }
+    .element span { font-size: 8px; letter-spacing: .11em; line-height: 1.4; color: var(--stone); text-transform: uppercase; display: block; }
+
+    .full { padding: 16px 0 23px; border-bottom: 1px solid var(--rule); }
+    .full .section-label { margin-bottom: 16px; }
+    .components { display: grid; grid-template-columns: 1.1fr 1fr 1fr .75fr .62fr; gap: 0; min-height: 98px; align-items: center; }
+    .component-cell { border-right: 1px solid var(--rule-soft); padding: 8px 25px; height: 100%; display: flex; justify-content: center; flex-direction: column; gap: 10px; min-width: 0; }
+    .component-cell:first-child { padding-left: 17px; }
+    .component-cell:last-child { border-right: 0; padding-right: 12px; }
+    .ui-button { border: 1px solid var(--rule); min-height: 31px; padding: 8px 13px; font-size: 9px; letter-spacing: .09em; text-transform: uppercase; text-align: center; background: transparent; color: var(--chalk); transition: background .2s, color .2s, border-color .2s; max-width: 240px; }
+    .ui-button:hover { border-color: var(--chalk); }
+    .ui-button.primary { background: var(--chalk); color: var(--black); border-color: var(--chalk); }
+    .ui-button.primary:hover { background: #fff; }
+    .tabs { display: flex; gap: 12px; border-bottom: 1px solid var(--rule-soft); align-items: end; white-space: nowrap; }
+    .tab { background: transparent; color: var(--stone); border: 0; border-bottom: 2px solid transparent; padding: 6px 8px 11px; margin-bottom: -1px; font-size: 10px; }
+    .tab[aria-selected="true"] { color: var(--chalk); border-bottom-color: var(--mist); }
+    .track-list { width: 100%; max-width: 270px; }
+    .track { border-bottom: 1px solid var(--rule-soft); padding: 3px 0; display: flex; justify-content: space-between; gap: 18px; color: var(--mist); font-size: 10px; line-height: 1.6; }
+    .track:first-child { border-top: 1px solid var(--rule-soft); }
+    .track time { font-variant-numeric: tabular-nums; color: var(--stone); }
+    .field-wrap { position: relative; }
+    .ui-select { width: 100%; min-width: 130px; appearance: none; color: var(--mist); background: transparent; border: 1px solid var(--rule); padding: 9px 30px 9px 12px; font-size: 10px; border-radius: 0; outline-offset: 3px; }
+    .ui-select option { background: var(--carbon); color: var(--chalk); }
+    .select-chevron { position: absolute; right: 11px; top: 50%; transform: translateY(-65%) rotate(45deg); width: 7px; height: 7px; border-bottom: 1px solid var(--mist); border-right: 1px solid var(--mist); pointer-events: none; }
+    .switch-label { display: flex; align-items: center; gap: 12px; font-size: 9px; color: var(--stone); white-space: nowrap; }
+    .switch { display: inline-flex; align-items: center; width: 39px; height: 19px; padding: 2px; border: 1px solid var(--subtle); background: var(--graphite); border-radius: 999px; cursor: pointer; transition: background .2s; }
+    .switch::after { content: ''; width: 13px; height: 13px; background: var(--stone); border-radius: 50%; transition: transform .2s, background .2s; }
+    .switch[aria-checked="true"] { background: #555752; border-color: var(--stone); }
+    .switch[aria-checked="true"]::after { background: var(--chalk); transform: translateX(19px); }
+
+    .viz-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-top: 3px; }
+    .viz { padding: 0 29px; min-width: 0; border-right: 1px solid var(--rule-soft); }
+    .viz:first-child { padding-left: 15px; }
+    .viz:last-child { border-right: none; padding-right: 10px; }
+    .viz svg { width: 100%; height: 142px; display: block; overflow: visible; }
+    .viz-caption { text-transform: uppercase; font-size: 9px; color: var(--mist); letter-spacing: .16em; margin-top: 7px; }
+    .viz-caption em { color: var(--subtle); font-style: normal; letter-spacing: .04em; }
+    .chart-note { color: var(--subtle); font-size: 9px; margin: 0; }
+
+    .icons-grid { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); padding-top: 9px; }
+    .icon-item { text-align: center; padding: 4px 7px 0; min-width: 0; border-right: 1px solid var(--rule-soft); }
+    .icon-item:last-child { border-right: 0; }
+    .icon-item svg { width: 24px; height: 24px; stroke: var(--mist); stroke-width: 1.25; fill: none; stroke-linecap: round; stroke-linejoin: round; display: block; margin: 0 auto 17px; }
+    .icon-item p { color: var(--stone); font-size: 8px; text-transform: uppercase; letter-spacing: .075em; margin: 0; overflow-wrap: anywhere; }
+    .footer { display: flex; gap: 15px; justify-content: space-between; align-items: end; padding-top: 22px; font-size: 9px; letter-spacing: .09em; color: var(--subtle); text-transform: uppercase; }
+    .footer span:last-child { text-align: right; }
+    #toast { position: fixed; z-index: 99; bottom: 25px; left: 50%; transform: translate(-50%, 15px); border: 1px solid var(--rule); padding: 12px 20px; background: #242626; color: var(--chalk); font-size: 11px; letter-spacing: .06em; opacity: 0; transition: opacity .2s, transform .2s; pointer-events: none; }
+    #toast.show { opacity: 1; transform: translate(-50%, 0); }
+    @media (max-width: 1220px) {
+      .overview { grid-template-columns: 25% 22% 53%; }
+      .principle { padding: 0 11px; }
+      .principle p { font-size: 9px; }
+      .type-layout, .color-layout { gap: 14px; }
+      .type-sample { grid-template-columns: 60px 1fr; gap: 9px; }
+      .type-aa { font-size: 46px; }
+      .type-description { padding-left: 9px; }
+      .swatches { gap: 8px; }
+      .swatch-block { height: 75px; }
+      .legend-row { display: block; }
+      .legend-row .dash { display: none; }
+      .components { grid-template-columns: 1.3fr 1.1fr 1fr .9fr .7fr; }
+      .component-cell { padding-inline: 12px; }
+      .viz { padding-inline: 18px; }
+    }
+    @media (max-width: 970px) {
+      .overview { grid-template-columns: 1fr 1fr; }
+      .overview-intro { padding-bottom: 20px; }
+      .overview-nav { border-right: 0; }
+      .overview-principles { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding: 18px 0 0; margin-top: 15px; }
+      .pair { grid-template-columns: 1fr; }
+      .pair > .module:first-child { border-right: 0; padding-right: 0; border-bottom: 1px solid var(--rule); }
+      .pair > .module:last-child { padding-left: 0; }
+      .type-layout { grid-template-columns: 1fr 1fr; }
+      .color-layout { grid-template-columns: 1.3fr 1fr; }
+      .legend-row { display: flex; }
+      .legend-row .dash { display: inline-block; }
+      .components { grid-template-columns: repeat(3, 1fr); row-gap: 18px; }
+      .component-cell:nth-child(3) { border-right: 0; }
+      .component-cell:nth-child(4), .component-cell:nth-child(5) { border-top: 1px solid var(--rule-soft); padding-top: 20px; }
+      .viz-grid { grid-template-columns: 1fr 1fr; row-gap: 30px; }
+      .viz:nth-child(2) { border-right: 0; }
+      .viz:nth-child(3) { padding-left: 15px; }
+      .viz svg { height: 160px; }
+      .icons-grid { grid-template-columns: repeat(6, 1fr); row-gap: 25px; }
+      .icon-item:nth-child(6) { border-right: 0; }
+    }
+    @media (max-width: 600px) {
+      .page { padding-top: 21px; }
+      .brand { font-size: 15px; letter-spacing: .25em; }
+      .version { font-size: 8px; letter-spacing: .06em; }
+      .header-line { width: 12px; margin-inline: 6px; }
+      .overview { grid-template-columns: 1fr; }
+      .overview-intro { border-right: 0; padding: 5px 0 17px; }
+      .overview-intro p { max-width: 100%; font-size: 14px; }
+      .overview-nav { padding: 15px 0 14px; border-top: 1px solid var(--rule-soft); }
+      .overview-nav ol { columns: 2; }
+      .overview-nav li { break-inside: avoid; }
+      .overview-principles { margin-top: 0; }
+      .principles-grid { grid-template-columns: 1fr 1fr; row-gap: 19px; }
+      .principle { padding-left: 14px; }
+      .principle:nth-child(3) { padding-left: 4px; }
+      .principle:nth-child(2) { border-right: 0; }
+      .section-label { font-size: 12px; letter-spacing: .18em; gap: 18px; }
+      .module { padding-bottom: 24px; }
+      .type-layout { grid-template-columns: 1fr; gap: 24px; }
+      .type-samples { border-right: 0; padding-right: 0; }
+      .type-sample { grid-template-columns: 80px 1fr; }
+      .type-aa { font-size: 55px; }
+      .type-table { border-top: 1px solid var(--rule-soft); padding-top: 9px; }
+      .color-layout { grid-template-columns: 1fr; }
+      .swatches { gap: 10px; }
+      .swatch-block { height: 70px; }
+      .swatch-name, .swatch-hex { font-size: 8px; }
+      .color-legend { border-left: 0; border-top: 1px solid var(--rule-soft); padding: 14px 0 0; gap: 7px; }
+      .grid-spacing-layout { grid-template-columns: 1fr; gap: 19px; }
+      .column-demo { border-right: 0; padding-right: 0; }
+      .grid-schematic { height: 60px; }
+      .elements { grid-template-columns: repeat(3, 1fr); row-gap: 12px; }
+      .elements svg { height: 50px; }
+      .components { grid-template-columns: 1fr 1fr; gap: 0; }
+      .component-cell { padding: 15px 10px; border-bottom: 1px solid var(--rule-soft); }
+      .component-cell:nth-child(2), .component-cell:nth-child(4) { border-right: 0; }
+      .component-cell:nth-child(3) { border-right: 1px solid var(--rule-soft); }
+      .component-cell:nth-child(5) { border-bottom: 0; border-top: 0; }
+      .component-cell:nth-child(4) { border-top: 0; }
+      .component-cell:first-child { padding-left: 5px; }
+      .component-cell:last-child { padding-right: 5px; }
+      .tab { font-size: 9px; padding-inline: 3px; }
+      .viz-grid { grid-template-columns: 1fr; row-gap: 20px; }
+      .viz { padding: 0 0 17px !important; border-right: 0; border-bottom: 1px solid var(--rule-soft); }
+      .viz:last-child { border-bottom: 0; }
+      .viz svg { height: 175px; }
+      .icons-grid { grid-template-columns: repeat(4, 1fr); }
+      .icon-item:nth-child(6) { border-right: 1px solid var(--rule-soft); }
+      .icon-item:nth-child(4), .icon-item:nth-child(8) { border-right: 0; }
+      .footer { flex-direction: column; align-items: start; }
+      .footer span:last-child { text-align: left; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="page" id="haut">
+    <header class="site-header">
+      <div class="brand">DESIGN SYSTEM</div>
+      <div class="version">v1.0 <span class="header-line" aria-hidden="true"></span> BASE SYSTEM</div>
+    </header>
+
+    <div class="overview">
+      <div class="overview-intro">
+        <p>Un système de design sobre et modulaire pour la visualisation d’information, les interfaces éditoriales et les rapports.</p>
+      </div>
+      <nav class="overview-nav" aria-label="Sommaire">
+        <ol>
+          <li><a href="#principes"><span>01</span> Principes</a></li>
+          <li><a href="#typographie"><span>02</span> Typographie</a></li>
+          <li><a href="#couleurs"><span>03</span> Couleurs</a></li>
+          <li><a href="#grille"><span>04</span> Grille &amp; espacements</a></li>
+          <li><a href="#elements"><span>05</span> Éléments graphiques</a></li>
+          <li><a href="#composants"><span>06</span> Composants</a></li>
+          <li><a href="#visualisations"><span>07</span> Visualisations</a></li>
+          <li><a href="#iconographie"><span>08</span> Iconographie</a></li>
+        </ol>
+      </nav>
+      <section class="overview-principles" id="principes" aria-labelledby="principes-titre">
+        <div class="section-label" id="principes-titre"><span class="num">01</span> Principes</div>
+        <div class="principles-grid">
+          <div class="principle"><h3>Sobriété</h3><p>Une esthétique minimale qui laisse respirer le contenu.</p></div>
+          <div class="principle"><h3>Clarté</h3><p>Une hiérarchie nette et immédiatement lisible.</p></div>
+          <div class="principle"><h3>Systémique</h3><p>Des composants cohérents, modulaires et durables.</p></div>
+          <div class="principle"><h3>Précision</h3><p>Mettre l’information en valeur, simplement.</p></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="pair">
+      <section class="module" id="typographie" aria-labelledby="type-titre">
+        <div class="section-label wide" id="type-titre"><span class="num">02</span> Typographie</div>
+        <div class="type-layout">
+          <div class="type-samples">
+            <div class="type-sample">
+              <div class="type-aa">Aa</div>
+              <div class="type-description"><strong>Monospace</strong><small>Pour les labels, données<br>et éléments techniques.</small></div>
+            </div>
+            <div class="type-sample">
+              <div class="type-aa sans">Aa</div>
+              <div class="type-description"><strong>Sans-serif</strong><small>Pour les textes courants,<br>titres et contenus éditoriaux.</small></div>
+            </div>
+          </div>
+          <div class="type-table" aria-label="Échelle typographique">
+            <div class="type-row"><span>H1</span><span>48 / 56</span><span>Monospace</span></div>
+            <div class="type-row"><span>H2</span><span>32 / 40</span><span>Monospace</span></div>
+            <div class="type-row"><span>H3</span><span>24 / 32</span><span>Monospace</span></div>
+            <div class="type-row"><span>H4</span><span>20 / 28</span><span>Monospace</span></div>
+            <div class="type-row"><span>Body</span><span>16 / 24</span><span>Sans-serif</span></div>
+            <div class="type-row"><span>Small</span><span>14 / 20</span><span>Sans-serif</span></div>
+            <div class="type-row"><span>Caps</span><span>12 / 16</span><span>Monospace</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="couleurs" aria-labelledby="couleurs-titre">
+        <div class="section-label wide" id="couleurs-titre"><span class="num">03</span> Couleurs</div>
+        <div class="color-layout">
+          <div class="swatches" aria-label="Palette monochrome ; cliquer pour copier un code couleur">
+            <button class="swatch" data-color="#101112" aria-label="Copier Noir profond #101112"><span class="swatch-block" style="background: #101112"></span><span class="swatch-name">Noir profond</span><span class="swatch-hex">#101112</span></button>
+            <button class="swatch" data-color="#272829" aria-label="Copier Graphite #272829"><span class="swatch-block" style="background: #272829"></span><span class="swatch-name">Graphite</span><span class="swatch-hex">#272829</span></button>
+            <button class="swatch" data-color="#898A88" aria-label="Copier Pierre #898A88"><span class="swatch-block" style="background: #898a88"></span><span class="swatch-name">Pierre</span><span class="swatch-hex">#898A88</span></button>
+            <button class="swatch" data-color="#DEDED9" aria-label="Copier Brume #DEDED9"><span class="swatch-block" style="background: #deded9"></span><span class="swatch-name">Brume</span><span class="swatch-hex">#DEDED9</span></button>
+          </div>
+          <div class="color-legend">
+            <div class="legend-row"><b>Texte principal</b><span class="dash"></span> Brume</div>
+            <div class="legend-row"><b>Fond principal</b><span class="dash"></span> Noir profond</div>
+            <div class="legend-row"><b>Texte secondaire</b><span class="dash"></span> Pierre</div>
+            <div class="legend-row"><b>Séparateurs</b><span class="dash"></span> Graphite / Pierre</div>
+            <div class="legend-row"><b>Surfaces</b><span class="dash"></span> Graphite léger</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="pair">
+      <section class="module" id="grille" aria-labelledby="grille-titre">
+        <div class="section-label wide" id="grille-titre"><span class="num">04</span> Grille &amp; espacements</div>
+        <div class="grid-spacing-layout">
+          <div class="column-demo">
+            <div class="grid-schematic" role="img" aria-label="Grille éditoriale à douze colonnes">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="schematic-label">GRILLE — 12 COLONNES</div>
+          </div>
+          <div>
+            <p class="spacing-caption">Échelle d'espacements (px)</p>
+            <div class="spacing-blocks" aria-label="Espacements 4, 8, 16, 24, 32, 48, 64 pixels">
+              <div class="spacing-item" style="--size:4px"><i></i><span>4</span></div>
+              <div class="spacing-item" style="--size:8px"><i></i><span>8</span></div>
+              <div class="spacing-item" style="--size:16px"><i></i><span>16</span></div>
+              <div class="spacing-item" style="--size:24px"><i></i><span>24</span></div>
+              <div class="spacing-item" style="--size:32px"><i></i><span>32</span></div>
+              <div class="spacing-item" style="--size:48px"><i></i><span>48</span></div>
+              <div class="spacing-item" style="--size:64px"><i></i><span>64</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="elements" aria-labelledby="elements-titre">
+        <div class="section-label wide" id="elements-titre"><span class="num">05</span> Éléments graphiques</div>
+        <div class="elements">
+          <div class="element"><svg viewBox="0 0 92 65" aria-hidden="true"><line x1="8" y1="30" x2="84" y2="30" stroke="#bfc0bc" stroke-width=".8"/></svg><span>Ligne<br>pleine</span></div>
+          <div class="element"><svg viewBox="0 0 92 65" aria-hidden="true"><line x1="8" y1="30" x2="84" y2="30" stroke="#bfc0bc" stroke-width=".8" stroke-dasharray="4 4"/></svg><span>Ligne<br>tiretée</span></div>
+          <div class="element"><svg viewBox="0 0 92 65" aria-hidden="true"><line x1="8" y1="30" x2="84" y2="30" stroke="#898a88" stroke-width=".8" stroke-dasharray="1 4" stroke-linecap="round"/></svg><span>Ligne<br>pointillée</span></div>
+          <div class="element"><svg viewBox="0 0 92 65" aria-hidden="true"><circle cx="46" cy="30" r="2.25" fill="#deded9"/></svg><span>Point</span></div>
+          <div class="element"><svg viewBox="0 0 92 65" aria-hidden="true"><circle cx="46" cy="30" r="11" stroke="#bfc0bc" stroke-width=".9" fill="none"/></svg><span>Cercle<br>(contour)</span></div>
+          <div class="element"><svg viewBox="0 0 92 65" aria-hidden="true"><line x1="8" y1="30" x2="84" y2="30" stroke="#898a88" stroke-width=".8"/><line x1="8" y1="30" x2="40" y2="30" stroke="#deded9" stroke-width="3"/></svg><span>Barre<br>d'indication</span></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="full" id="composants" aria-labelledby="composants-titre">
+      <div class="section-label wide" id="composants-titre"><span class="num">06</span> Composants</div>
+      <div class="components">
+        <div class="component-cell">
+          <button class="ui-button primary" id="copyPalette" type="button">Copier la palette</button>
+          <button class="ui-button" type="button" id="secondaryButton">Bouton secondaire</button>
+        </div>
+        <div class="component-cell">
+          <div class="tabs" role="tablist" aria-label="Exemple d'onglets">
+            <button class="tab" type="button" role="tab" id="tab-1" aria-selected="true" aria-controls="panel-1" data-tab="0">Onglet 1</button>
+            <button class="tab" type="button" role="tab" id="tab-2" aria-selected="false" aria-controls="panel-1" data-tab="1">Onglet 2</button>
+            <button class="tab" type="button" role="tab" id="tab-3" aria-selected="false" aria-controls="panel-1" data-tab="2">Onglet 3</button>
+          </div>
+          <span class="micro muted" id="tab-caption" role="tabpanel" aria-labelledby="tab-1" style="letter-spacing:.08em;font-size:9px;">Navigation minimale</span>
+        </div>
+        <div class="component-cell">
+          <div class="track-list" id="track-list" aria-label="Exemple de liste de pistes">
+            <div class="track"><span>Piste 01</span><time>4:51</time></div>
+            <div class="track"><span>Piste 02</span><time>3:37</time></div>
+            <div class="track"><span>Piste 03</span><time>5:28</time></div>
+          </div>
+        </div>
+        <div class="component-cell">
+          <div class="field-wrap"><select class="ui-select" id="selectExample" aria-label="Choisir une option"><option value="">Sélectionner…</option><option>Option 01</option><option>Option 02</option><option>Option 03</option></select><span class="select-chevron" aria-hidden="true"></span></div>
+        </div>
+        <div class="component-cell">
+          <div class="switch-label"><button class="switch" id="switchExample" type="button" role="switch" aria-label="Activer l'option" aria-checked="false"></button><span id="switchText">Désactivé</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="full" id="visualisations" aria-labelledby="visualisations-titre">
+      <div class="section-label wide" id="visualisations-titre"><span class="num">07</span> Visualisations</div>
+      <div class="viz-grid">
+        <div class="viz"><svg id="area-chart" viewBox="0 0 320 150" role="img" aria-label="Exemple de graphique en aires empilées dans des nuances de gris"></svg><div class="viz-caption">Aire <em>(couches)</em></div></div>
+        <div class="viz"><svg id="bar-chart" viewBox="0 0 320 150" role="img" aria-label="Exemple de graphique en barres croissantes dans des nuances de gris"></svg><div class="viz-caption">Barres</div></div>
+        <div class="viz"><svg id="network-chart" viewBox="0 0 320 150" role="img" aria-label="Exemple de diagramme de réseau, nœuds et liens fins"></svg><div class="viz-caption">Réseau</div></div>
+        <div class="viz"><svg id="world-map" viewBox="0 0 320 150" role="img" aria-label="Carte du monde représentée par de petits points monochromes"></svg><div class="viz-caption">Carte <em>(points)</em></div></div>
+      </div>
+    </section>
+
+    <section class="full" id="iconographie" aria-labelledby="iconographie-titre" style="border-bottom:0;padding-bottom:12px;">
+      <div class="section-label wide" id="iconographie-titre"><span class="num">08</span> Iconographie</div>
+      <div class="icons-grid">
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg><p>Ajouter</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/></svg><p>Retirer</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="m16 16 5 5"/></svg><p>Rechercher</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg><p>Fermer</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13v7H4V5h7M13 4h7v7M20 4 10 14"/></svg><p>Ouvrir</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="8" cy="6" r="2" fill="#101112"/><circle cx="15" cy="12" r="2" fill="#101112"/><circle cx="11" cy="18" r="2" fill="#101112"/></svg><p>Paramètres</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M6 21v-7M11 21V8M16 21V11M21 21V4"/></svg><p>Graphique</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 18 7-8 5 4 6-9"/></svg><p>Tendance</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5ZM3 13l9 5 9-5M3 18l9 5 9-5"/></svg><p>Calques</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><p>Données</p></div>
+        <div class="icon-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.2v.6"/></svg><p>Information</p></div>
+      </div>
+    </section>
+
+    <footer class="footer"><span>Monochrome — Système éditorial &amp; data</span><span>Grille 12 colonnes <span style="padding:0 8px;opacity:.5">/</span> 4 px base unit <span style="padding:0 8px;opacity:.5">/</span> v1.0</span></footer>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script>
+    (() => {
+      'use strict';
+      const ns = 'http://www.w3.org/2000/svg';
+      const el = (name, attrs, parent) => { const node = document.createElementNS(ns, name); for (const [key, val] of Object.entries(attrs || {})) node.setAttribute(key, val); if (parent) parent.appendChild(node); return node; };
+      const svg = id => document.getElementById(id);
+      const toast = document.getElementById('toast');
+      let toastTimer;
+      function notify(message) { toast.textContent = message; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 2200); }
+      async function copyText(value) {
+        try { await navigator.clipboard.writeText(value); notify('Copié dans le presse-papiers'); }
+        catch { const input = document.createElement('textarea'); input.value = value; input.style.position = 'fixed'; input.style.opacity = 0; document.body.appendChild(input); input.select(); try { document.execCommand('copy'); notify('Copié dans le presse-papiers'); } catch { notify(value); } input.remove(); }
+      }
+      document.querySelectorAll('[data-color]').forEach(b => b.addEventListener('click', () => copyText(b.dataset.color)));
+      document.getElementById('copyPalette').addEventListener('click', () => copyText(['--black: #101112;', '--graphite: #272829;', '--stone: #898A88;', '--chalk: #DEDED9;'].join('\n')));
+      document.getElementById('secondaryButton').addEventListener('click', () => notify('Bouton secondaire activé'));
+      const tabTexts = ['Navigation minimale', 'Hiérarchie éditoriale', 'Interactions discrètes'];
+      document.querySelectorAll('[role="tab"]').forEach(tab => tab.addEventListener('click', () => {
+        document.querySelectorAll('[role="tab"]').forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+        const caption = document.getElementById('tab-caption');
+        caption.textContent = tabTexts[Number(tab.dataset.tab)]; caption.setAttribute('aria-labelledby', tab.id);
+      }));
+      document.getElementById('selectExample').addEventListener('change', e => { if (e.target.value) notify(e.target.value + ' sélectionnée'); });
+      const switchBtn = document.getElementById('switchExample');
+      switchBtn.addEventListener('click', () => { const next = switchBtn.getAttribute('aria-checked') !== 'true'; switchBtn.setAttribute('aria-checked', String(next)); document.getElementById('switchText').textContent = next ? 'Activé' : 'Désactivé'; });
+
+      // Graphique en aires : superposition de surfaces, toujours sans couleur d'accent.
+      const area = svg('area-chart');
+      const defs = el('defs', {}, area);
+      [['area1','#b8b9b5','#505250'],['area2','#939592','#3c3e3d'],['area3','#737573','#313333'],['area4','#5f615f','#272929']].forEach(([id, top, bottom]) => {
+        const g = el('linearGradient', {id, x1:'0',y1:'0',x2:'0',y2:'1'}, defs);
+        el('stop', {offset:'0%', 'stop-color':top, 'stop-opacity':'.86'}, g);
+        el('stop', {offset:'100%', 'stop-color':bottom, 'stop-opacity':'.48'}, g);
+      });
+      for (let i = 0; i < 7; i++) el('line', {x1: 10+i*50,y1:8,x2:10+i*50,y2:139,stroke:'#656864','stroke-width':'.55','stroke-dasharray':'1 5',opacity:'.48'}, area);
+      el('line', {x1:8,y1:139,x2:312,y2:139,stroke:'#a7aaa5','stroke-width':'.8',opacity:'.75'}, area);
+      const levels = [0,14,29,43];
+      levels.forEach((offset, i) => {
+        let pts = [];
+        for (let x = 8; x <= 312; x += 4) {
+          let trend = 120 - .17*(x-8), wave = 11*Math.sin(x*.044+0.2) + 5*Math.sin(x*.091-.5);
+          const y = trend - wave + offset + (i*.5*Math.cos(x*.05));
+          pts.push([x, Math.min(137, y)]);
+        }
+        const poly = `M ${pts[0][0]} ${pts[0][1]} ` + pts.slice(1).map(p=>`L ${p[0]} ${p[1]}`).join(' ') + ' L 312 139 L 8 139 Z';
+        el('path', {d:poly, fill:`url(#area${4-i})`}, area);
+        el('path', {d:`M ${pts[0][0]} ${pts[0][1]} `+pts.slice(1).map(p=>`L ${p[0]} ${p[1]}`).join(' '),fill:'none',stroke:i===0?'#c4c5c1':'#8b8e8a','stroke-width':'.85',opacity:i===0?'.9':'.55'},area);
+      });
+      [[37,118],[111,110],[186,92],[253,84]].forEach(([x,y])=>el('circle',{cx:x,cy:y,r:2,fill:'#e0e0dd'},area));
+
+      // Graphique en barres à faible contraste.
+      const bars = svg('bar-chart');
+      el('line',{x1:10,y1:139,x2:313,y2:139,stroke:'#858885','stroke-width':'.8'},bars);
+      const heights=[11,14,18,23,27,34,31,41,39,45,53,49,65,63,72,69,81,91,104,113,126];
+      heights.forEach((h,i)=>{const x=12+i*14.1;el('rect',{x,y:139-h,width:9.2,height:h,fill:i%4===0?'#686b69':i%4===1?'#929491':i%4===2?'#b9bab6':'#808380',opacity:.82},bars);});
+
+      // Réseau analytique : géométrie calme, tracés capillaires.
+      const net = svg('network-chart');
+      const nodes = [[17,94],[48,41],[79,86],[109,22],[138,122],[160,68],[178,96],[207,42],[232,116],[269,18],[295,78],[285,132],[92,141],[23,136]];
+      const links=[[0,1],[0,2],[1,2],[1,3],[2,4],[2,5],[3,5],[3,7],[4,5],[4,6],[4,12],[5,6],[5,7],[5,8],[6,8],[6,9],[7,9],[7,10],[8,10],[8,11],[9,10],[10,11],[0,13],[12,13]];
+      links.forEach(([a,b],i)=>el('line',{x1:nodes[a][0],y1:nodes[a][1],x2:nodes[b][0],y2:nodes[b][1],stroke:i%3===0?'#afb1ac':'#666965','stroke-width':i%3===0?'.9':'.65',opacity:i%3===0?'.8':'.55'},net));
+      nodes.forEach(([x,y],i)=>el('circle',{cx:x,cy:y,r:i===7?3.8:i%5===0?2.8:2,fill:i%3===0?'#d6d7d2':'#a2a4a0'},net));
+
+      // Carte du monde ponctuée. Les contours sont simplifiés et les points calculés localement.
+      const map = svg('world-map');
+      const continents = [
+        [[12,37],[25,22],[48,16],[64,22],[76,34],[88,34],[95,51],[80,67],[71,76],[64,94],[52,87],[45,67],[31,61],[19,51]],
+        [[78,76],[92,82],[99,97],[96,111],[109,118],[102,138],[94,147],[86,128],[80,113],[76,92]],
+        [[129,34],[147,22],[173,17],[188,23],[208,17],[234,22],[251,17],[278,30],[309,43],[305,59],[290,67],[278,60],[264,72],[246,71],[234,85],[211,79],[193,67],[180,54],[163,58],[152,51],[138,58]],
+        [[153,67],[175,64],[193,76],[202,95],[191,112],[176,134],[162,126],[153,108],[149,91]],
+        [[258,111],[278,105],[295,117],[306,128],[299,140],[278,139],[264,127]],
+        [[94,9],[105,3],[121,9],[116,20],[104,23],[94,17]],
+        [[229,92],[236,94],[240,102],[233,106]],[[247,91],[253,96],[262,101],[258,105]],
+        [[120,38],[124,37],[126,43],[122,47]],[[306,79],[311,83],[307,94]]
+      ];
+      function inside(x,y,polygon) {let c=false;for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){const [xi,yi]=polygon[i],[xj,yj]=polygon[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c;}return c;}
+      let dotCount=0;
+      for(let y=7;y<145;y+=3.45) for(let x=9;x<314;x+=3.45) {
+        if(continents.some(poly=>inside(x,y,poly))){const opacity=.36+((Math.sin(x*1.2+y*.65)+1)/2)*.37;el('circle',{cx:x,cy:y,r:'.85',fill:'#bdc0bb',opacity:opacity.toFixed(2)},map);dotCount++;}
+      }
+    })();
+  </script>
+</body>
+</html>

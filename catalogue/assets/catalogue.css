@@ -1,0 +1,83 @@
+/* Habillage du catalogue uniquement (.cat-). Ne fait PAS partie du système :
+   ne pas réutiliser ces classes dans un produit. */
+html { scroll-behavior: smooth; scroll-padding-top: var(--space-6); }
+.cat-rail { --rail: 13rem; padding-top: var(--space-7); }
+.cat-nav { position: sticky; top: var(--space-6); align-self: start; max-height: calc(100vh - 4rem); overflow-y: auto; }
+.cat-main { display: flex; flex-direction: column; gap: var(--space-9); min-width: 0; padding-bottom: var(--space-9); }
+.cat-section { display: flex; flex-direction: column; gap: var(--space-6); min-width: 0; }
+.cat-intro { display: flex; flex-direction: column; gap: var(--space-5); }
+.cat-lede { font-family: var(--font-sans); font-size: var(--text-large); line-height: var(--leading-large); color: var(--fg-strong); max-width: 46ch; }
+.cat-sub { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+.cat-sub > h3 { text-transform: uppercase; letter-spacing: var(--track-label); font-weight: var(--weight-bold); color: var(--fg-strong); }
+.cat-sub > p, .cat-note { max-width: var(--measure); color: var(--fg); }
+.cat-demo { border: var(--hairline) dashed var(--line); padding: var(--space-5); min-width: 0; }
+.cat-demo--plain { border: 0; padding: 0; }
+.cat-code { margin-top: calc(var(--space-2) * -1); }
+.cat-code summary { cursor: pointer; width: max-content; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); padding: var(--space-1) 0; list-style: none; }
+.cat-code summary::-webkit-details-marker { display: none; }
+.cat-code summary::before { content: '+ '; }
+.cat-code[open] summary::before { content: '− '; }
+.cat-code summary:hover { color: var(--fg-strong); }
+.cat-code pre { margin: var(--space-2) 0 0; }
+
+/* Règles : numéro, énoncé, raison */
+.cat-rules { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: var(--space-6) var(--gutter); }
+.cat-rule { display: flex; flex-direction: column; gap: var(--space-2); padding-top: var(--space-3); border-top: var(--hairline) solid var(--line); }
+.cat-rule__num { font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-muted); }
+.cat-rule h3, .cat-rule h4 { text-transform: uppercase; letter-spacing: var(--track-label); font-weight: var(--weight-bold); color: var(--fg-strong); }
+.cat-rule p { color: var(--fg-soft); }
+
+/* À faire / à éviter */
+.cat-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); }
+@media (max-width: 760px) { .cat-pair { grid-template-columns: 1fr; } }
+.cat-verdict { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+.cat-verdict__mark { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-strong); display: flex; gap: var(--space-2); align-items: baseline; padding-bottom: var(--space-2); border-bottom: var(--hairline) solid var(--fg-soft); }
+.cat-verdict--dont .cat-verdict__mark { border-bottom-style: dashed; color: var(--fg-soft); }
+.cat-verdict p { color: var(--fg-soft); font-size: var(--text-small); line-height: var(--leading-base); }
+
+/* Nuancier */
+.cat-tones { display: grid; grid-template-columns: repeat(13, minmax(0, 1fr)); }
+.cat-tone { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.cat-tone i { display: block; height: 4.5rem; }
+.cat-tone span { font-size: var(--text-micro); color: var(--fg-soft); padding-left: 2px; overflow: hidden; }
+.cat-tone b { font-weight: var(--weight-regular); color: var(--fg-strong); display: block; }
+@media (max-width: 900px) { .cat-tones { grid-template-columns: repeat(7, minmax(0, 1fr)); row-gap: var(--space-4); } }
+.cat-swatch { width: 2.5rem; height: 1.25rem; border: var(--hairline) solid var(--line); flex: none; }
+.cat-roles td, .cat-roles th { vertical-align: middle; }
+
+/* Répartition des masses tonales */
+.cat-masses { display: flex; height: 3rem; width: 100%; }
+.cat-masses > div { min-width: 2px; }
+.cat-masses-legend { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
+@media (max-width: 760px) { .cat-masses-legend { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Spécimens typographiques */
+.cat-type-row { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-5); align-items: baseline; padding-block: var(--space-3); border-bottom: var(--hairline) solid var(--line-faint); }
+.cat-type-row > :first-child { font-size: var(--text-micro); letter-spacing: var(--track-label); color: var(--fg-muted); text-transform: uppercase; }
+@media (max-width: 640px) { .cat-type-row { grid-template-columns: 1fr; gap: var(--space-1); } }
+
+/* Espacements, grille */
+.cat-spaces { display: flex; align-items: flex-end; gap: var(--space-5); flex-wrap: wrap; }
+.cat-space { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); font-size: var(--text-micro); color: var(--fg-soft); }
+.cat-space i { display: block; width: var(--s); height: var(--s); background: var(--mark); }
+.cat-cols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); height: 5rem; }
+.cat-cols i { background: var(--surface-2); border-inline: var(--hairline) dotted var(--line-strong); }
+
+/* Schémas de composition (maquettes filaires miniatures) */
+.cat-wire { aspect-ratio: 16 / 10; background: var(--bg-sunken); position: relative; overflow: hidden; }
+[data-theme="papier"] .cat-wire { background: var(--surface); }
+.cat-wire > * { position: absolute; }
+.w-text { background: var(--fg-muted); height: 2px; }
+.w-strong { background: var(--fg-strong); height: 3px; }
+.w-rule { background: var(--line); height: 1px; }
+.w-vrule { background: var(--line); width: 1px; }
+.w-block { background: var(--mark-3); }
+.w-light { background: var(--inverse-bg); }
+.w-box { border: 1px solid var(--line-strong); }
+.w-signal { background: var(--signal); border-radius: 50%; width: 6px; height: 6px; }
+.w-signal-block { background: var(--signal); }
+.w-axis { border-left: 1px dashed var(--fg-soft); top: 0; bottom: 0; opacity: .7; }
+
+.cat-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: var(--space-5) var(--space-3); }
+.cat-icons figure { display: flex; flex-direction: column; gap: var(--space-3); color: var(--fg); }
+.cat-icons figcaption { font-size: var(--text-micro); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-soft); }

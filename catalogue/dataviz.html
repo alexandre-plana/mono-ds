@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONO — Visualisations</title>
+  <link rel="stylesheet" href="../src/mono.css">
+  <link rel="stylesheet" href="assets/catalogue.css">
+</head>
+<body data-root="./">
+  <div class="l-page">
+    <header class="c-masthead">
+      <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
+      <div class="c-masthead__meta">
+        <span>Visualisations</span><span>v0.1</span>
+        <span class="c-segmented" role="group" aria-label="Thème">
+          <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
+          <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
+        </span>
+      </div>
+    </header>
+
+    <div class="l-rail cat-rail">
+      <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
+      <main class="cat-main">
+
+        <section class="cat-intro">
+          <h1 class="t-spaced t-large">Visualisations</h1>
+          <p class="cat-lede">Un graphique est une page comme une autre : gris moyens pour les marques, clair pour les chiffres, signal pour l'exception.</p>
+        </section>
+
+        <section class="cat-section" id="regles">
+          <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Règles</span></h2>
+          <div class="cat-rules">
+            <div class="cat-rule"><span class="cat-rule__num">V1</span><h3>Marques en gris moyen</h3><p>Barres et aires prennent <code>--mark</code>, pas le ton le plus clair. Une grande surface claire écrase les chiffres qui la commentent.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">V2</span><h3>Le chiffre est le clair</h3><p>Valeurs en <code>--fg-strong</code>, posées directement sur la marque. Étiqueter tout quand la place existe, sinon le maximum, le dernier et l'exception.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">V3</span><h3>Une donnée en signal</h3><p>Le signal désigne le point dont parle le titre. Une marque, parfois une série ; jamais une catégorie parmi d'autres.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">V4</span><h3>Séries par ton et par trait</h3><p>Trois séries au plus : clair plein, moyen plein, moyen tireté. Au-delà, des petits multiples. Jamais de teinte par série.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">V5</span><h3>Grille pointillée</h3><p>Les repères sont pointillés et discrets ; seul l'axe de base est plein. Aucun cadre autour du graphique.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">V6</span><h3>Titre, unité, source</h3><p>Chaque figure porte un titre qui dit le constat, une ligne d'unité en micro-capitales et, dessous, sa source.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">V7</span><h3>Légende en clé</h3><p>Étiquetage direct d'abord. La clé nomme les formes et se loge dans un vide de la figure, jamais dans un cadre.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">V8</span><h3>Plat et droit</h3><p>Ni dégradé, ni ombre, ni arrondi, ni 3D. Un seul axe vertical par graphique. Le texte ne descend jamais sous 11 px.</p></div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="barres">
+          <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Barres</span></h2>
+          <figure class="v-figure">
+            <div>
+              <div class="v-figure__title">Premier repli des primes après vingt-trois ans de hausse</div>
+              <div class="v-figure__caption">Primes totales du groupe — en millions</div>
+            </div>
+            <div id="chart-bars" data-label="Primes totales par année, de 2001 à 2026. Maximum 5 364 en 2025, repli à 5 190 en 2026."></div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </figure>
+          <p class="cat-note">Les étiquettes d'abscisse passent sur deux rangs quand la place manque. La dernière barre porte le signal parce que le commentaire porte sur elle : le premier repli de la série.</p>
+
+          <div class="cat-sub">
+            <h3>Barres horizontales — .v-hbars</h3>
+            <p>En HTML pur, pour un classement court. Un filet de base, un segment gris, la valeur à droite.</p>
+            <div class="cat-demo" data-code>
+              <div class="v-hbars" style="max-width: 36rem">
+                <span class="v-hbars__label">Nord</span><div class="v-hbar" style="--value: 92"></div><span class="v-hbars__value">1 204</span>
+                <span class="v-hbars__label">Ouest</span><div class="v-hbar" style="--value: 71"></div><span class="v-hbars__value">931</span>
+                <span class="v-hbars__label">Sud</span><div class="v-hbar" style="--value: 44"></div><span class="v-hbars__value">569</span>
+                <span class="v-hbars__label">Est</span><div class="v-hbar v-hbar--signal" style="--value: 7"></div><span class="v-hbars__value">93</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="courbes">
+          <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Courbes</span></h2>
+          <figure class="v-figure">
+            <div>
+              <div class="v-figure__title">La branche vie décroche au troisième trimestre</div>
+              <div class="v-figure__caption">Indice base 100 — douze derniers mois</div>
+            </div>
+            <div id="chart-lines" data-label="Indices mensuels des branches non-vie, vie et marché. La branche vie passe de 104 à 62 en septembre."></div>
+            <div class="v-figure__source">Source : données de démonstration</div>
+          </figure>
+          <p class="cat-note">La série principale est claire et pleine, la seconde en gris moyen, la référence en tireté. Les noms sont posés en bout de courbe : pas de légende séparée.</p>
+        </section>
+
+        <section class="cat-section" id="arbre">
+          <h2 class="c-section-head"><span class="c-section-head__num">04</span><span>Arbre</span></h2>
+          <div class="l-grid">
+            <figure class="v-figure l-span-9">
+              <div>
+                <div class="v-figure__title">Parcours d'un appel dans le serveur vocal</div>
+                <div class="v-figure__caption">Longueur des barres — nombre de mots du message</div>
+              </div>
+              <div id="chart-tree" data-label="Arbre de décision d'un serveur vocal : trois choix au premier niveau, jusqu'à quatre niveaux de profondeur."></div>
+            </figure>
+            <div class="l-span-3" style="align-self: end">
+              <div class="c-key">
+                <div class="c-key__title">Clé</div>
+                <div class="c-key__item"><span class="c-key__swatch c-key__swatch--2"></span>Message</div>
+                <div class="c-key__item"><span class="c-key__swatch c-key__swatch--dotted"></span>Renvoi</div>
+                <div class="c-key__item"><span class="c-key__swatch c-key__swatch--signal"></span>Appel abouti</div>
+              </div>
+            </div>
+          </div>
+          <p class="cat-note">Les liens sont pointillés pour laisser la lecture aux barres. Le signal marque les seules issues utiles : les appels qui aboutissent à une personne.</p>
+        </section>
+
+        <section class="cat-section" id="carte">
+          <h2 class="c-section-head"><span class="c-section-head__num">05</span><span>Carte</span></h2>
+          <div class="l-grid">
+            <figure class="v-figure l-span-9">
+              <div>
+                <div class="v-figure__title">Une seule région concentre le tiers des agences</div>
+                <div class="v-figure__caption">Agences par branche régionale</div>
+              </div>
+              <div id="chart-map" data-label="Carte à graticule des branches régionales entre 13 et 19 degrés est et 49 et 53 degrés nord."></div>
+            </figure>
+            <div class="l-span-3" style="align-self: end">
+              <div class="c-key">
+                <div class="c-key__title">Clé</div>
+                <div class="c-key__item"><span class="c-key__swatch c-key__swatch--ring"></span>Nombre d'agences</div>
+                <div class="c-key__item"><span class="c-key__swatch c-key__swatch--dot" style="background: var(--mark)"></span>Point standard</div>
+                <div class="c-key__item"><span class="c-key__swatch c-key__swatch--signal"></span>Branche principale</div>
+              </div>
+            </div>
+          </div>
+          <p class="cat-note">Pas de fond de carte : le graticule pointillé et les coordonnées suffisent à situer. La taille des anneaux porte la quantité, le signal porte l'unique branche commentée.</p>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.1</span></footer>
+  </div>
+  <script src="assets/catalogue.js"></script>
+  <script src="assets/charts.js"></script>
+  <script src="assets/demo-data.js"></script>
+  <script>
+    MonoCharts.bars('#chart-bars', { data: MonoDemo.primes, unit: 'M', steps: 6, height: 340 });
+    MonoCharts.lines('#chart-lines', { labels: MonoDemo.mois, series: MonoDemo.indices, mark: { series: 1, index: 11, label: '62' }, steps: 6, height: 280 });
+    MonoCharts.tree('#chart-tree', { tree: MonoDemo.arbre });
+    MonoCharts.graticule('#chart-map', { lon: [13, 19], lat: [49, 53], points: MonoDemo.agences, height: 380 });
+  </script>
+</body>
+</html>

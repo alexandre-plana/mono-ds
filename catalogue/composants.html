@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONO — Composants</title>
+  <link rel="stylesheet" href="../src/mono.css">
+  <link rel="stylesheet" href="assets/catalogue.css">
+</head>
+<body data-root="./">
+  <div class="l-page">
+    <header class="c-masthead">
+      <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
+      <div class="c-masthead__meta">
+        <span>Composants</span><span>v0.1</span>
+        <span class="c-segmented" role="group" aria-label="Thème">
+          <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
+          <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
+        </span>
+      </div>
+    </header>
+
+    <div class="l-rail cat-rail">
+      <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
+      <main class="cat-main">
+
+        <section class="cat-intro">
+          <h1 class="t-spaced t-large">Composants</h1>
+          <p class="cat-lede">Chaque composant est montré avec son code réel : l'extrait affiché est le DOM de la démonstration.</p>
+        </section>
+
+        <section class="cat-section" id="structure">
+          <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Structure</span></h2>
+
+          <div class="cat-sub">
+            <h3>En-tête de page — .c-masthead</h3>
+            <p>Titre espacé à gauche, métadonnées à droite, un filet dessous. Un seul par écran.</p>
+            <div class="cat-demo" data-code>
+              <header class="c-masthead">
+                <div class="c-masthead__title">Observatoire du réseau</div>
+                <div class="c-masthead__meta"><span>Exercice 2026</span><span>T3</span></div>
+              </header>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>En-tête de section — .c-section-head</h3>
+            <p>Numéro, titre, note facultative à droite. Il ouvre chaque région d'un écran.</p>
+            <div class="cat-demo" data-code>
+              <h2 class="c-section-head">
+                <span class="c-section-head__num">04</span>
+                <span>Répartition</span>
+                <span class="c-section-head__aside">En milliers</span>
+              </h2>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Colophon — .c-colophon</h3>
+            <p>Pied d'écran : références, folio, source. C'est le contrepoids discret de l'en-tête.</p>
+            <div class="cat-demo" data-code>
+              <footer class="c-colophon">
+                <span>Rapport annuel — Réseau</span>
+                <span>76 / 120</span>
+              </footer>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Panneau — .c-panel</h3>
+            <p>À n'employer que pour détacher un contenu du flux. <code>data-theme</code> sur un panneau l'inverse : c'est la plus grande masse claire permise sur un écran encre, une seule par vue.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <div class="c-panel l-span-4">
+                  <div class="c-panel__head"><span>Contour</span><span>01</span></div>
+                  Panneau par défaut, filet d'un pixel.
+                </div>
+                <div class="c-panel c-panel--surface l-span-4">
+                  <div class="c-panel__head"><span>Surface</span><span>02</span></div>
+                  Un cran plus clair que le fond.
+                </div>
+                <div class="c-panel l-span-4" data-theme="papier">
+                  <div class="c-panel__head"><span>Inversé</span><span>03</span></div>
+                  Thème opposé, localement.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="listes">
+          <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Listes &amp; données</span></h2>
+
+          <div class="cat-sub">
+            <h3>Clé-valeur — .c-kv</h3>
+            <p>Label gras, filet conducteur, valeur maigre. La colonne des valeurs forme un axe vertical : l'aligner sur la grille. <code>.c-kv--plain</code> garde la casse d'origine.</p>
+            <div class="cat-demo" data-code>
+              <dl class="c-kv" style="max-width: 30rem">
+                <div><dt>Produit par</dt><dd>Atelier Nord</dd></div>
+                <div><dt>Enregistré à</dt><dd>Studio de la Lune<br>Grenoble, FR</dd></div>
+                <div><dt>Mixage</dt><dd>P. Francis</dd></div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Index — .c-index</h3>
+            <p>Liste numérotée automatiquement, titre à gauche, valeur à droite. Sommaire, liste de pistes, classement.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-index" style="max-width: 30rem">
+                <div class="c-index__row"><span class="c-index__title">Main tendue</span><span class="c-index__value">4:51</span></div>
+                <div class="c-index__row"><span class="c-index__title">Les abeilles</span><span class="c-index__value">5:58</span></div>
+                <div class="c-index__row"><span class="c-index__title">Le dormeur</span><span class="c-index__value">5:37</span></div>
+                <div class="c-index__row"><span class="c-index__title">Piste de Santa Fe</span><span class="c-index__value">4:50</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Tableau — .c-table</h3>
+            <p>Filets horizontaux seulement. En-têtes en micro-capitales, chiffres à droite (<code>.is-num</code>), ligne clé en gras (<code>.is-key</code>). Une seule cellule peut porter le signal (<code>.is-signal</code>).</p>
+            <div class="cat-demo" data-code>
+              <table class="c-table c-table--caps">
+                <caption>Primes — en milliers</caption>
+                <thead>
+                  <tr><th>Branche</th><th class="is-num">2025</th><th class="is-num">2026</th><th class="is-num">Dynamique</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th>Non-vie</th><td class="is-num">3 723 741</td><td class="is-num">4 285 447</td><td class="is-num">115,1 %</td></tr>
+                  <tr><th>Vie</th><td class="is-num">1 640 244</td><td class="is-num">904 503</td><td class="is-num is-signal">55,1 %</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><th>Total</th><td class="is-num">5 363 985</td><td class="is-num">5 189 950</td><td class="is-num">96,8 %</td></tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Chiffre clé — .c-stat</h3>
+            <p>Label, valeur, note. Un seul <code>--hero</code> par écran ; les autres en taille normale ou <code>--compact</code>.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <div class="c-stat c-stat--hero l-span-4">
+                  <span class="c-stat__label">Primes totales</span>
+                  <span class="c-stat__value">5 190<small>M</small></span>
+                  <span class="c-stat__note">−3,2 % sur un an</span>
+                </div>
+                <div class="c-stat c-stat--ruled l-span-4">
+                  <span class="c-stat__label">Agences</span>
+                  <span class="c-stat__value">1 204</span>
+                  <span class="c-stat__note">+18 ce trimestre</span>
+                </div>
+                <div class="c-stat c-stat--compact c-stat--ruled l-span-4">
+                  <span class="c-stat__label">Taux de service</span>
+                  <span class="c-stat__value">98,4<small>%</small></span>
+                  <div class="c-meter" style="--value: 98.4" role="img" aria-label="98,4 %"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Légende — .c-key</h3>
+            <p>Bloc « clé » posé dans un coin libre de la figure. Elle nomme les formes, pas les couleurs.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-key" style="max-width: 16rem">
+                <div class="c-key__title">Clé</div>
+                <div class="c-key__item"><span class="c-key__swatch"></span>Message</div>
+                <div class="c-key__item"><span class="c-key__swatch c-key__swatch--dotted"></span>Renvoi</div>
+                <div class="c-key__item"><span class="c-key__swatch c-key__swatch--ring"></span>Agences par branche</div>
+                <div class="c-key__item"><span class="c-key__swatch c-key__swatch--signal"></span>Appel abouti</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="actions">
+          <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Actions</span></h2>
+
+          <div class="cat-sub">
+            <h3>Bouton — .c-button</h3>
+            <p>Le primaire est un bloc inversé : la tache la plus claire de l'écran. <span class="t-strong">Un seul par vue.</span> Le bouton signal est réservé à l'irréversible. L'inactif se reconnaît à son contour tireté, pas à une opacité.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster">
+                <button class="c-button c-button--primary" type="button">Enregistrer</button>
+                <button class="c-button" type="button">Annuler</button>
+                <button class="c-button c-button--quiet" type="button">Détails</button>
+                <button class="c-button c-button--signal" type="button">Supprimer</button>
+                <button class="c-button" type="button" disabled>Indisponible</button>
+              </div>
+            </div>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster">
+                <button class="c-button c-button--primary c-button--large" type="button">Grand — 40 px</button>
+                <button class="c-button" type="button">
+                  <svg class="c-icon c-icon--small" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg>
+                  Ajouter
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Onglets — .c-tabs</h3>
+            <div class="cat-demo" data-code>
+              <div class="c-tabs" role="tablist" aria-label="Période">
+                <button class="c-tabs__tab" type="button" role="tab" aria-selected="true">Synthèse</button>
+                <button class="c-tabs__tab" type="button" role="tab" aria-selected="false">Branches</button>
+                <button class="c-tabs__tab" type="button" role="tab" aria-selected="false">Agences</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Sélecteur segmenté — .c-segmented</h3>
+            <p>Deux à quatre options exclusives. L'option active est remplie en gris moyen, pas en clair : elle ne concurrence pas le bouton primaire.</p>
+            <div class="cat-demo" data-code>
+              <div class="c-segmented" role="group" aria-label="Échelle">
+                <button class="c-segmented__item" type="button" aria-pressed="true">Jour</button>
+                <button class="c-segmented__item" type="button" aria-pressed="false">Mois</button>
+                <button class="c-segmented__item" type="button" aria-pressed="false">Année</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="saisie">
+          <h2 class="c-section-head"><span class="c-section-head__num">04</span><span>Saisie</span></h2>
+
+          <div class="cat-sub">
+            <h3>Champ — .c-field</h3>
+            <p>Label toujours visible au-dessus, en micro-capitales. L'erreur est dite par un texte et un glyphe ; le signal ne fait que la désigner.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <label class="c-field l-span-4">
+                  <span class="c-field__label">Référence <span class="t-muted">Requis</span></span>
+                  <input class="c-input" type="text" placeholder="WAP375CD">
+                  <span class="c-field__hint">Huit caractères, sans espace.</span>
+                </label>
+                <label class="c-field l-span-4">
+                  <span class="c-field__label">Montant</span>
+                  <input class="c-input" type="text" value="12 400" aria-invalid="true" aria-describedby="err-montant">
+                  <span class="c-field__error" id="err-montant">Dépasse le plafond de 10 000.</span>
+                </label>
+                <label class="c-field l-span-4">
+                  <span class="c-field__label">Branche</span>
+                  <select class="c-select">
+                    <option>Non-vie</option>
+                    <option>Vie</option>
+                  </select>
+                </label>
+                <label class="c-field l-span-8">
+                  <span class="c-field__label">Commentaire</span>
+                  <textarea class="c-textarea" placeholder="Facultatif"></textarea>
+                </label>
+                <label class="c-field l-span-4">
+                  <span class="c-field__label">Verrouillé</span>
+                  <input class="c-input" type="text" value="Lecture seule" disabled>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Case, radio, interrupteur — .c-check / .c-switch</h3>
+            <p>Formes pleines, sans coche : carré pour le choix multiple, rond pour le choix unique, curseur carré pour l'état immédiat.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-6)">
+                <label class="c-check"><input type="checkbox" checked><span>Inclure les filiales</span></label>
+                <label class="c-check"><input type="checkbox"><span>Données provisoires</span></label>
+                <label class="c-check"><input type="radio" name="demo-radio" checked><span>Brut</span></label>
+                <label class="c-check"><input type="radio" name="demo-radio"><span>Net</span></label>
+                <label class="c-switch"><input type="checkbox" role="switch" checked><span>Actualisation</span></label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="navigation">
+          <h2 class="c-section-head"><span class="c-section-head__num">05</span><span>Navigation</span></h2>
+          <div class="cat-sub">
+            <h3>Menu — .c-nav</h3>
+            <p>Liste numérotée ; l'entrée courante passe en gras et tire un filet jusqu'au bord. C'est le menu de ce catalogue.</p>
+            <div class="cat-demo" data-code>
+              <nav class="c-nav" aria-label="Exemple" style="max-width: 14rem">
+                <div class="c-nav__label">Rapport</div>
+                <a class="c-nav__item" href="#navigation"><span>01</span><span>Synthèse</span></a>
+                <a class="c-nav__item" href="#navigation" aria-current="page"><span>02</span><span>Réseau</span></a>
+                <a class="c-nav__item" href="#navigation"><span>03</span><span>Résultats</span></a>
+              </nav>
+            </div>
+          </div>
+          <div class="cat-sub">
+            <h3>Fil d'Ariane et pagination</h3>
+            <div class="cat-demo" data-code>
+              <div class="l-split">
+                <nav class="c-breadcrumb" aria-label="Fil d'Ariane">
+                  <a href="#navigation">Rapport</a>
+                  <a href="#navigation">Réseau</a>
+                  <span aria-current="page">Agences</span>
+                </nav>
+                <nav class="c-pagination" aria-label="Pages">
+                  <a href="#navigation" aria-label="Précédente">←</a>
+                  <a href="#navigation">1</a>
+                  <a href="#navigation" aria-current="page">2</a>
+                  <a href="#navigation">3</a>
+                  <span>…</span>
+                  <a href="#navigation">12</a>
+                  <a href="#navigation" aria-label="Suivante">→</a>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="etats">
+          <h2 class="c-section-head"><span class="c-section-head__num">06</span><span>États &amp; retours</span></h2>
+
+          <div class="cat-sub">
+            <h3>Statut — .c-status</h3>
+            <p>L'état se lit à la forme du glyphe et au mot. Il n'existe ni vert ni orange : seul « critique » reçoit le signal.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-6)">
+                <span class="c-status c-status--on">Actif</span>
+                <span class="c-status c-status--progress">En cours</span>
+                <span class="c-status">En attente</span>
+                <span class="c-status c-status--off">Inactif</span>
+                <span class="c-status c-status--warning">À vérifier</span>
+                <span class="c-status c-status--critical">Critique</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Étiquette et référence — .c-tag / .c-ref</h3>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-5)">
+                <span class="c-tag">Brouillon</span>
+                <span class="c-tag c-tag--solid">Publié</span>
+                <span class="c-tag c-tag--dashed">Provisoire</span>
+                <span class="c-ref">WAP375CD</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Jauge — .c-meter</h3>
+            <p>Un filet fin pour l'étendue, un segment épais pour la valeur.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-stack" style="max-width: 24rem">
+                <div class="c-meter" style="--value: 42" role="meter" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100" aria-label="Avancement"></div>
+                <div class="c-meter c-meter--signal" style="--value: 96" role="meter" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100" aria-label="Quota"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Note — .c-notice</h3>
+            <div class="cat-demo" data-code>
+              <div class="l-stack">
+                <div class="c-notice">
+                  <span class="c-notice__label">Note</span>
+                  <span>Les montants 2026 sont provisoires jusqu'à la clôture.</span>
+                </div>
+                <div class="c-notice c-notice--signal">
+                  <span class="c-notice__label">Alerte</span>
+                  <span>La synchronisation a échoué. Les données affichées datent de 14:02.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cat-sub">
+            <h3>Infobulle, notification, dialogue</h3>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-6); align-items: flex-start">
+                <span class="c-tooltip" role="tooltip">Agences ouvertes au 31 décembre.</span>
+                <div class="c-toast" role="status">
+                  <span>Export terminé</span>
+                  <button class="c-button c-button--quiet" type="button">Ouvrir</button>
+                </div>
+                <button class="c-button" type="button" onclick="document.getElementById('demo-dialog').showModal()">Ouvrir le dialogue</button>
+                <dialog class="c-dialog" id="demo-dialog">
+                  <h3 class="c-dialog__title">Supprimer l'agence</h3>
+                  <p>Cette action retire l'agence et son historique. Elle est irréversible.</p>
+                  <form method="dialog" class="c-dialog__actions">
+                    <button class="c-button" type="submit">Annuler</button>
+                    <button class="c-button c-button--signal" type="submit">Supprimer</button>
+                  </form>
+                </dialog>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="icones">
+          <h2 class="c-section-head"><span class="c-section-head__num">07</span><span>Icônes</span><span class="c-section-head__aside">Grille 24 · trait 1,25</span></h2>
+          <p class="cat-note">Tracé linéaire, extrémités rondes, sans remplissage. Une icône accompagne un mot ou le remplace dans un contrôle étroit ; elle n'est jamais décorative. <code>.c-icon</code> hérite de la couleur du texte.</p>
+          <div class="cat-icons">
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg><figcaption>Ajouter</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/></svg><figcaption>Retirer</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg><figcaption>Fermer</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="m16 16 5 5"/></svg><figcaption>Chercher</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13v7H4V5h7M13 4h7v7M20 4 10 14"/></svg><figcaption>Ouvrir</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg><figcaption>Exporter</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><figcaption>Filtrer</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h3M10 6h11M3 12h11M18 12h3M3 18h5M12 18h9"/><circle cx="8" cy="6" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></svg><figcaption>Réglages</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M6 21v-7M11 21V8M16 21V11M21 21V4"/></svg><figcaption>Barres</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 18 7-8 5 4 6-9"/></svg><figcaption>Tendance</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5ZM3 13l9 5 9-5"/></svg><figcaption>Calques</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><figcaption>Données</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.2v.6"/></svg><figcaption>Information</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.5 20h19L12 3ZM12 10v5M12 17.4v.4"/></svg><figcaption>Attention</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><figcaption>Suivant</figcaption></figure>
+            <figure><svg class="c-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><figcaption>Déplier</figcaption></figure>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.1</span></footer>
+  </div>
+  <script src="assets/catalogue.js"></script>
+  <script>
+    // Démonstrations : onglets et segments réagissent au clic.
+    document.querySelectorAll('.cat-demo [role="tablist"]').forEach((list) => list.addEventListener('click', (e) => {
+      const tab = e.target.closest('[role="tab"]'); if (!tab) return;
+      list.querySelectorAll('[role="tab"]').forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+    }));
+    document.querySelectorAll('.cat-demo .c-segmented').forEach((group) => group.addEventListener('click', (e) => {
+      const item = e.target.closest('.c-segmented__item'); if (!item) return;
+      group.querySelectorAll('.c-segmented__item').forEach((t) => t.setAttribute('aria-pressed', String(t === item)));
+    }));
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONO — Design system monochrome</title>
+  <meta name="description" content="Design system monochrome, sobre et technique : règles, fondations et composants réemployables.">
+  <link rel="stylesheet" href="../src/mono.css">
+  <link rel="stylesheet" href="assets/catalogue.css">
+</head>
+<body data-root="./">
+  <div class="l-page">
+    <header class="c-masthead">
+      <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
+      <div class="c-masthead__meta">
+        <span>Présentation</span><span>v0.1</span>
+        <span class="c-segmented" role="group" aria-label="Thème">
+          <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
+          <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
+        </span>
+      </div>
+    </header>
+
+    <div class="l-rail cat-rail">
+      <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
+      <main class="cat-main">
+
+        <section class="cat-intro">
+          <h1 class="t-spaced t-large">Mono</h1>
+          <p class="cat-lede">Un système monochrome, sobre et technique, pour les interfaces de données, les outils et les rapports. Treize gris, une seule couleur, et des règles de composition.</p>
+          <dl class="c-kv" style="max-width: 34rem; margin-top: var(--space-5)">
+            <div><dt>Voix</dt><dd>Monospace, capitales espacées</dd></div>
+            <div><dt>Gamme</dt><dd>13 gris — ni noir ni blanc purs</dd></div>
+            <div><dt>Couleur</dt><dd>1 signal, sous 1 % de l'écran</dd></div>
+            <div><dt>Formes</dt><dd>Filets d'1 px, angles droits</dd></div>
+            <div><dt>Thèmes</dt><dd>Encre (sombre) / Papier (clair)</dd></div>
+            <div><dt>Plancher</dt><dd>11 px, contraste 4,5 : 1</dd></div>
+          </dl>
+        </section>
+
+        <section class="cat-section" id="principes">
+          <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Principes</span></h2>
+          <div class="cat-rules">
+            <div class="cat-rule"><span class="cat-rule__num">P1</span><h3>Monochrome d'abord</h3><p>Tout écran doit fonctionner en gris seuls. La couleur n'est jamais décorative : elle est ajoutée en dernier, à un seul endroit, pour ce qui ne doit pas être manqué.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">P2</span><h3>Ni noir, ni blanc</h3><p>La gamme s'arrête avant les extrêmes. Un fond d'encre et un texte de craie fatiguent moins qu'un contraste maximal et laissent de la marge pour hiérarchiser.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">P3</span><h3>Le vide est un matériau</h3><p>Un tiers de l'écran reste libre. L'information se regroupe en grappes denses, séparées par de larges silences. On ne remplit pas un espace parce qu'il est disponible.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">P4</span><h3>Hiérarchie sans volume</h3><p>Graisse, casse, interlettrage et ton d'abord ; le corps en dernier. Trois corps par écran au plus. Un label est gras, sa valeur est maigre.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">P5</span><h3>Le filet avant la boîte</h3><p>Un trait d'un pixel suffit presque toujours à séparer, relier ou aligner. Plein pour la structure, tireté pour la relation, pointillé pour le repère.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">P6</span><h3>Un seul point focal</h3><p>Chaque vue a un élément le plus clair — un chiffre, un titre ou l'action primaire — et un seul. Le reste s'ordonne autour, en retrait.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">P7</span><h3>Lisible avant tout</h3><p>Aucun texte sous 11 px, aucun texte sous 4,5 : 1. Les chiffres sont tabulaires et alignés à droite. L'élégance ne justifie jamais un texte illisible.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">P8</span><h3>Rien d'ornemental</h3><p>Pas d'ombre, pas de dégradé, pas d'arrondi, pas d'icône d'ambiance. Si un élément ne porte ni information ni structure, il disparaît.</p></div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="emploi">
+          <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Emploi</span></h2>
+          <div class="l-grid">
+            <div class="l-span-6 cat-sub">
+              <h3>Installer</h3>
+              <p>Une feuille de style, aucune dépendance, aucune étape de construction. Les polices IBM Plex sont embarquées.</p>
+              <pre class="c-code">&lt;html lang="fr" data-theme="encre"&gt;
+  &lt;link rel="stylesheet" href="src/mono.css"&gt;</pre>
+              <p>Le thème se choisit par <code>data-theme</code> : <code>encre</code> ou <code>papier</code>. L'attribut peut être posé sur n'importe quel bloc pour l'inverser localement.</p>
+            </div>
+            <div class="l-span-6 cat-sub">
+              <h3>Organisation</h3>
+              <dl class="c-kv c-kv--plain">
+                <div><dt>src/tokens.css</dt><dd>Tons, rôles, échelles</dd></div>
+                <div><dt>src/base.css</dt><dd>Texte <code>.t-</code>, mise en page <code>.l-</code></dd></div>
+                <div><dt>src/components.css</dt><dd>Composants <code>.c-</code></dd></div>
+                <div><dt>src/viz.css</dt><dd>Marques de données <code>.v-</code></dd></div>
+                <div><dt>docs/</dt><dd>Les règles, en clair</dd></div>
+                <div><dt>scripts/</dt><dd>Contrôles : contraste, teintes</dd></div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="parcours">
+          <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Parcours</span></h2>
+          <div class="c-index" style="max-width: 44rem">
+            <a class="c-index__row" href="fondations.html"><span class="c-index__title">Fondations</span><span class="c-index__value">Tons, signal, typographie, espacements, filets</span></a>
+            <a class="c-index__row" href="composition.html"><span class="c-index__title">Composition</span><span class="c-index__value">Équilibre des écrans, masses tonales</span></a>
+            <a class="c-index__row" href="composants.html"><span class="c-index__title">Composants</span><span class="c-index__value">Le catalogue, avec le code</span></a>
+            <a class="c-index__row" href="dataviz.html"><span class="c-index__title">Visualisations</span><span class="c-index__value">Barres, courbes, arbres, cartes</span></a>
+            <a class="c-index__row" href="exemples/tableau-de-bord.html"><span class="c-index__title">Exemple</span><span class="c-index__value">Tableau de bord — thème encre</span></a>
+            <a class="c-index__row" href="exemples/rapport.html"><span class="c-index__title">Exemple</span><span class="c-index__value">Rapport — thème papier</span></a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.1</span></footer>
+  </div>
+  <script src="assets/catalogue.js"></script>
+</body>
+</html>

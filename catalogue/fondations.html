@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONO — Fondations</title>
+  <link rel="stylesheet" href="../src/mono.css">
+  <link rel="stylesheet" href="assets/catalogue.css">
+</head>
+<body data-root="./">
+  <div class="l-page">
+    <header class="c-masthead">
+      <a class="c-masthead__title" href="index.html" style="text-decoration:none">Mono — Design system</a>
+      <div class="c-masthead__meta">
+        <span>Fondations</span><span>v0.1</span>
+        <span class="c-segmented" role="group" aria-label="Thème">
+          <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
+          <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
+        </span>
+      </div>
+    </header>
+
+    <div class="l-rail cat-rail">
+      <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
+      <main class="cat-main">
+
+        <section class="cat-intro">
+          <h1 class="t-spaced t-large">Fondations</h1>
+          <p class="cat-lede">Les tons, la couleur, la typographie, l'espace et les filets. Tout le reste du système en découle.</p>
+        </section>
+
+        <section class="cat-section" id="tons">
+          <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>Tons</span><span class="c-section-head__aside">13 gris bornés</span></h2>
+          <p class="cat-note">La gamme va de <code>#131415</code> à <code>#E9E9E5</code> et s'arrête là : ni noir pur, ni blanc pur. Les sombres tirent très légèrement vers le froid, les clairs vers le chaud, comme une encre sur un papier non couché. Ces tons bruts ne s'emploient jamais directement dans un composant.</p>
+          <div class="cat-tones">
+            <div class="cat-tone"><i style="background:var(--tone-0)"></i><span><b>0</b><span data-token="--tone-0"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-1)"></i><span><b>1</b><span data-token="--tone-1"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-2)"></i><span><b>2</b><span data-token="--tone-2"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-3)"></i><span><b>3</b><span data-token="--tone-3"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-4)"></i><span><b>4</b><span data-token="--tone-4"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-5)"></i><span><b>5</b><span data-token="--tone-5"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-6)"></i><span><b>6</b><span data-token="--tone-6"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-7)"></i><span><b>7</b><span data-token="--tone-7"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-8)"></i><span><b>8</b><span data-token="--tone-8"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-9)"></i><span><b>9</b><span data-token="--tone-9"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-10)"></i><span><b>10</b><span data-token="--tone-10"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-11)"></i><span><b>11</b><span data-token="--tone-11"></span></span></div>
+            <div class="cat-tone"><i style="background:var(--tone-12)"></i><span><b>12</b><span data-token="--tone-12"></span></span></div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="roles">
+          <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Rôles</span><span class="c-section-head__aside">Valeurs du thème actif</span></h2>
+          <p class="cat-note">Les composants ne connaissent que des rôles. Chaque thème leur attribue un ton ; basculer le thème en haut de page met ce tableau à jour. Le contraste est mesuré contre <code>--bg</code>.</p>
+          <div class="c-table-wrap">
+            <table class="c-table cat-roles">
+              <thead><tr><th></th><th>Rôle</th><th>Emploi</th><th>Valeur</th><th class="is-num">Contraste</th></tr></thead>
+              <tbody>
+                <tr><td><div class="cat-swatch" style="background:var(--bg-sunken)"></div></td><th><code>--bg-sunken</code></th><td>Creux : blocs de code, zones en retrait</td><td data-token="--bg-sunken"></td><td class="is-num" data-token="--bg-sunken" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--bg)"></div></td><th><code>--bg</code></th><td>Fond de page. La masse dominante</td><td data-token="--bg"></td><td class="is-num">—</td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--surface)"></div></td><th><code>--surface</code></th><td>Surface détachée, ligne survolée</td><td data-token="--surface"></td><td class="is-num" data-token="--surface" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--surface-2)"></div></td><th><code>--surface-2</code></th><td>Survol de contrôle, infobulle</td><td data-token="--surface-2"></td><td class="is-num" data-token="--surface-2" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--line-faint)"></div></td><th><code>--line-faint</code></th><td>Filet de rang de tableau</td><td data-token="--line-faint"></td><td class="is-num" data-token="--line-faint" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--line)"></div></td><th><code>--line</code></th><td>Filet de structure</td><td data-token="--line"></td><td class="is-num" data-token="--line" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--line-strong)"></div></td><th><code>--line-strong</code></th><td>Bordure de contrôle (≥ 3 : 1)</td><td data-token="--line-strong"></td><td class="is-num" data-token="--line-strong" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--fg-muted)"></div></td><th><code>--fg-muted</code></th><td>Texte tertiaire : unités, folios (≥ 4,5 : 1)</td><td data-token="--fg-muted"></td><td class="is-num" data-token="--fg-muted" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--fg-soft)"></div></td><th><code>--fg-soft</code></th><td>Texte secondaire, légendes</td><td data-token="--fg-soft"></td><td class="is-num" data-token="--fg-soft" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--fg)"></div></td><th><code>--fg</code></th><td>Texte courant</td><td data-token="--fg"></td><td class="is-num" data-token="--fg" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--fg-strong)"></div></td><th><code>--fg-strong</code></th><td>Titres, labels, chiffres clés</td><td data-token="--fg-strong"></td><td class="is-num" data-token="--fg-strong" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--inverse-bg)"></div></td><th><code>--inverse-bg</code></th><td>Bloc inversé : l'action primaire</td><td data-token="--inverse-bg"></td><td class="is-num" data-token="--inverse-bg" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--mark)"></div></td><th><code>--mark</code></th><td>Marque de donnée principale (gris moyen)</td><td data-token="--mark"></td><td class="is-num" data-token="--mark" data-show="ratio"></td></tr>
+                <tr><td><div class="cat-swatch" style="background:var(--signal)"></div></td><th><code>--signal</code></th><td>L'exception. Voir ci-dessous</td><td data-token="--signal"></td><td class="is-num" data-token="--signal" data-show="ratio"></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="cat-rules">
+            <div class="cat-rule"><span class="cat-rule__num">T1</span><h3>Quatre niveaux de texte</h3><p>Fort, courant, secondaire, tertiaire. Pas de cinquième : en dessous de <code>--fg-muted</code> un gris n'est plus un texte, c'est un filet.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">T2</span><h3>Le clair se mérite</h3><p><code>--fg-strong</code> est réservé à ce qui nomme ou chiffre. Un paragraphe entier en ton fort aplatit la hiérarchie.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">T3</span><h3>Élévation par le ton</h3><p>Une surface se détache en s'éclaircissant d'un cran, jamais par une ombre. Trois plans au plus : creux, fond, surface.</p></div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="signal">
+          <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>Signal</span><span class="c-section-head__aside">L'unique couleur</span></h2>
+          <div class="l-grid">
+            <div class="l-span-5 cat-sub">
+              <p>Le système possède une seule teinte, un rouge. Elle répond à une question : <span class="t-strong">« qu'est-ce qui, sur cet écran, ne doit pas être manqué ? »</span> S'il n'y a rien, il n'y a pas de signal — et c'est le cas le plus fréquent.</p>
+              <div class="l-cluster" style="--gap: var(--space-5); margin-top: var(--space-3)">
+                <div class="l-cluster"><div class="cat-swatch" style="background:var(--signal); border:0"></div><span data-token="--signal"></span></div>
+                <span class="t-muted">Contraste <span data-token="--signal" data-show="ratio"></span></span>
+              </div>
+            </div>
+            <div class="l-span-7">
+              <table class="c-table">
+                <thead><tr><th>Le signal sert à</th><th>Le signal ne sert jamais à</th></tr></thead>
+                <tbody>
+                  <tr><td>Désigner LA donnée dont on parle</td><td>Distinguer des séries entre elles</td></tr>
+                  <tr><td>Marquer un état critique ou une erreur</td><td>Dire « succès », « info », « nouveau »</td></tr>
+                  <tr><td>Annoncer une action irréversible</td><td>Habiller l'action primaire courante</td></tr>
+                  <tr><td>Un point, un trait, un mot, un chiffre</td><td>Un fond, un bandeau, un paragraphe</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="cat-rules">
+            <div class="cat-rule"><span class="cat-rule__num">S1</span><h3>Moins de 1 %</h3><p>Le signal couvre moins de 1 % de la surface visible. Au-delà il devient une couleur de marque et cesse d'alerter.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">S2</span><h3>Un seul sens par écran</h3><p>Tout ce qui est rouge sur une vue signifie la même chose. Trois occurrences du même fait : oui. Deux faits différents : non.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">S3</span><h3>Jamais seul</h3><p>Le signal double toujours une forme, une graisse ou un mot. L'écran reste compréhensible imprimé en noir et blanc.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">S4</span><h3>Ajouté en dernier</h3><p>On compose en gris, on vérifie la hiérarchie, puis on pose le signal. S'il faut de la couleur pour que l'écran tienne, la composition est à revoir.</p></div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="typographie">
+          <h2 class="c-section-head"><span class="c-section-head__num">04</span><span>Typographie</span><span class="c-section-head__aside">IBM Plex Mono / Sans</span></h2>
+          <p class="cat-note">Le monospace est la voix du système : interface, données, titres. Le sans-serif n'intervient que pour la lecture longue (plus de trois lignes de prose). Trois graisses : 400 pour les valeurs, 500 pour l'accent, 600 pour les labels.</p>
+          <div>
+            <div class="cat-type-row"><span>.t-hero<br>48 / 56</span><span class="t-hero">5 364</span></div>
+            <div class="cat-type-row"><span>.t-display<br>32 / 40</span><span class="t-display">Réseau d'agences</span></div>
+            <div class="cat-type-row"><span>.t-title<br>24 / 32</span><span class="t-title">Croissance des primes</span></div>
+            <div class="cat-type-row"><span>.t-large<br>18 / 28</span><span class="t-large">Sous-titre de section</span></div>
+            <div class="cat-type-row"><span>.t-spaced<br>13 / 20 · .32em</span><span class="t-spaced">Titre espacé</span></div>
+            <div class="cat-type-row"><span>.t-label<br>13 / 20 · 600</span><span class="t-label">Produit par</span></div>
+            <div class="cat-type-row"><span>.t-body<br>13 / 20</span><span class="t-body">Texte d'interface et données : 4 285 447 — 115,1 %</span></div>
+            <div class="cat-type-row"><span>.t-micro<br>11 / 16 · .14em</span><span class="t-micro">Tous les montants en milliers</span></div>
+            <div class="cat-type-row"><span>.t-prose<br>15 / 24 · sans</span><p class="t-prose">Le texte long passe en sans-serif pour le confort de lecture, sur une mesure de 68 caractères au plus. C'est le seul emploi du sans-serif dans le système.</p></div>
+          </div>
+          <div class="cat-rules">
+            <div class="cat-rule"><span class="cat-rule__num">Y1</span><h3>Plancher à 11 px</h3><p>11 px est réservé aux capitales espacées. Toute phrase en bas de casse fait 12 px au moins, 13 px par défaut.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">Y2</span><h3>Trois corps par écran</h3><p>Un corps de service (11–13), un corps de titre, éventuellement un chiffre héros. On différencie ensuite par graisse, casse et ton.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">Y3</span><h3>Capitales = espacées</h3><p>Toute capitale reçoit de l'interlettrage : .06em en label, .14em en micro, .32em en titre. Jamais de capitales pour une phrase entière.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">Y4</span><h3>Label gras, valeur maigre</h3><p>Dans une paire, le label porte la graisse 600 et la valeur reste en 400. L'œil trouve la question, puis lit la réponse.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">Y5</span><h3>Chiffres alignés</h3><p>Chiffres tabulaires partout, alignés à droite en colonne, avec la même précision décimale sur toute la colonne.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">Y6</span><h3>Ni italique ni souligné</h3><p>L'emphase se fait par la graisse ou le ton. Le soulignement est réservé aux liens.</p></div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="espace">
+          <h2 class="c-section-head"><span class="c-section-head__num">05</span><span>Espace</span><span class="c-section-head__aside">Base 4 px · 12 colonnes</span></h2>
+          <div class="cat-spaces">
+            <div class="cat-space" style="--s:var(--space-1)"><i></i>1 · 4</div>
+            <div class="cat-space" style="--s:var(--space-2)"><i></i>2 · 8</div>
+            <div class="cat-space" style="--s:var(--space-3)"><i></i>3 · 12</div>
+            <div class="cat-space" style="--s:var(--space-4)"><i></i>4 · 16</div>
+            <div class="cat-space" style="--s:var(--space-5)"><i></i>5 · 24</div>
+            <div class="cat-space" style="--s:var(--space-6)"><i></i>6 · 32</div>
+            <div class="cat-space" style="--s:var(--space-7)"><i></i>7 · 48</div>
+            <div class="cat-space" style="--s:var(--space-8)"><i></i>8 · 64</div>
+            <div class="cat-space" style="--s:var(--space-9)"><i></i>9 · 96</div>
+          </div>
+          <div class="cat-sub">
+            <div class="cat-cols" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <span class="t-micro">Grille — 12 colonnes, gouttière 24 px, marge 20 à 64 px</span>
+          </div>
+          <div class="cat-rules">
+            <div class="cat-rule"><span class="cat-rule__num">E1</span><h3>Serré dedans, large dehors</h3><p>4 à 8 px entre les éléments d'un même groupe ; 48 à 96 px entre deux groupes. Le rapport est d'au moins 1 à 4 : c'est lui qui dessine les groupes.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">E2</span><h3>Sauter des crans</h3><p>Entre deux niveaux d'imbrication, sauter au moins un cran de l'échelle (8 → 24, 16 → 48). Deux espacements voisins se confondent.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">E3</span><h3>Tout sur la base 4</h3><p>Hauteurs de ligne, contrôles (32 / 40 px) et marges sont multiples de 4. Aucune valeur arbitraire.</p></div>
+          </div>
+        </section>
+
+        <section class="cat-section" id="filets">
+          <h2 class="c-section-head"><span class="c-section-head__num">06</span><span>Filets</span><span class="c-section-head__aside">Trois styles, trois sens</span></h2>
+          <div class="l-grid">
+            <div class="l-span-4 cat-sub"><hr class="c-rule c-rule--strong"><h3>Plein — structure</h3><p class="t-soft">Sépare des régions, souligne un en-tête, porte un axe. Trois forces : faible, normale, forte.</p></div>
+            <div class="l-span-4 cat-sub"><hr class="c-rule c-rule--strong c-rule--dashed"><h3>Tireté — relation</h3><p class="t-soft">Relie deux éléments, marque l'inactif, le provisoire, le prévisionnel.</p></div>
+            <div class="l-span-4 cat-sub"><hr class="c-rule c-rule--dotted"><h3>Pointillé — repère</h3><p class="t-soft">Grilles de graphique, graticules, guides. Ce qui aide à lire sans être lu.</p></div>
+          </div>
+          <div class="cat-demo" data-code>
+            <hr class="c-rule c-rule--faint">
+            <br>
+            <hr class="c-rule">
+            <br>
+            <hr class="c-rule c-rule--strong">
+            <br>
+            <hr class="c-rule c-rule--dashed">
+            <br>
+            <hr class="c-rule c-rule--dotted">
+          </div>
+          <div class="cat-rules">
+            <div class="cat-rule"><span class="cat-rule__num">F1</span><h3>Un pixel</h3><p>Tous les filets font 1 px. L'épaisseur de 2 à 4 px est réservée à l'état actif (onglet) et aux marques de données.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">F2</span><h3>Filet conducteur</h3><p>Un filet horizontal relie un label à sa valeur éloignée, comme dans une table des matières. Il remplace la grille de tableau.</p></div>
+            <div class="cat-rule"><span class="cat-rule__num">F3</span><h3>Pas de cadre par défaut</h3><p>Un bloc n'est encadré que s'il doit être détaché du flux. Sinon : un filet au-dessus et de l'espace.</p></div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="c-colophon"><span>Mono — système monochrome</span><span>Grille 12 col. / base 4 px / v0.1</span></footer>
+  </div>
+  <script src="assets/catalogue.js"></script>
+</body>
+</html>
