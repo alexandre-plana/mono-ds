@@ -96,5 +96,32 @@ Trois idées tiennent ces graphiques ensemble :
 - **Données.** Anneaux proportionnels, un seul en signal, toujours nommé. Un nom
   qui toucherait un anneau ou un autre nom se tait ; l'infobulle le rend. Les
   anneaux rétrécissent aux petites échelles.
-- **Limite.** Ni rues, ni relief, ni villes : pour un plan de ville, il faut des
-  tuiles vectorielles (MapLibre et une feuille de style MONO) et un service en ligne.
+- **Limite.** Ni rues, ni relief, ni villes : c'est le rôle du plan détaillé.
+
+## Plan détaillé
+
+`catalogue/exemples/plan.html`, feuille de style dans `catalogue/assets/plan.js`.
+Il descend jusqu'à la rue, et c'est le seul écran du système qui dépende de
+services en ligne.
+
+| Élément | Source | Dessin |
+|---|---|---|
+| Relief | Altitudes Terrarium (Mapzen, données ouvertes AWS), converties en courbes par maplibre-contour | Courbes de niveau ; maîtresses plus marquées et cotées. Pas d'ombrage : ce serait un dégradé |
+| Eau | OpenStreetMap, tuiles OpenFreeMap | Le ton le plus bas, rive en filet |
+| Routes et rail | idem | L'épaisseur et le ton disent le rang ; rail en trait-point |
+| Rues et chemins | idem | Filet discret ; chemins tiretés |
+| Bâti | idem | Aplat d'un cran, sans contour |
+| Limites | idem | Tireté |
+| Noms | idem | Capitales espacées, halo au ton du fond |
+| Agences | données de l'application | Anneaux proportionnels, un seul en signal |
+
+- **Calques.** Chaque famille s'affiche ou se masque (`.c-check`) ; le compte est
+  entre crochets. Les bois sont masqués par défaut.
+- **Aucune couleur écrite.** La feuille de style lit les rôles du thème
+  (`--bg`, `--line-strong`…) et se reconstruit quand le thème change.
+- **Dépendances.** MapLibre GL JS 4.7 et maplibre-contour (BSD-3), embarquées dans
+  `assets/vendor/`. Les tuiles sont demandées à `tiles.openfreemap.org` et
+  `s3.amazonaws.com` : hors ligne, le plan est vide.
+- **Limites.** Les noms sont en Noto Sans (seule police servie en glyphes de
+  carte), pas en Plex Mono. Mentions obligatoires dans la barre d'état :
+  OpenStreetMap, OpenMapTiles, OpenFreeMap.

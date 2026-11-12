@@ -97,6 +97,14 @@ n'importe quelle partie du monde.
 
 ![Carte du réseau : anneaux proportionnels sur fond Natural Earth](docs/captures/carte.png)
 
+Et jusqu'à la rue : courbes de niveau, routes, rues, bâti, en calques que l'on
+affiche ou masque. La feuille de style ne contient aucune couleur ; elle lit les
+rôles du thème.
+
+![Plan du massif de Grenoble : relief en courbes, routes, agences](docs/captures/plan.png)
+
+![Plan de Vizille à l'échelle de la rue, thème papier](docs/captures/plan-rue.png)
+
 ### Les images
 
 Des photos sans rapport entre elles — studio, nuit, relevé scientifique —
@@ -113,7 +121,7 @@ seul, jamais dans une modale.
 
 ![Application à onglets, inspecteur attaché](docs/captures/application-onglets.png)
 
-Huit écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
+Neuf écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
 
 ## En bref
 
@@ -121,7 +129,8 @@ Huit écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
 - **Un jeu d'icônes maison** de 50 dessins sur une grille de 16 px.
 - **Aucune dépendance** pour le système, aucune étape de construction. Polices
   embarquées. Seul l'exemple « bureau » embarque une bibliothèque (interact.js)
-  pour déplacer, redimensionner et aimanter les fenêtres.
+  pour déplacer, redimensionner et aimanter les fenêtres, et l'exemple « plan »
+  MapLibre et des tuiles en ligne.
 - **Un journal des décisions** : chaque règle, sa raison et ce qui a été écarté,
   dans [`docs/decisions.md`](docs/decisions.md).
 
@@ -166,12 +175,13 @@ docs/               les règles
   composants.md     index des composants et de leurs variantes
   dataviz.md        règles et classes de visualisation
 catalogue/          le catalogue navigable (démonstrations + code)
-  exemples/         huit écrans : carte, tableau de bord, rapport, collection + inspecteur,
+  exemples/         neuf écrans : carte, plan, tableau de bord, rapport, collection + inspecteur,
                     connexion, bureau à fenêtres, et deux gabarits de shell à
                     copier : application.html (arborescente) et
                     application-modules.html (modules séparés)
   assets/vendor/    interact.js (MIT), pour la seule version bureau ;
-                    world-50m.js (Natural Earth, domaine public), pour la carte
+                    world-50m.js (Natural Earth, domaine public), pour la carte ;
+                    MapLibre GL JS et maplibre-contour (BSD-3), pour le plan
 scripts/
   contrast.mjs      contrôle des contrastes des tokens
   build-search-index.mjs  index de la recherche du catalogue

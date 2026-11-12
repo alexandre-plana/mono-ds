@@ -80,7 +80,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-057 | Annuler plutôt que confirmer | en vigueur |
 | D-058 | Notifications : un journal, trois échelles | en vigueur |
 | D-059 | Touche Z, saisie et archives : précisions | en vigueur |
-| D-060 | Carte géographique : fond réel embarqué, pas de tuiles | en vigueur |
+| D-060 | Carte géographique : fond réel embarqué, pas de tuiles | en vigueur, complétée par D-061 |
+| D-061 | Plan détaillé : tuiles vectorielles, relief en courbes, calques | en vigueur |
 
 ---
 
@@ -561,3 +562,15 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Écarté** : des tuiles vectorielles avec MapLibre. C'est la seule voie pour un plan de ville (rues, bâtiments), et une feuille de style MONO y est faisable, mais elle impose une bibliothèque de 800 Ko, un service de tuiles en ligne, et n'a pas pu être essayée ici. À rouvrir si le besoin est le plan de ville.
 - **Limites** : détail d'atlas (un département n'a presque aucun trait) ; pas de villes ni de relief dans le fond ; projection simple, déformée aux très petites échelles ; noms de pays en anglais hors de la table de traduction de l'exemple.
 - **Données de l'exemple** : coordonnées réelles des villes, chiffres fictifs.
+
+## D-061 — Plan détaillé : tuiles vectorielles, relief en courbes, calques
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« plus de détail : élévation, rues et routes, éléments activables ») · **Complète** : D-060, dont elle lève le point « écarté »
+- **Décision** : un second écran, `exemples/plan.html`, qui descend jusqu'à la rue. Rendu par MapLibre GL JS ; rues, routes, eau, bâti, limites et noms viennent des tuiles vectorielles OpenStreetMap servies par OpenFreeMap ; le relief vient des tuiles d'altitude Terrarium, converties en courbes de niveau dans le navigateur par maplibre-contour. Neuf calques activables : relief, eau, routes et rail, rues et chemins, bâti, bois, limites, noms, agences.
+- **Choix de Claude** :
+  - le relief est en **courbes de niveau**, pas en ombrage : un ombrage est un dégradé, les courbes sont des filets — et c'est le dessin des cartes d'état-major ;
+  - la feuille de style ne contient **aucune couleur** : elle lit les rôles du thème, ce qui respecte la règle des tokens et donne les deux thèmes sans rien dupliquer ;
+  - la carte d'atlas (D-060) est **gardée** : elle marche hors ligne et suffit à l'échelle d'un pays ; le plan est l'outil du détail.
+- **Entorse assumée** : c'est le seul écran qui dépende de services en ligne et de bibliothèques lourdes (MapLibre : 800 Ko). Comme interact.js pour le bureau, elles restent dans `catalogue/assets/vendor/` et hors de `src/`.
+- **Limites** : noms en Noto Sans, seule police disponible en glyphes de carte ; disponibilité et conditions des services tiers à vérifier avant un usage en production ; mentions d'attribution obligatoires, placées dans la barre d'état.
+- **Environnement** : un environnement cloud « mono-ds » autorisant `tiles.openfreemap.org` a été créé pour pouvoir tester le rendu.

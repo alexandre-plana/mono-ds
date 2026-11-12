@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan — exemple MONO</title>
+  <link rel="stylesheet" href="../assets/vendor/maplibre-gl.css">
+  <link rel="stylesheet" href="../../src/mono.css">
+</head>
+<!-- Plan détaillé.
+     La carte d'atlas (carte.html) s'arrête à l'échelle du pays. Celle-ci descend jusqu'à la rue :
+     courbes de niveau, eau, routes, rues, bâti, limites, noms — chacun est un calque que l'on
+     affiche ou masque dans la colonne de droite.
+     Elle dépend de services en ligne (tuiles OpenStreetMap par OpenFreeMap, altitudes Terrarium)
+     et de deux bibliothèques embarquées (MapLibre GL JS, maplibre-contour). La feuille de style est
+     écrite dans assets/plan.js à partir des rôles du thème : aucune couleur n'y figure.
+     Les agences sont posées à leurs coordonnées réelles ; leurs chiffres sont fictifs. -->
+<body class="l-desk l-desk--app">
+
+  <div class="l-shell">
+    <div class="l-pane">
+      <div class="l-pane__head">
+        <header class="c-masthead">
+          <div class="c-masthead__title">Réseau — Plan</div>
+          <div class="c-masthead__meta"><span>Exercice 2026</span><span>T3</span><a href="../index.html">Catalogue</a></div>
+        </header>
+        <div class="l-pane__bar">
+          <div class="l-cluster" role="group" aria-label="Cadrage" id="views">
+            <button class="c-chip" type="button" data-view="massif" aria-pressed="true">Massif</button>
+            <button class="c-chip" type="button" data-view="grenoble" aria-pressed="false">Grenoble</button>
+            <button class="c-chip" type="button" data-view="vizille" aria-pressed="false">Vizille</button>
+            <button class="c-chip" type="button" data-view="reseau" aria-pressed="false">Réseau</button>
+          </div>
+          <div class="l-cluster" style="--gap: var(--space-2)">
+            <button class="c-button" type="button" id="zoom-out" aria-label="Réduire l'échelle"><i class="c-icon i-minus" aria-hidden="true"></i></button>
+            <button class="c-button" type="button" id="zoom-in" aria-label="Agrandir l'échelle"><i class="c-icon i-plus" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <main class="l-pane__body" style="padding-block: var(--space-4); overflow: hidden; background: none">
+        <div class="l-detail has-aside" style="--detail: 13rem; flex: 1; min-height: 0; align-items: stretch">
+          <div id="map" style="min-height: 20rem" aria-label="Plan du massif autour de Grenoble : relief, routes et agences."></div>
+          <aside class="l-detail__aside" aria-label="Calques">
+            <div class="l-detail__head"><span class="t-micro">Calques</span><span class="g-bracket" id="layer-count"></span></div>
+            <div class="l-stack" style="--gap: var(--space-2)" id="layers">
+              <label class="c-check"><input type="checkbox" data-layer="relief" checked><span>Relief</span></label>
+              <label class="c-check"><input type="checkbox" data-layer="eau" checked><span>Eau</span></label>
+              <label class="c-check"><input type="checkbox" data-layer="routes" checked><span>Routes et rail</span></label>
+              <label class="c-check"><input type="checkbox" data-layer="voies" checked><span>Rues et chemins</span></label>
+              <label class="c-check"><input type="checkbox" data-layer="batiments" checked><span>Bâti</span></label>
+              <label class="c-check"><input type="checkbox" data-layer="vegetation"><span>Bois</span></label>
+              <label class="c-check"><input type="checkbox" data-layer="limites" checked><span>Limites</span></label>
+              <label class="c-check"><input type="checkbox" data-layer="noms" checked><span>Noms</span></label>
+              <label class="c-check"><input type="checkbox" data-layer="agences" checked><span>Agences</span></label>
+            </div>
+            <div class="c-key" style="margin-top: var(--space-5)">
+              <div class="c-key__title">Clé</div>
+              <div class="c-key__item"><span class="c-key__swatch c-key__swatch--ring"></span>Primes de l'agence</div>
+              <div class="c-key__item"><span class="c-key__swatch c-key__swatch--signal"></span>En fermeture</div>
+              <div class="c-key__item"><span class="c-key__swatch c-key__swatch--dotted"></span>Chemin, limite</div>
+            </div>
+          </aside>
+        </div>
+      </main>
+
+      <div class="l-pane__foot">
+        <div class="c-statusbar">
+          <span class="c-statusbar__group g-bracket" id="coords">—</span>
+          <span class="c-statusbar__group" id="scale"></span>
+          <span class="c-statusbar__group" style="margin-left: auto">© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a></span>
+          <span class="c-statusbar__group"><a href="https://www.openmaptiles.org/">OpenMapTiles</a></span>
+          <span class="c-statusbar__group"><a href="https://openfreemap.org">OpenFreeMap</a></span>
+          <span class="c-statusbar__group">Relief : Mapzen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/vendor/maplibre-gl.js"></script>
+  <script src="../assets/vendor/maplibre-contour.min.js"></script>
+  <script src="../assets/plan.js"></script>
+  <script>
+    'use strict';
+    (() => {
+      const VIEWS = { massif: { lon: 5.78, lat: 45.14, zoom: 10.6 }, grenoble: { lon: 5.724, lat: 45.188, zoom: 13.6 }, vizille: { lon: 5.772, lat: 45.076, zoom: 14.6 }, reseau: { lon: 3.9, lat: 45.0, zoom: 6.6 } };
+      // Coordonnées réelles des villes ; primes fictives, en millions.
+      const AGENCES = [['Grenoble Centre', 5.7245, 45.1885, 12.4], ['Chambéry', 5.92, 45.57, 7.9], ['Voiron', 5.59, 45.364, 4.1], ['Vizille', 5.772, 45.077, 0.9, true], ['Clermont Jaude', 3.082, 45.776, 9.8], ['Avignon', 4.81, 43.95, 8.7], ['Arles', 4.63, 43.68, 1.8], ['Brive', 1.53, 45.16, 2.2], ['Limoges', 1.26, 45.83, 5.4], ['Montluçon', 2.6, 46.34, 3.3], ['Nîmes Arènes', 4.36, 43.84, 6.2], ['Vichy', 3.43, 46.13, 2.6]]
+        .map(([name, lon, lat, value, signal]) => ({ name, lon, lat, value, signal }));
+      const $ = (id) => document.getElementById(id);
+      const deg = (v, pos, neg) => `${Math.abs(v).toLocaleString('fr-FR', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}° ${v >= 0 ? pos : neg}`;
+      const plan = MonoPlan($('map'), { view: VIEWS.massif, points: AGENCES,
+        onMove: (lon, lat) => { $('coords').textContent = `${deg(lat, 'N', 'S')} · ${deg(lon, 'E', 'O')}`; },
+        onView: (v) => { const m = v.mpp * 100; $('scale').textContent = `100 px = ${m >= 1000 ? (m / 1000).toLocaleString('fr-FR', { maximumFractionDigits: 1 }) + ' km' : Math.round(m / 10) * 10 + ' m'}`; } });
+      const count = () => { const b = [...document.querySelectorAll('[data-layer]')]; $('layer-count').textContent = `${b.filter((i) => i.checked).length} / ${b.length}`; };
+      $('layers').addEventListener('change', (e) => { const l = e.target.dataset.layer; if (l) { plan.toggle(l, e.target.checked); count(); } });
+      const press = (id) => document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === id)));
+      $('views').addEventListener('click', (e) => { const b = e.target.closest('[data-view]'); if (!b) return; plan.go(VIEWS[b.dataset.view]); press(b.dataset.view); });
+      $('zoom-in').addEventListener('click', () => { plan.zoom(1); press(null); });
+      $('zoom-out').addEventListener('click', () => { plan.zoom(-1); press(null); });
+      plan.map.on('dragstart', () => press(null)); plan.map.on('wheel', () => press(null));
+      count(); window.plan = plan;
+    })();
+  </script>
+</body>
+</html>
