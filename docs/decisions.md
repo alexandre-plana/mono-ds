@@ -66,6 +66,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-043 | Tableau sans filets ; un filet sous la ligne survolée | en vigueur |
 | D-044 | Le survol annonce ce que fera le clic | en vigueur |
 | D-045 | Images : dessin du système, ou image brute encrée | en vigueur |
+| D-046 | La modale est une petite page, sans habillage | en vigueur |
+| D-047 | Le filet de survol d'une ligne cliquable dépasse à droite | en vigueur |
 
 ---
 
@@ -410,3 +412,18 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Règles** : dans une fiche, l'image vient après l'en-tête et le titre ; jamais de texte sur l'image ; les images comptent dans les masses tonales, un tiers de la vue au plus ; la couleur ne revient pas au survol.
 - **Écarté** : une teinte monochrome (duotone signal) — la couleur deviendrait décorative ; un flou — c'est un effet.
 - **Démonstration** : trois photographies libres de droits dans `catalogue/assets/img/` (sources dans `SOURCES.md`).
+
+## D-046 — La modale est une petite page, sans habillage
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« trop modale classique »)
+- **Contexte** : la modale reprenait l'anatomie habituelle — bandeau de titre fermé par un filet, croix dans l'angle, corps, pied séparé par un filet, fond d'un cran plus clair. Rien de cela ne vient des références.
+- **Décision** : la modale a le fond et le contour de la page. Plus de bandeau ni de filet intérieur. De haut en bas : une ligne de service en petites capitales (nature · référence, et à droite « Fermer » avec la touche Échap dans son cadre), un titre en grand corps, le contenu, les actions ferrées à gauche — la principale, puis « Annuler » en bouton discret. Largeur par défaut ramenée de 32 à 30 rem ; marge intérieure portée à 32 px.
+- **Raison** : depuis D-041, c'est la page hachurée dessous qui dit « modale ». L'habillage faisait double emploi. Et D-040 s'applique : un filet d'en-tête ou de pied ne se justifie que comme limite de défilement — il n'apparaît donc que si le contenu dépasse.
+- **Abandonné** : la croix de fermeture (remplacée par le mot et la touche), `__aside` dans les actions (la référence monte dans la ligne de service), le filet du pied de « Aller à ».
+- **Inchangé** : ancrage au tiers haut, tailles `--small` / `--large`, une seule modale par vue, la confirmation sans bouton fermer.
+
+## D-047 — Le filet de survol d'une ligne cliquable dépasse à droite
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Précise** : D-044
+- **Décision** : sous une ligne de tableau cliquable, le filet de survol se prolonge de 8 px dans la marge de droite avant sa pointe (`--cue-reach`). Les chiffres gardent leur axe ; seule la flèche sort.
+- **Garde-fou** : dans une zone qui défile en largeur (`.c-table-wrap`), rien ne dépasse, sinon la flèche créerait un défilement.

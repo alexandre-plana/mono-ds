@@ -1107,21 +1107,20 @@
 
           <div class="cat-sub" id="c-dialog" data-search="composant">
             <h3>Modale — .c-dialog</h3>
-            <p>Un <code>&lt;dialog&gt;</code> natif en trois parties : en-tête (titre et fermeture), corps défilant, actions. Les actions sont ferrées à gauche, la principale en premier. La modale est ancrée au tiers haut de l'écran : son bord supérieur ne bouge pas quand le contenu change de hauteur.</p>
+            <p>Une petite page posée sur la page hachurée : même fond, même contour d'un pixel, aucun bandeau ni filet intérieur. Une ligne de service (nature, référence, touche Échap), un titre en grand, le contenu, puis les actions ferrées à gauche, la principale en premier. Seul l'espace sépare. La modale est ancrée au tiers haut de l'écran : son bord supérieur ne bouge pas quand le contenu change de hauteur.</p>
             <div class="cat-demo" data-code>
               <button class="c-button" type="button" onclick="document.getElementById('demo-dialog').showModal()">Modifier l'agence</button>
               <dialog class="c-dialog" id="demo-dialog" aria-labelledby="demo-dialog-title">
                 <div class="c-dialog__head">
-                  <h3 class="c-dialog__title" id="demo-dialog-title">Modifier l'agence</h3>
-                  <button class="c-button c-button--quiet" type="button" aria-label="Fermer" onclick="this.closest('dialog').close()">
-                    <i class="c-icon i-close" aria-hidden="true"></i>
-                  </button>
+                  <span>Agence · <span class="c-ref">N-014</span></span>
+                  <button class="c-dialog__close" type="button" onclick="this.closest('dialog').close()">Fermer <kbd class="c-kbd">Échap</kbd></button>
                 </div>
+                <h3 class="c-dialog__title" id="demo-dialog-title">Modifier l'agence</h3>
                 <form method="dialog" style="display: contents">
                   <div class="c-dialog__body">
                     <label class="c-field">
                       <span class="c-field__label">Nom</span>
-                      <input class="c-input" type="text" value="Grenoble Centre">
+                      <input class="c-input" type="text" value="Grenoble Centre" autofocus>
                     </label>
                     <label class="c-field">
                       <span class="c-field__label">Branche</span>
@@ -1130,18 +1129,18 @@
                   </div>
                   <div class="c-dialog__actions">
                     <button class="c-button c-button--primary" type="submit">Enregistrer</button>
-                    <button class="c-button" type="submit">Annuler</button>
-                    <span class="c-dialog__aside">N-014</span>
+                    <button class="c-button c-button--quiet" type="submit">Annuler</button>
                   </div>
                 </form>
               </dialog>
             </div>
             <dl class="cat-spec">
-              <div><dt>Anatomie</dt><dd><code>__head</code> (<code>__title</code> + bouton fermer) · <code>__body</code> (défile seul) · <code>__actions</code> (principale, secondaire, puis <code>__aside</code> à droite pour une référence).</dd></div>
+              <div><dt>Anatomie</dt><dd><code>__head</code> : ligne de service en petites capitales, nature et référence à gauche, <code>__close</code> à droite (le mot et la touche, pas de croix) · <code>__title</code> en grand corps · <code>__body</code> (défile seul ; un filet n'apparaît qu'à la limite d'un contenu qui dépasse) · <code>__actions</code> : la principale, puis « Annuler » en bouton discret.</dd></div>
+              <div><dt>Ce qu'elle n'a pas</dt><dd>Ni bandeau de titre, ni croix dans l'angle, ni pied séparé par un filet, ni fond plus clair que la page, ni boutons à droite. C'est la page hachurée dessous qui dit « modale », pas son habillage.</dd></div>
               <div><dt>Employer</dt><dd>Une tâche courte et autonome qui exige une réponse avant de continuer : modifier un objet, confirmer une action irréversible.</dd></div>
               <div><dt>Éviter</dt><dd>Pour informer (préférer <code>.c-notice</code> ou <code>.c-toast</code>), pour un formulaire de plus de cinq champs (une page), pour consulter un détail sans quitter la liste (un inspecteur). Jamais de modale ouverte depuis une modale.</dd></div>
               <div><dt>Titre et actions</dt><dd>Le titre est un verbe et son objet (« Modifier l'agence »). Le bouton principal reprend ce verbe, jamais « OK ». Deux actions, trois au plus.</dd></div>
-              <div><dt>Tailles</dt><dd><code>--small</code> 24 rem · défaut 32 rem · <code>--large</code> 48 rem. Hauteur limitée à 76 % de l'écran.</dd></div>
+              <div><dt>Tailles</dt><dd><code>--small</code> 24 rem · défaut 30 rem · <code>--large</code> 48 rem. Hauteur limitée à 76 % de l'écran.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>showModal()</code> piège le focus et rend la page inerte ; Échap ferme ; <code>aria-labelledby</code> pointe le titre ; le focus revient à l'élément déclencheur.</dd></div>
             </dl>
           </div>
@@ -1152,16 +1151,15 @@
             <div class="cat-demo" data-code>
               <button class="c-button c-button--signal" type="button" onclick="document.getElementById('demo-confirm').showModal()">Supprimer l'agence</button>
               <dialog class="c-dialog c-dialog--small" id="demo-confirm" aria-labelledby="demo-confirm-title">
-                <div class="c-dialog__head">
-                  <h3 class="c-dialog__title" id="demo-confirm-title">Supprimer l'agence</h3>
-                </div>
+                <div class="c-dialog__head"><span>Irréversible · <span class="c-ref">N-014</span></span></div>
+                <h3 class="c-dialog__title" id="demo-confirm-title">Supprimer l'agence ?</h3>
                 <form method="dialog" style="display: contents">
                   <div class="c-dialog__body">
                     <p><span class="t-strong">Grenoble Centre</span> et ses 14 mois d'historique seront supprimés. Cette action est irréversible.</p>
                   </div>
                   <div class="c-dialog__actions">
                     <button class="c-button c-button--signal" type="submit">Supprimer</button>
-                    <button class="c-button" type="submit" autofocus>Annuler</button>
+                    <button class="c-button c-button--quiet" type="submit" autofocus>Annuler</button>
                   </div>
                 </form>
               </dialog>

@@ -218,7 +218,7 @@ et le signal (2), on ne réduit pas le reste du tableau sous le plancher (1).
 | On demande | Pourquoi c'est un écart | Ce que MONO répond |
 |---|---|---|
 | « Du vert pour le succès, de l'orange pour l'alerte » | Trois teintes font un langage d'états ; le signal n'alerte plus | Le glyphe et le mot : `.c-status--on`, `--warning`. Seul le critique prend le signal |
-| « Une ombre pour détacher la modale » | L'élévation n'existe pas | Un voile sur la page, une surface d'un cran, un filet |
+| « Une ombre pour détacher la modale » | L'élévation n'existe pas | La page dessous se hachure ; la modale est une petite page, même fond, même contour |
 | « Arrondir un peu les boutons, c'est plus doux » | Une seconde famille de formes | Le rayon reste à 0 ; la douceur vient des tons bornés et du vide |
 | « Une couleur de marque » | Le signal deviendrait une identité | La marque s'exprime par le titre espacé, la typographie et la composition |
 | « Une couleur par série, sinon on ne distingue pas » | Conviction 4 | Ton et trait pour trois séries ; au-delà, des petits multiples |

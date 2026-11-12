@@ -195,8 +195,11 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 /* Le survol annonce : sous une ligne qui mène quelque part, le filet se termine en flèche.
    Une ligne qu'on ne peut que lire garde un filet nu. */
 .c-table tr[tabindex] > :last-child { position: relative; }
-.c-table tr[tabindex]:not([aria-selected="true"]) > :last-child::after { content: ''; position: absolute; right: 1px; bottom: -4px; width: 6px; height: 6px; border-top: var(--hairline) solid var(--line-strong); border-right: var(--hairline) solid var(--line-strong); transform: rotate(45deg); opacity: 0; }
-.c-table tr[tabindex]:not([aria-selected="true"]):hover > :last-child::after { opacity: 1; }
+.c-table tr[tabindex]:not([aria-selected="true"]) > :last-child::before { content: ''; position: absolute; left: 100%; bottom: -1px; width: var(--cue-reach, 0.5rem); height: 1px; background: var(--line-strong); opacity: 0; }
+.c-table tr[tabindex]:not([aria-selected="true"]) > :last-child::after { content: ''; position: absolute; right: calc(1px - var(--cue-reach, 0.5rem)); bottom: -4px; width: 6px; height: 6px; border-top: var(--hairline) solid var(--line-strong); border-right: var(--hairline) solid var(--line-strong); transform: rotate(45deg); opacity: 0; }
+.c-table tr[tabindex]:not([aria-selected="true"]):hover > :last-child::before, .c-table tr[tabindex]:not([aria-selected="true"]):hover > :last-child::after { opacity: 1; }
+/* Dans une zone qui défile en largeur, rien ne dépasse : la pointe reste au bord du tableau. */
+.c-table-wrap { --cue-reach: 0px; }
 .c-table tr[tabindex]:focus-visible { outline-offset: -2px; }
 .c-table tr[aria-selected="true"] > * { border-top: var(--stroke) solid var(--selected-line); border-bottom: var(--stroke) solid var(--selected-line); padding-block: calc(var(--space-2) - 1px); color: var(--fg); }
 .c-table tr[aria-selected="true"] > th { font-weight: var(--weight-medium); }
@@ -293,10 +296,12 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-tooltip { display: inline-block; padding: var(--space-2) var(--space-3); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); color: var(--fg-strong); font-size: var(--text-small); line-height: var(--leading-small); max-width: 32ch; }
 .c-toast { display: inline-flex; align-items: baseline; gap: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--surface-2); border: var(--hairline) solid var(--line-strong); border-left: var(--stroke) solid var(--fg-strong); color: var(--fg-strong); font-size: var(--text-small); }
 .c-toast--signal { border-left-color: var(--signal); }
-/* Modale : <dialog> natif. En-tête, corps défilant, actions ferrées à gauche.
-   Ancrée au tiers haut plutôt que centrée : le bord supérieur ne bouge pas
-   quand le contenu change de hauteur. */
-.c-dialog { padding: 0; margin-top: 12vh; width: min(32rem, calc(100vw - 2rem)); max-height: min(76vh, 44rem); background: var(--surface); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
+/* Modale : une petite page posée sur la page hachurée. Même fond et même contour que la page,
+   aucun bandeau, aucun filet intérieur : une ligne de service (nature, référence, Échap), un
+   titre en grand, le contenu, puis les actions ferrées à gauche. Seul l'espace sépare.
+   Ancrée au tiers haut plutôt que centrée : le bord supérieur ne bouge pas quand le contenu
+   change de hauteur. */
+.c-dialog { --dialog-pad: var(--space-6); padding: 0; margin-top: 12vh; width: min(30rem, calc(100vw - 2rem)); max-height: min(76vh, 44rem); background: var(--bg); border: var(--hairline) solid var(--line-strong); color: var(--fg); }
 .c-dialog[open] { display: flex; flex-direction: column; }
 /* Fond d'une modale : la page dessous est hachurée. En dessin technique, une zone hachurée est
    une zone exclue — c'est exactement ce qu'elle est tant que la modale est ouverte. Les hachures
@@ -305,10 +310,19 @@ th[aria-sort="ascending"] .c-table__sort .c-icon, th[aria-sort="descending"] .c-
 .c-dialog::backdrop { background-color: color-mix(in srgb, var(--desk) 78%, transparent); background-image: repeating-linear-gradient(135deg, var(--hatch) 0, var(--hatch) 1px, transparent 1px, transparent 7px); }
 .c-dialog--small { width: min(24rem, calc(100vw - 2rem)); }
 .c-dialog--large { width: min(48rem, calc(100vw - 2rem)); }
-.c-dialog__head { flex: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); min-height: 3rem; padding: 0 var(--space-3) 0 var(--space-5); border-bottom: var(--hairline) solid var(--line); }
-.c-dialog__title { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-small); line-height: var(--leading-base); color: var(--fg-strong); font-weight: var(--weight-medium); }
-.c-dialog__body { flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4); }
-.c-dialog__actions { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-top: var(--hairline) solid var(--line); }
+.c-dialog__head { flex: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); min-height: 1.25rem; padding: var(--space-5) var(--dialog-pad) 0; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+/* Fermer : la touche, dans son cadre. Pas de croix. */
+.c-dialog__close { appearance: none; background: none; border: 0; padding: 0; margin: 0 0 0 auto; font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: var(--space-2); }
+.c-dialog__close:hover, .c-dialog__close:hover .c-kbd { color: var(--fg-strong); border-color: var(--fg-soft); }
+.c-dialog__title { flex: none; margin: 0; padding: var(--space-5) var(--dialog-pad) 0; font-size: var(--text-large); line-height: var(--leading-large); color: var(--fg-strong); font-weight: var(--weight-regular); }
+/* Le corps défile seul ; un filet n'apparaît qu'à la limite d'un contenu qui dépasse. */
+.c-dialog__body { --_w: calc(100% - 2 * var(--dialog-pad)); flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-4) var(--dialog-pad) var(--space-2); display: flex; flex-direction: column; gap: var(--space-4); color: var(--fg-soft);
+  background:
+    linear-gradient(var(--bg), var(--bg)) local 0 0 / 100% 1px no-repeat,
+    linear-gradient(var(--bg), var(--bg)) local 0 100% / 100% 1px no-repeat,
+    linear-gradient(var(--line), var(--line)) scroll var(--dialog-pad) 0 / var(--_w) 1px no-repeat,
+    linear-gradient(var(--line), var(--line)) scroll var(--dialog-pad) 100% / var(--_w) 1px no-repeat; }
+.c-dialog__actions { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); padding: var(--space-5) var(--dialog-pad) var(--dialog-pad); }
 .c-dialog__aside { margin-left: auto; font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); }
 
 /* --- Fiche (carte) --------------------------------------------------------------
@@ -609,7 +623,7 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
 .c-palette__main { min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-4); }
 .c-palette__title { color: var(--fg-strong); font-weight: var(--weight-medium); }
 .c-palette__desc { color: var(--fg-soft); font-size: var(--text-small); }
-.c-palette__foot { flex: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); padding: var(--space-3) var(--space-5); border-top: var(--hairline) solid var(--line); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
+.c-palette__foot { flex: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); padding: var(--space-3) var(--space-5); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
 .c-palette .c-empty { margin: var(--space-4) var(--space-5); }
 @media (max-width: 640px) { .c-palette__item { grid-template-columns: minmax(0, 1fr); } .c-palette__type, .c-palette__hint { display: none; } }
 

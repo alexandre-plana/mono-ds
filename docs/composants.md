@@ -107,7 +107,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 
 | Composant | Éléments et variantes | Règle d'emploi |
 |---|---|---|
-| `.c-dialog` (`<dialog>`) | `__head`, `__title`, `__body`, `__actions`, `__aside` ; `--small`, `--large` | Tâche courte qui exige une réponse. Titre = verbe + objet ; le bouton principal répète le verbe |
+| `.c-dialog` (`<dialog>`) | `__head` (ligne de service), `__close`, `__title`, `__body`, `__actions` ; `--small`, `--large` | Tâche courte qui exige une réponse. Une petite page sur la page hachurée : ni bandeau, ni croix, ni filet intérieur. Titre = verbe + objet ; le bouton principal répète le verbe |
 | `.c-dialog--small` (confirmation) | — | Irréversible uniquement. Pas de bouton fermer ; focus initial sur « Annuler » ; seul le bouton porte le signal |
 | `.c-window` | `__frame`, `__bar`, `__title`, `__actions`, `__body` (`--flush`) ; `--resizable`, `.is-active`, `.is-maximized`, `.is-minimized` ; `--window`, `--window-height` | Fenêtre flottante non modale : un outil gardé sous la main. Liseré de plan de travail, aucune ombre. Deux au plus |
 
