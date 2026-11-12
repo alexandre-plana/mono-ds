@@ -1107,7 +1107,7 @@
 
           <div class="cat-sub" id="c-dialog" data-search="composant">
             <h3>Modale — .c-dialog</h3>
-            <p>Une feuille posée sur la page hachurée, plus haute que large — le format A, celui d'une page ou d'une étiquette, pas d'une boîte de dialogue. Même fond et même contour que la page, aucun bandeau ni filet intérieur. Un seul titre, en haut, en grand ; le texte ou les champs ; le vide ; puis le pied — la référence à gauche, les actions à droite, la principale tout au bout.</p>
+            <p>Une feuille étroite posée à droite de l'écran, sur la page hachurée. Excentrée : elle laisse lisible, à gauche, ce sur quoi l'on travaillait, et se range du côté où la lecture s'achève. Même fond et même contour que la page, aucun bandeau ni filet intérieur. Trois choses au plus : un titre, une phrase ou quelques champs, les actions à droite. Sa hauteur est celle de son contenu.</p>
             <div class="cat-demo" data-code>
               <button class="c-button" type="button" onclick="document.getElementById('demo-dialog').showModal()">Modifier l'agence</button>
               <dialog class="c-dialog" id="demo-dialog" aria-labelledby="demo-dialog-title">
@@ -1124,7 +1124,6 @@
                     </label>
                   </div>
                   <div class="c-dialog__actions">
-                    <span class="c-dialog__aside"><span class="c-ref">N-014</span></span>
                     <button class="c-button c-button--quiet" type="submit">Annuler</button>
                     <button class="c-button c-button--primary" type="submit">Enregistrer</button>
                   </div>
@@ -1132,12 +1131,13 @@
               </dialog>
             </div>
             <dl class="cat-spec">
-              <div><dt>Anatomie</dt><dd><code>__title</code> : le seul titre, en corps d'écran (32 px), bas de casse, sur deux lignes s'il le faut · <code>__body</code> : la prose en sans-serif de lecture, les champs ensuite ; il défile seul, et un filet n'apparaît qu'à la limite d'un contenu qui dépasse · <code>__actions</code> : à gauche <code>__aside</code> (référence ou touche), à droite « Annuler » en bouton discret puis l'action principale.</dd></div>
+              <div><dt>Anatomie</dt><dd><code>__title</code> : le seul titre, en corps de titre (24 px), bas de casse · <code>__body</code> : une phrase en sans-serif de lecture, ou quelques champs ; il défile seul si le contenu dépasse · <code>__actions</code> : « Annuler » en bouton discret puis l'action principale, à droite. <code>__aside</code>, à gauche du pied, seulement pour une position dans une suite.</dd></div>
+              <div><dt>Place</dt><dd>En haut à droite, à trois retraits du bord de l'écran. Toujours au même endroit : on sait où regarder. Sur téléphone, au centre. <code>--large</code> (« Aller à », tableau) reste centrée.</dd></div>
               <div><dt>Ce qu'elle n'a pas</dt><dd>Ni bandeau, ni surtitre, ni croix dans l'angle, ni pied séparé par un filet, ni fond plus clair que la page. Échap et « Annuler » ferment. C'est la page hachurée dessous qui dit « modale », pas son habillage.</dd></div>
               <div><dt>Employer</dt><dd>Une tâche courte et autonome qui exige une réponse avant de continuer : modifier un objet, confirmer une action irréversible.</dd></div>
               <div><dt>Éviter</dt><dd>Pour informer (préférer <code>.c-notice</code> ou <code>.c-toast</code>), pour un formulaire de plus de cinq champs (une page), pour consulter un détail sans quitter la liste (un inspecteur). Jamais de modale ouverte depuis une modale.</dd></div>
               <div><dt>Titre et actions</dt><dd>Le titre est un verbe et son objet (« Modifier l'agence »). Le bouton principal reprend ce verbe, jamais « OK ». Deux actions, trois au plus.</dd></div>
-              <div><dt>Tailles</dt><dd>Défaut : feuille de 23 rem, 1 : √2 · <code>--column</code> : même largeur, toute la hauteur · <code>--small</code> (27 rem) et <code>--large</code> (48 rem) : formats couchés, pour une confirmation d'une phrase et pour un contenu large.</dd></div>
+              <div><dt>Tailles</dt><dd>Défaut 22 rem · <code>--small</code> 18 rem pour une question d'une ligne · <code>--column</code> : toute la hauteur, pour un formulaire · <code>--large</code> 48 rem, centrée.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>showModal()</code> piège le focus et rend la page inerte ; Échap ferme ; <code>aria-labelledby</code> pointe le titre ; le focus revient à l'élément déclencheur.</dd></div>
             </dl>
           </div>
@@ -1200,7 +1200,7 @@
 
           <div class="cat-sub" id="c-dialog-compositions" data-search="composant">
             <h3>Compositions de modale — __stake, --column</h3>
-            <p>Trois façons de composer la feuille. Entre le titre et le pied, le vide — ou ce qui est en jeu : le chiffre, l'étiquette. Et la colonne, pour un formulaire.</p>
+            <p>Trois compositions plus riches, quand la phrase ne suffit pas : le chiffre, l'étiquette, et la colonne pour un formulaire.</p>
             <div class="cat-demo" data-code>
               <div class="l-cluster">
                 <button class="c-button" type="button" onclick="document.getElementById('demo-portrait-a').showModal()">Le chiffre</button>
@@ -1220,7 +1220,6 @@
                     </div>
                   </div>
                   <div class="c-dialog__actions">
-                    <span class="c-dialog__aside"><span class="c-ref">N-016</span></span>
                     <button class="c-button c-button--quiet" type="submit" autofocus>Annuler</button>
                     <button class="c-button c-button--signal" type="submit">Fermer</button>
                   </div>
@@ -1241,7 +1240,6 @@
                     <div class="c-dialog__stake"><p>Cette action est irréversible.</p></div>
                   </div>
                   <div class="c-dialog__actions">
-                    <span class="c-dialog__aside"><kbd class="c-kbd">Échap</kbd></span>
                     <button class="c-button c-button--quiet" type="submit" autofocus>Annuler</button>
                     <button class="c-button c-button--signal" type="submit">Fermer</button>
                   </div>
@@ -1268,9 +1266,9 @@
             <dl class="cat-spec">
               <div><dt>Le chiffre</dt><dd>Un <code>.c-stat--hero</code> dans <code>__stake</code>. Ce que l'action engage, en un nombre, juste au-dessus du bouton. Pour une confirmation dont la conséquence se mesure.</dd></div>
               <div><dt>L'étiquette</dt><dd>Un <code>.c-kv</code> : la fiche de l'objet, à filets conducteurs, comme une étiquette technique. Pour vérifier que l'on agit sur le bon objet.</dd></div>
-              <div><dt>La colonne</dt><dd><code>--column</code> : toute la hauteur de l'écran, centrée. Les champs se remplissent de haut en bas, le pied ne bouge pas, la position dans la suite se lit entre crochets. Pour un formulaire de quatre à huit champs, ou en deux temps.</dd></div>
-              <div><dt>__stake</dt><dd>Poussé au bas du corps. Une seule chose : un chiffre, ou une phrase. C'est la dernière chose lue avant le bouton.</dd></div>
-              <div><dt>Éviter</dt><dd>Remplir le vide du milieu : il fait partie de la composition. Un titre de plus de trois lignes. La feuille pour un tableau ou un contenu large : c'est le rôle de <code>--large</code>.</dd></div>
+              <div><dt>La colonne</dt><dd><code>--column</code> : toute la hauteur de l'écran, à droite. Les champs se remplissent de haut en bas, le pied ne bouge pas, la position dans la suite se lit entre crochets. Pour un formulaire de quatre à huit champs, ou en deux temps.</dd></div>
+              <div><dt>__stake</dt><dd>Sous le texte, juste au-dessus des actions. Une seule chose : un chiffre, ou une phrase. C'est la dernière chose lue avant le bouton.</dd></div>
+              <div><dt>Éviter</dt><dd>Cumuler le chiffre et l'étiquette. Un titre de plus de trois lignes. La feuille pour un tableau ou un contenu large : c'est le rôle de <code>--large</code>.</dd></div>
             </dl>
           </div>
 

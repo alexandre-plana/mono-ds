@@ -107,7 +107,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 
 | Composant | Éléments et variantes | Règle d'emploi |
 |---|---|---|
-| `.c-dialog` (`<dialog>`) | `__title`, `__body`, `__stake`, `__actions`, `__aside` ; `--column`, `--small`, `--large` | Tâche courte qui exige une réponse. Une feuille plus haute que large (1 : √2) sur la page hachurée : un seul titre en grand, le texte, `__stake` (le chiffre ou la phrase en jeu) au bas du corps, puis le pied — référence à gauche, actions à droite. `--column` pour un formulaire, `--small` et `--large` couchés |
+| `.c-dialog` (`<dialog>`) | `__title`, `__body`, `__stake`, `__actions`, `__aside` ; `--small`, `--column`, `--large` | Tâche courte qui exige une réponse. Une feuille étroite (22 rem) en haut à droite de l'écran, sur la page hachurée : un titre, une phrase ou quelques champs, les actions à droite. Hauteur du contenu. `--large` reste centrée |
 | `.c-dialog--small` (confirmation) | — | Irréversible uniquement. Pas de bouton fermer ; focus initial sur « Annuler » ; seul le bouton porte le signal |
 | `.c-window` | `__frame`, `__bar`, `__title`, `__actions`, `__body` (`--flush`) ; `--resizable`, `.is-active`, `.is-maximized`, `.is-minimized` ; `--window`, `--window-height` | Fenêtre flottante non modale : un outil gardé sous la main. Liseré de plan de travail, aucune ombre. Deux au plus |
 
@@ -115,7 +115,7 @@ Deux natures : la modale interrompt (une seule à la fois, voile et filet), la
 fenêtre accompagne (elle ne bloque rien). Aucune ne porte d'ombre. Déplacement,
 redimensionnement et aimantation des fenêtres ne font pas partie du système : la
 version bureau les confie à interact.js (`catalogue/assets/vendor`, licence MIT). Le détail d'un
-élément ne va dans aucune des deux : il va dans l'inspecteur — il n'y a pas de tiroir. La modale est ancrée au tiers haut ;
+élément ne va dans aucune des deux : il va dans l'inspecteur — il n'y a pas de tiroir. La modale est posée en haut à droite de l'écran ;
 ses actions sont à droite, la principale tout au bout.
 
 ## Règles transversales

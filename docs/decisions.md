@@ -70,7 +70,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-047 | Le filet de survol d'une ligne cliquable dépasse à droite | en vigueur |
 | D-048 | Modale éditoriale : un seul titre, actions à droite | en vigueur |
 | D-049 | Modales portrait : le chiffre, l'étiquette, la colonne | adoptée, voir D-050 |
-| D-050 | La modale est portrait par défaut | en vigueur |
+| D-050 | La modale est portrait par défaut | remplacée par D-051 |
+| D-051 | La modale est excentrée à droite, minimale | en vigueur |
 
 ---
 
@@ -453,7 +454,17 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 
 ## D-050 — La modale est portrait par défaut
 
-- **Date** : 2026-11-12 · **Statut** : en vigueur · **Validée par** : le commanditaire (« ok pour la modale ») · **Suite de** : D-049
+- **Date** : 2026-11-12 · **Statut** : remplacée par D-051 · **Validée par** : le commanditaire (« ok pour la modale ») · **Suite de** : D-049
 - **Décision** : les trois compositions de D-049 sont adoptées et la feuille portrait devient le format de `.c-dialog` sans modificateur : 23 rem de large, 1 : √2, titre en 32 px. `--column` garde la pleine hauteur. Les formats couchés restent en modificateurs : `--small` pour une confirmation d'une phrase, `--large` pour un contenu large (« Aller à », tableau). La classe `--portrait` de D-049 n'a plus lieu d'être.
 - **Choix de Claude** sur les deux points laissés ouverts : portrait par défaut ; la colonne est gardée, pour quatre à huit champs — au-delà, une page.
 - **Remplace dans D-048** : les largeurs (32 rem / 27 rem) et le corps du titre (24 px), qui ne valent plus que pour les formats couchés.
+
+## D-051 — La modale est excentrée à droite, minimale
+
+- **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Remplace** : D-050
+- **Contexte** : après quatre versions centrées (D-046, D-048, D-049, D-050), la modale ne convainquait toujours pas. Trois pistes hors boîte ont été maquettées (en place dans la ligne, bandeau, page de garde) ; le commanditaire a demandé une autre voie : excentrer.
+- **Décision** : `.c-dialog` se pose en haut à droite de l'écran, à trois retraits du bord. 22 rem de large, hauteur de son contenu (plus de format 1 : √2 imposé). Trois choses au plus : un titre en 24 px, une phrase ou quelques champs, les actions à droite. La référence dans le pied disparaît des exemples ; `__aside` ne sert plus qu'à une position dans une suite. `--small` : 18 rem. `--column` : pleine hauteur, à droite. `--large` reste centrée. Sur téléphone, tout revient au centre.
+- **Raison** : centrée, une boîte recouvre ce sur quoi l'on travaillait et lit comme une modale classique. À droite, elle laisse la page lisible à gauche (hachurée mais visible) et se trouve là où la lecture s'achève et où sont déjà les actions.
+- **Réserve de Claude** : `--column` à droite a la forme du tiroir supprimé en D-020. Elle s'en distingue par l'usage — un formulaire à valider, pas le détail d'un élément — mais la ressemblance est réelle ; à surveiller.
+- **Gardé de D-049** : `__stake` et les compositions « chiffre » et « étiquette », pour les cas où la phrase ne suffit pas.
+- **Non retenu pour l'instant** : la confirmation en place dans la ligne du tableau, que Claude recommandait ; elle reste une piste pour les actions qui ont une ligne d'origine.

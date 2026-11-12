@@ -64,15 +64,14 @@ zone exclue. Les deux thèmes s'échangent sans rien déplacer.
 
 ![Survol d'un tableau, « Aller à », modale, changement de thème](docs/captures/interactions.gif)
 
-### La modale est une feuille
+### La modale se range à droite
 
-Plus haute que large, au format d'une page. Un seul titre, le texte, le vide,
-puis ce qui est en jeu juste au-dessus des actions : un chiffre, ou la fiche de
-l'objet comme sur une étiquette technique.
+Une feuille étroite, en haut à droite de l'écran : un titre, une phrase, les
+actions. Elle laisse lisible, à gauche, ce sur quoi l'on travaillait.
 
 | | |
 |---|---|
-| ![Modale avec chiffre, thème encre](docs/captures/modale.png) | ![Modale en étiquette, thème papier](docs/captures/modale-etiquette.png) |
+| ![Confirmation, thème encre](docs/captures/modale.png) | ![Formulaire court, thème papier](docs/captures/modale-papier.png) |
 
 ### Les images sont encrées
 
