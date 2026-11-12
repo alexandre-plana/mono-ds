@@ -142,24 +142,14 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-pathnav__seg:last-of-type > summary { color: var(--fg-strong); }
 .c-pathnav .c-menu__list { letter-spacing: 0; text-transform: none; }
 
-/* Navigation par modules : les destinations de premier niveau, écrites en toutes lettres
-   dans la ligne de tête. Pour les applications dont les parties sont séparées et entre
-   lesquelles on saute sans cesse. Le module courant ne change que de contour : un trait
-   de 2 px posé sur le filet de l'en-tête. À placer dans .c-masthead. */
-.c-mainnav { flex: 1 1 0; align-self: stretch; display: flex; align-items: stretch; gap: var(--space-5); min-width: 0; overflow-x: auto; margin-bottom: calc(-1 * var(--space-3) - 1px); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-small); line-height: var(--leading-base); }
-.c-mainnav__home { display: inline-flex; align-items: center; padding-bottom: var(--space-3); margin-right: var(--space-3); letter-spacing: var(--track-title); font-size: var(--text-base); color: var(--fg-strong); text-decoration: none; white-space: nowrap; }
-.c-mainnav__item { appearance: none; display: inline-flex; align-items: center; padding: 0 0 calc(var(--space-3) - 1px); background: none; border: 0; border-bottom: var(--stroke) solid transparent; font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--fg-soft); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
-.c-mainnav__item:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
-/* Lieu de passage : un endroit hors des modules épinglés, atteint par un saut. Tireté = provisoire. */
-.c-mainnav__item--temp[aria-current] { border-bottom-style: dashed; }
-.c-mainnav__brand { display: inline-flex; align-items: center; padding-bottom: var(--space-3); margin-right: var(--space-2); letter-spacing: var(--track-title); font-size: var(--text-base); color: var(--fg-strong); white-space: nowrap; }
-.c-mainnav__item .c-icon { margin-right: var(--space-2); }
-.c-mainnav__item[aria-current] { color: var(--fg); font-weight: var(--weight-medium); border-bottom-color: var(--selected-line); }
-
 .c-breadcrumb { display: flex; flex-wrap: wrap; gap: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
 .c-breadcrumb a { color: var(--fg-soft); text-decoration: none; }
 .c-breadcrumb a:hover { color: var(--fg-strong); }
 .c-breadcrumb > * + *::before { content: '/'; margin-right: var(--space-2); color: var(--fg-muted); }
+/* En tête de page : le fil d'Ariane tient lieu de titre. Le dernier terme dit où l'on est. */
+.c-breadcrumb--head { font-size: var(--text-base); line-height: var(--leading-base); letter-spacing: var(--track-title); gap: var(--space-3); }
+.c-breadcrumb--head > * + *::before { margin-right: var(--space-3); }
+.c-breadcrumb--head [aria-current] { color: var(--fg-strong); }
 .c-breadcrumb [aria-current] { color: var(--fg); }
 
 .c-pagination { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-small); }
@@ -543,11 +533,22 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
    Posés sur le plan de travail, au-dessus de la page qu'ils ouvrent. Tous ont le fond
    de la page ; l'onglet courant s'en distingue par son seul contour : un trait de
    2 px dessus, et pas de trait dessous — il s'ouvre sur la page. */
-.c-doctabs { display: flex; align-items: flex-end; gap: 0; margin-bottom: -1px; position: relative; z-index: 1; overflow-x: auto; }
-.c-doctabs__tab { appearance: none; display: inline-flex; align-items: center; gap: var(--space-2); height: 2rem; padding: 0 var(--space-4); margin-right: -1px; background: var(--bg); border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color var(--duration); }
+.c-doctabs { display: flex; align-items: flex-end; gap: 0; margin-bottom: -1px; position: relative; z-index: 1; min-width: 0; }
+.c-doctabs__tab { appearance: none; flex: none; display: inline-flex; align-items: center; gap: var(--space-2); height: 2rem; max-width: 15rem; padding: 0 var(--space-4); margin-right: -1px; background: var(--bg); border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); font-family: inherit; font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); text-decoration: none; white-space: nowrap; cursor: pointer; transition: color var(--duration); }
 .c-doctabs__tab:hover { color: var(--fg-strong); }
 .c-doctabs__tab[aria-current], .c-doctabs__tab[aria-selected="true"] { border-top: var(--stroke) solid var(--selected-line); border-bottom-color: var(--bg); color: var(--fg); font-weight: var(--weight-medium); }
+.c-doctabs__label { overflow: hidden; text-overflow: ellipsis; }
 .c-doctabs__tab--add { padding-inline: var(--space-2); }
+/* Onglet ouvert à la demande : il se ferme. Les onglets permanents n'ont pas de croix. */
+.c-doctabs__close { display: inline-grid; place-content: center; width: 1rem; height: 1rem; margin-right: calc(var(--space-2) * -1); color: var(--fg-muted); }
+.c-doctabs__close:hover { color: var(--fg-strong); }
+/* Outils à gauche (plan) et débordement à droite : quand les onglets ne tiennent plus,
+   ceux qui dépassent se rangent dans le menu « … ». L'onglet courant reste toujours visible. */
+.c-doctabs__tab--tool { color: var(--fg-soft); margin-right: var(--space-3); }
+.c-doctabs__more { flex: none; margin-left: var(--space-3); }
+.c-doctabs__more > summary { margin-right: 0; }
+.c-doctabs__more .c-menu__list { text-transform: none; letter-spacing: 0; }
+.c-doctabs__spacer { flex: 1; }
 
 /* --- Aller à ------------------------------------------------------------------------------
    Le saut direct : une recherche qui mène à n'importe quel écran, objet ou action, et qui,

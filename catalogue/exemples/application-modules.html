@@ -3,97 +3,79 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Application — modules — gabarit MONO</title>
+  <title>Application à onglets — gabarit MONO</title>
   <link rel="stylesheet" href="../../src/mono.css">
 </head>
-<!-- GABARIT D'APPLICATION, navigation par MODULES — à copier comme point de départ.
+<!-- GABARIT D'APPLICATION À ONGLETS — à copier comme point de départ.
 
-     Pour une application dont les parties sont séparées et entre lesquelles on saute sans
-     cesse : aucune n'est « sous » une autre.
+     Pour une application dont les parties sont séparées et entre lesquelles on saute
+     sans cesse. Chaque partie est un ONGLET, et un onglet est une page qui reste
+     ouverte : en y revenant, on la retrouve telle qu'on l'a laissée (filtre saisi,
+     ligne ouverte, position de défilement, note en cours).
 
-       en haut   la ligne de tête : « Plan », puis les modules écrits en toutes lettres
-                 (.c-mainnav), tous visibles, à un clic. À droite, « Aller à » et l'utilisateur.
-       le plan   (.c-plan, touche G, ou un clic sur les hachures) : toutes les pages de
-                 l'application posées sur le plan de travail. Une page s'ouvre en grand ou
-                 se pose À CÔTÉ de celle où l'on travaille.
-       dessous   un fil d'Ariane, seulement quand on est descendu dans un module.
-       en bas    la barre d'état.
+       sur le plan   les onglets (.c-doctabs), au-dessus de la page. Les modules sont
+                     permanents ; ce que l'on ouvre en plus (une agence, les réglages)
+                     s'ajoute à droite et se ferme. Quand ils ne tiennent plus, ceux qui
+                     dépassent se rangent dans le menu « … ».
+       en haut       le fil d'Ariane, toujours présent : famille / page / détail.
+                     À droite, « Aller à » et le menu de l'utilisateur.
+       en bas        la barre d'état.
 
-     Sept modules au plus : au-delà, la ligne déborde et il faut regrouper.
-     « Aller à » (touche /) saute à n'importe quel écran, agence ou action.
+     « Plan » (touche G, ou un clic sur les hachures) montre toutes les pages de
+     l'application ; une page s'y ouvre en onglet ou se pose À CÔTÉ de la page courante.
 
      Si l'application est un arbre dans lequel on descend, partir plutôt de application.html.
-     Ce qui change d'un écran à l'autre est balisé « À REMPLACER ». -->
-<body class="l-desk l-desk--app">
- <div class="l-shell" id="page">
-  <div class="l-pane">
+     Les panneaux des onglets sont créés par ../assets/tabs-demo.js : c'est là que se
+     trouve ce qui est À REMPLACER par les écrans réels. -->
+<body class="l-desk l-desk--app l-desk--tabs">
 
-    <div class="l-pane__head">
-      <header class="c-masthead">
-        <!-- À REMPLACER : les modules de l'application, sept au plus -->
-        <nav class="c-mainnav" aria-label="Modules" id="modules">
-          <span class="c-mainnav__brand">Mono</span>
-          <button class="c-mainnav__item" type="button" data-plan><i class="c-icon i-grid" aria-hidden="true"></i>Plan</button>
-        </nav>
-        <div class="l-cluster" style="--gap: var(--space-2); flex-wrap: nowrap">
-          <button class="c-button c-button--quiet" type="button" id="goto">Aller à <span class="c-kbd" aria-hidden="true">/</span></button>
-          <details class="c-menu c-menu--end" id="user">
-            <summary class="c-button c-button--quiet">M. Delorme<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
-            <div class="c-menu__list" role="menu">
-              <button class="c-menu__item" type="button" role="menuitem" data-open="Réglages">Réglages</button>
-              <button class="c-menu__item" type="button" role="menuitem" data-console>Console <span class="c-menu__hint">C</span></button>
-              <hr class="c-menu__sep">
-              <a class="c-menu__item" role="menuitem" href="connexion.html">Quitter</a>
-            </div>
-          </details>
+  <nav class="c-doctabs" id="tabs" aria-label="Pages ouvertes">
+    <button class="c-doctabs__tab c-doctabs__tab--tool" type="button" id="plan-open" aria-pressed="false"><i class="c-icon i-grid" aria-hidden="true"></i>Plan</button>
+    <div role="tablist" aria-label="Onglets" id="tablist" style="display: contents"></div>
+    <details class="c-menu c-menu--end c-doctabs__more" id="more" hidden>
+      <summary class="c-doctabs__tab" id="more-label"></summary>
+      <div class="c-menu__list" role="menu" id="more-list"></div>
+    </details>
+  </nav>
+
+  <div class="l-shell" id="page">
+    <div class="l-pane">
+      <div class="l-pane__head">
+        <header class="c-masthead">
+          <nav class="c-breadcrumb c-breadcrumb--head" aria-label="Fil d'Ariane" id="crumbs"></nav>
+          <div class="l-cluster" style="--gap: var(--space-2); flex-wrap: nowrap">
+            <button class="c-button c-button--quiet" type="button" id="goto">Aller à <span class="c-kbd" aria-hidden="true">/</span></button>
+            <details class="c-menu c-menu--end" id="user">
+              <summary class="c-button c-button--quiet">M. Delorme<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
+              <div class="c-menu__list" role="menu">
+                <button class="c-menu__item" type="button" role="menuitem" data-open="Réglages">Réglages</button>
+                <button class="c-menu__item" type="button" role="menuitem" data-console>Console <span class="c-menu__hint">C</span></button>
+                <hr class="c-menu__sep">
+                <a class="c-menu__item" role="menuitem" href="connexion.html">Quitter</a>
+              </div>
+            </details>
+          </div>
+        </header>
+      </div>
+
+      <!-- Les panneaux des onglets sont ajoutés ici ; ils restent dans le document tant que l'onglet est ouvert. -->
+      <div id="panels" style="display: contents"></div>
+
+      <div class="l-pane__foot">
+        <div class="c-statusbar">
+          <span class="c-statusbar__group"><span class="c-status c-status--on">Connecté</span> <span class="c-statusbar__group">Exercice 2026 · T3</span> <span class="c-statusbar__group g-bracket" id="tab-count"></span></span>
+          <span class="c-statusbar__group"><span class="c-kbd">G</span> plan <span class="c-statusbar__group"><span class="c-kbd">/</span> aller à</span><span class="c-statusbar__group"><a href="../index.html">Catalogue</a></span></span>
         </div>
-      </header>
-      <!-- Fil d'Ariane : présent seulement quand on est descendu dans un module. -->
-      <div class="l-pane__bar" id="crumbs" hidden>
-        <nav class="c-breadcrumb" aria-label="Fil d'Ariane"><a href="#" id="crumb-up"></a><span aria-current="page" id="crumb-here"></span></nav>
       </div>
     </div>
-
-    <main class="l-pane__body" id="screen">
-      <!-- À REMPLACER : le contenu de l'écran. Son action principale vit ici, pas dans une barre. -->
-      <div class="l-split" style="align-items: flex-end">
-        <h1 class="t-title"><span id="hero">412</span> <span class="t-soft t-body" id="hero-label">agences</span></h1>
-        <button class="c-button c-button--primary" type="button" id="action"><i class="c-icon i-plus" aria-hidden="true"></i><span>Nouvelle agence</span></button>
-      </div>
-      <div class="l-grid" style="align-items: start">
-        <div class="c-stat c-stat--compact c-stat--ruled l-span-3"><span class="c-stat__label">Primes</span><span class="c-stat__value">1 780<small>M</small></span><span class="c-stat__note">+4,2 % sur un an</span></div>
-        <div class="c-stat c-stat--compact c-stat--ruled l-span-3"><span class="c-stat__label">Effectif</span><span class="c-stat__value">2 961</span><span class="c-stat__note">7,2 par agence</span></div>
-        <div class="c-stat c-stat--compact c-stat--ruled l-span-3"><span class="c-stat__label">Service</span><span class="c-stat__value">98,4<small>%</small></span><span class="c-stat__note">Objectif 98 %</span></div>
-        <div class="c-stat c-stat--compact c-stat--ruled l-span-3"><span class="c-stat__label">Ouvertures</span><span class="c-stat__value">3</span><span class="c-stat__note">Depuis janvier</span></div>
-      </div>
-      <table class="c-table" id="table">
-        <thead><tr><th>Réf.</th><th>Agence</th><th>Responsable</th><th>État</th><th class="is-num">Primes (M)</th></tr></thead>
-        <tbody>
-          <tr tabindex="0" data-ref="N-011"><td class="t-muted u-nowrap">N-011</td><th>Chambéry</th><td>A. Perrin</td><td><span class="c-status c-status--on">Actif</span></td><td class="is-num">7,9</td></tr>
-          <tr tabindex="0" data-ref="N-014"><td class="t-muted u-nowrap">N-014</td><th>Grenoble Centre</th><td>M. Delorme</td><td><span class="c-status c-status--on">Actif</span></td><td class="is-num">12,4</td></tr>
-          <tr tabindex="0" data-ref="N-015"><td class="t-muted u-nowrap">N-015</td><th>Voiron</th><td>S. Garcin</td><td><span class="c-status c-status--progress">En cours</span></td><td class="is-num">4,1</td></tr>
-          <tr tabindex="0" data-ref="N-016"><td class="t-muted u-nowrap">N-016</td><th>Vizille</th><td>L. Brun</td><td><span class="c-status c-status--critical">Fermeture</span></td><td class="is-num">0,9</td></tr>
-        </tbody>
-      </table>
-      <dl class="c-kv c-kv--plain" id="detail" style="max-width: 30rem" hidden></dl>
-    </main>
-
-    <div class="l-pane__foot">
-      <div class="c-statusbar">
-        <span class="c-statusbar__group"><span class="c-status c-status--on">Connecté</span> <span class="c-statusbar__group">Exercice 2026 · T3</span></span>
-        <span class="c-statusbar__group"><span class="c-kbd">G</span> plan <span class="c-statusbar__group"><span class="c-kbd">/</span> aller à</span><span class="c-statusbar__group"><a href="../index.html">Catalogue</a></span></span>
-      </div>
-    </div>
-
   </div>
- </div>
 
-  <!-- Page posée à côté : une seconde page de l'application, lue pendant qu'on travaille sur la première. -->
+  <!-- Page posée à côté : une seconde page, lue pendant qu'on travaille sur la première. -->
   <aside class="l-shell" id="beside" aria-label="Page posée à côté" hidden>
     <div class="l-pane">
       <div class="l-pane__head">
         <header class="c-masthead">
-          <div class="c-masthead__title" id="beside-title"></div>
+          <nav class="c-breadcrumb c-breadcrumb--head" aria-label="Page d'à côté" style="flex-wrap: nowrap"><span aria-current="page" id="beside-title"></span></nav>
           <div class="l-cluster" style="--gap: var(--space-1); flex-wrap: nowrap">
             <button class="c-button c-button--quiet" type="button" id="beside-swap">Ouvrir en grand</button>
             <button class="c-button c-button--quiet" type="button" id="beside-close" aria-label="Retirer la page d'à côté"><i class="c-icon i-close" aria-hidden="true"></i></button>
@@ -104,11 +86,10 @@
         <h2 class="t-title"><span id="beside-hero"></span> <span class="t-soft t-body" id="beside-label"></span></h2>
         <p class="t-soft" id="beside-desc" style="max-width: 46ch"></p>
       </div>
-      <div class="l-pane__foot"><div class="c-statusbar"><span class="c-statusbar__group" id="beside-group"></span><span class="c-statusbar__group">Lecture</span></div></div>
+      <div class="l-pane__foot"><div class="c-statusbar"><span class="c-statusbar__group" id="beside-family"></span><span class="c-statusbar__group">À côté · lecture</span></div></div>
     </div>
   </aside>
 
-  <!-- Plan : toutes les pages de l'application, posées sur le plan de travail. -->
   <nav class="c-plan" id="plan" aria-label="Plan de l'application" hidden></nav>
 
   <!-- Console : une fenêtre flottante, ouverte à la demande. -->
@@ -130,21 +111,6 @@
 
   <script src="../assets/console.js"></script>
   <script src="../assets/palette.js"></script>
-  <script src="../assets/app-demo.js"></script>
-  <script>
-    MonoApp({
-      // Dessine la navigation propre à ce gabarit : tous les modules, en mots, sur la ligne de tête.
-      renderNav(here, MAP, detail) {
-        const nav = document.getElementById('modules');
-        nav.querySelectorAll('a.c-mainnav__item').forEach((n) => n.remove());
-        // Les modules épinglés, dans un ordre stable ; un lieu atteint par un saut s'ajoute en tireté.
-        const pinned = MAP.flatMap(([, screens]) => screens).map(([name]) => name).filter((name) => name !== 'Réglages');
-        const names = pinned.includes(here.screen) ? pinned : [...pinned, here.screen];
-        nav.insertAdjacentHTML('beforeend', names.map((name) => `<a class="c-mainnav__item${pinned.includes(name) ? '' : ' c-mainnav__item--temp'}" href="#" data-screen="${name}"${name === here.screen ? ' aria-current="page"' : ''}>${name}</a>`).join(''));
-        document.getElementById('crumbs').hidden = !detail;
-        if (detail) { const up = document.getElementById('crumb-up'); up.textContent = here.screen; up.dataset.screen = here.screen; document.getElementById('crumb-here').textContent = detail.nom; }
-      },
-    });
-  </script>
+  <script src="../assets/tabs-demo.js"></script>
 </body>
 </html>

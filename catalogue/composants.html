@@ -225,25 +225,35 @@
           </div>
 
           <div class="cat-sub" id="c-doctabs" data-search="composant">
-            <h3>Onglets de documents — .c-doctabs</h3>
-            <p>Ils vivent sur le plan de travail, au-dessus de la page qu'ils ouvrent. Tous ont le fond de la page ; l'onglet courant ne s'en distingue que par son contour : un trait de 2 px dessus, et aucun trait dessous — il s'ouvre sur la page.</p>
+            <h3>Onglets — .c-doctabs</h3>
+            <p>Les onglets vivent sur le plan de travail, au-dessus de la page qu'ils ouvrent. Un onglet est une page qui reste ouverte : en y revenant, on la retrouve telle qu'on l'a laissée. Tous ont le fond de la page ; l'onglet courant ne s'en distingue que par son contour — un trait de 2 px dessus, et aucun trait dessous : il s'ouvre sur la page.</p>
             <div class="cat-demo cat-demo--plain" data-code>
-              <div class="l-desk" style="min-height: 0">
-                <div>
-                  <nav class="c-doctabs" aria-label="Documents ouverts">
-                    <a class="c-doctabs__tab" href="#c-doctabs" aria-current="page">Agences</a>
-                    <a class="c-doctabs__tab" href="#c-doctabs">Branches</a>
-                    <a class="c-doctabs__tab" href="#c-doctabs">Rapport T3</a>
-                    <button class="c-doctabs__tab c-doctabs__tab--add" type="button" aria-label="Nouveau document"><i class="c-icon i-plus" aria-hidden="true"></i></button>
-                  </nav>
-                  <div class="l-shell" style="height: 6rem"></div>
-                </div>
+              <div class="l-desk l-desk--tabs" style="min-height: 0; overflow-x: auto">
+                <nav class="c-doctabs" aria-label="Pages ouvertes">
+                  <button class="c-doctabs__tab c-doctabs__tab--tool" type="button"><i class="c-icon i-grid" aria-hidden="true"></i>Plan</button>
+                  <button class="c-doctabs__tab" type="button" role="tab" aria-selected="false"><span class="c-doctabs__label">Synthèse</span></button>
+                  <button class="c-doctabs__tab" type="button" role="tab" aria-selected="true"><span class="c-doctabs__label">Agences</span></button>
+                  <button class="c-doctabs__tab" type="button" role="tab" aria-selected="false"><span class="c-doctabs__label">Grenoble Centre</span><span class="c-doctabs__close" role="button" aria-label="Fermer Grenoble Centre"><i class="c-icon i-close" aria-hidden="true"></i></span></button>
+                  <details class="c-menu c-menu--end c-doctabs__more">
+                    <summary class="c-doctabs__tab" aria-label="2 autres onglets">… <span>2</span></summary>
+                    <div class="c-menu__list" role="menu">
+                      <button class="c-menu__item" type="button" role="menuitem">Rapports <span class="c-menu__hint">Pilotage</span></button>
+                      <button class="c-menu__item" type="button" role="menuitem">Journal <span class="c-menu__hint">Pilotage</span></button>
+                    </div>
+                  </details>
+                </nav>
+                <div class="l-shell" style="height: 6rem"></div>
               </div>
             </div>
             <dl class="cat-spec">
-              <div><dt>Employer</dt><dd>Plusieurs documents de même rang ouverts en même temps dans une application : on passe de l'un à l'autre sans perdre leur état.</dd></div>
-              <div><dt>Éviter</dt><dd>Pour les vues d'un même objet (<code>.c-tabs</code>, dans la page). Au-dessus d'une seule des deux pages d'un écran partagé : leurs en-têtes ne tomberaient plus sur la même ligne. Plus de six onglets.</dd></div>
-              <div><dt>Accessibilité</dt><dd><code>&lt;nav&gt;</code> de liens avec <code>aria-current="page"</code>, ou <code>role="tablist"</code> si les documents restent montés.</dd></div>
+              <div><dt>Employer</dt><dd>Comme navigation d'une application à parties séparées, entre lesquelles on saute sans cesse. Chaque partie est un onglet permanent ; ce que l'on ouvre en plus — un objet, un écran secondaire — s'ajoute à droite et se ferme.</dd></div>
+              <div><dt>Éviter</dt><dd>Avec la ligne de tête en chemin (<code>.c-pathnav</code>) : un seul moyen principal par application. Pour les vues d'un même objet à l'intérieur d'une page (<code>.c-tabs</code>). Des icônes ou des numéros à la place des mots.</dd></div>
+              <div><dt>Persistance</dt><dd>C'est la promesse d'un onglet : la page n'est pas rechargée quand on y revient. Filtre saisi, ligne ouverte, position de défilement, saisie en cours sont conservés tant que l'onglet est ouvert. Une application qui ne peut pas tenir cette promesse ne doit pas employer d'onglets.</dd></div>
+              <div><dt>Débordement</dt><dd>Quand les onglets ne tiennent plus, ceux qui dépassent se rangent dans le menu « … », qui en donne le nombre. L'onglet courant reste toujours visible ; rien ne défile, rien ne rétrécit jusqu'à l'illisible.</dd></div>
+              <div><dt>Anatomie</dt><dd><code>__tab</code> (<code>__label</code>, <code>__close</code> pour un onglet ouvert à la demande) · <code>__tab--tool</code> pour un outil à gauche, comme le plan · <code>__more</code> pour le menu de débordement. Dans un plan de travail <code>.l-desk--tabs</code>, la rangée occupe toute la largeur et toutes les pages commencent sur la même ligne, dessous.</dd></div>
+              <div><dt>Fil d'Ariane</dt><dd>Les onglets disent quelles pages sont ouvertes ; ils ne disent pas où l'on est dans la page. La ligne de tête de la page porte donc toujours le fil d'Ariane (<code>.c-breadcrumb--head</code>) : famille, page, détail.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="tablist"</code> / <code>tab</code> / <code>tabpanel</code>, <code>aria-selected</code>. Flèches gauche et droite passent d'un onglet à l'autre, Suppr ferme un onglet ouvert à la demande. Le menu de débordement annonce le nombre d'onglets qu'il contient.</dd></div>
+              <div><dt>Script</dt><dd>État des onglets, persistance et débordement reviennent à l'application ; voir <code>catalogue/assets/tabs-demo.js</code>.</dd></div>
             </dl>
           </div>
 
@@ -721,36 +731,11 @@
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Comme navigation d'une application arborescente, où chaque écran a une place dans un arbre et où l'on travaille surtout à l'intérieur d'une branche. Dans <code>.c-masthead</code>, à la place du titre.</dd></div>
-              <div><dt>Éviter</dt><dd>Pour une application à modules séparés entre lesquels on saute sans cesse : chaque saut coûterait deux clics (préférer <code>.c-mainnav</code>). Plus de trois niveaux. Un segment sans voisins, à écrire en texte simple.</dd></div>
-              <div><dt>Fil d'Ariane ou ligne de tête</dt><dd><code>.c-breadcrumb</code> situe une page dans un document et ne fait que remonter. <code>.c-pathnav</code> navigue : elle remonte, et passe aussi d'un voisin à l'autre.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour une application à modules séparés entre lesquels on saute sans cesse : chaque saut coûterait deux clics (préférer les onglets, <code>.c-doctabs</code>). Plus de trois niveaux. Un segment sans voisins, à écrire en texte simple.</dd></div>
+              <div><dt>Fil d'Ariane ou ligne de tête</dt><dd><code>.c-breadcrumb</code> situe une page et ne fait que remonter ; avec <code>--head</code> il tient lieu de titre en tête d'une page à onglets. <code>.c-pathnav</code> navigue : elle remonte, et passe aussi d'un voisin à l'autre.</dd></div>
               <div><dt>Plan</dt><dd>Le premier segment ouvre le plan (<code>.c-plan</code>) : toutes les pages de l'application, posées sur le plan de travail.</dd></div>
               <div><dt>États</dt><dd>Segment courant au ton fort. Survol ou ouverture : le segment passe au ton fort, son chevron aussi. Dans la liste, le voisin courant porte le trait de sélection.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;nav&gt;</code> ; chaque segment est un <code>&lt;details&gt;</code>, ouvrable au clavier sans script. Échap et clic extérieur ferment. Le bouton du sommaire porte <code>aria-expanded</code>.</dd></div>
-            </dl>
-          </div>
-
-          <div class="cat-sub" id="c-mainnav" data-search="composant">
-            <h3>Navigation par modules — .c-mainnav</h3>
-            <p>Les destinations de premier niveau écrites en toutes lettres dans la ligne de tête, toutes visibles, à un clic. Pour les applications dont les parties sont séparées et entre lesquelles on saute sans cesse. Le module courant ne change que de contour : un trait de 2 px posé sur le filet de l'en-tête.</p>
-            <div class="cat-demo" data-code>
-              <header class="c-masthead" style="align-items: center; min-height: 3rem; padding-bottom: var(--space-3)">
-                <nav class="c-mainnav" aria-label="Modules">
-                  <span class="c-mainnav__brand">Mono</span>
-                  <button class="c-mainnav__item" type="button"><i class="c-icon i-grid" aria-hidden="true"></i>Plan</button>
-                  <a class="c-mainnav__item" href="#c-mainnav">Synthèse</a>
-                  <a class="c-mainnav__item" href="#c-mainnav" aria-current="page">Agences</a>
-                  <a class="c-mainnav__item" href="#c-mainnav">Rapports</a>
-                  <a class="c-mainnav__item c-mainnav__item--temp" href="#c-mainnav">Réglages</a>
-                </nav>
-                <button class="c-button c-button--quiet" type="button">Aller à <span class="c-kbd" aria-hidden="true">/</span></button>
-              </header>
-            </div>
-            <dl class="cat-spec">
-              <div><dt>Employer</dt><dd>Une application à modules séparés — aucun n'est « sous » un autre — où l'on passe sans cesse de l'un à l'autre. Sept modules au plus, un mot chacun, dans un ordre qui ne change jamais.</dd></div>
-              <div><dt>Éviter</dt><dd>Avec la ligne de tête en chemin (<code>.c-pathnav</code>) : un seul moyen de se déplacer par application. Des icônes à la place des mots. Un module caché derrière « Plus ».</dd></div>
-              <div><dt>Lieu de passage</dt><dd><code>__item--temp</code> : un endroit atteint par un saut et qui n'est pas un module épinglé s'ajoute en bout de ligne, en tireté. Il disparaît quand on le quitte.</dd></div>
-              <div><dt>Profondeur</dt><dd>Quand on descend dans un module, un fil d'Ariane apparaît sous la ligne de tête ; il n'est pas là tant qu'on est au premier niveau.</dd></div>
-              <div><dt>Accessibilité</dt><dd><code>&lt;nav&gt;</code> de liens, module courant en <code>aria-current="page"</code>. Sur écran étroit la ligne défile horizontalement ; rien n'est masqué.</dd></div>
             </dl>
           </div>
 
@@ -786,7 +771,7 @@
               </div>
             </div>
             <dl class="cat-spec">
-              <div><dt>Employer</dt><dd>Voir d'un coup tout ce que contient l'application, s'y repérer par l'emplacement autant que par le nom, et travailler sur deux pages à la fois. Il s'ouvre par « Plan » dans la ligne de tête, la touche <span class="c-kbd">G</span>, ou un clic sur les hachures.</dd></div>
+              <div><dt>Employer</dt><dd>Voir d'un coup tout ce que contient l'application, s'y repérer par l'emplacement autant que par le nom, et travailler sur deux pages à la fois. Il s'ouvre par « Plan », à gauche des onglets ou dans la ligne de tête, la touche <span class="c-kbd">G</span>, ou un clic sur les hachures.</dd></div>
               <div><dt>Éviter</dt><dd>Plus d'une vingtaine de pages : au-delà, le plan ne se lit plus d'un regard. Changer la place des pages d'une fois sur l'autre — l'emplacement est une mémoire.</dd></div>
               <div><dt>Poser à côté</dt><dd>Le bouton « À côté » ouvre la page dans une seconde feuille, à droite de la page courante, séparée par la bande hachurée. On lit l'une en travaillant sur l'autre ; « Ouvrir en grand » les échange. Une seule page à côté.</dd></div>
               <div><dt>Anatomie</dt><dd><code>__group</code> (une famille) · <code>__page</code> : <code>__head</code> (famille, numéro ou « Vous êtes ici »), <code>__open</code> (le nom, qui est le bouton), <code>__desc</code>, <code>__foot</code> (<code>__figure</code>, <code>__beside</code>). <code>.c-plan</code> est un enfant direct de <code>.l-desk</code>.</dd></div>

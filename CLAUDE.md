@@ -5,6 +5,9 @@ Langue du projet : français (documentation, catalogue, commentaires).
 
 ## Avant de créer ou modifier une UI
 
+Consulter `docs/decisions.md` : le journal des décisions de conception, avec leurs
+raisons et ce qui a été écarté. Ne pas rouvrir une décision sans la citer.
+
 Lire d'abord `docs/philosophie.md` : les convictions, les budgets par vue, l'ordre
 d'arbitrage et les tests d'écart. En cas de doute ou de demande qui contredit le
 système, c'est ce document qui tranche — voir sa table « Demandes fréquentes ».
@@ -54,6 +57,10 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
 
 ## Étendre le système
 
+- Toute décision de conception — un choix entre plusieurs voies, une règle ajoutée,
+  assouplie ou abandonnée — s'inscrit dans `docs/decisions.md` dans le même commit.
+  Une entrée ne se supprime ni ne se réécrit : on la marque « remplacée par D-xxx »
+  et l'on ajoute la nouvelle.
 - Nouveau composant : passer les sept tests d'écart, puis l'écrire dans
   `src/components.css` (préfixe `.c-`, rôles sémantiques uniquement). Dans
   `catalogue/composants.html`, ajouter un bloc
@@ -62,12 +69,13 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   (Employer / Éviter / États / Accessibilité). Ajouter une ligne à `docs/composants.md`.
 - Nouvelle application : choisir le gabarit selon sa forme. Arborescente (on
   descend dans un arbre) : `catalogue/exemples/application.html`, le chemin est la
-  navigation (`.c-pathnav`). À modules séparés (on saute d'une partie à l'autre) :
-  `application-modules.html`, les modules en mots (`.c-mainnav`). Jamais les deux.
-  Dans les deux cas : deux lignes fixes seulement, pas de rail ; le plan (`.c-plan`),
-  la pose à côté et « Aller à » (`.c-palette`) servent aux déplacements hors de
-  l'ordre ; console et aide sont des fenêtres. La navigation s'écrit en mots :
-  ni numéros seuls, ni icônes seules, ni texte vertical.
+  navigation (`.c-pathnav`). À parties séparées (on saute de l'une à l'autre) :
+  `application-modules.html`, des onglets persistants (`.c-doctabs`) au-dessus de
+  la page et le fil d'Ariane en tête. Jamais les deux. Un onglet doit garder l'état
+  de sa page ; au débordement, menu « … ». Dans les deux cas : pas de rail ; le
+  plan (`.c-plan`), la pose à côté et « Aller à » (`.c-palette`) servent aux
+  déplacements hors de l'ordre ; console et aide sont des fenêtres. La navigation
+  s'écrit en mots : ni numéros seuls, ni icônes seules, ni texte vertical.
 - Le système reste en CSS pur. Les comportements (fenêtres, canevas, menus,
   console) vivent dans `catalogue/assets/` comme démonstrations ; seule la version
   bureau dépend d'une bibliothèque, interact.js, embarquée dans `assets/vendor/`.

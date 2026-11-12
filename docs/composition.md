@@ -97,7 +97,7 @@ l'application.
 | Forme | Ligne de tête | Gabarit |
 |---|---|---|
 | Arborescente : on descend dans un arbre, on travaille dans une branche | Le chemin, `.c-pathnav` : chaque segment ouvre ses voisins | `catalogue/exemples/application.html` |
-| À modules séparés : on saute sans cesse d'une partie à l'autre | Les modules en toutes lettres, `.c-mainnav`, tous visibles | `catalogue/exemples/application-modules.html` |
+| À parties séparées : on saute sans cesse de l'une à l'autre | Le fil d'Ariane ; les parties sont des onglets persistants (`.c-doctabs`) au-dessus de la page | `catalogue/exemples/application-modules.html` |
 
 Les deux partagent trois moyens de se déplacer hors de l'ordre :
 
@@ -114,7 +114,12 @@ Règles :
 - **A1 — Deux lignes fixes.** Ni rail, ni barre d'outils permanente, ni console ancrée.
 - **A2 — Des mots, pas des signes.** Ni numéros seuls, ni icônes seules, ni texte
   vertical : on sait où cliquer et ce qu'on va trouver.
-- **A3 — Un seul moyen principal** : le chemin ou les modules, jamais les deux.
+- **A3 — Un seul moyen principal** : le chemin ou les onglets, jamais les deux.
+  Dans les deux cas la ligne de tête dit où l'on est : le chemin, ou le fil d'Ariane.
+- **A7 — Un onglet tient sa promesse.** Une page ouverte en onglet garde son état
+  (filtre, ligne ouverte, défilement, saisie). Sans persistance, pas d'onglets.
+- **A8 — Rien ne se perd au débordement.** Les onglets qui ne tiennent plus vont
+  dans le menu « … » ; l'onglet courant reste visible.
 - **A4 — Le plan de travail est la carte.** Les pages y gardent leur place :
   l'emplacement est une mémoire.
 - **A5 — Deux pages plutôt qu'un aller-retour.**

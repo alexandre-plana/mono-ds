@@ -89,6 +89,12 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 .l-desk__area { position: relative; min-height: 0; min-width: 0; overflow: clip; }
 .l-desk__area > .c-window { position: absolute; }
 
+/* Onglets au-dessus des pages : la rangée d'onglets occupe toute la largeur du plan de
+   travail, les pages commencent toutes sur la même ligne en dessous. */
+.l-desk--tabs { grid-template-rows: auto minmax(0, 1fr); row-gap: 0; }
+.l-desk--tabs > .c-doctabs, .l-desk--tabs > .c-plan { grid-column: 1 / -1; }
+.l-desk--tabs > .c-plan { padding-top: var(--shell-inset); }
+
 /* Séparateur : la bande hachurée elle-même se saisit pour redimensionner l'inspecteur.
    <div class="l-splitter" role="separator" aria-orientation="vertical" tabindex="0"> entre les deux pages. */
 .l-desk--split:has(> .l-splitter) { grid-template-columns: minmax(0, 1fr) var(--shell-inset) var(--inspector); column-gap: 0; }

@@ -275,12 +275,12 @@
           <p class="cat-note">En application, le plan occupe exactement l'écran (<code>.l-desk--app</code>) et chaque page défile pour elle-même ; <code>.l-desk--split</code> pose la collection et l'inspecteur côte à côte. Une page est alors un volet (<code>.l-pane</code>) : en-tête fixe, corps défilant, barre d'état. Voir l'exemple <a href="exemples/collection.html">Collection et inspecteur</a>.</p>
           <div class="cat-sub" id="shell" data-search="rubrique">
             <h3>Shell d'application</h3>
-            <p>Une application tient en une page et deux lignes fixes : en haut la ligne de tête, en bas la barre d'état. Il n'y a ni rail, ni barre d'outils permanente. Ce que porte la ligne de tête dépend de la forme de l'application.</p>
+            <p>Une application tient en une page et deux lignes fixes : en haut la ligne de tête, en bas la barre d'état. Il n'y a ni rail, ni barre d'outils permanente. Il n'y a ni rail, ni barre d'outils permanente. Ce qui sert à se déplacer dépend de la forme de l'application.</p>
             <div class="c-table-wrap"><table class="c-table" style="min-width: 36rem">
               <thead><tr><th>Forme de l'application</th><th>Ligne de tête</th><th>Gabarit</th></tr></thead>
               <tbody>
                 <tr><th>Arborescente : on descend dans un arbre et l'on travaille dans une branche</th><td>Le chemin (<code>.c-pathnav</code>) : chaque segment ouvre ses voisins</td><td><a href="exemples/application.html">application.html</a></td></tr>
-                <tr><th>À modules séparés : on saute sans cesse d'une partie à l'autre</th><td>Les modules en toutes lettres (<code>.c-mainnav</code>), tous visibles</td><td><a href="exemples/application-modules.html">application-modules.html</a></td></tr>
+                <tr><th>À modules séparés : on saute sans cesse d'une partie à l'autre</th><td>Le fil d'Ariane ; les parties sont des onglets persistants (<code>.c-doctabs</code>) posés au-dessus de la page</td><td><a href="exemples/application-modules.html">application-modules.html</a></td></tr>
               </tbody>
             </table></div>
             <p>Les deux partagent trois moyens de se déplacer hors de l'ordre : le <a href="composants.html#c-plan">plan</a>, qui montre toutes les pages posées sur le plan de travail ; la pose <em style="font-style: normal" class="t-strong">à côté</em>, qui met deux pages l'une près de l'autre ; et <a href="composants.html#c-palette">« Aller à »</a>, qui saute à un écran, un objet ou une action par son nom.</p>
@@ -288,7 +288,7 @@
           <div class="cat-rules">
             <div class="cat-rule" id="regle-a1" data-search="regle"><span class="cat-rule__num">A1</span><h3>Deux lignes fixes</h3><p>La ligne de tête et la barre d'état. Toute autre région permanente — rail, barre d'outils, console — se paie en clarté : on ne l'ajoute pas.</p></div>
             <div class="cat-rule" id="regle-a2" data-search="regle"><span class="cat-rule__num">A2</span><h3>Des mots, pas des signes</h3><p>La navigation s'écrit en toutes lettres : ni numéros seuls, ni icônes seules, ni texte vertical. On sait où cliquer et ce qu'on va trouver.</p></div>
-            <div class="cat-rule" id="regle-a3" data-search="regle"><span class="cat-rule__num">A3</span><h3>Un seul moyen principal</h3><p>Le chemin ou les modules, jamais les deux. Le choix suit la forme de l'application, pas le goût.</p></div>
+            <div class="cat-rule" id="regle-a3" data-search="regle"><span class="cat-rule__num">A3</span><h3>Un seul moyen principal</h3><p>Le chemin ou les onglets, jamais les deux. Le choix suit la forme de l'application, pas le goût. Dans les deux cas, la ligne de tête dit toujours où l'on est.</p></div>
             <div class="cat-rule" id="regle-a4" data-search="regle"><span class="cat-rule__num">A4</span><h3>Le plan de travail est la carte</h3><p>Reculer d'un cran montre toute l'application, à des emplacements qui ne changent pas. L'emplacement est une mémoire : on retrouve une page là où on l'a laissée.</p></div>
             <div class="cat-rule" id="regle-a5" data-search="regle"><span class="cat-rule__num">A5</span><h3>Deux pages plutôt qu'un aller-retour</h3><p>Quand on a besoin de deux endroits, on les pose côte à côte. Naviguer dix fois entre deux écrans est un défaut de l'outil, pas de l'utilisateur.</p></div>
             <div class="cat-rule" id="regle-a6" data-search="regle"><span class="cat-rule__num">A6</span><h3>Les outils viennent à la demande</h3><p>Console, aide, raccourcis : des fenêtres que l'on ouvre et que l'on referme, jamais des régions de la page.</p></div>

@@ -34,7 +34,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-masthead` | `__title`, `__meta` | Un par écran |
 | `.c-section-head` | `__num`, `__aside` | Ouvre chaque région |
 | `.c-colophon` | — | Pied d'écran : source, folio, référence |
-| `.c-doctabs` | `__tab[aria-current]`, `__tab--add` | Documents ouverts, sur le plan de travail au-dessus de la page. Courant = trait de 2 px dessus, ouvert dessous |
+| `.c-doctabs` | `__tab[aria-selected]`, `__label`, `__close`, `__tab--tool`, `__more` (`<details class="c-menu">`) ; plan de travail `.l-desk--tabs` | Navigation des applications à parties séparées. Un onglet est une page qui reste ouverte et garde son état ; au-delà de la largeur, menu « … ». Jamais avec `.c-pathnav` |
 | `.c-taskbar` | `__group` (`--windows`), `__item[aria-pressed]`, `.is-minimized`, `__meta` | Barre des fenêtres, en version bureau seulement. Active = trait de 2 px dessus ; réduite = tireté |
 | `.c-console` | `__head`, `__log`, `__line` (`--warn`, `--error`, `--cmd`), `__time`, `__mark`, `__prompt` ; `--fill` | Journal et ligne de commande. Niveau lu au glyphe (· ▲ ■ >), jamais à une teinte |
 | `.c-canvas` | `__plane`, `__item[aria-selected]`, `__head`, `__body` ; `--x`, `--y`, `--z`, `--grid` | Surface libre de représentations. Sa trame de points est la grille d'aimantation, et n'existe que là |
@@ -69,10 +69,9 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-steps` | `__step`, `.is-done`, `[aria-current="step"]` | Parcours linéaire de 3 à 6 étapes : plein = fait, épais = en cours, tireté = à venir |
 | `.c-nav` | `__label`, `__item[aria-current]` | Menu numéroté |
 | `.c-pathnav` | `__home`, `__sep`, `__seg` (`<details class="c-menu">`) | Ligne de tête des applications arborescentes : le chemin est la navigation. Trois niveaux au plus |
-| `.c-mainnav` | `__brand`, `__item[aria-current]`, `__item--temp` | Ligne de tête des applications à modules séparés : les modules en toutes lettres, sept au plus. Jamais avec `.c-pathnav` |
 | `.c-plan` | `__group`, `__page[aria-current]`, `__head`, `__open`, `__desc`, `__foot`, `__figure`, `__beside` | Toutes les pages de l'application posées sur le plan de travail ; une page s'ouvre en grand ou se pose à côté |
 | `.c-palette` (`<dialog>`) | `__search`, `__list`, `__group`, `__item[aria-selected]`, `__type`, `__title`, `__desc`, `__hint`, `__foot` | « Aller à » : saut vers un écran, un objet ou une action. Vide, elle montre les récents puis la carte |
-| `.c-breadcrumb`, `.c-pagination` | `[aria-current]` | Le fil d'Ariane situe et remonte ; il ne navigue pas entre voisins |
+| `.c-breadcrumb`, `.c-pagination` | `[aria-current]` ; `--head` en tête d'une page à onglets | Le fil d'Ariane situe et remonte ; il ne navigue pas entre voisins |
 
 ## Saisie
 

@@ -46,6 +46,7 @@ src/
   fonts.css, fonts/ IBM Plex Mono et Sans (SIL OFL 1.1)
   mono.css          point d'entrée
 docs/               les règles
+  decisions.md      journal des décisions : ce qui a été choisi, écarté, et pourquoi
   philosophie.md    le pourquoi : convictions, budgets, arbitrages, tests d'écart
   principes.md      les 8 principes et la liste de contrôle d'un écran
   fondations.md     tons, rôles, signal, typographie, espace, filets
