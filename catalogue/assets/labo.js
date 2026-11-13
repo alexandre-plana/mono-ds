@@ -49,7 +49,7 @@
     const replay = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
     // Le mot à palettes : les lettres défilent puis se fixent, de gauche à droite.
     const flap = (el, text) => { clearInterval(el.flap); const from = el.textContent, len = Math.max(from.length, text.length), A = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; if (!on()) { el.textContent = text; return; }
-      let t = 0; const per = Math.min(2, 12 / len) * gain();   // un mot long ne dure pas plus qu'un court : une demi-seconde au plus el.flap = setInterval(() => { t++; let out = ''; for (let i = 0; i < len; i++) { const fixed = t > (i + 1) * per + 2, target = text[i] ?? ' '; out += fixed || target === ' ' ? target : A[(i * 7 + t * 3) % 26].toLowerCase(); }
+      let t = 0; const per = Math.min(2, 12 / len) * gain(); /* un mot long ne dure pas plus qu'un court : une demi-seconde au plus */ el.flap = setInterval(() => { t++; let out = ''; for (let i = 0; i < len; i++) { const fixed = t > (i + 1) * per + 2, target = text[i] ?? ' '; out += fixed || target === ' ' ? target : A[(i * 7 + t * 3) % 26].toLowerCase(); }
         el.textContent = out.replace(/^./, (c) => c.toUpperCase()); if (t > len * per + 3) { clearInterval(el.flap); el.textContent = text; } }, 34); };
     // Glisser à sa place : on note où était chaque élément, on range, on anime l'écart.
     const flip = (els, change, ms = 280) => { const before = new Map(els().map((e) => [e, e.getBoundingClientRect()])); change(); if (!on()) return;
