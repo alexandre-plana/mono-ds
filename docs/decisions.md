@@ -120,9 +120,10 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-097 | Laboratoire, expérience 01 : rouge, orange, vert | en vigueur |
 | D-098 | Laboratoire, expérience 02 : douze cas de geste récompensé | en vigueur |
 | D-099 | Laboratoire : chaque atelier dans son propre écran | en vigueur |
-| D-100 | Laboratoire, expérience 03 : la donnée vivante | en vigueur, étendue par D-101 |
-| D-101 | Expérience 03 : l'ordre et le rythme | en vigueur |
-| D-102 | Laboratoire, expérience 04 : l'attention arbitrée ; la bande des ateliers tient en une ligne | en vigueur |
+| D-100 | Laboratoire, expérience 03 : la donnée vivante | fondue dans D-103 |
+| D-101 | Expérience 03 : l'ordre et le rythme | remplacée par D-103 (les reclassements comparés disparaissent) |
+| D-102 | Laboratoire, expérience 04 : l'attention arbitrée ; la bande des ateliers tient en une ligne | l'expérience fondue dans D-103 ; la bande en vigueur |
+| D-103 | Laboratoire : les expériences 03 et 04 n'en font qu'une, avec le langage visuel de la 01 | en vigueur |
 
 ---
 
@@ -966,3 +967,14 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Garde-fous** : trois lignes remontées au plus ; un journal de toutes les décisions de l'application, avec leur règle ; un réglage pour interdire la remontée ; « Suivre » rend la main à l'utilisateur sur ce qui compte.
 - **Appui et limite** : reporter une interruption au moment d'une pause en réduit le coût (Iqbal et Bailey) ; rien trouvé sur l'animation explicative, qui est donc une invention à éprouver.
 - **La bande des ateliers** : jugée trop imposante, elle tient désormais en une ligne dans les quatre ateliers. Le mode d'emploi, les réglages et le journal sont repliés et s'ouvrent vers le haut ; seules les actions du scénario restent visibles.
+
+## D-103 — Laboratoire : les expériences 03 et 04 n'en font qu'une, avec le langage visuel de la 01
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Fond** : D-100 et l'expérience de D-102 · **Remplace** : D-101
+- **Décision** : un seul atelier, « La donnée vivante » (03). Il n'y a plus d'atelier 04.
+- **Ce qui vient de l'ancienne 03** : la valeur qui roule et « refroidit » ; ce qu'on garde de l'ancienne valeur (rien, fantôme, écart cumulé depuis la dernière vue, tracé) ; le point du non-vu ; l'absence et le résumé du retour ; le décompte dans le titre de l'onglet.
+- **Ce qui vient de l'ancienne 04** : le jugement par règles nommées ; les deux voies (tout de suite, à l'accalmie) et le carré « une mise à jour attend » ; la remontée au-dessus du tri, sa frontière écrite, le budget de trois lignes ; l'animation en trois temps — la cause, un silence, le geste avec son mot laissé sur place et son fil ; le journal ; « Suivre ».
+- **Ce qui vient de la 01** : la couleur par priorité — rouge pour ce qui bloque, orange pour ce qui est à surveiller, vert pour une bonne nouvelle — ; l'aplat qui traverse la ligne puis retombe en marque ; la forme qui double la couleur (plein, à demi, contour) ; l'ordre de passage quand plusieurs choses arrivent ensemble, la plus grave d'abord ; l'annonce au bord de ce qu'on ne voit pas ; le réglage « Trois / Une seule ».
+- **Ce qui disparaît** : la comparaison des trois reclassements (immédiat, différé, au calme), de l'affichage par lots et des arrivées insérées ou en attente (D-101). L'arbitrage les remplace : l'important tout de suite, le reste à l'accalmie, en une vague et un seul reclassement ; les arrivées passent avec la réserve.
+- **Conséquence pour les règles** : l'atelier enfreint désormais « une seule couleur », comme la 01. « Une seule » montre la version qui resterait dans la règle.
+- **Statut** : en cours, sans verdict.

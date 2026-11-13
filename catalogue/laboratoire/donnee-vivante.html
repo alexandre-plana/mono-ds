@@ -9,20 +9,21 @@
   <script src="../assets/prefs.js"></script>
 </head>
 <body class="l-desk x-atelier">
-  <div class="x-stage" id="x3" data-flow="marche" data-where="deux" data-before="ecart" data-arrivals="attente" data-order="calme" data-pace="calme" data-batch="un">
+  <div class="x-stage" id="x3" data-flow="marche" data-pace="calme" data-sense="normale" data-lift="oui" data-colors="trois" data-before="ecart">
     <div class="l-shell x-screen">
       <header class="c-masthead">
         <div class="c-masthead__title">Réseau — Agences en direct</div>
-        <div class="c-masthead__meta"><span class="x-pulse" aria-live="off">En direct</span><span>Vendredi 13 novembre</span><span class="c-logo c-logo--plain">Mono</span></div>
+        <div class="c-masthead__meta"><span class="x-mood" aria-live="off">Vous lisez</span><span>Vendredi 13 novembre</span><span class="c-logo c-logo--plain">Mono</span></div>
       </header>
       <div class="x-banner" data-back hidden aria-live="polite"><span>Pendant votre absence</span><b></b><button type="button" data-first>Voir le premier</button><button type="button" data-seen>Tout marquer vu</button></div>
-      <div class="x-banner" data-reorder hidden aria-live="polite"><b></b><span></span><button type="button">Reclasser maintenant</button></div>
-      <div class="x-banner" data-arrive hidden aria-live="polite"><b></b><button type="button" data-show>Afficher</button></div>
-      <div class="x-live" tabindex="0" aria-label="Agences — faire défiler">
+      <div class="x-banner" data-calm hidden aria-live="polite"><b></b><span></span></div>
+      <div class="x-banner" data-reserve hidden aria-live="polite"><b></b><span>appliqués à la prochaine accalmie</span><button type="button" data-apply>Appliquer maintenant</button></div>
+      <div class="x-live x-arb" tabindex="0" aria-label="Agences — faire défiler">
         <table>
-          <thead><tr><th>Rang</th><th>Agence</th><th class="n">Effectif</th><th class="n">Primes (M)</th><th>Avant</th><th>État</th><th class="n">Modifié</th></tr></thead>
+          <thead><tr><th>Rang</th><th>Agence</th><th class="n">Primes (M)</th><th>Avant</th><th>État</th><th>Pourquoi</th><th class="n">Suivi</th></tr></thead>
           <tbody></tbody>
         </table>
+        <div class="x-below" aria-live="polite"></div>
       </div>
       <div class="x-read" aria-live="polite"></div>
       <div class="x-away" hidden><span>Vous êtes ailleurs</span><small></small></div>
@@ -30,28 +31,29 @@
     <footer class="x-strip">
       <a class="x-strip__back" href="../laboratoire.html#donnee-vivante"><i class="c-icon i-arrow-left" aria-hidden="true"></i>Laboratoire</a>
       <span class="x-strip__name">Atelier 03 · La donnée vivante</span>
-      <span class="x-bar__group"><span class="x-bar__label">Flux</span><span class="c-segmented" role="group" aria-label="Flux"><button class="c-segmented__item" type="button" data-set-flow="marche" aria-pressed="true">En marche</button><button class="c-segmented__item" type="button" data-set-flow="pause" aria-pressed="false">En pause</button></span></span>
-      <button class="c-button" type="button" data-once>Une mise à jour</button>
+      <span class="x-bar__group"><span class="c-segmented" role="group" aria-label="Flux"><button class="c-segmented__item" type="button" data-set-flow="marche" aria-pressed="true">Flux</button><button class="c-segmented__item" type="button" data-set-flow="pause" aria-pressed="false">Pause</button></span></span>
+      <button class="c-button" type="button" data-important>Événement important</button>
       <button class="c-button" type="button" data-leave>S'absenter 8 s</button>
+      <details class="x-pop"><summary>Journal<i class="c-icon i-chevron-up" aria-hidden="true"></i></summary>
+        <div class="x-pop__panel"><p class="x-note">Tout ce que l'application a décidé, et la règle qui l'a décidé.</p><ol class="x-journal" aria-live="polite"></ol></div></details>
       <details class="x-pop"><summary>Réglages<i class="c-icon i-chevron-up" aria-hidden="true"></i></summary>
         <div class="x-pop__panel">
-          <span class="x-bar__group"><span class="x-bar__label">Montrer sur</span><span class="c-segmented" role="group" aria-label="Montrer sur"><button class="c-segmented__item" type="button" data-set-where="valeur" aria-pressed="false">La valeur</button><button class="c-segmented__item" type="button" data-set-where="ligne" aria-pressed="false">La ligne</button><button class="c-segmented__item" type="button" data-set-where="deux" aria-pressed="true">Les deux</button></span></span>
-          <span class="x-bar__group"><span class="x-bar__label">Avant</span><span class="c-segmented" role="group" aria-label="Ancienne valeur"><button class="c-segmented__item" type="button" data-set-before="rien" aria-pressed="false">Rien</button><button class="c-segmented__item" type="button" data-set-before="fantome" aria-pressed="false">Fantôme</button><button class="c-segmented__item" type="button" data-set-before="ecart" aria-pressed="true">Écart</button><button class="c-segmented__item" type="button" data-set-before="trace" aria-pressed="false">Tracé</button></span></span>
-          <span class="x-bar__group"><span class="x-bar__label">Reclassement</span><span class="c-segmented" role="group" aria-label="Reclassement"><button class="c-segmented__item" type="button" data-set-order="immediat" aria-pressed="false">Immédiat</button><button class="c-segmented__item" type="button" data-set-order="differe" aria-pressed="false">Différé</button><button class="c-segmented__item" type="button" data-set-order="calme" aria-pressed="true">Au calme</button></span></span>
-          <span class="x-bar__group"><span class="x-bar__label">Rythme</span><span class="c-segmented" role="group" aria-label="Rythme"><button class="c-segmented__item" type="button" data-set-pace="calme" aria-pressed="true">Calme</button><button class="c-segmented__item" type="button" data-set-pace="vif" aria-pressed="false">Vif</button><button class="c-segmented__item" type="button" data-set-pace="rafale" aria-pressed="false">Rafale</button></span></span>
-          <span class="x-bar__group"><span class="x-bar__label">Affichage</span><span class="c-segmented" role="group" aria-label="Affichage"><button class="c-segmented__item" type="button" data-set-batch="un" aria-pressed="true">Un par un</button><button class="c-segmented__item" type="button" data-set-batch="lots" aria-pressed="false">Par lots</button></span></span>
-          <span class="x-bar__group"><span class="x-bar__label">Arrivées</span><span class="c-segmented" role="group" aria-label="Arrivées"><button class="c-segmented__item" type="button" data-set-arrivals="inserees" aria-pressed="false">Insérées</button><button class="c-segmented__item" type="button" data-set-arrivals="attente" aria-pressed="true">En attente</button></span></span>
+          <span class="x-bar__group"><span class="x-bar__label">Couleurs</span><span class="c-segmented" role="group" aria-label="Couleurs"><button class="c-segmented__item" type="button" data-set-colors="trois" aria-pressed="true">Trois</button><button class="c-segmented__item" type="button" data-set-colors="une" aria-pressed="false">Une seule</button></span></span>
+          <span class="x-bar__group"><span class="x-bar__label">Ancienne valeur</span><span class="c-segmented" role="group" aria-label="Ancienne valeur"><button class="c-segmented__item" type="button" data-set-before="rien" aria-pressed="false">Rien</button><button class="c-segmented__item" type="button" data-set-before="fantome" aria-pressed="false">Fantôme</button><button class="c-segmented__item" type="button" data-set-before="ecart" aria-pressed="true">Écart</button><button class="c-segmented__item" type="button" data-set-before="trace" aria-pressed="false">Tracé</button></span></span>
+          <span class="x-bar__group"><span class="x-bar__label">L'application peut remonter</span><span class="c-segmented" role="group" aria-label="Remonter"><button class="c-segmented__item" type="button" data-set-lift="oui" aria-pressed="true">Oui</button><button class="c-segmented__item" type="button" data-set-lift="non" aria-pressed="false">Non</button></span></span>
+          <span class="x-bar__group"><span class="x-bar__label">Sensibilité</span><span class="c-segmented" role="group" aria-label="Sensibilité"><button class="c-segmented__item" type="button" data-set-sense="stricte" aria-pressed="false">Stricte</button><button class="c-segmented__item" type="button" data-set-sense="normale" aria-pressed="true">Normale</button><button class="c-segmented__item" type="button" data-set-sense="large" aria-pressed="false">Large</button></span></span>
+          <span class="x-bar__group"><span class="x-bar__label">Rythme du flux</span><span class="c-segmented" role="group" aria-label="Rythme"><button class="c-segmented__item" type="button" data-set-pace="calme" aria-pressed="true">Calme</button><button class="c-segmented__item" type="button" data-set-pace="vif" aria-pressed="false">Vif</button><button class="c-segmented__item" type="button" data-set-pace="rafale" aria-pressed="false">Rafale</button></span></span>
           <button class="c-button c-button--quiet" type="button" data-restart style="align-self: flex-start"><i class="c-icon i-undo" aria-hidden="true"></i>Recommencer</button>
         </div></details>
       <details class="x-pop"><summary>Mode d'emploi<i class="c-icon i-chevron-up" aria-hidden="true"></i></summary>
-        <div class="x-pop__panel">
-          <ol class="x-steps">
-      <li class="is-on"><b>1 · Regardez vivre la liste</b>Les valeurs changent sans rechargement. Changez « Montrer sur » : est-ce le chiffre qui parle, ou la ligne ?</li>
-      <li class="is-on"><b>2 · Gardez ou non l'ancienne valeur</b>Rien, le fantôme barré, l'écart, ou le tracé. Passez sur une ligne : elle est « vue », son point disparaît.</li>
-      <li class="is-on"><b>3 · Laissez l'ordre bouger</b>La liste est classée par primes. Immédiat : les lignes sautent. Différé : elles attendent. Au calme : elles se rangent quand le flux se tait et que vous n'y êtes pas.</li>
-      <li class="is-on"><b>4 · Accélérez, puis absentez-vous</b>Rythme vif ou rafale, un par un ou par lots. Puis huit secondes ailleurs : au retour, l'écran dit ce que vous avez manqué.</li>
-    </ol>
-        </div></details>
+        <div class="x-pop__panel"><ol class="x-steps">
+          <li class="is-on"><b>1 · Lisez la liste, pointeur dessus</b>Les changements mineurs n'apparaissent pas : un petit carré vide, près de la valeur, dit qu'une mise à jour attend. Rien ne bouge sous vos yeux.</li>
+          <li class="is-on"><b>2 · Provoquez un événement important</b>La raison s'écrit et la ligne s'allume — rouge, orange ou vert selon sa gravité. Puis elle monte, en laissant un mot à sa place et un fil le long de son trajet.</li>
+          <li class="is-on"><b>3 · Passez sur la ligne remontée</b>Elle est « vue » : elle le dit, puis redescend à son rang par le même chemin. Son écart et son point s'effacent.</li>
+          <li class="is-on"><b>4 · Éloignez le pointeur</b>Après deux secondes et demie, c'est l'accalmie : les changements mineurs passent en une vague, puis la liste se range, une fois.</li>
+          <li class="is-on"><b>5 · Passez en rafale</b>Cinq changements d'un coup : les importants passent un par un, le rouge avant l'orange, l'orange avant le vert.</li>
+          <li class="is-on"><b>6 · Absentez-vous, suivez une agence, ouvrez le journal</b>Au retour, l'écran dit ce que vous avez manqué. Une agence suivie compte toujours. Chaque décision a sa règle.</li>
+        </ol></div></details>
       <a class="x-strip__back" href="../laboratoire.html#donnee-vivante">Notice</a>
     </footer>
   </div>

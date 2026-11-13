@@ -282,3 +282,10 @@
 @keyframes x-thread { 0% { opacity: 0; } 12%, 70% { opacity: 1; } 100% { opacity: 0; } }
 .x-mood { display: inline-flex; align-items: center; gap: var(--space-2); } .x-mood::before { content: ''; width: 6px; height: 6px; background: var(--fg-strong); } .x-mood.is-calm::before { background: none; outline: 1px solid var(--fg-soft); outline-offset: -1px; }
 @media (prefers-reduced-motion: reduce) { .x-thread, .x-why > span.is-in { animation: none; } .x-ghost > td > div { transition: none; } }
+
+/* Expérience 03, fusionnée : l'aplat de l'expérience 01 sur une ligne vivante. Pendant l'aplat, une seule encre. */
+.x-live .x-row.x-flash td, .x-live .x-row.x-flash td * { color: var(--x-on) !important; }
+.x-live .x-row.x-flash .x-num, .x-live .x-row.x-flash .x-why > span { animation: none !important; font-weight: var(--weight-bold); }
+.x-live .x-row.x-flash td.nm > span::before, .x-live .x-row.x-flash .x-held { background: var(--x-on); outline-color: var(--x-on); }
+.x-live .x-row.x-flash .x-follow { border-bottom-color: transparent; }
+.x-live .x-below { z-index: 4; }
