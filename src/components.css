@@ -758,3 +758,114 @@ a.c-doctabs__tab { text-decoration: none; }
 .c-plan__figure small { font-size: var(--text-micro); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-muted); margin-left: var(--space-2); }
 .c-plan__beside { position: relative; z-index: 1; min-height: 1.5rem; }
 @media (max-width: 640px) { .c-plan__group { width: 100%; } .c-plan__page { width: 100%; min-height: 0; } .c-plan__beside { display: none; } }
+
+/* === Saisie : compléments (D-081) ==========================================
+   Tout ce qui suit reprend le langage des champs : un contour d'un pixel, le
+   survol qui le renforce, le focus qui pose la surface, l'inactif en tireté. */
+
+/* Bouton d'une seule icône : carré, toujours nommé par aria-label. */
+.c-button--icon { width: var(--control-height); padding: 0; }
+.c-button--icon.c-button--large { width: var(--control-height-large); }
+/* Bouton occupé : il garde son libellé et sa largeur, le spinner dit que cela tourne ; il ne répond plus. */
+.c-button[aria-busy="true"] { cursor: progress; pointer-events: none; }
+.c-button .c-spinner { color: inherit; }
+
+/* Champ composé : le contour entoure la saisie et ce qui la précise — unité, devise, pas, action.
+   <label class="c-input-group"><span class="c-input-group__affix">€</span><input …></label> */
+.c-input-group { display: flex; align-items: center; gap: var(--space-2); min-height: var(--control-height); padding: 0 var(--space-3); border: var(--hairline) solid var(--line-strong); cursor: text; transition: border-color var(--duration), background var(--duration); }
+.c-input-group:hover { border-color: var(--fg-soft); }
+.c-input-group:focus-within { border-color: var(--fg-soft); background: var(--surface); outline: var(--hairline) solid var(--fg-soft); }
+.c-input-group:has(input[aria-invalid="true"]) { border-color: var(--signal); box-shadow: inset 2px 0 0 var(--signal); }
+.c-input-group:has(input:disabled) { border-style: dashed; border-color: var(--line); cursor: not-allowed; }
+.c-input-group > input { appearance: none; flex: 1; min-width: 0; min-height: calc(var(--control-height) - 2px); background: none; border: 0; outline: 0; padding: 0; color: var(--fg-strong); font-size: var(--text-base); line-height: var(--leading-base); }
+.c-input-group > input::placeholder { color: var(--fg-muted); opacity: 1; }
+.c-input-group > input:disabled { color: var(--fg-muted); cursor: not-allowed; }
+.c-input-group__affix { flex: none; color: var(--fg-muted); font-size: var(--text-small); white-space: nowrap; }
+.c-input-group__action { appearance: none; flex: none; display: inline-grid; place-content: center; min-width: 1.25rem; height: 1.25rem; padding: 0; background: none; border: 0; border-bottom: var(--hairline) solid transparent; color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); cursor: pointer; }
+.c-input-group__action:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
+.c-input-group__action:disabled { color: var(--fg-muted); cursor: not-allowed; border-bottom-color: transparent; }
+/* Un nombre s'aligne à droite, en chiffres tabulaires ; les flèches natives disparaissent. */
+.c-input--num, .c-input-group--num > input { text-align: right; font-variant-numeric: tabular-nums; }
+.c-input[type="number"], .c-input-group > input[type="number"] { appearance: textfield; -moz-appearance: textfield; }
+.c-input[type="number"]::-webkit-inner-spin-button, .c-input-group > input[type="number"]::-webkit-inner-spin-button { appearance: none; margin: 0; }
+/* Un pas : la valeur se tient entre le moins et le plus. */
+.c-input-group--step > input { text-align: center; font-variant-numeric: tabular-nums; }
+/* Date et heure : la saisie est celle du navigateur, segment par segment ; son repère est l'icône du jeu. */
+.c-input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"]) { font-variant-numeric: tabular-nums; }
+.c-input[type="date"]::-webkit-calendar-picker-indicator, .c-input[type="datetime-local"]::-webkit-calendar-picker-indicator, .c-input[type="month"]::-webkit-calendar-picker-indicator { width: 1rem; height: 1rem; padding: 0; background: var(--fg-soft); -webkit-mask: var(--i-calendar) center / contain no-repeat; mask: var(--i-calendar) center / contain no-repeat; cursor: pointer; }
+.c-input[type="time"]::-webkit-calendar-picker-indicator { width: 1rem; height: 1rem; padding: 0; background: var(--fg-soft); -webkit-mask: var(--i-clock) center / contain no-repeat; mask: var(--i-clock) center / contain no-repeat; cursor: pointer; }
+
+/* Choix multiple : un champ qui ouvre une liste de cases. Le champ dit le décompte, la liste le détail.
+   <details class="c-menu c-menu--field"><summary class="c-select">2 branches<i class="c-icon i-chevron-down"></i></summary>
+     <div class="c-menu__list"><label class="c-menu__item c-menu__item--check c-check"><input type="checkbox"><span>Vie</span></label>… */
+.c-menu--field { display: block; }
+.c-menu--field > .c-menu__list { right: 0; min-width: 0; padding-bottom: var(--space-2); }
+summary.c-select { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding-right: var(--space-3); background-image: none; }
+summary.c-select::-webkit-details-marker { display: none; }
+summary.c-select .c-icon { flex: none; color: var(--fg-soft); }
+.c-menu--field[open] > summary.c-select { border-color: var(--fg-soft); background: var(--surface); }
+.c-menu__item--check { justify-content: flex-start; gap: var(--space-3); min-height: 0; }
+.c-menu__list[hidden] { display: none; }
+
+/* Filtre appliqué : il se lit « critère : valeur » et se retire d'une croix. */
+.c-chip--applied { cursor: default; color: var(--fg); padding-right: 0; gap: 0; }
+.c-chip--applied:hover { border-color: var(--line-strong); color: var(--fg); }
+.c-chip__remove { appearance: none; display: grid; place-content: center; width: 1.5rem; height: 100%; padding: 0; background: none; border: 0; color: var(--fg-muted); cursor: pointer; }
+.c-chip__remove:hover { color: var(--fg-strong); }
+.c-chip__remove .c-icon { width: 0.75rem; height: 0.75rem; }
+
+/* Saisie assistée : un champ, et sous lui la liste de ce qui correspond — la feuille d'un menu.
+   <div class="c-combo"><input class="c-input" role="combobox" aria-expanded="true"><div class="c-menu__list" role="listbox">… */
+.c-combo { position: relative; }
+.c-combo > .c-menu__list { left: 0; right: 0; min-width: 0; max-height: 14rem; overflow-y: auto; }
+.c-combo .c-menu__item mark { font-weight: var(--weight-medium); }
+
+/* Saisie d'étiquettes : les valeurs déjà saisies vivent dans le champ, la saisie continue après elles. */
+.c-input-group--tags { flex-wrap: wrap; gap: var(--space-1) var(--space-2); padding: 3px var(--space-3) 3px var(--space-1); }
+.c-input-group--tags > input { flex: 1 1 6rem; min-height: 1.5rem; padding-left: var(--space-1); }
+
+/* Dépôt de fichier : un emplacement, donc un contour tireté — le même que celui d'une fiche en cours de glissé.
+   Il se renforce quand un fichier le survole. La liste des fichiers suit, ligne à ligne. */
+.c-dropzone { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); padding: var(--space-5); border: var(--hairline) dashed var(--line-strong); color: var(--fg-soft); cursor: pointer; transition: border-color var(--duration), color var(--duration); }
+.c-dropzone:hover, .c-dropzone.is-over { border-style: solid; border-color: var(--fg-strong); color: var(--fg); }
+.c-dropzone:focus-within { outline: var(--stroke) solid var(--fg-strong); outline-offset: 3px; }
+.c-dropzone input[type="file"] { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.c-dropzone__title { color: var(--fg-strong); }
+.c-dropzone__browse { text-decoration: underline; text-underline-offset: 0.3em; }
+.c-dropzone__hint { font-size: var(--text-small); color: var(--fg-muted); }
+.c-files { list-style: none; margin: 0; padding: 0; display: grid; }
+.c-files__item { display: grid; grid-template-columns: minmax(0, 1fr) max-content max-content 1.5rem; column-gap: var(--space-4); align-items: baseline; padding: var(--space-2) 0; }
+.c-files__name { color: var(--fg-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.c-files__size, .c-files__state { font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); color: var(--fg-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.c-files__item .c-meter { grid-column: 1 / -1; margin-top: var(--space-2); }
+.c-files__remove { appearance: none; display: grid; place-content: center; width: 1.5rem; height: 1.25rem; padding: 0; background: none; border: 0; color: var(--fg-muted); cursor: pointer; align-self: center; }
+.c-files__remove:hover { color: var(--fg-strong); }
+
+/* Curseur de valeur : un filet, une réglette. La part acquise s'épaissit comme une jauge (--value de 0 à 100). */
+.c-range { appearance: none; display: block; width: 100%; height: 1.5rem; margin: 0; background: none; cursor: pointer; }
+.c-range::-webkit-slider-runnable-track { height: 3px; background: linear-gradient(var(--fg-soft), var(--fg-soft)) 0 50% / calc(var(--value, 0) * 1%) 3px no-repeat, linear-gradient(var(--line-strong), var(--line-strong)) 0 50% / 100% 1px no-repeat; }
+.c-range::-moz-range-track { height: 1px; background: var(--line-strong); }
+.c-range::-moz-range-progress { height: 3px; background: var(--fg-soft); }
+.c-range::-webkit-slider-thumb { appearance: none; width: 5px; height: 1rem; margin-top: calc(1.5px - 0.5rem); background: var(--fg-strong); border: 0; border-radius: 0; }
+.c-range::-moz-range-thumb { width: 5px; height: 1rem; background: var(--fg-strong); border: 0; border-radius: 0; }
+.c-range:disabled { cursor: not-allowed; }
+.c-range:disabled::-webkit-slider-thumb { background: var(--fg-muted); }
+.c-range:disabled::-moz-range-thumb { background: var(--fg-muted); }
+.c-range__scale { display: flex; justify-content: space-between; font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-muted); font-variant-numeric: tabular-nums; }
+
+/* Calendrier : un mois en grille. Aujourd'hui est un repère (pointillé), le jour choisi un contour de sélection,
+   une période une relation (tireté) entre ses deux bornes. Aucun fond.
+   <div class="c-calendar"><div class="c-calendar__head">…</div><table class="c-calendar__grid">… <button class="c-calendar__day"> */
+.c-calendar { display: inline-flex; flex-direction: column; gap: var(--space-3); }
+.c-calendar__head { display: flex; align-items: center; gap: var(--space-1); }
+.c-calendar__title { flex: 1; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-strong); }
+.c-calendar__grid { border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.c-calendar__grid th { width: 2.25rem; height: 1.5rem; padding: 0; font-weight: var(--weight-regular); font-size: var(--text-micro); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--fg-muted); text-align: center; }
+.c-calendar__grid td { padding: 0; }
+.c-calendar__day { appearance: none; display: grid; place-content: center; width: 2.25rem; height: 2rem; padding: 0; background: none; border: var(--hairline) solid transparent; color: var(--fg); font: inherit; font-size: var(--text-small); cursor: pointer; }
+.c-calendar__day:hover { border-color: var(--fg-strong); color: var(--fg-strong); }
+.c-calendar__day.is-out { color: var(--fg-muted); }
+.c-calendar__day[aria-current="date"] { border-bottom: var(--hairline) dotted var(--fg-soft); color: var(--fg-strong); font-weight: var(--weight-medium); }
+.c-calendar__day.is-between { border-top: var(--hairline) dashed var(--line-strong); border-bottom: var(--hairline) dashed var(--line-strong); }
+.c-calendar__day[aria-pressed="true"] { border: var(--stroke) solid var(--selected-line); color: var(--fg-strong); font-weight: var(--weight-medium); }
+.c-calendar__day:disabled { color: var(--fg-muted); text-decoration: line-through; cursor: not-allowed; border-color: transparent; }

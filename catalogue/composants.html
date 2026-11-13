@@ -641,12 +641,22 @@
                 </button>
               </div>
             </div>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster">
+                <button class="c-button c-button--icon" type="button" aria-label="Actualiser"><i class="c-icon i-refresh" aria-hidden="true"></i></button>
+                <button class="c-button c-button--icon c-button--quiet" type="button" aria-label="Plus d'actions"><i class="c-icon i-more" aria-hidden="true"></i></button>
+                <button class="c-button c-button--primary" type="button" aria-busy="true"><span class="c-spinner" aria-hidden="true"></span>Enregistrement</button>
+                <button class="c-button" type="button" data-demo-busy="Exporté">Exporter</button>
+              </div>
+            </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Déclencher une action. Le libellé est un verbe, deux mots au plus.</dd></div>
               <div><dt>Éviter</dt><dd>Deux primaires sur une vue. Un primaire sur un écran de consultation, où rien ne conclut une tâche. Un bouton pour naviguer (un lien). Le signal pour une action courante. Une icône seule sans <code>aria-label</code>.</dd></div>
               <div><dt>Hiérarchie</dt><dd><code>--primary</code> zéro ou une fois par vue : seulement quand l'écran existe pour accomplir une action (formulaire, connexion, modale) · défaut (contour) pour le reste · <code>--quiet</code> pour l'action tertiaire ou dans une ligne · <code>--signal</code> pour l'irréversible.</dd></div>
               <div><dt>États</dt><dd>Survol : le contour passe au ton fort, le fond ne change pas. Bouton plein (primaire, signal en accent fort) : un second contour d'un pixel, détaché d'un pas. Bouton discret : un filet dessous. Inactif : contour tireté, texte encore lisible. Focus clavier : contour de 2 px.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;button type&gt;</code> ; 32 px de haut au moins, 40 px en <code>--large</code> sur écran tactile.</dd></div>
+              <div><dt>Icône seule</dt><dd><code>--icon</code> : un carré, pour une action répétée sur chaque ligne ou une barre d'outils étroite. Toujours un <code>aria-label</code> ; seulement pour une icône que l'on reconnaît sans légende (fermer, actualiser, plus).</dd></div>
+              <div><dt>Occupé</dt><dd><code>aria-busy="true"</code> et un <code>.c-spinner</code> devant le libellé, qui passe au participe (« Enregistrement »). Le bouton garde sa place et ne répond plus ; au-delà de quelques secondes, préférer une jauge.</dd></div>
             </dl>
           </div>
 
@@ -726,10 +736,19 @@
               </div>
               <p class="t-large" style="margin-top: var(--space-4)" aria-live="polite"><span id="demo-chip-total">812</span> <span class="t-soft t-body">agences affichées</span></p>
             </div>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-2)" role="group" aria-label="Filtres appliqués">
+                <span class="c-chip c-chip--applied">Région : Sud <button class="c-chip__remove" type="button" aria-label="Retirer le filtre Région : Sud"><i class="c-icon i-close" aria-hidden="true"></i></button></span>
+                <span class="c-chip c-chip--applied">Branche : Non-vie <button class="c-chip__remove" type="button" aria-label="Retirer le filtre Branche : Non-vie"><i class="c-icon i-close" aria-hidden="true"></i></button></span>
+                <span class="c-chip c-chip--applied">Depuis : 2024 <button class="c-chip__remove" type="button" aria-label="Retirer le filtre Depuis : 2024"><i class="c-icon i-close" aria-hidden="true"></i></button></span>
+                <button class="c-button c-button--quiet" type="button" data-demo-reset>Tout retirer</button>
+              </div>
+            </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Des critères cumulables sur une liste ou un tableau. Aucun filtre actif signifie « tout ».</dd></div>
               <div><dt>Éviter</dt><dd>Pour des options exclusives (préférer <code>.c-segmented</code>) ou pour étiqueter sans interaction (préférer <code>.c-tag</code>).</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;button aria-pressed&gt;</code> ; le groupe porte un <code>aria-label</code>.</dd></div>
+              <div><dt>Filtre appliqué</dt><dd><code>--applied</code> : un critère déjà posé, écrit « critère : valeur », avec une croix (<code>.c-chip__remove</code>) qui le retire. Ce n'est plus une bascule : c'est un <code>span</code>, seule la croix est un bouton. Retirer est réversible, donc sans confirmation.</dd></div>
             </dl>
           </div>
         </section>
@@ -769,11 +788,245 @@
                 </label>
               </div>
             </div>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <label class="c-field l-span-3">
+                  <span class="c-field__label">Effectif</span>
+                  <input class="c-input c-input--num" type="number" value="412" min="0" inputmode="numeric">
+                </label>
+                <label class="c-field l-span-3">
+                  <span class="c-field__label">Ouverture</span>
+                  <input class="c-input" type="date" value="2026-11-13">
+                </label>
+                <label class="c-field l-span-3">
+                  <span class="c-field__label">Heure</span>
+                  <input class="c-input" type="time" value="09:30">
+                </label>
+                <label class="c-field l-span-3">
+                  <span class="c-field__label">Courriel</span>
+                  <input class="c-input" type="email" placeholder="nom@domaine.fr" autocomplete="email">
+                </label>
+              </div>
+            </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Toute saisie. Le label est toujours visible ; l'aide précise le format attendu avant l'erreur.</dd></div>
               <div><dt>Éviter</dt><dd>Un texte indicatif à la place du label. Une erreur dite par la seule bordure. Un astérisque : écrire « Requis » ou « Facultatif ».</dd></div>
               <div><dt>États</dt><dd>Survol, focus (bordure forte, surface d'un cran), invalide (<code>aria-invalid</code> : filet signal à gauche et message), inactif (tireté).</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;label&gt;</code> englobant ; l'erreur est liée par <code>aria-describedby</code>.</dd></div>
+              <div><dt>Types</dt><dd>Nombre : <code>.c-input--num</code>, ferré à droite, chiffres tabulaires, sans flèches natives. Date et heure : la saisie du navigateur, segment par segment, avec l'icône du jeu. Unité, devise, mot de passe, pas : voir le champ composé. Liste : voir la liste déroulante.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-select" data-search="composant">
+            <h3>Liste déroulante — .c-select</h3>
+            <p>Un choix parmi une liste connue. Fermée, c'est un champ comme les autres ; ouverte, c'est la feuille d'un menu : l'option visée se souligne d'un filet, l'option choisie porte le contour de sélection. Pour plusieurs choix, le champ ouvre une liste de cases et annonce le décompte.</p>
+            <div class="cat-demo" data-code style="min-height: 15rem">
+              <div class="l-grid">
+                <label class="c-field l-span-4">
+                  <span class="c-field__label">Branche</span>
+                  <select class="c-select">
+                    <option>Non-vie</option>
+                    <option selected>Vie</option>
+                    <option>Santé</option>
+                    <option disabled>Prévoyance — fermée</option>
+                  </select>
+                </label>
+                <div class="c-field l-span-4">
+                  <span class="c-field__label" id="lbl-regions">Régions</span>
+                  <details class="c-menu c-menu--field">
+                    <summary class="c-select" aria-labelledby="lbl-regions"><span data-count>2 régions</span><i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
+                    <div class="c-menu__list" role="group" aria-labelledby="lbl-regions">
+                      <label class="c-menu__item c-menu__item--check c-check"><input type="checkbox" checked><span>Sud</span></label>
+                      <label class="c-menu__item c-menu__item--check c-check"><input type="checkbox" checked><span>Ouest</span></label>
+                      <label class="c-menu__item c-menu__item--check c-check"><input type="checkbox"><span>Nord</span></label>
+                      <label class="c-menu__item c-menu__item--check c-check"><input type="checkbox"><span>Est</span></label>
+                    </div>
+                  </details>
+                </div>
+                <label class="c-field l-span-4">
+                  <span class="c-field__label">Exercice</span>
+                  <select class="c-select" disabled>
+                    <option>2026</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Cinq à quinze options connues d'avance, une seule à choisir. Plusieurs à choisir : le champ à cases (<code>.c-menu--field</code>), qui écrit « 2 régions » plutôt que de les énumérer.</dd></div>
+              <div><dt>Éviter</dt><dd>Deux à quatre options (préférer <code>.c-segmented</code> ou des radios, visibles d'emblée). Plus de quinze, ou une liste que l'on cherche : la saisie assistée (<code>.c-combo</code>). Une liste d'actions : c'est un menu (<code>.c-menu</code>).</dd></div>
+              <div><dt>États</dt><dd>Survol : contour d'un cran plus clair. Ouvert : surface. Option visée : filet dessous. Option choisie : contour de sélection à gauche. Inactif : tireté.</dd></div>
+              <div><dt>Limite</dt><dd>La liste ouverte d'un <code>&lt;select&gt;</code> ne se dessine que là où le navigateur connaît <code>appearance: base-select</code> ; ailleurs elle reste native, le champ fermé étant identique partout.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Un vrai <code>&lt;select&gt;</code> : clavier et lecteur d'écran sont ceux du système. Le champ à cases est un groupe de cases étiqueté par le label du champ.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-input-group" data-search="composant">
+            <h3>Champ composé — .c-input-group</h3>
+            <p>Quand la saisie a besoin d'une précision — une unité, une devise, un pas, « voir » — le contour les entoure ensemble. Ce qui précise est écrit en ton éteint ; ce qui agit est un mot ou une icône, sans contour propre.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <div class="c-field l-span-3">
+                  <label class="c-field__label" for="ig-prime">Prime</label>
+                  <label class="c-input-group c-input-group--num"><input id="ig-prime" type="text" inputmode="decimal" value="1 780"><span class="c-input-group__affix">M €</span></label>
+                </div>
+                <div class="c-field l-span-3">
+                  <label class="c-field__label" for="ig-site">Site</label>
+                  <label class="c-input-group"><span class="c-input-group__affix">https://</span><input id="ig-site" type="text" placeholder="reseau.exemple"></label>
+                </div>
+                <div class="c-field l-span-3">
+                  <label class="c-field__label" for="ig-pass">Mot de passe</label>
+                  <label class="c-input-group"><input id="ig-pass" type="password" value="monochrome" autocomplete="off"><button class="c-input-group__action" type="button" aria-pressed="false" data-demo-reveal>Voir</button></label>
+                </div>
+                <div class="c-field l-span-3">
+                  <label class="c-field__label" for="ig-qte">Postes</label>
+                  <label class="c-input-group c-input-group--step"><button class="c-input-group__action" type="button" aria-label="Un de moins" data-demo-step="-1"><i class="c-icon i-minus" aria-hidden="true"></i></button><input id="ig-qte" type="number" value="7" min="0" max="12"><button class="c-input-group__action" type="button" aria-label="Un de plus" data-demo-step="1"><i class="c-icon i-plus" aria-hidden="true"></i></button></label>
+                </div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Une unité ou une devise qui ne se saisit pas ; un préfixe fixe ; une action propre au champ (voir le mot de passe, effacer) ; un pas pour un petit nombre que l'on ajuste.</dd></div>
+              <div><dt>Éviter</dt><dd>Plus d'une précision et une action par champ. Une unité qui change (deux champs). Un pas pour un grand nombre : on le tape.</dd></div>
+              <div><dt>États</dt><dd>Ceux du champ, portés par le groupe : survol, focus (surface), invalide (filet signal à gauche), inactif (tireté).</dd></div>
+              <div><dt>Accessibilité</dt><dd>Le label vise l'<code>input</code> ; l'unité est lue avec lui (<code>aria-describedby</code>). Une action en icône porte un <code>aria-label</code> ; « Voir » est une bascule (<code>aria-pressed</code>).</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-combo" data-search="composant">
+            <h3>Saisie assistée — .c-combo</h3>
+            <p>Un champ, et sous lui la liste de ce qui correspond à la frappe. C'est la liste déroulante des longues listes : on tape trois lettres, on choisit. La liste est la feuille d'un menu ; ce qui correspond est marqué dans chaque entrée.</p>
+            <div class="cat-demo" data-code style="min-height: 17rem">
+              <div class="l-grid">
+                <div class="c-field l-span-5">
+                  <label class="c-field__label" for="combo-agence">Agence</label>
+                  <div class="c-combo">
+                    <input class="c-input" id="combo-agence" type="text" role="combobox" aria-expanded="true" aria-controls="combo-agence-list" aria-autocomplete="list" autocomplete="off" value="ar">
+                    <div class="c-menu__list" id="combo-agence-list" role="listbox">
+                      <button class="c-menu__item" type="button" role="option" aria-selected="true"><span><mark>Ar</mark>les</span> <span class="c-menu__hint">Sud</span></button>
+                      <button class="c-menu__item" type="button" role="option"><span><mark>Ar</mark>ras</span> <span class="c-menu__hint">Nord</span></button>
+                      <button class="c-menu__item" type="button" role="option"><span>B<mark>ar</mark>-le-Duc</span> <span class="c-menu__hint">Est</span></button>
+                      <button class="c-menu__item" type="button" role="option"><span>Colm<mark>ar</mark></span> <span class="c-menu__hint">Est</span></button>
+                    </div>
+                  </div>
+                  <span class="c-field__hint">412 agences. Tapez les premières lettres.</span>
+                </div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Choisir dans une liste longue ou que l'on connaît par son nom : une agence, une personne, un code. La valeur vient toujours de la liste.</dd></div>
+              <div><dt>Éviter</dt><dd>Moins de quinze options (liste déroulante). Une recherche dans tout l'outil (« Aller à »). Une valeur libre : c'est un champ, avec au besoin des suggestions sous lui, pas une liste fermée.</dd></div>
+              <div><dt>États</dt><dd>Liste fermée tant que rien n'est tapé. Entrée visée : filet à pointe. Aucune correspondance : une ligne « Aucune agence », jamais une liste vide.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>role="combobox"</code> sur le champ, <code>aria-expanded</code>, <code>aria-controls</code> ; la liste est un <code>listbox</code> d'<code>option</code>. Flèches pour parcourir, Entrée pour choisir, Échap pour fermer ; le focus reste dans le champ.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-input-tags" data-search="composant">
+            <h3>Saisie d'étiquettes — .c-input-group--tags</h3>
+            <p>Plusieurs valeurs libres dans un seul champ : chaque valeur validée devient un filtre appliqué, et la saisie continue après elle. Entrée ou virgule valide, Retour arrière reprend la dernière.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <div class="c-field l-span-7">
+                  <label class="c-field__label" for="tags-dest">Destinataires <span class="t-muted">3 au plus</span></label>
+                  <label class="c-input-group c-input-group--tags">
+                    <span class="c-chip c-chip--applied">M. Delorme <button class="c-chip__remove" type="button" aria-label="Retirer M. Delorme"><i class="c-icon i-close" aria-hidden="true"></i></button></span>
+                    <span class="c-chip c-chip--applied">P. Vidal <button class="c-chip__remove" type="button" aria-label="Retirer P. Vidal"><i class="c-icon i-close" aria-hidden="true"></i></button></span>
+                    <input id="tags-dest" type="text" placeholder="Ajouter" autocomplete="off" data-max="3">
+                  </label>
+                  <span class="c-field__hint" aria-live="polite">Entrée pour ajouter.</span>
+                </div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Quelques valeurs courtes et libres : destinataires, mots-clés, références.</dd></div>
+              <div><dt>Éviter</dt><dd>Des valeurs prises dans une liste connue (le champ à cases). Plus d'une dizaine de valeurs : une liste, une ligne par valeur. Des valeurs longues.</dd></div>
+              <div><dt>États</dt><dd>Ceux du champ composé. À la limite, la saisie se ferme et l'aide le dit ; un doublon est refusé sans bruit, l'aide le dit aussi.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Chaque croix nomme ce qu'elle retire ; l'aide est une zone <code>aria-live</code> qui annonce ajout, retrait et limite.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-calendar" data-search="composant">
+            <h3>Calendrier — .c-calendar</h3>
+            <p>Pour saisir une date, le champ suffit : <code>type="date"</code>, segment par segment. Le calendrier sert quand le mois lui-même est l'information — choisir une période, voir des jours fermés. Aujourd'hui est un repère, donc pointillé ; le jour choisi porte le contour de sélection ; une période est une relation, donc tiretée entre ses deux bornes. Aucun fond.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-cluster" style="--gap: var(--space-8); align-items: flex-start">
+                <div class="c-calendar" role="group" aria-label="Novembre 2026">
+                  <div class="c-calendar__head">
+                    <span class="c-calendar__title" aria-live="polite">Novembre 2026</span>
+                    <button class="c-button c-button--icon c-button--quiet" type="button" aria-label="Mois précédent" data-cal="-1"><i class="c-icon i-chevron-left" aria-hidden="true"></i></button>
+                    <button class="c-button c-button--icon c-button--quiet" type="button" aria-label="Mois suivant" data-cal="1"><i class="c-icon i-chevron-right" aria-hidden="true"></i></button>
+                  </div>
+                  <table class="c-calendar__grid">
+                    <thead><tr><th scope="col" abbr="lundi">L</th><th scope="col" abbr="mardi">M</th><th scope="col" abbr="mercredi">M</th><th scope="col" abbr="jeudi">J</th><th scope="col" abbr="vendredi">V</th><th scope="col" abbr="samedi">S</th><th scope="col" abbr="dimanche">D</th></tr></thead>
+                    <tbody>
+                    <tr><td><button class="c-calendar__day is-out" type="button" data-date="2026-10-26">26</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-10-27">27</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-10-28">28</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-10-29">29</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-10-30">30</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-10-31">31</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-01">1</button></td></tr>
+                    <tr><td><button class="c-calendar__day" type="button" data-date="2026-11-02">2</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-03">3</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-04">4</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-05">5</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-06">6</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-07">7</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-08">8</button></td></tr>
+                    <tr><td><button class="c-calendar__day" type="button" data-date="2026-11-09">9</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-10">10</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-11" disabled>11</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-12">12</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-13" aria-current="date">13</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-14">14</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-15">15</button></td></tr>
+                    <tr><td><button class="c-calendar__day" type="button" data-date="2026-11-16" aria-pressed="true">16</button></td><td><button class="c-calendar__day is-between" type="button" data-date="2026-11-17">17</button></td><td><button class="c-calendar__day is-between" type="button" data-date="2026-11-18">18</button></td><td><button class="c-calendar__day is-between" type="button" data-date="2026-11-19">19</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-20" aria-pressed="true">20</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-21">21</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-22">22</button></td></tr>
+                    <tr><td><button class="c-calendar__day" type="button" data-date="2026-11-23">23</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-24">24</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-25">25</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-26">26</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-27">27</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-28">28</button></td><td><button class="c-calendar__day" type="button" data-date="2026-11-29">29</button></td></tr>
+                    <tr><td><button class="c-calendar__day" type="button" data-date="2026-11-30">30</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-12-01">1</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-12-02">2</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-12-03">3</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-12-04">4</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-12-05">5</button></td><td><button class="c-calendar__day is-out" type="button" data-date="2026-12-06">6</button></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <dl class="c-kv c-kv--plain" style="min-width: 16rem">
+                  <div><dt>Du</dt><dd data-cal-from>16 nov. 2026</dd></div>
+                  <div><dt>Au</dt><dd data-cal-to>20 nov. 2026</dd></div>
+                  <div><dt>Durée</dt><dd data-cal-len>5 jours</dd></div>
+                </dl>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Choisir une période ; choisir un jour quand certains sont fermés ou chargés ; montrer un mois. Posé dans la page, ou dans un menu sous un champ.</dd></div>
+              <div><dt>Éviter</dt><dd>Pour une date que l'on connaît (une naissance, une échéance lue sur un papier) : on la tape. Deux mois côte à côte pour une période courte. Des points ou des couleurs dans les cases : un jour chargé se dit dans la liste d'à côté.</dd></div>
+              <div><dt>États</dt><dd>Survol : contour. Aujourd'hui : <code>aria-current="date"</code>, pointillé dessous. Choisi : <code>aria-pressed</code>, contour de 2 px. Entre deux bornes : <code>.is-between</code>, tireté. Hors du mois : <code>.is-out</code>, ton éteint. Fermé : <code>disabled</code>, barré.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Un tableau, des en-têtes de colonne avec <code>abbr</code> ; chaque jour est un bouton. Le titre du mois est une zone <code>aria-live</code>. La période choisie est toujours redite en texte à côté.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-dropzone" data-search="composant">
+            <h3>Dépôt de fichier — .c-dropzone</h3>
+            <p>Un emplacement : son contour est tireté, comme celui qui attend une fiche pendant un glissé. Il se renforce quand un fichier le survole. Chaque fichier reçu devient une ligne — nom, poids, état — et se retire d'une croix.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-stack" style="max-width: 34rem">
+                <label class="c-dropzone">
+                  <input type="file" multiple>
+                  <span class="c-dropzone__title">Déposer des fichiers ici, ou <span class="c-dropzone__browse">parcourir</span></span>
+                  <span class="c-dropzone__hint">CSV ou PDF, 10 Mo au plus par fichier.</span>
+                </label>
+                <ul class="c-files" aria-label="Fichiers" aria-live="polite">
+                  <li class="c-files__item"><span class="c-files__name">agences-2026-t3.csv</span><span class="c-files__size">248 Ko</span><span class="c-files__state">Reçu</span><button class="c-files__remove" type="button" aria-label="Retirer agences-2026-t3.csv"><i class="c-icon i-close" aria-hidden="true"></i></button></li>
+                  <li class="c-files__item"><span class="c-files__name">rapport-annuel.pdf</span><span class="c-files__size">3,1 Mo</span><span class="c-files__state">62 %</span><button class="c-files__remove" type="button" aria-label="Retirer rapport-annuel.pdf"><i class="c-icon i-close" aria-hidden="true"></i></button><span class="c-meter" style="--value: 62" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" aria-label="Envoi de rapport-annuel.pdf"></span></li>
+                </ul>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Joindre un ou plusieurs fichiers. Toujours avec « parcourir » : le glissé est un raccourci, pas le seul chemin.</dd></div>
+              <div><dt>Éviter</dt><dd>Une zone qui occupe l'écran quand un bouton « Joindre » suffit. Une illustration. Un refus sans raison : dire le format et le poids avant, et pourquoi après.</dd></div>
+              <div><dt>États</dt><dd>Repos : tireté. Survol ou fichier au-dessus (<code>.is-over</code>) : contour plein, au ton fort. Envoi : la jauge sous la ligne et le pourcentage. Refusé : la ligne le dit en mots, avec le signe d'erreur.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Un <code>&lt;label&gt;</code> autour d'un vrai <code>input type="file"</code> : Entrée ou Espace ouvre le choix. La liste est une zone <code>aria-live</code>.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-range" data-search="composant">
+            <h3>Curseur de valeur — .c-range</h3>
+            <p>Un filet et une réglette. La part acquise s'épaissit comme une jauge. La valeur est toujours écrite à côté, en chiffres : le curseur règle, le nombre dit.</p>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <div class="c-field l-span-6">
+                  <label class="c-field__label" for="range-seuil">Seuil d'alerte <output for="range-seuil" class="t-strong">60 %</output></label>
+                  <input class="c-range" id="range-seuil" type="range" min="0" max="100" step="5" value="60" style="--value: 60">
+                  <div class="c-range__scale" aria-hidden="true"><span>0</span><span>50</span><span>100</span></div>
+                </div>
+                <div class="c-field l-span-6">
+                  <label class="c-field__label" for="range-off">Plafond <output for="range-off">30 %</output></label>
+                  <input class="c-range" id="range-off" type="range" min="0" max="100" value="30" style="--value: 30" disabled>
+                  <div class="c-range__scale" aria-hidden="true"><span>0</span><span>50</span><span>100</span></div>
+                </div>
+              </div>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Régler une valeur approximative dans un intervalle borné, quand on juge à l'effet : un seuil, une densité, une échelle.</dd></div>
+              <div><dt>Éviter</dt><dd>Une valeur exacte (un champ nombre). Un intervalle sans bornes naturelles. Deux poignées sur un même filet : deux champs.</dd></div>
+              <div><dt>États</dt><dd>La part acquise suit <code>--value</code> (0 à 100), à tenir à jour avec la valeur. Inactif : réglette au ton éteint.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Un vrai <code>input type="range"</code> : flèches, Début, Fin. La valeur est dans un <code>&lt;output&gt;</code> lié au champ.</dd></div>
             </dl>
           </div>
 
@@ -960,38 +1213,49 @@
             </dl>
           </div>
 
-          <div class="cat-sub" id="fil-d-ariane-et-pagination" data-search="composant">
-            <h3>Fil d'Ariane et pagination</h3>
-            <div class="cat-demo" data-code style="min-height: 10rem">
-              <div class="l-split">
-                <nav class="c-breadcrumb" aria-label="Fil d'Ariane">
-                  <a href="#navigation">Rapport</a>
-                  <a href="#navigation">Réseau</a>
-                  <details class="c-breadcrumb__seg" name="fil-demo" aria-current="page" open>
-                    <summary>Agences<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
-                    <div class="c-breadcrumb__row">
-                      <a href="#navigation">Synthèse</a>
-                      <a href="#navigation" aria-current="true">Agences</a>
-                      <a href="#navigation">Branches</a>
-                    </div>
-                  </details>
-                </nav>
-                <nav class="c-pagination" aria-label="Pages">
-                  <a href="#navigation" aria-label="Précédente"><i class="c-icon i-arrow-left" aria-hidden="true"></i></a>
-                  <a href="#navigation">1</a>
-                  <a href="#navigation" aria-current="page">2</a>
-                  <a href="#navigation">3</a>
-                  <span>…</span>
-                  <a href="#navigation">12</a>
-                  <a href="#navigation" aria-label="Suivante"><i class="c-icon i-arrow-right" aria-hidden="true"></i></a>
-                </nav>
-              </div>
+          <div class="cat-sub" id="c-breadcrumb" data-search="composant">
+            <h3>Fil d'Ariane — .c-breadcrumb</h3>
+            <p>Il situe la page et ramène d'un cran. À l'intérieur d'une page, un cran peut déplier ses voisins en une rangée sous le fil : on passe de l'un à l'autre sans remonter, et rien ne flotte.</p>
+            <div class="cat-demo" data-code style="min-height: 6rem">
+              <nav class="c-breadcrumb" aria-label="Fil d'Ariane">
+                <a href="#navigation">Rapport</a>
+                <a href="#navigation">Réseau</a>
+                <details class="c-breadcrumb__seg" name="fil-demo" aria-current="page" open>
+                  <summary>Agences<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
+                  <div class="c-breadcrumb__row">
+                    <a href="#navigation">Synthèse</a>
+                    <a href="#navigation" aria-current="true">Agences</a>
+                    <a href="#navigation">Branches</a>
+                  </div>
+                </details>
+              </nav>
             </div>
             <dl class="cat-spec">
-              <div><dt>Employer</dt><dd>Fil d'Ariane : situer une page à plus de deux niveaux de profondeur. Pagination : au-delà de cinquante lignes.</dd></div>
+              <div><dt>Employer</dt><dd>Situer une page à plus de deux niveaux de profondeur. Avec <code>--head</code>, il tient lieu de titre en tête d'une page à onglets.</dd></div>
               <div><dt>Voisins</dt><dd>Un cran peut déplier ses voisins (<code>.c-breadcrumb__seg</code>, <code>.c-breadcrumb__row</code>) : une rangée sous le fil, dans la page, le courant souligné du contour de sélection. Rien ne flotte. Un seul cran déplié à la fois (même <code>name</code>). À réserver aux crans à l'intérieur de la page ; le premier cran reste un lien, un cran sans voisin reste un texte.</dd></div>
-              <div><dt>Éviter</dt><dd>Un fil d'Ariane sur une page de premier niveau. Une pagination pour moins de deux pages.</dd></div>
-              <div><dt>Accessibilité</dt><dd><code>&lt;nav aria-label&gt;</code> ; position courante en <code>aria-current</code> ; flèches avec <code>aria-label</code>.</dd></div>
+              <div><dt>Éviter</dt><dd>Sur une page de premier niveau. Comme navigation principale d'une application arborescente : c'est la ligne de tête (<code>.c-pathnav</code>).</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;nav aria-label&gt;</code> ; position courante en <code>aria-current</code>. Un cran dépliable est un <code>&lt;details&gt;</code> : Entrée ou Espace l'ouvre.</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-pagination" data-search="composant">
+            <h3>Pagination — .c-pagination</h3>
+            <p>Des numéros, deux flèches. La page courante porte le contour de sélection.</p>
+            <div class="cat-demo" data-code>
+              <nav class="c-pagination" aria-label="Pages">
+                <a href="#navigation" aria-label="Précédente"><i class="c-icon i-arrow-left" aria-hidden="true"></i></a>
+                <a href="#navigation">1</a>
+                <a href="#navigation" aria-current="page">2</a>
+                <a href="#navigation">3</a>
+                <span>…</span>
+                <a href="#navigation">12</a>
+                <a href="#navigation" aria-label="Suivante"><i class="c-icon i-arrow-right" aria-hidden="true"></i></a>
+              </nav>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Au-delà de cinquante lignes, quand la position dans la liste compte (« page 2 sur 12 »).</dd></div>
+              <div><dt>Éviter</dt><dd>Pour moins de deux pages. Dans un volet qui défile déjà : charger la suite au défilement, avec le décompte en ligne d'état.</dd></div>
+              <div><dt>Accessibilité</dt><dd><code>&lt;nav aria-label&gt;</code> ; page courante en <code>aria-current="page"</code> ; flèches avec <code>aria-label</code>.</dd></div>
             </dl>
           </div>
 
@@ -1591,7 +1855,7 @@
       group.querySelectorAll('.c-segmented__item').forEach((t) => t.setAttribute('aria-pressed', String(t === item)));
     }));
     // Filtres : le décompte — le résultat — se met à jour ; aucun filtre actif = tout.
-    document.querySelectorAll('.cat-demo .c-chip').forEach((chip) => chip.addEventListener('click', () => {
+    document.querySelectorAll('.cat-demo button.c-chip:not(.c-chip--applied)').forEach((chip) => chip.addEventListener('click', () => {
       chip.setAttribute('aria-pressed', String(chip.getAttribute('aria-pressed') !== 'true'));
       const all = [...chip.parentElement.querySelectorAll('.c-chip:not(:disabled)')], on = all.filter((c) => c.getAttribute('aria-pressed') === 'true');
       const sum = (on.length ? on : all.slice(0, 2)).reduce((a, c) => a + +c.querySelector('.c-chip__count').textContent.replace(/\D/g, ''), 0);
@@ -1620,7 +1884,7 @@
       bulk.querySelector('[data-clear]').addEventListener('click', () => { body.querySelectorAll('input:checked').forEach((i) => (i.checked = false)); count(); });
     })();
     // Menu : Échap et clic extérieur ferment, le focus revient au bouton.
-    document.addEventListener('click', (e) => document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item')) m.open = false; }));
+    document.addEventListener('click', (e) => document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item:not(.c-menu__item--check)')) m.open = false; }));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-menu[open]').forEach((m) => { m.open = false; m.querySelector('summary').focus(); }); });
   </script>
 </body>

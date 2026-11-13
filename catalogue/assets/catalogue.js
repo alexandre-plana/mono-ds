@@ -53,7 +53,7 @@
   const palette = document.createElement('dialog'); palette.className = 'c-dialog c-dialog--large c-palette cat-palette'; palette.setAttribute('aria-label', 'Aller à');
   palette.innerHTML = '<div id="cat-search" class="cat-search" role="search"></div>'; document.body.append(palette);
   palette.addEventListener('click', (e) => { if (e.target === palette) palette.close(); });
-  document.addEventListener('click', (e) => { document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item')) m.open = false; }); });
+  document.addEventListener('click', (e) => { document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item:not(.c-menu__item--check)')) m.open = false; }); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-breadcrumb__seg[open]').forEach((m) => { m.open = false; }); });
   // Un exemple ouvert dans l'onglet Exemples suit le thème et l'accent choisis ici.
   const frame = () => document.querySelector('iframe.cat-frame')?.contentDocument?.documentElement;

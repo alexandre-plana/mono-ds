@@ -84,6 +84,15 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 |---|---|---|
 | `.c-field` | `__label`, `__hint`, `__error` | Label toujours visible, au-dessus |
 | `.c-select` (liste ouverte) | `appearance: base-select` | La liste déroulante suit le système là où le navigateur le permet : surface de menu, option visée au ton d'un cran, option choisie marquée par le contour de sélection. Ailleurs, liste native |
+| `.c-menu--field` + `summary.c-select`, `.c-menu__item--check` | — | Choix multiple : un champ qui ouvre une liste de cases et annonce le décompte (« 2 régions ») |
+| `.c-button--icon`, `.c-button[aria-busy]` | `--large` | Icône seule : toujours un `aria-label`. Occupé : spinner devant le libellé, le bouton garde sa place et ne répond plus |
+| `.c-input--num`, `.c-input[type=date\|time]` | — | Nombre ferré à droite, tabulaire, sans flèches natives. Date et heure : saisie native, icône du jeu |
+| `.c-input-group` | `__affix`, `__action`, `--num`, `--step`, `--tags` | Champ composé : unité, préfixe, action (« Voir »), pas. `--tags` : saisie d'étiquettes, chaque valeur est un `.c-chip--applied` |
+| `.c-chip--applied`, `.c-chip__remove` | — | Filtre appliqué « critère : valeur », retiré d'une croix. Un `span`, seule la croix est un bouton |
+| `.c-combo` | `role="combobox"` + `.c-menu__list[role=listbox]` | Saisie assistée pour les longues listes ; la valeur vient toujours de la liste |
+| `.c-calendar` | `__head`, `__grid`, `__day` ; `aria-current="date"`, `aria-pressed`, `.is-between`, `.is-out`, `disabled` | Mois en grille. Aujourd'hui pointillé, choisi en contour de sélection, période tiretée. Pour une simple date : `type="date"` |
+| `.c-dropzone`, `.c-files` | `.is-over` ; `__item`, `__name`, `__size`, `__state`, `__remove` | Dépôt de fichier : emplacement tireté, toujours avec « parcourir ». Une ligne par fichier, jauge pendant l'envoi |
+| `.c-range` | `--value` (0–100), `.c-range__scale` | Curseur de valeur : un filet, une réglette ; la valeur est toujours écrite à côté |
 | `.c-input`, `.c-select`, `.c-textarea` | `[aria-invalid="true"]`, `disabled` | Erreur = texte + glyphe ; le signal désigne |
 | `.c-check` (`<label><input><span>`) | checkbox ou radio | Carré = multiple, rond = unique |
 | `.c-switch` (`<label><input role="switch"><span>`) | — | Effet immédiat uniquement |

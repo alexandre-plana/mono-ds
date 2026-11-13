@@ -101,6 +101,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-078 | Un cran du fil d'Ariane ouvre la liste de ses voisins | en vigueur, la forme (menu) remplacée par D-079 |
 | D-079 | Les voisins du fil se déplient en ligne ; un menu se survole par un filet, jamais par un fond | en vigueur, étendue aux contrôles par D-080 |
 | D-080 | Survol d'un contrôle : le contour se renforce, le fond ne change pas | en vigueur |
+| D-081 | Saisie : les contrôles courants qui manquaient | en vigueur |
 
 ---
 
@@ -753,3 +754,17 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Ce qui garde un fond** : l'appui (`:active`) — c'est le retour d'un geste, pas une annonce — et le bouton primaire lui-même, qui reste la tache claire de l'écran.
 - **Conséquence** : `--inverse-bg-hover` n'est plus consommé par aucun composant ; le rôle reste défini dans `tokens.css` pour ne rien casser chez qui l'emploierait.
 - **Distinction avec le focus** : focus clavier, 2 px au ton fort, à 3 px ; survol d'un bouton plein, 1 px dans la teinte du bouton, à 2 px. Le focus prime quand les deux coïncident.
+
+## D-081 — Saisie : les contrôles courants qui manquaient
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« vérifie qu'on a bien boutons, chips, champs, listes déroulantes… »)
+- **Constat** : l'inventaire de la page Composants montrait les bases, mais pas : une fiche propre à la liste déroulante, le choix multiple, le bouton d'une icône, le bouton occupé, les champs typés, le champ à unité, le filtre que l'on retire, la saisie assistée, la saisie d'étiquettes, la date, le dépôt de fichier, le curseur de valeur.
+- **Principe** : aucun nouveau langage. Chaque contrôle est un champ — contour d'un pixel, survol qui le renforce, focus qui pose la surface, inactif tireté — et chaque liste ouverte est la feuille d'un menu (D-079). Les sept tests d'écart ont été passés à chacun ; trois arbitrages méritent d'être écrits.
+- **Date** : la saisie d'une date est celle du navigateur (`type="date"`), segment par segment, avec l'icône du jeu. Écarté : un sélecteur de date maison ouvert sous chaque champ — plus lent qu'une frappe pour une date connue, et un composant lourd à rendre accessible. Le calendrier (`.c-calendar`) existe pour le cas où le mois est l'information : choisir une période, voir des jours fermés. Ses états suivent la grammaire des filets : aujourd'hui est un repère (pointillé), le jour choisi un contour de sélection, la période une relation (tireté). Aucune case teintée.
+- **Choix multiple** : un champ qui ouvre une liste de cases et écrit le décompte (« 2 régions »). Écarté : le `<select multiple>` natif (une boîte à défilement dont la sélection est une couleur du système d'exploitation) et les étiquettes dans le champ pour des valeurs prises dans une liste connue (le champ change de hauteur à chaque choix). Les étiquettes dans le champ (`.c-input-group--tags`) sont réservées aux valeurs libres.
+- **Dépôt de fichier** : un emplacement, donc un contour tireté — le même sens que l'emplacement d'une fiche pendant un glissé (D-073). Ferré à gauche, sans illustration, toujours avec « parcourir ».
+- **Curseur de valeur** : la part acquise reprend le dessin de la jauge (`.c-meter`) ; elle suit une propriété `--value` que le produit tient à jour, faute de moyen en CSS pur sur tous les navigateurs. La valeur est toujours écrite en chiffres à côté.
+- **Bouton occupé** : il garde libellé et largeur, reçoit le `.c-spinner` du système (jamais un cercle) et ne répond plus.
+- **Non retenu : l'avatar.** Une personne s'écrit par son nom — « M. Delorme » —, comme dans les références. Une pastille d'initiales serait un rond décoratif de plus, et le rayon est nul. À rouvrir seulement si un écran doit distinguer des personnes d'un coup d'œil dans une colonne étroite.
+- **Catalogue** : le fil d'Ariane et la pagination ont chacun leur fiche. Toutes les nouvelles démonstrations répondent (D-075).
+- **Limites** : le format affiché d'une date native dépend de la langue du navigateur ; la liste ouverte d'un `<select>` reste native hors de `base-select` (D-074).

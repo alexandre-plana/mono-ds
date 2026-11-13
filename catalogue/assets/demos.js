@@ -119,4 +119,77 @@
   (() => { const d = demo('c-board'); if (!d || !window.MonoKanban) return; const board = $('.c-board', d), ghost = document.createElement('div'); ghost.hidden = true;
     MonoKanban({ board, inspector: ghost, detail: ghost, notifs, columns: [{ id: 'todo', name: 'À faire' }, { id: 'doing', name: 'En cours' }, { id: 'done', name: 'Fait' }],
       cards: [['D-044', 'Ouverture d\'Arles : effectif', 'J. Reynaud', '2 déc.', 'todo'], ['D-045', 'Rapport du troisième trimestre', 'P. Vidal', '30 nov.', 'todo'], ['D-041', 'Reprise des contrats de Vizille', 'M. Delorme', '14 nov.', 'doing', true], ['D-038', 'Audit des primes du Nord', 'A. Perrin', '21 nov.', 'doing'], ['D-031', 'Clôture de l\'exercice 2025', 'P. Vidal', '31 oct.', 'done']].map(([ref, title, who, due, col, blocked], i) => ({ id: 'c' + i, ref, title, who, due, col, blocked: !!blocked, note: '' })) }); })();
+
+  // ---- Bouton occupé : il tourne, puis dit que c'est fait
+  $$('[data-demo-busy]').forEach((b) => b.addEventListener('click', () => { const label = b.textContent; b.setAttribute('aria-busy', 'true'); b.innerHTML = '<span class="c-spinner" aria-hidden="true"></span>Export';
+    setTimeout(() => { b.removeAttribute('aria-busy'); b.textContent = b.dataset.demoBusy; setTimeout(() => { b.textContent = label; }, 1400); }, 1500); }));
+
+  // ---- Filtres appliqués : la croix retire, « Tout retirer » vide, et l'on peut revenir
+  (() => { const d = $('#c-chip [role="group"][aria-label="Filtres appliqués"]'); if (!d) return; const initial = d.innerHTML;
+    d.addEventListener('click', (e) => { if (e.target.closest('.c-chip__remove')) e.target.closest('.c-chip').remove(); else if (e.target.closest('[data-demo-reset]')) $$('.c-chip', d).forEach((c) => c.remove()); else if (e.target.closest('[data-demo-restore]')) { d.innerHTML = initial; return; } else return;
+      const btn = $('button.c-button', d); if (!$('.c-chip', d)) { btn.textContent = 'Rétablir les filtres'; btn.removeAttribute('data-demo-reset'); btn.setAttribute('data-demo-restore', ''); } }); })();
+
+  // ---- Champ composé : voir le mot de passe, ajuster d'un pas
+  $$('[data-demo-reveal]').forEach((b) => b.addEventListener('click', () => { const input = b.parentElement.querySelector('input'), on = input.type === 'password'; input.type = on ? 'text' : 'password'; b.setAttribute('aria-pressed', String(on)); b.textContent = on ? 'Cacher' : 'Voir'; }));
+  $$('[data-demo-step]').forEach((b) => { const input = b.parentElement.querySelector('input'), sync = () => $$('[data-demo-step]', b.parentElement).forEach((x) => { x.disabled = +x.dataset.demoStep < 0 ? +input.value <= +input.min : +input.value >= +input.max; });
+    b.addEventListener('click', () => { input.value = Math.max(+input.min, Math.min(+input.max, (+input.value || 0) + +b.dataset.demoStep)); sync(); }); input.addEventListener('input', sync); sync(); });
+
+  // ---- Champ à cases : le champ annonce le décompte
+  $$('.c-menu--field').forEach((m) => { const out = $('[data-count]', m), sync = () => { const on = $$('input:checked', m); out.textContent = !on.length ? 'Toutes les régions' : on.length === 1 ? on[0].nextElementSibling.textContent : on.length + ' régions'; }; m.addEventListener('change', sync); sync(); });
+
+  // ---- Saisie assistée : la liste suit la frappe ; flèches, Entrée, Échap
+  (() => { const d = demo('c-combo'); if (!d) return; const input = $('input', d), list = $('.c-menu__list', d);
+    const DATA = [['Arles', 'Sud'], ['Arras', 'Nord'], ['Bar-le-Duc', 'Est'], ['Colmar', 'Est'], ['Carcassonne', 'Sud'], ['Annecy', 'Est'], ['Angers', 'Ouest'], ['Bayonne', 'Sud'], ['Brest', 'Ouest'], ['Chartres', 'Ouest'], ['Dax', 'Sud'], ['Lorient', 'Ouest'], ['Narbonne', 'Sud'], ['Tarbes', 'Sud'], ['Vizille', 'Est']];
+    const norm = (v) => v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); let active = 0, shown = [];
+    const open = (on) => { list.hidden = !on; input.setAttribute('aria-expanded', String(on)); };
+    const render = () => { const q = norm(input.value.trim()); if (!q) { open(false); return; }
+      shown = DATA.filter(([n]) => norm(n).includes(q)).sort((a, b) => norm(a[0]).indexOf(q) - norm(b[0]).indexOf(q)).slice(0, 6); active = Math.min(active, Math.max(0, shown.length - 1));
+      list.innerHTML = shown.length ? shown.map(([n, r], i) => { const k = norm(n).indexOf(q); return `<button class="c-menu__item" type="button" role="option" tabindex="-1" aria-selected="${i === active}"><span>${n.slice(0, k)}<mark>${n.slice(k, k + q.length)}</mark>${n.slice(k + q.length)}</span> <span class="c-menu__hint">${r}</span></button>`; }).join('') : '<span class="c-menu__label">Aucune agence</span>';
+      open(true); };
+    const pick = (i) => { if (!shown[i]) return; input.value = shown[i][0]; open(false); };
+    input.addEventListener('input', () => { active = 0; render(); }); input.addEventListener('focus', () => { input.select(); });
+    input.addEventListener('keydown', (e) => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (list.hidden) { render(); return; } active = (active + (e.key === 'ArrowDown' ? 1 : -1) + shown.length) % shown.length; render(); } else if (e.key === 'Enter' && !list.hidden) { e.preventDefault(); pick(active); } else if (e.key === 'Escape') open(false); });
+    list.addEventListener('pointerdown', (e) => { const it = e.target.closest('.c-menu__item'); if (it) { e.preventDefault(); pick($$('.c-menu__item', list).indexOf(it)); } });
+    input.addEventListener('blur', () => open(false)); })();
+
+  // ---- Saisie d'étiquettes : Entrée ou virgule ajoute, Retour arrière reprend la dernière
+  (() => { const d = demo('c-input-tags'); if (!d) return; const group = $('.c-input-group', d), input = $('input', group), hint = $('.c-field__hint', d), max = +input.dataset.max;
+    const tags = () => $$('.c-chip', group), names = () => tags().map((t) => t.firstChild.textContent.trim());
+    const sync = (msg) => { const full = tags().length >= max; input.disabled = full; input.placeholder = full ? '' : 'Ajouter'; hint.textContent = msg || (full ? `${max} destinataires : la limite est atteinte.` : 'Entrée pour ajouter.'); };
+    const add = () => { const v = input.value.replace(/,/g, '').trim(); if (!v) return; if (names().some((n) => n.toLowerCase() === v.toLowerCase())) { input.value = ''; sync(`${v} y est déjà.`); return; }
+      const c = document.createElement('span'); c.className = 'c-chip c-chip--applied'; c.append(v + ' '); const x = document.createElement('button'); x.className = 'c-chip__remove'; x.type = 'button'; x.setAttribute('aria-label', 'Retirer ' + v); x.innerHTML = '<i class="c-icon i-close" aria-hidden="true"></i>'; c.append(x); input.before(c); input.value = ''; sync(); };
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); add(); } else if (e.key === 'Backspace' && !input.value && tags().length) { const last = tags().at(-1); input.value = last.firstChild.textContent.trim(); last.remove(); sync(); e.preventDefault(); } });
+    group.addEventListener('click', (e) => { const x = e.target.closest('.c-chip__remove'); if (x) { e.preventDefault(); x.closest('.c-chip').remove(); sync(); input.focus(); } }); sync(); })();
+
+  // ---- Calendrier : changer de mois, choisir une période en deux clics
+  (() => { const d = demo('c-calendar'); if (!d) return; const cal = $('.c-calendar', d), title = $('.c-calendar__title', cal), body = $('tbody', cal);
+    const MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'], SHORT = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+    const iso = (t) => `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`, at = (s) => { const [y, m, dd] = s.split('-').map(Number); return new Date(y, m - 1, dd); };
+    const say = (s) => { const t = at(s); return `${t.getDate()} ${SHORT[t.getMonth()]} ${t.getFullYear()}`; };
+    const TODAY = '2026-11-13', CLOSED = new Set(['2026-11-11', '2026-12-25', '2027-01-01']); let view = new Date(2026, 10, 1), from = '2026-11-16', to = '2026-11-20';
+    const render = () => { const name = MONTHS[view.getMonth()]; title.textContent = name[0].toUpperCase() + name.slice(1) + ' ' + view.getFullYear(); cal.setAttribute('aria-label', title.textContent);
+      const start = new Date(view); start.setDate(1 - ((view.getDay() + 6) % 7)); let html = '';
+      for (let w = 0; w < 6; w++) { const first = new Date(start); first.setDate(start.getDate() + w * 7); if (w === 5 && first.getMonth() !== view.getMonth()) break; html += '<tr>';
+        for (let i = 0; i < 7; i++) { const t = new Date(first); t.setDate(first.getDate() + i); const k = iso(t), end = k === from || k === to;
+          html += `<td><button class="c-calendar__day${t.getMonth() !== view.getMonth() ? ' is-out' : ''}${!end && to && k > from && k < to ? ' is-between' : ''}" type="button" data-date="${k}"${k === TODAY ? ' aria-current="date"' : ''}${end ? ' aria-pressed="true"' : ''}${CLOSED.has(k) ? ' disabled' : ''}>${t.getDate()}</button></td>`; } html += '</tr>'; }
+      body.innerHTML = html;
+      $('[data-cal-from]', d).textContent = say(from); $('[data-cal-to]', d).textContent = to ? say(to) : '— choisir la fin'; const n = to ? Math.round((at(to) - at(from)) / 864e5) + 1 : 0; $('[data-cal-len]', d).textContent = to ? `${n} jour${n > 1 ? 's' : ''}` : '—'; };
+    cal.addEventListener('click', (e) => { const nav = e.target.closest('[data-cal]'), day = e.target.closest('.c-calendar__day');
+      if (nav) { view = new Date(view.getFullYear(), view.getMonth() + +nav.dataset.cal, 1); render(); }
+      else if (day) { const k = day.dataset.date; if (!to && k >= from) to = k; else { from = k; to = null; } render(); } }); })();
+
+  // ---- Dépôt de fichier : le contour se renforce au survol d'un fichier ; chaque fichier reçu devient une ligne
+  (() => { const d = demo('c-dropzone'); if (!d) return; const zone = $('.c-dropzone', d), input = $('input', zone), list = $('.c-files', d);
+    const size = (n) => (n > 1048576 ? (n / 1048576).toFixed(1).replace('.', ',') + ' Mo' : Math.max(1, Math.round(n / 1024)) + ' Ko'), esc = (v) => v.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const run = (li) => { const state = $('.c-files__state', li), meter = $('.c-meter', li); let v = +meter.getAttribute('aria-valuenow'); const t = setInterval(() => { if (!li.isConnected) return clearInterval(t); v = Math.min(100, v + 2 + Math.random() * 5); meter.style.setProperty('--value', v); meter.setAttribute('aria-valuenow', Math.round(v)); state.textContent = Math.round(v) + ' %'; if (v >= 100) { clearInterval(t); meter.remove(); state.textContent = 'Reçu'; } }, 420); };
+    const add = (files) => [...files].forEach((f) => { const ok = /\.(csv|pdf)$/i.test(f.name) && f.size <= 10485760, li = document.createElement('li'); li.className = 'c-files__item';
+      li.innerHTML = `<span class="c-files__name">${esc(f.name)}</span><span class="c-files__size">${size(f.size)}</span><span class="c-files__state">${ok ? '0 %' : ''}</span><button class="c-files__remove" type="button" aria-label="Retirer ${esc(f.name)}"><i class="c-icon i-close" aria-hidden="true"></i></button>` + (ok ? '<span class="c-meter" style="--value: 0" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></span>' : `<span class="c-field__error" style="grid-column: 1 / -1">${f.size > 10485760 ? 'Refusé : plus de 10 Mo.' : 'Refusé : ni CSV ni PDF.'}</span>`);
+      list.append(li); if (ok) run(li); });
+    ['dragenter', 'dragover'].forEach((n) => zone.addEventListener(n, (e) => { e.preventDefault(); zone.classList.add('is-over'); }));
+    ['dragleave', 'drop'].forEach((n) => zone.addEventListener(n, (e) => { e.preventDefault(); zone.classList.remove('is-over'); }));
+    zone.addEventListener('drop', (e) => add(e.dataTransfer.files)); input.addEventListener('change', () => { add(input.files); input.value = ''; });
+    list.addEventListener('click', (e) => e.target.closest('.c-files__remove')?.closest('li').remove()); const pending = $('.c-meter', list)?.closest('li'); if (pending) run(pending); })();
+
+  // ---- Curseur : la part acquise et le nombre suivent
+  $$('.c-range').forEach((r) => { const out = document.querySelector(`output[for="${r.id}"]`), sync = () => { r.style.setProperty('--value', (r.value - r.min) / (r.max - r.min) * 100); if (out) out.textContent = r.value + ' %'; }; r.addEventListener('input', sync); sync(); });
 })();
