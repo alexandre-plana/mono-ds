@@ -97,7 +97,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-074 | La liste déroulante suit le système | en vigueur |
 | D-075 | Catalogue : « Aller à » pour tout ce qui est global ; un index par page ; démonstrations vivantes | en vigueur, l'index de page remplacé par D-077 |
 | D-076 | Les exemples s'ouvrent dans leur onglet, avec le fil d'Ariane | en vigueur |
-| D-077 | Pages du catalogue : un sommaire, puis une chose à la fois | en vigueur |
+| D-077 | Pages du catalogue : un sommaire, puis une chose à la fois | en vigueur, complétée par D-078 |
+| D-078 | Un cran du fil d'Ariane ouvre la liste de ses voisins | en vigueur |
 
 ---
 
@@ -721,3 +722,12 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Raison** : c'est la règle du gabarit arborescent — le chemin est la navigation — et celle du vide : à l'écran, il n'y a que ce qu'on lit. Pour sauter ailleurs, « Aller à » (touche /) est toujours là.
 - **Écarté** : l'index latéral qui suit le défilement (D-075, retiré), les onglets de rubrique (première tentative de D-075), un sommaire replié dans un menu (une navigation cachée de plus).
 - **Conséquence** : un lien ou un résultat de recherche ouvre directement la bonne vue ; l'onglet retrouve la vue où on l'avait laissé.
+
+## D-078 — Un cran du fil d'Ariane ouvre la liste de ses voisins
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Complète** : D-077, D-076
+- **Constat** : avec D-077, passer d'un composant à son voisin demandait de remonter d'un cran ou d'enchaîner « Suite ». Il manquait une navigation rapide.
+- **Décision** : dans le fil d'Ariane, un cran peut être un menu (`.c-breadcrumb__seg`) : un clic sur « Plan » ouvre la liste des composants de la rubrique, un clic sur « Navigation » celle des rubriques ; l'élément courant y porte le contour de sélection. Un chevron annonce le menu. Même chose pour un exemple ouvert : « Dossiers » ouvre la liste des exemples.
+- **Et la règle « jamais les deux » ?** Elle oppose deux navigations d'application : les onglets (parties séparées) et la ligne de tête en chemin (`.c-pathnav`, arborescence). Elle tient. Ici les onglets restent la seule navigation entre les parties ; le fil ne propose des voisins qu'à l'intérieur de la page, sous le niveau de l'onglet. Le cran de l'onglet lui-même reste un simple lien — il ne double pas la rangée d'onglets.
+- **Limites** : le premier cran reste un lien ; un cran sans voisin reste un texte ; la liste d'un cran ne montre qu'un niveau.
+- **Écarté** : remettre une liste des voisins dans la page (c'est ce que D-077 a retiré).

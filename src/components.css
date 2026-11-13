@@ -166,6 +166,19 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-breadcrumb--head > * + *::before { margin-right: var(--space-3); }
 .c-breadcrumb--head [aria-current] { color: var(--fg-strong); }
 .c-breadcrumb [aria-current] { color: var(--fg); }
+/* Un cran du fil peut ouvrir la liste de ses voisins (même niveau, même parent) : on change de voisin
+   sans remonter. <details class="c-menu c-breadcrumb__seg"><summary>Plan<i class="c-icon i-chevron-down"></i></summary>…
+   Le premier cran reste un lien ; un cran sans voisin reste un texte. */
+.c-breadcrumb { align-items: baseline; }
+.c-breadcrumb__seg { display: inline-flex; align-items: baseline; }
+.c-breadcrumb__seg > summary { list-style: none; display: inline-flex; align-items: baseline; gap: var(--space-1); color: var(--fg-soft); cursor: pointer; transition: color var(--duration); }
+.c-breadcrumb__seg > summary::-webkit-details-marker { display: none; }
+.c-breadcrumb__seg > summary .c-icon { align-self: center; color: var(--fg-muted); }
+.c-breadcrumb__seg > summary:hover, .c-breadcrumb__seg[open] > summary, .c-breadcrumb__seg > summary:hover .c-icon, .c-breadcrumb__seg[open] > summary .c-icon { color: var(--fg-strong); }
+.c-breadcrumb__seg[aria-current] > summary { color: var(--fg); }
+.c-breadcrumb--head .c-breadcrumb__seg[aria-current] > summary { color: var(--fg-strong); }
+.c-breadcrumb__seg > .c-menu__list { left: auto; right: auto; margin-left: 1.5em; letter-spacing: 0; text-transform: none; max-height: min(60vh, 28rem); overflow-y: auto; }
+.c-breadcrumb--head .c-breadcrumb__seg > .c-menu__list { margin-left: 2em; }
 
 .c-pagination { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-small); }
 .c-pagination a, .c-pagination span { min-width: 1.75rem; height: 1.75rem; display: grid; place-content: center; padding-inline: var(--space-1); text-decoration: none; color: var(--fg-soft); border: var(--hairline) solid transparent; }

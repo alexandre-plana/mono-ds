@@ -962,12 +962,19 @@
 
           <div class="cat-sub" id="fil-d-ariane-et-pagination" data-search="composant">
             <h3>Fil d'Ariane et pagination</h3>
-            <div class="cat-demo" data-code>
+            <div class="cat-demo" data-code style="min-height: 10rem">
               <div class="l-split">
                 <nav class="c-breadcrumb" aria-label="Fil d'Ariane">
                   <a href="#navigation">Rapport</a>
                   <a href="#navigation">Réseau</a>
-                  <span aria-current="page">Agences</span>
+                  <details class="c-menu c-breadcrumb__seg" aria-current="page">
+                    <summary>Agences<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
+                    <div class="c-menu__list" role="menu">
+                      <a class="c-menu__item" role="menuitem" href="#navigation">Synthèse</a>
+                      <a class="c-menu__item" role="menuitem" href="#navigation" aria-current="true">Agences</a>
+                      <a class="c-menu__item" role="menuitem" href="#navigation">Branches</a>
+                    </div>
+                  </details>
                 </nav>
                 <nav class="c-pagination" aria-label="Pages">
                   <a href="#navigation" aria-label="Précédente"><i class="c-icon i-arrow-left" aria-hidden="true"></i></a>
@@ -982,6 +989,7 @@
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Fil d'Ariane : situer une page à plus de deux niveaux de profondeur. Pagination : au-delà de cinquante lignes.</dd></div>
+              <div><dt>Voisins</dt><dd>Un cran peut ouvrir la liste de ses voisins (<code>.c-breadcrumb__seg</code>) : on passe d'un élément à l'autre sans remonter. À réserver aux crans à l'intérieur de la page ; le premier cran reste un lien, un cran sans voisin reste un texte.</dd></div>
               <div><dt>Éviter</dt><dd>Un fil d'Ariane sur une page de premier niveau. Une pagination pour moins de deux pages.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;nav aria-label&gt;</code> ; position courante en <code>aria-current</code> ; flèches avec <code>aria-label</code>.</dd></div>
             </dl>
