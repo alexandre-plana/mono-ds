@@ -7,7 +7,7 @@
   "style": "src/mono.css",
   "files": ["src", "docs"],
   "scripts": {
-    "serve": "python3 -m http.server 8080",
+    "serve": "node scripts/serve.mjs",
     "check:contrast": "node scripts/contrast.mjs",
     "check:tones": "node scripts/tonal-audit.mjs",
     "build:search": "node scripts/build-search-index.mjs",
