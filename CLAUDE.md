@@ -103,7 +103,8 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
 - Le logo (`.c-logo`, sans point `--plain` dans un écran de travail) figure dans chaque
   écran, à une extrémité : bout de la rangée d'onglets, fin des métadonnées de l'en-tête,
   ou colophon. Le catalogue lui-même suit le gabarit à onglets : pas de rail. Ce qui est global
-  (logo, recherche, notifications, thème, réglages) tient sur une ligne système au-dessus des onglets,
+  (recherche, notifications, thème, réglages) tient sur une ligne système au-dessus des onglets — le
+  logo est le premier onglet, l'accueil, et la recherche part du même bord que lui —,
   jamais dans l'en-tête d'une page ; le panneau de recherche est calé sur son champ (touche /) ; une
   page a une marge à gauche — son sommaire : rubriques repliées sur leur nom, celle qu'on lit ouverte,
   ni titre ni numéro ni filet, au ton éteint tant qu'on ne s'en approche pas — et montre à droite une

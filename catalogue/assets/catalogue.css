@@ -173,3 +173,5 @@ button.cat-result { appearance: none; width: 100%; background: none; border-top:
 .cat-section.is-leaf > :not(.cat-sub) { display: none; }
 /* Arriver par une ancre montre la vue depuis son en-tête, fil d'Ariane compris. */
 .cat-section, .cat-sub { scroll-margin-top: 24rem; }
+/* Le logo dans le premier onglet : au corps de la rangée. */
+.c-doctabs__tab .c-logo { font-size: inherit; }

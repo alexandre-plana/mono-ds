@@ -103,7 +103,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-080 | Survol d'un contrôle : le contour se renforce, le fond ne change pas | en vigueur |
 | D-081 | Saisie : les contrôles courants qui manquaient | en vigueur |
 | D-082 | Fil d'Ariane : la rangée de voisins est la sœur du cran ; le serveur local interdit le cache | en vigueur |
-| D-083 | Catalogue : une ligne système au-dessus des onglets | en vigueur |
+| D-083 | Catalogue : une ligne système au-dessus des onglets | en vigueur, la place du logo amendée par D-094 |
 | D-084 | Grain fin sur le fond Encre | amendée par D-085 |
 | D-085 | Grain fin sur le fond Papier | amendée par D-086 |
 | D-086 | Texture fibreuse en thème Papier | en vigueur |
@@ -114,6 +114,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-091 | Trames de signal, matrices de caractères et mosaïques | remplacée par D-093 |
 | D-092 | Densité des planches du bureau | remplacée par D-093 |
 | D-093 | Trois nouvelles animations d’après les références | en vigueur |
+| D-094 | Catalogue : le logo est le premier onglet | en vigueur |
 
 ---
 
@@ -877,3 +878,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Date** 2026-11-13 · **Statut** en vigueur · **Remplace** les scènes de D-090 à D-092.
 - **Décision**. Trois compositions procédurales repartent des quatre références visuelles fournies. Brouillage mêle trames, bruit et déchirures horizontales. Mosaïque anime des aplats et leurs subdivisions. Transmission fait évoluer un champ de glyphes. Le bureau et ses commandes reprennent le fonctionnement de D-090.
 - **Affinement**. Brouillage réserve une bande peu marquée entre deux masses de trame et localise les déchirures. Dans Mosaïque, la partie haute reste fixe et la subdivision se concentre dans la moitié basse. Transmission garde ses caractères en place. De petites empreintes se révèlent horizontalement, avec des écarts de densité entre les zones.
+## D-094 — Catalogue : le logo est le premier onglet
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Proposée par** : le commanditaire · **Amende** : D-083 (place du logo)
+- **Constat** : sur la ligne système, le logo précédait la recherche ; le champ ne tombait sur aucun axe — ni le bord de la fenêtre, ni celui du contenu.
+- **Décision** : le logo quitte la ligne système et devient le libellé du premier onglet, à la place du mot « Présentation » : c'est l'accueil. La ligne système commence alors par la recherche, sur le même bord gauche que la rangée d'onglets et la page. Deux lignes, un seul axe.
+- **Conséquences** : l'onglet garde son nom pour les lecteurs d'écran (« Mono — Présentation ») ; comme tout onglet, il prend le contour de sélection quand on est sur l'accueil. La fiche du logo, qui s'ouvrait d'un clic sur lui, passe dans « Réglages ».
+- **Règle générale inchangée** : le logo figure à une extrémité de l'écran ; le début de la rangée d'onglets en est une.
+- **Écarté** (maquettes soumises) : le logo à l'autre bout de la ligne système — même alignement, mais la droite se charge ; la recherche calée sur l'axe du contenu — un axe qui se déplace avec la largeur de la fenêtre.

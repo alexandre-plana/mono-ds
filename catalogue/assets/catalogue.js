@@ -42,10 +42,10 @@
 
   // Le catalogue applique son propre gabarit : une application à parties séparées, donc des onglets
   // persistants au-dessus de la page, le fil d'Ariane en tête — et pas de rail. Ce qui vaut pour toute
-  // l'application a sa propre ligne, au-dessus des onglets : le logo, la recherche — un vrai champ, qui
-  // prend la largeur libre —, puis les notifications, le thème et les réglages. Tout s'y écrit en mots.
+  // l'application a sa propre ligne, au-dessus des onglets : la recherche — un vrai champ, qui prend la
+  // largeur libre —, puis les notifications, le thème et les réglages. Tout s'y écrit en mots.
   const sys = document.createElement('div'); sys.className = 'cat-sys';
-  sys.innerHTML = `<button class="c-logo" type="button" id="cat-logo" aria-haspopup="dialog" aria-label="Mono — le logo" style="appearance: none; background: none; border: 0; padding: 0; cursor: pointer">Mono</button>
+  sys.innerHTML = `
     <div id="cat-search" class="cat-search" role="search"></div>
     <div class="cat-sys__tools">
       <details class="c-menu c-menu--end" id="cat-notifs"><summary class="c-button c-button--quiet">Notifications<span class="g-bracket" data-badge hidden></span></summary><div class="c-menu__list c-notifs" aria-label="Notifications"></div></details>
@@ -57,10 +57,14 @@
           <button class="c-menu__item" type="button" role="menuitemradio" data-set-accent="flash">Flash <span class="c-menu__hint">Aplat à l'arrivée</span></button>
           <hr class="c-menu__sep">
           <button class="c-menu__item c-menu__item--check" type="button" role="menuitemcheckbox" data-toggle-grain>Grain <span class="c-menu__hint" aria-hidden="true"></span></button>
+          <hr class="c-menu__sep">
+          <button class="c-menu__item" type="button" role="menuitem" id="cat-logo" aria-haspopup="dialog">Le logo <span class="c-menu__hint">Dessin et règles</span></button>
         </div></details>
     </div>`;
   const tabs = document.createElement('nav'); tabs.className = 'c-doctabs'; tabs.setAttribute('aria-label', 'Catalogue');
-  tabs.innerHTML = PAGES.map(([href, label]) => `<a class="c-doctabs__tab" href="${root}${href}"${isCurrent(href) ? ' aria-current="page"' : ''}><span class="c-doctabs__label">${label}</span></a>`).join('');
+  // Le premier onglet est l'accueil : il porte le logo à la place du mot. La ligne système commence alors par
+  // la recherche, calée sur le même bord gauche que la rangée d'onglets et la page.
+  tabs.innerHTML = PAGES.map(([href, label], i) => `<a class="c-doctabs__tab" href="${root}${href}"${isCurrent(href) ? ' aria-current="page"' : ''}${i ? '' : ` aria-label="Mono — ${label}"`}><span class="c-doctabs__label">${i ? label : '<span class="c-logo">Mono</span>'}</span></a>`).join('');
   document.body.classList.add('l-desk--tabs', 'cat-has-sys'); document.body.prepend(sys, tabs);
   document.addEventListener('click', (e) => { document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item:not(.c-menu__item--check)')) m.open = false; }); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-breadcrumb__seg[open], .cat-sys .c-menu[open]').forEach((m) => { m.open = false; }); });
