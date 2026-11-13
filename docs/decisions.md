@@ -124,7 +124,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-101 | Expérience 03 : l'ordre et le rythme | remplacée par D-103 (les reclassements comparés disparaissent) |
 | D-102 | Laboratoire, expérience 04 : l'attention arbitrée ; la bande des ateliers tient en une ligne | l'expérience fondue dans D-103 ; la bande en vigueur |
 | D-103 | Laboratoire : les expériences 03 et 04 n'en font qu'une, avec le langage visuel de la 01 | en vigueur |
-| D-104 | Laboratoire, expérience 04 : les formes du direct | en vigueur |
+| D-104 | Laboratoire, expérience 04 : les formes du direct | en vigueur, la carte et la couleur reprises par D-105 |
+| D-105 | Expérience 04 : la carte reprise, quatre teintes, le flux qui défile | en vigueur |
 
 ---
 
@@ -992,3 +993,12 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Principes communs** : rien ne défile, rien ne déplace ce qu'on lit ; ce qui vieillit se compresse au lieu de disparaître ; aucune couleur hormis le signal, la direction se dit par la forme.
 - **Particularité** : aucune règle enfreinte ; ces formes pourraient rejoindre les visualisations du système.
 - **Technique** : `catalogue/assets/labo-formes.js`, deux des formes dessinées sur canevas avec les rôles lus dans la feuille de style.
+
+## D-105 — Expérience 04 : la carte reprise, quatre teintes, le flux qui défile
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Signalée par** : le commanditaire (capture : contours qui se chevauchent ; « pas de couleurs d'état, variations trop peu étendues, je m'attends à plus de mouvement et de couleur ») · **Amende** : D-104
+- **La carte** : le contour de l'ancienne taille, posé à l'extérieur des cases, chevauchait les voisines dès que les colonnes changeaient de largeur. Il est retiré. L'ancienne taille se dit maintenant à l'intérieur de la case (un trait tireté), et seulement quand elle grandit. La couleur entre : chaque case se remplit selon son mouvement net récent — la teinte dit le sens, l'intensité l'ampleur —, et s'éteint avec une demi-vie de douze secondes. Les états s'écrivent : « Bloquée » (case pleine, au signal), « Sous 3 M ».
+- **Des variations amples** : le flux simulé passe de 1 à 8 % par événement à 4 à 18 %, avec des sauts de 25 à 50 % et un retour vers la valeur de base. Constat à retenir : une carte proportionnelle ne convient qu'à des données qui varient franchement.
+- **Quatre teintes** (réglage) : feu (vert, orange, rouge), chaud-froid, ambre (une seule teinte), encre (sans couleur). Elles s'appliquent aux cinq formes ; la forme double toujours la couleur. L'atelier enfreint donc « une seule couleur », sauf en « Encre ».
+- **Une cinquième forme, le flux qui défile** : les événements entrent par le haut ; en choisir un arrête le défilement, retient les nouveaux derrière une ligne, et montre l'événement en entier à côté — avant, après, nature, passé récent de l'agence. L'agence choisie est désignée dans la carte et sur la bande. Flèches pour parcourir, Échap pour reprendre.
+- **« Ensemble »** montre côte à côte la carte, la bande, le flux et les sédiments ; le journal qui se résume reste une forme à part.

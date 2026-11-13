@@ -9,7 +9,7 @@
   <script src="../assets/prefs.js"></script>
 </head>
 <body class="l-desk x-atelier">
-  <div class="x-stage" id="x4" data-flow="marche" data-pace="calme" data-form="carte">
+  <div class="x-stage" id="x4" data-flow="marche" data-pace="calme" data-form="carte" data-hue="feu">
     <div class="l-shell x-screen">
       <header class="c-masthead">
         <div class="c-masthead__title">Réseau — Activité en direct</div>
@@ -21,20 +21,22 @@
     <footer class="x-strip">
       <a class="x-strip__back" href="../laboratoire.html#formes-du-direct"><i class="c-icon i-arrow-left" aria-hidden="true"></i>Laboratoire</a>
       <span class="x-strip__name">Atelier 04 · Les formes du direct</span>
-      <span class="x-bar__group"><span class="c-segmented" role="group" aria-label="Forme"><button class="c-segmented__item" type="button" data-set-form="carte" aria-pressed="true">Carte</button><button class="c-segmented__item" type="button" data-set-form="bande" aria-pressed="false">Bande</button><button class="c-segmented__item" type="button" data-set-form="journal" aria-pressed="false">Journal</button><button class="c-segmented__item" type="button" data-set-form="sediments" aria-pressed="false">Sédiments</button><button class="c-segmented__item" type="button" data-set-form="quatre" aria-pressed="false">Les quatre</button></span></span>
+      <span class="x-bar__group"><span class="c-segmented" role="group" aria-label="Forme"><button class="c-segmented__item" type="button" data-set-form="carte" aria-pressed="true">Carte</button><button class="c-segmented__item" type="button" data-set-form="bande" aria-pressed="false">Bande</button><button class="c-segmented__item" type="button" data-set-form="flux" aria-pressed="false">Flux</button><button class="c-segmented__item" type="button" data-set-form="journal" aria-pressed="false">Journal</button><button class="c-segmented__item" type="button" data-set-form="sediments" aria-pressed="false">Sédiments</button><button class="c-segmented__item" type="button" data-set-form="quatre" aria-pressed="false">Ensemble</button></span></span>
       <span class="x-bar__group"><span class="c-segmented" role="group" aria-label="Flux"><button class="c-segmented__item" type="button" data-set-flow="marche" aria-pressed="true">Flux</button><button class="c-segmented__item" type="button" data-set-flow="pause" aria-pressed="false">Pause</button></span></span>
       <button class="c-button" type="button" data-once>Un changement</button>
       <details class="x-pop"><summary>Réglages<i class="c-icon i-chevron-up" aria-hidden="true"></i></summary>
         <div class="x-pop__panel">
+          <span class="x-bar__group"><span class="x-bar__label">Teinte</span><span class="c-segmented" role="group" aria-label="Teinte"><button class="c-segmented__item" type="button" data-set-hue="feu" aria-pressed="true">Feu</button><button class="c-segmented__item" type="button" data-set-hue="chaudfroid" aria-pressed="false">Chaud-froid</button><button class="c-segmented__item" type="button" data-set-hue="ambre" aria-pressed="false">Ambre</button><button class="c-segmented__item" type="button" data-set-hue="encre" aria-pressed="false">Encre</button></span></span>
           <span class="x-bar__group"><span class="x-bar__label">Rythme du flux</span><span class="c-segmented" role="group" aria-label="Rythme"><button class="c-segmented__item" type="button" data-set-pace="calme" aria-pressed="true">Calme</button><button class="c-segmented__item" type="button" data-set-pace="vif" aria-pressed="false">Vif</button><button class="c-segmented__item" type="button" data-set-pace="rafale" aria-pressed="false">Rafale</button></span></span>
         </div></details>
       <details class="x-pop"><summary>Mode d'emploi<i class="c-icon i-chevron-up" aria-hidden="true"></i></summary>
         <div class="x-pop__panel"><ol class="x-steps">
-          <li class="is-on"><b>Carte</b>La surface d'une case est la prime de l'agence. Les cases ne changent jamais de place ; quand l'une change, le contour tireté de son ancienne taille reste un instant.</li>
+          <li class="is-on"><b>Carte</b>La surface d'une case est la prime de l'agence. La couleur dit le mouvement récent : sa teinte le sens, son intensité l'ampleur ; elle s'éteint en une demi-minute. Une case qui vient de grandir garde, dedans, le trait de son ancienne taille.</li>
           <li class="is-on"><b>Bande</b>Le temps coule vers la gauche. À droite du trait plein, les quinze dernières secondes, trait par trait ; à gauche, cinq minutes serrées, qui se lisent comme une densité.</li>
+          <li class="is-on"><b>Flux</b>Les événements entrent par le haut. Cliquez-en un : le défilement s'arrête, l'événement se lit en entier à côté, et son agence est désignée dans la carte. Flèches pour parcourir, Échap pour reprendre.</li>
           <li class="is-on"><b>Journal</b>Une ligne par événement, douze secondes. Puis les lignes d'une agence se fondent en une seule ; après une minute, celles d'une région. Les compteurs restent justes.</li>
           <li class="is-on"><b>Sédiments</b>Chaque événement est un grain qui tombe : plein s'il monte, vide s'il descend. Les grains anciens se tassent en strates.</li>
-          <li class="is-on"><b>Les quatre</b>Le même flux, sous ses quatre formes à la fois. Passez en « Vif » ou « Rafale » : laquelle tient le mieux ?</li>
+          <li class="is-on"><b>Ensemble</b>Le même flux sous quatre formes à la fois. Changez la teinte dans les réglages ; passez en « Vif » ou « Rafale » : laquelle tient le mieux ?</li>
         </ol></div></details>
       <a class="x-strip__back" href="../laboratoire.html#formes-du-direct">Notice</a>
     </footer>

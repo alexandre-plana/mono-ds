@@ -10,34 +10,43 @@
   const tok = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
   const host = $('.x-forms', stage), read = $('.x-read', stage), pulse = $('.x-pulse', stage);
   const A = [['Arles', 'Sud', 4.9], ['Carcassonne', 'Sud', 3.4], ['Dax', 'Sud', 3.2], ['Narbonne', 'Sud', 7.0], ['Tarbes', 'Sud', 7.8], ['Brest', 'Ouest', 9.4], ['Vannes', 'Ouest', 4.4], ['Bayonne', 'Ouest', 5.5], ['Colmar', 'Est', 12.1], ['Annecy', 'Est', 6.2], ['Bar-le-Duc', 'Est', 3.8], ['Arras', 'Nord', 8.1]]
-    .map(([name, region, v], i) => ({ i, name, region, v, w: [3, 1, 2, 1, 2, 3, 1, 1, 2, 1, 1, 2][i], blocked: false }));
+    .map(([name, region, v], i) => ({ i, name, region, v, base: v, w: [3, 1, 2, 1, 2, 3, 1, 1, 2, 1, 1, 2][i], blocked: false }));
   const REG = ['Sud', 'Ouest', 'Est', 'Nord'];
-  let events = [], views = [], timer = null, last = null;
+  let events = [], views = [], timer = null, last = null, seq = 0, chosen = null;
   // ---- Le flux. Certaines agences bougent plus que d'autres ; de temps en temps un saut, rarement un blocage.
   const pick = () => { const sum = A.reduce((s, a) => s + a.w, 0); let k = Math.random() * sum; for (const a of A) { k -= a.w; if (k <= 0) return a; } return A[0]; };
-  const gen = (t, apply) => { const a = pick(), k = Math.random(), amp = k > 0.93 ? 0.15 + Math.random() * 0.15 : 0.01 + Math.random() * 0.07, dir = Math.random() < 0.5 ? -1 : 1, d = +(a.v * amp * dir).toFixed(1) || 0.1 * dir;
-    const ev = { t, a, d, pct: Math.abs(d) / a.v * 100, big: k > 0.93, block: k < 0.02 && !a.blocked }; if (apply) { a.v = Math.max(0.6, +(a.v + d).toFixed(1)); if (ev.block) a.blocked = true; else if (a.blocked && k > 0.8) { a.blocked = false; ev.unblock = true; } } ev.v = a.v; return ev; };
+  // Des variations amples — 4 à 18 %, parfois 25 à 50 % — sinon une surface ne bouge pas assez pour se lire.
+  // Une valeur qui s'éloigne de sa base a plus de chances d'y revenir : la carte bouge sans dériver.
+  const gen = (t, apply) => { const a = pick(), k = Math.random(), big = k > 0.9, amp = big ? 0.25 + Math.random() * 0.25 : 0.04 + Math.random() * 0.14, pull = (a.base - a.v) / a.base, dir = Math.random() < 0.5 + pull * 0.6 ? 1 : -1, old = a.v, now = Math.min(a.base * 2.4, Math.max(0.8, +(old * (1 + dir * amp)).toFixed(1)));
+    const ev = { t, a, d: +(now - old).toFixed(1) || 0.1 * dir, old, pct: Math.abs(now - old) / old * 100, big, block: k < 0.03 && !a.blocked, id: ++seq }; if (apply) { a.v = now; if (ev.block) a.blocked = true; else if (a.blocked && k > 0.7) { a.blocked = false; ev.unblock = true; } } ev.v = apply ? a.v : now; return ev; };
   const emit = (ev) => { events.push(ev); if (events.length > 900) events.shift(); last = ev; views.forEach((v) => v.on && v.on(ev)); pulse.classList.remove('is-beat'); void pulse.offsetWidth; pulse.classList.add('is-beat'); report(); };
   const tick = () => { const n = cfg('pace') === 'rafale' ? 6 : 1; for (let i = 0; i < n; i++) emit(gen(Date.now(), true)); };
-  const run = () => { clearInterval(timer); const on = cfg('flow') === 'marche'; pulse.classList.toggle('is-off', !on); pulse.lastChild.textContent = on ? 'En direct' : 'Flux en pause'; if (on) timer = setInterval(tick, { calme: 1100, vif: 320, rafale: 2600 }[cfg('pace')]); };
+  const run = () => { clearInterval(timer); const on = cfg('flow') === 'marche'; pulse.classList.toggle('is-off', !on); pulse.lastChild.textContent = on ? 'En direct' : 'Flux en pause'; if (on) timer = setInterval(tick, { calme: 850, vif: 260, rafale: 2400 }[cfg('pace')]); };
   const report = () => { const now = Date.now(), n = events.filter((e) => now - e.t < 300000).length; read.innerHTML = `<span><b>${n}</b> changements en 5 min</span>` + (last ? `<span>Dernier : <b>${last.a.name}</b> ${last.d > 0 ? '▲' : '▼'} ${fr(Math.abs(last.d))} · ${hms(last.t)}</span>` : ''); };
   // Un passé de cinq minutes, pour que les formes aient de la matière dès l'ouverture.
   const seed = () => { events = []; const now = Date.now(); let t = now - 300000; while (t < now - 1500) { events.push(gen(t, false)); t += 600 + Math.random() * 2600; } };
   const canvas = (el) => { const c = document.createElement('canvas'); c.style.cssText = 'display: block; width: 100%; height: 100%'; el.append(c); const ctx = c.getContext('2d'); const fit = () => { const r = c.getBoundingClientRect(), d = devicePixelRatio || 1; c.width = Math.max(1, Math.round(r.width * d)); c.height = Math.max(1, Math.round(r.height * d)); ctx.setTransform(d, 0, 0, d, 0, 0); c.w = r.width; c.h = r.height; }; new ResizeObserver(fit).observe(c); fit(); return { c, ctx }; };
-  const ink = () => ({ fg: tok('--fg'), strong: tok('--fg-strong'), soft: tok('--fg-soft'), muted: tok('--fg-muted'), line: tok('--line'), lineS: tok('--line-strong'), signal: tok('--signal'), bg: tok('--bg'), font: getComputedStyle(document.body).fontFamily });
+  const hue = (v) => getComputedStyle(stage).getPropertyValue(v).trim();
+  const ink = () => ({ pos: hue('--x-pos'), neg: hue('--x-neg'), neg2: hue('--x-neg2'), mono: cfg('hue') === 'encre', fg: tok('--fg'), strong: tok('--fg-strong'), soft: tok('--fg-soft'), muted: tok('--fg-muted'), line: tok('--line'), lineS: tok('--line-strong'), signal: tok('--signal'), bg: tok('--bg'), font: getComputedStyle(document.body).fontFamily });
   const label = (ctx, K, txt, x, y, color, align = 'left') => { ctx.font = `11px ${K.font}`; ctx.letterSpacing = '1px'; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillStyle = color; ctx.fillText(txt.toUpperCase(), x, y); };
 
   // ===== 1. La carte qui respire ============================================
-  // Chaque agence a une surface proportionnelle à ses primes. Les cases ne changent jamais de place : seule leur
-  // taille change. Quand une case change, le contour de son ancienne taille reste un instant : l'écart entre les
-  // deux dit de combien elle a grandi ou rétréci.
-  const Carte = () => { let el, cells = new Map(), cols = new Map();
+  // Chaque agence a une surface proportionnelle à ses primes ; les cases gardent leur ordre, seule leur taille
+  // change. La couleur dit le mouvement récent : sa teinte le sens, son intensité l'ampleur ; elle s'éteint en
+  // une trentaine de secondes. Une case qui vient de grandir garde, à l'intérieur, le contour de son ancienne taille.
+  const Carte = () => { let el, cells = new Map(), cols = new Map(), t = null;
     const size = () => REG.forEach((r) => { cols.get(r).style.flexGrow = A.filter((a) => a.region === r).reduce((s, a) => s + a.v, 0); });
-    return { mount(e) { el = e; el.className = 'x-map'; el.innerHTML = REG.map((r) => `<div class="x-map__col" data-r="${r}"><span class="x-map__reg">${r}</span>${A.filter((a) => a.region === r).map((a) => `<div class="x-map__cell" data-a="${a.i}" style="flex-grow: ${a.v}"><span class="x-map__name">${a.name}</span><span class="x-map__val">${fr(a.v)}</span><span class="x-map__d"></span></div>`).join('')}</div>`).join('');
-        $$('.x-map__col', el).forEach((c) => cols.set(c.dataset.r, c)); $$('.x-map__cell', el).forEach((c) => cells.set(+c.dataset.a, c)); A.forEach((a) => cells.get(a.i).classList.toggle('is-blocked', a.blocked)); size(); },
-      on(ev) { const c = cells.get(ev.a.i); if (!c) return; if (!still) { const r = c.getBoundingClientRect(), o = el.getBoundingClientRect(), g = document.createElement('i'); g.className = 'x-map__ghost'; g.style.cssText = `left:${r.left - o.left}px;top:${r.top - o.top}px;width:${r.width}px;height:${r.height}px`; el.append(g); setTimeout(() => g.remove(), 3400); }
-        c.style.flexGrow = ev.a.v; size(); $('.x-map__val', c).textContent = fr(ev.a.v); const d = $('.x-map__d', c); d.textContent = `${ev.d > 0 ? '▲' : '▼'} ${fr(Math.abs(ev.d))}`; clearTimeout(c.dt); c.dt = setTimeout(() => { d.textContent = ''; }, 4200);
-        c.classList.toggle('is-blocked', ev.a.blocked); c.classList.remove('is-fresh'); void c.offsetWidth; c.classList.add('is-fresh'); } }; };
+    // La chaleur d'une case : la somme de ses variations récentes, chacune s'effaçant avec une demi-vie de douze secondes.
+    const heat = () => { const now = Date.now(); A.forEach((a) => { const c = cells.get(a.i); let h = 0; for (let k = events.length - 1; k >= 0; k--) { const e = events[k], age = (now - e.t) / 1000; if (age > 60) break; if (e.a === a) h += (e.d > 0 ? 1 : -1) * e.pct * Math.pow(0.5, age / 12); }
+      const m = Math.min(1, Math.abs(h) / 22); c.style.setProperty('--heat', a.blocked ? 0.9 : m.toFixed(3)); c.dataset.dir = a.blocked ? 'block' : h > 0 ? 'up' : m > 0.55 ? 'down2' : 'down'; c.classList.toggle('is-hot', a.blocked || m > 0.5);
+      $('.x-map__st', c).textContent = a.blocked ? 'Bloquée' : a.v < 3 ? 'Sous 3 M' : ''; c.classList.toggle('is-low', !a.blocked && a.v < 3); }); };
+    return { mount(e) { el = e; el.className = 'x-map'; el.innerHTML = REG.map((r) => `<div class="x-map__col" data-r="${r}"><span class="x-map__reg">${r}</span>${A.filter((a) => a.region === r).map((a) => `<div class="x-map__cell" data-a="${a.i}" style="flex-grow: ${a.v}"><i class="x-map__was"></i><span class="x-map__name">${a.name}</span><span class="x-map__val">${fr(a.v)}</span><span class="x-map__d"></span><span class="x-map__st"></span></div>`).join('')}</div>`).join('');
+        $$('.x-map__col', el).forEach((c) => cols.set(c.dataset.r, c)); $$('.x-map__cell', el).forEach((c) => cells.set(+c.dataset.a, c)); size(); heat(); t = setInterval(heat, 400); if (chosen) this.select(chosen.a); },
+      on(ev) { const c = cells.get(ev.a.i); if (!c) return; c.style.flexGrow = ev.a.v; size(); $('.x-map__val', c).textContent = fr(ev.a.v); const d = $('.x-map__d', c); d.textContent = `${ev.d > 0 ? '▲' : '▼'} ${fr(Math.abs(ev.d))}`; clearTimeout(c.dt); c.dt = setTimeout(() => { d.textContent = ''; }, 5000);
+        // L'ancienne taille, à l'intérieur de la case : elle ne déborde jamais sur une voisine.
+        const was = $('.x-map__was', c); was.style.setProperty('--was', Math.min(1, ev.old / ev.a.v).toFixed(3)); was.classList.remove('is-on'); if (ev.d > 0 && !still) { void was.offsetWidth; was.classList.add('is-on'); }
+        c.classList.toggle('is-shrunk', ev.d < 0); clearTimeout(c.st); c.st = setTimeout(() => c.classList.remove('is-shrunk'), 2600); heat(); },
+      select(a) { cells.forEach((c, i) => c.classList.toggle('is-sel', !!a && a.i === i)); }, unmount() { clearInterval(t); } }; };
 
   // ===== 2. La bande à temps élastique ======================================
   // Le temps coule de droite à gauche. Les quinze dernières secondes occupent plus de la moitié de la bande ;
@@ -49,7 +58,7 @@
         [[0, 'maintenant'], [15, '15 s'], [60, '1 min'], [300, '5 min']].forEach(([age, txt], i) => { const x = Math.round(X(age || 0.001, x0, P)) + 0.5; ctx.strokeStyle = i === 1 ? K.lineS : K.line; ctx.setLineDash(i === 1 ? [] : [2, 3]); ctx.beginPath(); ctx.moveTo(x, top - 6); ctx.lineTo(x, H - 4); ctx.stroke(); ctx.setLineDash([]); label(ctx, K, txt, x - 4, 10, i < 2 ? K.soft : K.muted, 'right'); });
         let y = top, reg = null; A.forEach((a) => { if (reg && reg !== a.region) y += lane; reg = a.region; const mid = Math.round(y + lane / 2) + 0.5; a.laneY = mid; ctx.strokeStyle = K.line; ctx.beginPath(); ctx.moveTo(x0, mid); ctx.lineTo(x0 + P, mid); ctx.stroke(); label(ctx, K, a.name, 0, mid, a.blocked ? K.strong : K.soft); if (a.blocked) { ctx.fillStyle = K.signal; ctx.fillRect(x0 - 12, mid - 3, 6, 6); } y += lane; });
         const maxH = lane / 2 - 2; for (const ev of events) { const age = (now - ev.t) / 1000; if (age > 300 || age < 0) continue; const x = Math.round(X(Math.max(age, 0.001), x0, P)), h = Math.max(2, Math.min(maxH, ev.pct * 1.1)), mid = ev.a.laneY, fresh = age < 3;
-          ctx.fillStyle = fresh || ev.big ? K.strong : age < 15 ? K.soft : K.muted; const w = fresh ? 2 : 1; ctx.fillRect(x - (w - 1), ev.d > 0 ? mid - h : mid, w, h); if (ev.big && age < 60) ctx.fillRect(x - 2, ev.d > 0 ? mid - h - 4 : mid + h, 4, 4); if (ev.block) { ctx.fillStyle = K.signal; ctx.fillRect(x - 3, mid - 3, 6, 6); } } } }; };
+          ctx.fillStyle = K.mono ? (fresh || ev.big ? K.strong : age < 15 ? K.soft : K.muted) : (ev.d > 0 ? K.pos : ev.big ? K.neg2 : K.neg); ctx.globalAlpha = K.mono ? 1 : age < 15 ? 1 : 0.55; const w = fresh || !K.mono ? 2 : 1; ctx.fillRect(x - (w - 1), ev.d > 0 ? mid - h : mid, w, h); if (ev.big && age < 60) ctx.fillRect(x - 2, ev.d > 0 ? mid - h - 4 : mid + h, 4, 4); ctx.globalAlpha = 1; if (ev.block) { ctx.fillStyle = K.signal; ctx.fillRect(x - 3, mid - 3, 6, 6); } if (chosen && chosen.id === ev.id) { ctx.strokeStyle = K.strong; ctx.lineWidth = 2; ctx.strokeRect(x - 5, mid - maxH - 2, 10, maxH * 2 + 4); ctx.lineWidth = 1; } } } }; };
 
   // ===== 3. Le journal qui se résume =========================================
   // Une ligne par événement, à l'instant. Après douze secondes, les lignes d'une même agence se fondent en une
@@ -77,16 +86,34 @@
         A.forEach((a) => { if (reg && reg !== a.region) x += cw; if (reg !== a.region) label(ctx, K, a.region, x + 2, 9, K.muted); reg = a.region; const cx = Math.round(x + cw / 2), half = Math.min(26, cw / 2 - 6), st = col.get(a.i);
           ctx.fillStyle = K.lineS; ctx.fillRect(Math.round(x + 4), base, Math.round(cw - 8), 1); label(ctx, K, a.name.length > cw / 8 ? a.name.slice(0, Math.max(3, Math.floor(cw / 8) - 1)) + '.' : a.name, cx, base + 14, a.blocked ? K.strong : K.soft, 'center');
           let y = base - 3; for (let s = 0; s < st.strata; s++) { ctx.fillStyle = s % 5 === 4 ? K.soft : K.muted; ctx.fillRect(cx - half, y - 1, half * 2, H > 460 ? 2 : 1); y -= SP; if (y < 30) break; }
-          st.grains.forEach((g, k) => { const rest = y - (k + 1) * (G + GAP), p = still ? 1 : Math.min(1, (perf - g.t0) / 460), gy = 22 + (rest - 22) * p * p, age = (now - g.born) / 1000; ctx.fillStyle = g.block ? K.signal : age < 3 ? K.strong : K.soft; ctx.strokeStyle = ctx.fillStyle; const gx = cx - (g.big ? G : G / 2), gw = g.big ? G * 2 : G;
+          st.grains.forEach((g, k) => { const rest = y - (k + 1) * (G + GAP), p = still ? 1 : Math.min(1, (perf - g.t0) / 460), gy = 22 + (rest - 22) * p * p, age = (now - g.born) / 1000; ctx.fillStyle = g.block ? K.signal : K.mono ? (age < 3 ? K.strong : K.soft) : (g.up ? K.pos : g.big ? K.neg2 : K.neg); ctx.strokeStyle = ctx.fillStyle; const gx = cx - (g.big ? G : G / 2), gw = g.big ? G * 2 : G;
             if (g.up || g.block) ctx.fillRect(gx, gy, gw, G); else ctx.strokeRect(gx + 0.5, gy + 0.5, gw - 1, G - 1); }); x += cw; }); } }; };
 
+  // ===== 5. Le flux qui défile ==============================================
+  // Les événements entrent par le haut et poussent les précédents vers le bas. On en choisit un : le défilement
+  // s'arrête — rien ne doit fuir sous le pointeur —, les nouveaux s'accumulent, et l'événement se lit en entier à côté.
+  const Flux = () => { let el, list, detail, bar, paused = false, pending = [];
+    const row = (ev) => `<li data-id="${ev.id}" tabindex="-1" data-dir="${ev.block ? 'block' : ev.d > 0 ? 'up' : ev.big ? 'down2' : 'down'}"><time>${hms(ev.t)}</time><i class="x-feed__mark"></i><b>${ev.a.name}</b><span class="x-feed__reg">${ev.a.region}</span><span class="x-feed__d">${ev.d > 0 ? '▲' : '▼'} ${fr(Math.abs(ev.d))}</span><span class="x-feed__v">${fr(ev.v)} M</span><span class="x-feed__tag">${ev.block ? 'Bloquée' : ev.unblock ? 'Rétablie' : ev.big ? 'Saut' : ''}</span></li>`;
+    const insert = (evs) => { if (!evs.length) return; list.insertAdjacentHTML('afterbegin', evs.slice().reverse().map(row).join('')); const h = [...list.children].slice(0, evs.length).reduce((s2, li) => s2 + li.offsetHeight, 0); if (!still) list.animate([{ transform: `translateY(${-h}px)` }, { transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.2, .8, .2, 1)' }); while (list.children.length > 60) list.lastElementChild.remove(); };
+    const note = () => { bar.hidden = !paused; if (paused) $('b', bar).textContent = pending.length ? (pending.length > 1 ? `${pending.length} nouveaux événements en attente` : '1 nouvel événement en attente') : 'Défilement arrêté'; };
+    const show = (ev) => { const prev = events.filter((e) => e.a === ev.a && e.t <= ev.t).slice(-6).reverse(); detail.hidden = false; detail.innerHTML = `<span class="x-feed__kicker">${ev.a.region} · ${hms(ev.t)}</span><span class="x-feed__title">${ev.a.name}</span><span class="x-feed__big" data-dir="${ev.d > 0 ? 'up' : ev.big ? 'down2' : 'down'}">${ev.d > 0 ? '▲' : '▼'} ${fr(Math.abs(ev.d))} M<small>${ev.d > 0 ? '+' : '−'} ${Math.round(ev.pct)} %</small></span>
+        <dl class="x-feed__kv"><div><dt>Avant</dt><dd>${fr(ev.old)} M</dd></div><div><dt>Après</dt><dd>${fr(ev.v)} M</dd></div><div><dt>Nature</dt><dd>${ev.block ? 'Blocage' : ev.unblock ? 'Rétablissement' : ev.big ? 'Saut de plus de 25 %' : 'Variation courante'}</dd></div><div><dt>Maintenant</dt><dd>${fr(ev.a.v)} M${ev.a.blocked ? ' · bloquée' : ''}</dd></div></dl>
+        <span class="x-feed__kicker">Cette agence, juste avant</span><ol class="x-feed__hist">${prev.map((e) => `<li${e.id === ev.id ? ' class="is-this"' : ''}><time>${hms(e.t)}</time><span>${e.d > 0 ? '▲' : '▼'} ${fr(Math.abs(e.d))}</span><span>${fr(e.v)} M</span></li>`).join('')}</ol>`; };
+    const pickEv = (ev) => { chosen = ev; paused = !!ev; $$('li', list).forEach((li) => li.setAttribute('aria-selected', String(!!ev && +li.dataset.id === ev.id))); if (ev) show(ev); else { detail.hidden = true; insert(pending); pending = []; } note(); views.forEach((v) => v.select && v.select(ev ? ev.a : null)); };
+    return { mount(e) { el = e; el.className = 'x-feed'; el.innerHTML = `<div class="x-feed__main"><div class="x-banner" hidden><b></b><button type="button">Reprendre le défilement</button><span><kbd class="c-kbd">Échap</kbd></span></div><ol class="x-feed__list" tabindex="0" aria-label="Flux — flèches pour parcourir, Échap pour reprendre"></ol></div><aside class="x-feed__detail" hidden></aside>`;
+        list = $('.x-feed__list', el); detail = $('.x-feed__detail', el); bar = $('.x-banner', el); paused = false; pending = []; insert(events.slice(-26)); $('button', bar).addEventListener('click', () => pickEv(null));
+        list.addEventListener('click', (ev) => { const li = ev.target.closest('li'); if (li) pickEv(events.find((x) => x.id === +li.dataset.id) || null); });
+        list.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { pickEv(null); return; } if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') return; ev.preventDefault(); const lis = $$('li', list), i = lis.findIndex((li) => li.getAttribute('aria-selected') === 'true'), n = lis[Math.max(0, Math.min(lis.length - 1, i + (ev.key === 'ArrowDown' ? 1 : -1)))]; if (n) pickEv(events.find((x) => x.id === +n.dataset.id) || null); });
+        if (chosen) pickEv(chosen); },
+      on(ev) { if (paused) { pending.push(ev); note(); } else insert([ev]); }, unmount() { if (chosen) { chosen = null; views.forEach((v) => v.select && v.select(null)); } } }; };
+
   // ---- Le choix de la forme : une à la fois, ou les quatre côte à côte sur le même flux.
-  const FORMS = { carte: ['La carte qui respire', Carte], bande: ['La bande à temps élastique', Bande], journal: ['Le journal qui se résume', Journal], sediments: ['Les sédiments', Sediments] };
-  const mount = () => { views.forEach((v) => v.unmount && v.unmount()); views = []; host.innerHTML = ''; const f = cfg('form'), list = f === 'quatre' ? Object.keys(FORMS) : [f]; host.classList.toggle('is-four', f === 'quatre');
+  const FORMS = { carte: ['La carte qui respire', Carte], bande: ['La bande à temps élastique', Bande], flux: ['Le flux qui défile', Flux], journal: ['Le journal qui se résume', Journal], sediments: ['Les sédiments', Sediments] };
+  const mount = () => { views.forEach((v) => v.unmount && v.unmount()); views = []; host.innerHTML = ''; const f = cfg('form'), list = f === 'quatre' ? ['carte', 'bande', 'flux', 'sediments'] : [f]; host.classList.toggle('is-four', f === 'quatre');
     list.forEach((k) => { const pane = document.createElement('section'); pane.className = 'x-pane'; pane.innerHTML = `<h4>${FORMS[k][0]}</h4><div></div>`; host.append(pane); const v = FORMS[k][1](); v.mount(pane.lastChild); views.push(v); }); };
   const loop = () => { const now = Date.now(), perf = performance.now(); views.forEach((v) => v.frame && v.frame(now, perf)); requestAnimationFrame(loop); };
   const seg = (attr, fn) => $$(`[data-set-${attr}]`, stage).forEach((b) => b.addEventListener('click', () => { stage.dataset[attr] = b.dataset['set' + attr[0].toUpperCase() + attr.slice(1)]; $$(`[data-set-${attr}]`, stage).forEach((x) => x.setAttribute('aria-pressed', String(x === b))); fn && fn(); }));
-  seg('form', mount); seg('flow', run); seg('pace', run);
+  seg('form', mount); seg('flow', run); seg('pace', run); seg('hue', mount);
   $('[data-once]', stage).addEventListener('click', tick);
   seed(); mount(); run(); report(); requestAnimationFrame(loop);
 })();
