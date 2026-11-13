@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MONO — présentation</title>
+<!--
+  Présentation du système, en mouvement. Source de docs/video/mono-presentation.mp4.
+
+  Une seule horloge : seek(t) met toute la séquence à l'instant t (en secondes), sans aléatoire
+  non semé. La page se joue d'elle-même dans un navigateur ; scripts/render-video.mjs la pilote
+  image par image (?render) et assemble la vidéo. ?t=12.5 fige l'instant 12,5 s.
+
+  Composée pour une vue de 1280 × 720 (rendue à 1,5 × : 1920 × 1080). Ailleurs, le film est mis
+  à l'échelle de la fenêtre, sans rien recomposer.
+
+  Règles tenues : rôles du thème seulement (aucune valeur de couleur écrite ici), une seule couleur
+  et un seul fait par plan, trois corps de texte par plan, ferré à gauche sur trois axes (colonnes
+  1, 5 et 9), un tiers vide, filets d'un pixel, ni rayon ni ombre ni dégradé ni transparence :
+  ce qui apparaît ou s'efface monte ou descend les tons un à un. Relève de l'exception de D-062 :
+  un écran à regarder, pas une interface (voir D-107).
+-->
+<link rel="stylesheet" href="../../src/mono.css">
+<style>
+  html, body { height: 100%; }
+  body { margin: 0; overflow: hidden; background: var(--desk); }
+  .pr-film { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; transform-origin: 50% 50%; overflow: hidden; }
+  /* Le plan de travail et la page, à la taille de la vue de composition. */
+  .pr-film .l-desk { --shell-inset: var(--space-5); width: 1280px; height: 720px; grid-template-rows: minmax(0, 1fr); }
+  .pr-film .l-shell { overflow: hidden; }
+  .pr-shell { position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; padding: var(--space-6) var(--space-7) var(--space-5); }
+  .pr-main { position: relative; margin-block: var(--space-7); }
+  .pr-scene { position: absolute; inset: 0; display: none; }
+  .pr-scene.is-on { display: block; }
+  .pr-at { position: absolute; margin: 0; }
+  /* Le contour qui se trace à l'ouverture : quatre filets d'un pixel, au ton du contour de page. */
+  .pr-contour { position: absolute; left: var(--space-5); top: var(--space-5); right: var(--space-5); bottom: var(--space-5); pointer-events: none; }
+  .pr-contour > i { position: absolute; background: var(--line-strong); }
+  .pr-contour > i:nth-child(1) { left: 0; top: 0; width: 100%; height: 1px; transform-origin: 0 0; }
+  .pr-contour > i:nth-child(2) { right: 0; top: 0; width: 1px; height: 100%; transform-origin: 0 0; }
+  .pr-contour > i:nth-child(3) { right: 0; bottom: 0; width: 100%; height: 1px; transform-origin: 100% 0; }
+  .pr-contour > i:nth-child(4) { left: 0; bottom: 0; width: 1px; height: 100%; transform-origin: 0 100%; }
+  .pr-cursor { position: absolute; background: var(--fg-strong); }
+  .pr-svg { position: absolute; overflow: visible; max-width: none; font-family: var(--font-mono); }
+  .pr-svg text { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+  /* Rampes de tons : trois rangs de pastilles, aucune bordure. */
+  .pr-ramp { display: flex; gap: var(--space-1); }
+  .pr-ramp > div { flex: 1 1 0; display: flex; flex-direction: column; gap: var(--space-2); }
+  .pr-ramp b { display: block; height: 96px; transform-origin: 50% 100%; }
+  .pr-ladder { display: grid; grid-template-columns: 40px max-content; column-gap: var(--space-4); row-gap: 2px; align-items: center; }
+  .pr-ladder b { display: block; height: 16px; }
+  .pr-ladder span { line-height: 20px; color: var(--fg); }
+  .pr-line { height: 0; border-top: var(--hairline) solid var(--line-strong); }
+  .pr-skel .c-skeleton { margin-block: 0 var(--space-3); transform-origin: 0 50%; }
+  .pr-skel .c-skeleton--title { margin-block: 0 var(--space-4); }
+  .pr-corner { position: absolute; background: var(--fg-muted); }
+  .pr-dash .c-table { width: 100%; }
+  .pr-word { display: inline; }
+  .pr-dl { grid-template-columns: 10rem minmax(0, 1fr); }
+</style>
+</head>
+<body>
+<div class="pr-film" id="film" role="img" aria-label="Présentation animée du design system MONO : la page, les tons, les filets, le vide, le signal, la hiérarchie, les données, les deux thèmes.">
+  <div class="l-desk" id="desk">
+    <div class="l-shell pr-shell" id="shell">
+      <header class="c-masthead" id="mast">
+        <div class="c-masthead__title">Présentation</div>
+        <div class="c-masthead__meta"><span id="chap">Ouverture</span><span class="g-bracket" id="folio">01 / 10</span></div>
+      </header>
+
+      <main class="pr-main" id="main">
+
+        <!-- 01 · Ouverture : le logo s'écrit, le curseur devient le point. -->
+        <section class="pr-scene" id="s1">
+          <div class="pr-at" id="logo1-box" style="left: 0; top: 0">
+            <span class="c-logo c-logo--plain" id="logo1" style="font-size: 24px">MONO</span>
+            <div class="pr-cursor" id="cursor"></div>
+            <svg class="pr-svg" id="build" width="1" height="1" style="left: 0; top: 0" aria-hidden="true"></svg>
+          </div>
+          <p class="pr-at t-micro" id="s1-cap" style="left: 0; top: 80px">Design system monochrome</p>
+        </section>
+
+        <!-- 02 · La page : la grille se trace, trois axes restent, le texte les tient. -->
+        <section class="pr-scene" id="s2">
+          <h1 class="pr-at t-display" id="s2-title" style="left: 0; top: 0">L’écran est une page.</h1>
+          <svg class="pr-svg" id="guides" width="1134" height="448" style="left: 0; top: 0" aria-hidden="true"></svg>
+          <div class="pr-at l-stack l-stack--tight" id="s2-b1" style="left: 0; top: 112px; width: 361px"><span class="t-micro">Grille</span><span>Douze colonnes, une gouttière de 24 px.</span></div>
+          <div class="pr-at l-stack l-stack--tight" id="s2-b2" style="left: 386px; top: 112px; width: 361px"><span class="t-micro">Axes</span><span>Trois ou quatre bords, répétés.</span></div>
+          <div class="pr-at l-stack l-stack--tight" id="s2-b3" style="left: 772px; top: 112px; width: 361px"><span class="t-micro">Cadre</span><span>Un contour d’un pixel, des marges égales.</span></div>
+        </section>
+
+        <!-- 03 · Les tons : treize gris en encre, les mêmes rôles en papier. -->
+        <section class="pr-scene" id="s3">
+          <h1 class="pr-at t-display" style="left: 0; top: 0"><span id="s3-t1">Une encre,</span> <span id="s3-t2">un papier.</span></h1>
+          <p class="pr-at t-micro" id="s3-encre" style="left: 0; top: 104px">Encre</p>
+          <div class="pr-at pr-ramp" id="ramp" style="left: 0; top: 136px; width: 748px"></div>
+          <p class="pr-at t-micro" id="s3-cap" style="left: 0; top: 280px; width: 748px">Treize tons, bornés avant le noir et avant le blanc.</p>
+          <div class="pr-at" id="papier" data-theme="papier" style="left: 772px; top: 0; width: 362px; height: 448px; padding: 104px var(--space-5) var(--space-5)">
+            <p class="t-micro" id="s3-pap">Papier — mêmes rôles</p>
+            <div class="pr-ladder" id="ladder" style="margin-top: var(--space-4)"></div>
+          </div>
+        </section>
+
+        <!-- 04 · Les filets : une forme, un sens. -->
+        <section class="pr-scene" id="s4">
+          <h1 class="pr-at t-display" id="s4-title" style="left: 0; top: 0">Des filets.</h1>
+          <div id="s4-rows"></div>
+          <div class="pr-at" id="s4-kv" style="left: 386px; top: 316px; width: 361px"></div>
+          <p class="pr-at" id="s4-note" style="left: 0; top: 316px; width: 361px; color: var(--fg-soft)">La structure se trace, elle ne s’emboîte pas.</p>
+        </section>
+
+        <!-- 05 · Le vide : une page en grappes, un tiers qui se tait. -->
+        <section class="pr-scene" id="s5">
+          <h1 class="pr-at t-display" id="s5-title" style="left: 0; top: 0">Beaucoup de vide.</h1>
+          <div class="pr-at pr-skel" id="sk1" style="left: 0; top: 136px; width: 361px">
+            <span class="c-skeleton c-skeleton--title" style="--w: 62%"></span>
+            <span class="c-skeleton" style="--w: 100%"></span><span class="c-skeleton" style="--w: 92%"></span>
+            <span class="c-skeleton" style="--w: 97%"></span><span class="c-skeleton" style="--w: 58%"></span>
+          </div>
+          <div class="pr-at pr-skel" id="sk2" style="left: 386px; top: 136px; width: 361px">
+            <span class="c-skeleton c-skeleton--block" style="--h: 168px; margin-bottom: var(--space-4); transform-origin: 50% 100%"></span>
+            <span class="c-skeleton" style="--w: 84%"></span><span class="c-skeleton" style="--w: 40%"></span>
+          </div>
+          <div id="corners"></div>
+          <div class="pr-at l-stack l-stack--tight" id="s5-measure" style="left: 796px; top: 160px"><span class="t-micro">Vide</span><span class="t-display" id="s5-val">0 %</span></div>
+          <p class="pr-at" id="s5-note" style="left: 0; top: 340px; width: 361px; color: var(--fg-soft)">Le vide forme les groupes et donne l’ordre de lecture.</p>
+        </section>
+
+        <!-- 06 · Le signal : une seule couleur, un seul fait, posé en dernier. -->
+        <section class="pr-scene" id="s6">
+          <h1 class="pr-at t-display" style="left: 0; top: 0; width: 1134px"><span id="s6-t1">Une seule couleur,</span><br><span id="s6-t2" style="color: var(--fg)">pour ce qui ne doit pas être manqué.</span></h1>
+          <svg class="pr-svg v-chart" id="bars" width="748" height="300" style="left: 386px; top: 136px; width: 748px" role="img" aria-label="Primes totales de 2003 à 2026 : premier repli en 2026, à 5 190 millions."></svg>
+          <div class="pr-at c-notice c-notice--signal c-notice--stacked c-notice--hang" id="s6-notice" style="left: 0; top: 164px; width: 300px">
+            <span class="c-notice__label">Premier repli</span><span>Après vingt-trois ans de hausse.</span>
+          </div>
+          <p class="pr-at t-micro" id="s6-measure" style="left: 0; top: 404px">Signal : <span id="s6-pct">0,0</span> % de la vue</p>
+        </section>
+
+        <!-- 07 · La hiérarchie, puis 09 · Les thèmes : un écran réel, composé avec les composants du système. -->
+        <section class="pr-scene pr-dash" id="s7">
+          <div class="pr-at c-stat c-stat--hero" id="hero" style="left: 0; top: 0">
+            <span class="c-stat__label">Primes totales</span>
+            <span class="c-stat__value"><span id="hero-v">5 190</span><small>M</small></span>
+            <span class="t-micro" id="hero-n">−3,2 % sur un an</span>
+          </div>
+          <div class="pr-at" id="dash-kv" style="left: 0; top: 160px; width: 265px"></div>
+          <div class="pr-at" style="left: 386px; top: 0; width: 748px">
+            <table class="c-table" id="dash-table">
+              <caption id="dash-cap">Branches — en milliers d’euros</caption>
+              <thead><tr><th>Branche</th><th>État</th><th class="is-num">2025</th><th class="is-num">2026</th><th class="is-num">Évolution</th></tr></thead>
+              <tbody>
+                <tr><th>Non-vie — particuliers</th><td><span class="c-status c-status--on">Clos</span></td><td class="is-num">2 104 380</td><td class="is-num">2 398 112</td><td class="is-num" data-roll="114.0">114,0 %</td></tr>
+                <tr><th>Non-vie — entreprises</th><td><span class="c-status c-status--on">Clos</span></td><td class="is-num">1 619 361</td><td class="is-num">1 887 335</td><td class="is-num" data-roll="116.5">116,5 %</td></tr>
+                <tr id="row-vie"><th>Vie — épargne</th><td><span class="c-status c-status--progress" id="vie-st">En cours</span></td><td class="is-num">1 640 244</td><td class="is-num">904 503</td><td class="is-num" id="vie-ev" data-roll="55.1">55,1 %</td></tr>
+              </tbody>
+              <tfoot><tr><th>Total</th><td></td><td class="is-num">5 363 985</td><td class="is-num">5 189 950</td><td class="is-num" data-roll="96.8">96,8 %</td></tr></tfoot>
+            </table>
+          </div>
+          <div class="pr-at c-notice c-notice--stacked c-notice--hang" id="dash-notice" style="left: 0; top: 340px; width: 361px"><span id="dash-say"></span></div>
+        </section>
+
+        <!-- 08 · Les données : des crêtes au trait, un seul point en signal. -->
+        <section class="pr-scene" id="s8">
+          <h1 class="pr-at t-display" id="s8-title" style="left: 0; top: 0">En un an, la pointe est passée à 15 h.</h1>
+          <p class="pr-at t-micro" id="s8-cap" style="left: 0; top: 104px">Appels par heure, un profil par mois</p>
+          <svg class="pr-svg v-chart" id="ridges" width="748" height="356" style="left: 386px; top: 88px; width: 748px" role="img" aria-label="Douze profils horaires d'appels, d'octobre à septembre : la pointe passe du matin à 15 h."></svg>
+          <p class="pr-at" id="s8-note" style="left: 0; top: 340px; width: 361px; color: var(--fg-soft)">Marques en gris, chiffre en clair, un seul fait en signal.</p>
+        </section>
+
+        <!-- 10 · Le propos, puis la signature. -->
+        <section class="pr-scene" id="s10">
+          <p class="pr-at t-title" id="s10-say" style="left: 0; top: 0; width: 748px; color: var(--fg)"></p>
+          <span class="pr-at c-logo c-logo--plain" id="logo2" style="left: 0; top: 400px; font-size: 24px">MONO</span>
+          <p class="pr-at t-micro" id="s10-cap" style="left: 386px; top: 409px">Treize gris · une couleur · CSS pur</p>
+        </section>
+      </main>
+
+      <footer class="c-colophon" id="colo">
+        <span>Design system monochrome — CSS pur, sans dépendance</span>
+        <span id="colo-end"><span class="c-ref" id="colo-ref">V0.4</span><span class="c-logo c-logo--plain" id="colo-logo">MONO</span></span>
+      </footer>
+    </div>
+  </div>
+  <div class="pr-contour" id="contour" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+</div>
+
+<script>
+'use strict';
+(() => {
+  const DURATION = 69;
+  const FPS = 30;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const SVG = 'http://www.w3.org/2000/svg';
+  const svgEl = (tag, attrs, parent) => { const e = document.createElementNS(SVG, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.append(e); return e; };
+
+  // --- Temps -------------------------------------------------------------------------------
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+  const prog = (t, a, d) => clamp((t - a) / d);
+  const out3 = (x) => 1 - (1 - x) ** 3;           // départ franc, arrivée posée : aucun rebond
+  const out4 = (x) => 1 - (1 - x) ** 4;
+  const inout = (x) => (x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2);
+  const STEP = 2 / FPS;                            // un cran de ton tous les deux images
+  const fr = (n, d = 0) => n.toLocaleString('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  // Aléatoire semé (crêtes) : la même graine redonne la même image.
+  const mulberry = (a) => () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+
+  // --- Tons : ce qui apparaît monte les tons, ce qui s'efface les descend -------------------
+  // Les valeurs sont lues dans le thème au chargement : rien n'est écrit ici.
+  const RAMP = ['--line-faint', '--line', '--line-strong', '--fg-muted', '--fg-soft', '--fg', '--fg-strong'];
+  const RANK = { '--line-faint': 0, '--line': 1, '--line-strong': 2, '--mark-3': 2, '--fg-muted': 3, '--mark': 3, '--selected-line': 3, '--fg-soft': 4, '--fg': 5, '--mark-2': 5, '--fg-strong': 6, '--signal': 6 };
+  let TONE = {};
+  const readTones = () => { const g = getComputedStyle(document.documentElement); TONE = {}; for (const k of [...RAMP, '--mark', '--mark-2', '--mark-3', '--selected-line', '--signal']) TONE[k] = g.getPropertyValue(k).trim(); };
+  // level : -1 caché, 0 à 6 un cran de la rampe, 7 ou plus le ton naturel.
+  function dim(el, level) {
+    // caché : invisible, et ses filets aussi (un tableau fusionne les bordures de ses lignes)
+    if (level < 0) { el.style.visibility = 'hidden'; for (const k in RANK) el.style.setProperty(k, 'transparent'); return; }
+    el.style.visibility = '';
+    for (const k in RANK) {
+      if (level >= RAMP.length || RANK[k] <= level) el.style.removeProperty(k);
+      else el.style.setProperty(k, TONE[RAMP[level]]);
+    }
+  }
+  // Monte à partir de tin (quatre crans, de --line-faint au ton naturel), descend à partir de tout.
+  function tone(el, t, tin, tout = Infinity) {
+    if (t < tin) return dim(el, -1);
+    const up = [0, 1, 2, 3, 99][Math.min(4, Math.floor((t - tin) / STEP))];
+    if (t < tout) return dim(el, up);
+    const k = Math.floor((t - tout) / STEP);
+    dim(el, [5, 4, 3, 2, 1, 0, -1][Math.min(6, k)]);
+  }
+
+  // --- Texte qui se compose : le reste est réservé, invisible, pour que rien ne bouge ---------
+  function type(el, t, t0, cps = 32) {
+    const full = el._full ?? (el._full = el.textContent);
+    const n = t < t0 ? 0 : Math.min(full.length, Math.floor((t - t0) * cps) + 1);
+    if (el._n === n) return; el._n = n;
+    el.textContent = full.slice(0, n);
+    if (n < full.length) { const h = document.createElement('span'); h.style.visibility = 'hidden'; h.textContent = full.slice(n); el.append(h); }
+  }
+  // Un filet se tire : il se découvre de gauche à droite (ou de haut en bas), sans se déformer.
+  const pull = (el, p, dir = 'x') => { el.style.clipPath = dir === 'x' ? `inset(0 ${100 - p * 100}% 0 0)` : dir === 'y' ? `inset(0 0 ${100 - p * 100}% 0)` : `inset(${100 - p * 100}% 0 0 0)`; el.style.visibility = p <= 0 ? 'hidden' : ''; };
+
+  // --- Géométrie ------------------------------------------------------------------------------
+  const A1 = 0, A2 = 386, A3 = 772, R = 1134;
+
+  // --- Cadre ---------------------------------------------------------------------------------
+  const SCENES = [
+    { id: 's1', a: 0, b: 6.6, chap: 'Ouverture' },
+    { id: 's2', a: 6.6, b: 13, chap: 'La page' },
+    { id: 's3', a: 13, b: 20, chap: 'Les tons' },
+    { id: 's4', a: 20, b: 26.6, chap: 'Les filets' },
+    { id: 's5', a: 26.6, b: 32.6, chap: 'Le vide' },
+    { id: 's6', a: 32.6, b: 40.4, chap: 'Le signal' },
+    { id: 's7', a: 40.4, b: 48.4, chap: 'La hiérarchie' },
+    { id: 's8', a: 48.4, b: 54.8, chap: 'Les données' },
+    { id: 's7', a: 54.8, b: 60.8, chap: 'Les thèmes', themes: true },
+    { id: 's10', a: 60.8, b: DURATION, chap: 'Mono' },
+  ];
+
+  // --- Construction des plans ------------------------------------------------------------------
+  let G = {}; // mesures prises une fois les polices chargées
+  function build() {
+    readTones();
+    // les mesures demandent des plans affichés : on les montre tous le temps de construire
+    $$('.pr-scene').forEach((e) => e.classList.add('is-on'));
+    // 01 — logo : mesures réelles du composant .c-logo
+    const logo = $('#logo1'), box = $('#logo1-box');
+    logo.className = 'c-logo'; const withDot = logo.getBoundingClientRect().width; logo.className = 'c-logo c-logo--plain';
+    // ligne de base : une sonde de hauteur nulle, dans la même ligne que le logo, s'y pose
+    const probe = document.createElement('span'); probe.style.cssText = 'display:inline-block;width:0;height:0';
+    logo.after(probe); const base = probe.getBoundingClientRect().top - box.getBoundingClientRect().top;
+    const size = 24, dotX = withDot - 4, step = (dotX - 0.48 * size) / 4;
+    box.style.top = (32 - base).toFixed(2) + 'px';  // ligne de base commune avec les titres des plans suivants
+    G.logo = { size, base, dotX, step, cap: Math.round(size * 0.7), adv: step - 0.42 * size };
+    const b = $('#build'); b.setAttribute('width', 600); b.setAttribute('height', 150);
+    b.style.top = '-30px'; const bg = svgEl('g', { transform: 'translate(0 30)' }, b);  // marge au-dessus, pour la cote du point
+    $('#s1-cap').style.top = (32 + 44) + 'px';
+    // tracés de construction (repris de catalogue/assets/logo-anim.js), posés à droite du mot
+    const { cap } = G.logo, xr = dotX + 4 + 96, y0 = base, yc = base - cap;
+    G.build = { xr };
+    svgEl('line', { x1: 0, y1: y0 + 0.5, x2: xr, y2: y0 + 0.5, 'stroke-dasharray': '1 4', stroke: 'currentColor', class: 'g-base' }, bg);
+    svgEl('line', { x1: 0, y1: yc + 0.5, x2: xr, y2: yc + 0.5, 'stroke-dasharray': '1 4', stroke: 'currentColor', class: 'g-base' }, bg);
+    const t1 = svgEl('text', { x: xr + 8, y: yc + 4, fill: 'currentColor', class: 'g-lab' }, bg); t1.textContent = 'Cap.';
+    const t2 = svgEl('text', { x: xr + 8, y: y0 + 4, fill: 'currentColor', class: 'g-lab' }, bg); t2.textContent = 'Base';
+    for (let i = 0; i < 4; i++) { const x = Math.round(i * step) + 0.5; svgEl('line', { x1: x, y1: y0 + 8, x2: x, y2: y0 + 14, stroke: 'currentColor', class: 'g-tick' }, bg); }
+    const a = Math.round(G.logo.adv) + 0.5, c = Math.round(step) + 0.5;
+    for (const [x1, y1, x2, y2] of [[a, y0 + 22.5, c, y0 + 22.5], [a, y0 + 19, a, y0 + 26], [c, y0 + 19, c, y0 + 26]]) svgEl('line', { x1, y1, x2, y2, stroke: 'currentColor', class: 'g-tick' }, bg);
+    const t3 = svgEl('text', { x: c + 8, y: y0 + 26, fill: 'currentColor', class: 'g-tick' }, bg); t3.textContent = '0,42 em';
+    svgEl('line', { x1: dotX + 6, y1: y0 - 6, x2: dotX + 20, y2: yc - 8, stroke: 'currentColor', class: 'g-lab' }, bg);
+    const t4 = svgEl('text', { x: dotX + 24, y: yc - 10, fill: 'currentColor', class: 'g-lab' }, bg); t4.textContent = '4 px';
+
+    // 02 — guides de colonnes, en pointillé (repère)
+    const gd = $('#guides');
+    G.guides = [];
+    for (let i = 0; i <= 12; i++) { const x = (i < 12 ? Math.round(i * 96.5) : R - 1) + 0.5; G.guides.push(svgEl('line', { x1: x, y1: 176, x2: x, y2: 176, class: 'v-grid' }, gd)); }
+
+    // 03 — rampes
+    const roles = ['--bg-sunken', '--bg', '--surface', '--surface-2', '--line-faint', '--line', '--line-strong', '--fg-muted', '--fg-soft', '--fg', '--inverse-bg', '--fg-strong', '--inverse-bg-hover'];
+    $('#ramp').innerHTML = roles.map((r, i) => `<div><b style="background: var(${r})"></b><span class="t-micro" style="color: var(--fg-muted)">${i}</span></div>`).join('');
+    $('#ladder').innerHTML = roles.map((r) => `<b style="background: var(${r})"></b><span>${r}</span>`).join('');
+
+    // 04 — trois filets, trois sens
+    const rows = [['Plein', 'Structure', 'solid'], ['Tireté', 'Relation', 'dashed'], ['Pointillé', 'Repère', 'dotted']];
+    $('#s4-rows').innerHTML = rows.map(([n, s, st], i) => `
+      <span class="pr-at t-strong s4-n" style="left: ${A1}px; top: ${112 + i * 64}px">${n}</span>
+      <span class="pr-at t-micro s4-s" style="left: ${A2}px; top: ${114 + i * 64}px">${s}</span>
+      <div class="pr-at pr-line s4-l" style="left: ${A2}px; top: ${142 + i * 64}px; width: ${R - A2}px; border-top-style: ${st}"></div>`).join('');
+    const kv = [['Rayon', '0'], ['Ombre', 'aucune'], ['Dégradé', 'aucun'], ['Filet', '1 px']];
+    $('#s4-kv').innerHTML = kv.map(([k, v]) => `<dl class="c-kv c-kv--plain pr-dl s4-kv"><div><dt>${k}</dt><dd>${v}</dd></div></dl>`).join('');
+
+    // 05 — repères d'angle autour du tiers vide
+    const cz = { x: A3, y: 136, w: R - A3, h: 448 - 136 }, L = 12;
+    const cs = [];
+    for (const [cx, cy, sx, sy] of [[cz.x, cz.y, 1, 1], [cz.x + cz.w, cz.y, -1, 1], [cz.x, cz.y + cz.h, 1, -1], [cz.x + cz.w, cz.y + cz.h, -1, -1]]) {
+      cs.push({ x: sx > 0 ? cx : cx - 1, y: sy > 0 ? cy : cy - 1, sx, sy });
+    }
+    $('#corners').innerHTML = cs.map((c) => `<i class="pr-corner" data-h style="left:${c.sx > 0 ? c.x : c.x - L + 1}px; top:${c.y}px; width:${L}px; height:1px; transform-origin:${c.sx > 0 ? 0 : 100}% 0"></i><i class="pr-corner" data-v style="left:${c.x}px; top:${c.sy > 0 ? c.y : c.y - L + 1}px; width:1px; height:${L}px; transform-origin:0 ${c.sy > 0 ? 0 : 100}%"></i>`).join('');
+
+    // 06 — barres : données de demo-data.js (primes totales, 2003 à 2026)
+    const P = [47, 79, 93, 178, 238, 398, 569, 649, 817, 931, 1052, 1114, 1329, 1551, 1961, 2433, 3139, 3707, 4194, 4235, 4236, 4974, 5364, 5190];
+    const bs = $('#bars'), x0 = 52, x1 = 720, yb = 252, k = 216 / 6000, slot = (x1 - x0) / P.length, bw = 17;
+    for (const v of [2000, 4000, 6000]) {
+      const y = Math.round(yb - v * k) + 0.5;
+      svgEl('line', { x1: x0, y1: y, x2: x1, y2: y, class: 'v-grid s6-grid' }, bs);
+      const tx = svgEl('text', { x: 0, y: y + 4, class: 'v-label v-label--muted s6-grid' }, bs); tx.textContent = fr(v);
+    }
+    svgEl('line', { x1: x0, y1: yb + 0.5, x2: x1, y2: yb + 0.5, class: 'v-axis s6-grid' }, bs);
+    G.bars = P.map((v, i) => { const x = Math.round(x0 + i * slot + (slot - bw) / 2); return { v, x, el: svgEl('rect', { x, y: yb, width: bw, height: 0, class: 'v-mark' }, bs) }; });
+    G.barsGeo = { yb, k, bw };
+    P.forEach((v, i) => { if (i % 5 === 0 || i === P.length - 1) { const tx = svgEl('text', { x: G.bars[i].x + bw / 2, y: yb + 22, 'text-anchor': 'middle', class: 'v-label s6-grid' + (i === P.length - 1 ? ' s6-y26' : '') }, bs); tx.textContent = 2003 + i; } });
+    G.vMax = svgEl('text', { x: G.bars[22].x + bw, y: 0, 'text-anchor': 'end', class: 'v-value' }, bs);
+    G.vLast = svgEl('text', { x: G.bars[23].x + 1, y: 0, 'text-anchor': 'start', class: 'v-value' }, bs);
+    G.vMax.style.transform = 'translateX(-2px)';
+
+    // 07 — clés-valeurs du tableau de bord
+    const dk = [['Non-vie', '4 285 M'], ['Vie', '905 M'], ['Agences', '1 204'], ['Service', '98,4 %']];
+    $('#dash-kv').innerHTML = dk.map(([k2, v]) => `<dl class="c-kv dash-kv" style="grid-template-columns: 8.5rem minmax(0, 1fr)"><div><dt>${k2}</dt><dd>${v}</dd></div></dl>`).join('');
+
+    // 08 — crêtes : douze profils horaires, graine fixe
+    const rd = $('#ridges'), months = ['Oct', 'Nov', 'Déc', 'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sept'];
+    const rnd = mulberry(20261113), hx = (h) => 60 + ((h - 7) / 13) * 676;
+    G.ridges = months.map((m, i) => {
+      const f = i / 11, yb2 = 96 + i * 20, pts = [];
+      const noise = Array.from({ length: 53 }, () => rnd() - 0.5);
+      for (let j = 0; j < 53; j++) {
+        const h = 7 + j * 0.25, n = (noise[Math.max(0, j - 1)] + noise[j] * 2 + noise[Math.min(52, j + 1)]) * 1.6;
+        const v = (64 * (1 - f) + 6) * Math.exp(-((h - 10.2) ** 2) / (2 * 1.5 ** 2)) + (74 * f + 10) * Math.exp(-((h - 15) ** 2) / (2 * 1.6 ** 2)) + n * (i === 11 ? 0.4 : 1);
+        pts.push([hx(h), yb2 - v]);
+      }
+      const d = pts.map((p, j) => (j ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+      const path = svgEl('path', { d, class: i === 11 ? 'v-line' : 'v-line v-line--2' }, rd);
+      if (i !== 11) path.style.strokeWidth = '1';
+      const lab = svgEl('text', { x: 0, y: yb2 + 4, class: i === 11 ? 'v-label v-label--strong' : 'v-label' }, rd); lab.textContent = m;
+      return { path, lab, len: path.getTotalLength(), pts };
+    });
+    const last = G.ridges[11].pts; let mi = 0; last.forEach((p, j) => { if (p[1] < last[mi][1]) mi = j; });
+    G.peak = { x: last[mi][0], y: last[mi][1], h: 7 + mi * 0.25 };
+    G.peakDot = svgEl('rect', { x: Math.round(G.peak.x) - 3, y: Math.round(G.peak.y) - 3, width: 6, height: 6, class: 'v-dot--signal' }, rd);
+    G.peakLab = svgEl('text', { x: Math.round(G.peak.x) + 10, y: Math.round(G.peak.y) - 8, class: 'v-label v-label--signal' }, rd); G.peakLab.textContent = fr(G.peak.h) + ' h';
+    { const bb = G.peakLab.getBBox(); G.peakHalo = svgEl('rect', { x: bb.x - 4, y: bb.y - 1, width: bb.width + 8, height: bb.height + 2, class: 'v-halo' }); rd.insertBefore(G.peakHalo, G.peakLab); }
+    G.ticks = [];
+    for (const h of [7, 10, 13, 17, 20]) {
+      const x = Math.round(hx(h)) + 0.5;
+      G.ticks.push(svgEl('line', { x1: x, y1: 330, x2: x, y2: 336, class: 'v-tick' }, rd));
+      const tx = svgEl('text', { x: h === 20 ? x + 0.5 : x - 0.5, y: 354, 'text-anchor': h === 20 ? 'end' : 'start', class: 'v-label' }, rd); tx.textContent = h + ' h'; G.ticks.push(tx);
+    }
+
+    // 10 — le propos, mot à mot
+    const say = 'MONO traite l’écran comme une page imprimée : une encre, un papier, des filets, beaucoup de vide — et une seule couleur, gardée pour ce qui ne doit pas être manqué.';
+    $('#s10-say').innerHTML = say.split(' ').map((w, i) => `<span class="pr-word"${i === 0 ? ' style="color: var(--fg-strong)"' : ''}>${w}</span>`).join(' ');
+  }
+
+  // --- Plans ------------------------------------------------------------------------------------
+  const PLAN = {
+    s1(u, t) {
+      const { step, size, cap, dotX, base } = G.logo;
+      const logo = $('#logo1'), cur = $('#cursor');
+      const tStart = 2.6, typed = u < tStart ? 0 : Math.min(4, Math.floor((u - tStart) / 0.28) + 1);
+      logo.textContent = 'MONO'.slice(0, typed);
+      logo.style.visibility = typed ? '' : 'hidden';
+      const big = size / 2;
+      const g = out3(prog(u, 4.15, 0.8));
+      if (u < 2.1) cur.style.display = 'none';
+      else if (g < 1) {
+        const blinkOn = u < tStart ? Math.floor((u - 2.1) / 0.25) % 2 === 0 : true;
+        const px0 = typed * step, w = big + (4 - big) * g, h = cap + (4 - cap) * g, x = px0 + (dotX - px0) * g;
+        cur.style.display = blinkOn ? '' : 'none';
+        Object.assign(cur.style, { left: x.toFixed(2) + 'px', top: (base - h).toFixed(2) + 'px', width: w.toFixed(2) + 'px', height: h.toFixed(2) + 'px', background: g > 0.55 ? 'var(--signal)' : 'var(--fg-strong)' });
+      } else cur.style.display = 'none';
+      logo.className = g >= 1 ? 'c-logo' : 'c-logo c-logo--plain';
+      if (g >= 1) logo.textContent = 'MONO';
+      // tracés de construction : ils passent, puis descendent les tons
+      const b = $('#build'), grow = out3(prog(u, 4.9, 0.5));
+      const fade = ['--fg-soft', '--fg-muted', '--line-strong', '--line', '--line-faint'];
+      const k = u < 4.9 ? -1 : u < 5.7 ? 0 : Math.floor((u - 5.7) / 0.12) + 1;
+      if (k < 0 || k >= fade.length) b.style.visibility = 'hidden';
+      else {
+        b.style.visibility = ''; b.style.color = `var(${fade[k]})`;
+        b.style.clipPath = `inset(0 ${(1 - grow) * 100}% 0 0)`;
+        $$('.g-tick', b).forEach((e) => (e.style.visibility = grow > 0.5 ? '' : 'hidden'));
+        $$('.g-lab', b).forEach((e) => (e.style.visibility = grow > 0.9 ? '' : 'hidden'));
+      }
+      type($('#s1-cap'), u, 5.5, 40);
+    },
+    s2(u) {
+      type($('#s2-title'), u, 0.05, 30);
+      G.guides.forEach((l, i) => {
+        const p = out3(prog(u, 0.7 + i * 0.045, 0.55)), axis = i === 0 || i === 4 || i === 8;
+        l.setAttribute('y2', 176 + 272 * p);
+        // les guides qui ne sont pas des axes s'effacent en descendant les tons ; puis les axes
+        const tout = axis ? Infinity : 2.1 + i * 0.02, kk = Math.floor((u - tout) / STEP);
+        const seq = ['--line-strong', '--line', '--line-faint'];
+        l.style.visibility = p <= 0 || kk >= seq.length ? 'hidden' : '';
+        l.style.stroke = u < tout ? '' : `var(${seq[Math.min(seq.length - 1, Math.max(0, kk))]})`;
+      });
+      tone($('#s2-b1'), u, 2.7); tone($('#s2-b2'), u, 2.95); tone($('#s2-b3'), u, 3.2);
+      // le texte des blocs se compose pendant que les axes tiennent encore
+      $$('#s2-b1 span:last-child, #s2-b2 span:last-child, #s2-b3 span:last-child').forEach((e, i) => type(e, u, 2.8 + i * 0.25, 46));
+    },
+    s3(u) {
+      type($('#s3-t1'), u, 0.05, 30);
+      type($('#s3-t2'), u, 3.0, 30);
+      tone($('#s3-encre'), u, 0.45);
+      $$('#ramp > div').forEach((d, i) => {
+        const p = out4(prog(u, 0.55 + i * 0.07, 0.36));
+        const bar = d.firstElementChild; bar.style.transform = `scaleY(${p})`; bar.style.visibility = p > 0 ? '' : 'hidden';
+        tone(d.lastElementChild, u, 0.75 + i * 0.07);
+      });
+      type($('#s3-cap'), u, 1.8, 50);
+      const pap = $('#papier'), w = out4(prog(u, 3.35, 0.5));
+      pull(pap, w);
+      tone($('#s3-pap'), u, 3.8);
+      $$('#ladder > *').forEach((e, i) => tone(e, u, 3.95 + Math.floor(i / 2) * 0.07));
+    },
+    s4(u) {
+      type($('#s4-title'), u, 0.05, 30);
+      $$('.s4-n').forEach((e, i) => tone(e, u, 0.55 + i * 0.4));
+      $$('.s4-s').forEach((e, i) => type(e, u, 0.7 + i * 0.4, 40));
+      $$('.s4-l').forEach((e, i) => pull(e, out3(prog(u, 0.6 + i * 0.4, 0.55))));
+      $$('.s4-kv').forEach((e, i) => pull(e, out3(prog(u, 2.3 + i * 0.28, 0.45))));
+      type($('#s4-note'), u, 3.7, 46);
+    },
+    s5(u) {
+      type($('#s5-title'), u, 0.05, 30);
+      $$('#sk1 .c-skeleton').forEach((e, i) => { const p = out4(prog(u, 0.6 + i * 0.08, 0.35)); e.style.transform = `scaleX(${p})`; e.style.visibility = p > 0 ? '' : 'hidden'; });
+      $$('#sk2 .c-skeleton').forEach((e, i) => { const p = out4(prog(u, 0.85 + i * 0.1, 0.4)); e.style.transform = i === 0 ? `scaleY(${p})` : `scaleX(${p})`; e.style.transform += ''; e.style.transformOrigin = i === 0 ? '50% 100%' : '0 50%'; e.style.visibility = p > 0 ? '' : 'hidden'; });
+      $$('#corners i').forEach((e) => { const p = out3(prog(u, 1.8, 0.35)); e.style.transform = e.dataset.h !== undefined ? `scaleX(${p})` : `scaleY(${p})`; e.style.visibility = p > 0 ? '' : 'hidden'; });
+      tone($('#s5-measure'), u, 2.05);
+      const v = Math.round(out3(prog(u, 2.1, 1.1)) * G.vide);
+      $('#s5-val').textContent = v + ' %';
+      type($('#s5-note'), u, 3.4, 46);
+    },
+    s6(u) {
+      type($('#s6-t1'), u, 0.05, 30);
+      type($('#s6-t2'), u, 0.95, 32);
+      $$('.s6-grid').forEach((e) => tone(e, u, 0.35));
+      const { yb, k } = G.barsGeo;
+      G.bars.forEach((b, i) => {
+        const p = out3(prog(u, 0.6 + i * 0.05, 0.4));
+        let v = b.v * p;
+        if (i === 23) { const up = out3(prog(u, 0.6 + i * 0.05, 0.4)), down = inout(prog(u, 3.3, 0.6)); v = (5364 + (5190 - 5364) * down) * up; }
+        const h = Math.round(v * k);
+        b.el.setAttribute('y', yb - h); b.el.setAttribute('height', h);
+        b.el.setAttribute('class', i === 23 && u >= 3.9 ? 'v-mark v-mark--signal' : 'v-mark');
+      });
+      // la valeur maximale, puis le repli : le chiffre roule, la barre passe au signal en dernier
+      const yMax = yb - Math.round(5364 * k) - 6;
+      G.vMax.setAttribute('y', yMax); tone(G.vMax, u, 2.35);
+      G.vMax.textContent = fr(5364);
+      const down = inout(prog(u, 3.3, 0.6)), vl = Math.round(5364 + (5190 - 5364) * down);
+      G.vLast.textContent = fr(vl);
+      G.vLast.setAttribute('y', yb - Math.round(vl * k) - 6);
+      G.vLast.setAttribute('class', u >= 3.9 ? 'v-value v-value--signal' : 'v-value');
+      tone(G.vLast, u, 3.15);
+      $('.s6-y26').setAttribute('class', u >= 3.9 ? 'v-label v-label--strong s6-grid s6-y26' : 'v-label s6-grid s6-y26');
+      tone($('#s6-notice'), u, 4.3);
+      tone($('#s6-measure'), u, 5.2);
+      $('#s6-pct').textContent = fr(G.signal * out3(prog(u, 5.25, 0.9)), 1);
+    },
+    s7(u, t, themes) {
+      const final = themes;   // au plan des thèmes, l'écran est déjà composé
+      const T = final ? 99 : u;
+      tone($('#hero .c-stat__label'), T, 0);
+      $('#hero-v').textContent = fr(Math.round(5190 * out3(prog(T, 0.1, 1.3))));
+      tone($('#hero .c-stat__value'), T, 0.1);
+      tone($('#hero-n'), T, 1.35);
+      $$('.dash-kv').forEach((e, i) => tone(e, T, 0.6 + i * 0.12));
+      tone($('#dash-cap'), T, 0.8);
+      tone($('#dash-table thead tr'), T, 0.9);
+      $$('#dash-table tbody tr, #dash-table tfoot tr').forEach((r, i) => {
+        tone(r, T, 1.05 + i * 0.16);
+        const c = r.querySelector('[data-roll]'), v = +c.dataset.roll;
+        c.textContent = fr(v * out3(prog(T, 1.05 + i * 0.16, 0.7)), 1) + ' %';
+      });
+      // le signal se pose en dernier : la branche Vie passe en repli
+      const crit = T >= 3.0;
+      const st = $('#vie-st'); st.className = crit ? 'c-status c-status--critical' : 'c-status c-status--progress'; st.textContent = crit ? 'Repli' : 'En cours';
+      $('#vie-ev').classList.toggle('is-signal', crit);
+      const say = $('#dash-say');
+      const text = themes ? 'Deux thèmes symétriques : mêmes rôles, mêmes règles. Rien ne bouge.' : 'La retenue fait la hiérarchie : un chiffre héros, un seul fait en signal, trois corps de texte.';
+      if (say._full !== text) { say._full = text; say._n = -1; }
+      type(say, themes ? u : u, themes ? 0.1 : 3.6, 56);
+      tone($('#dash-notice'), themes ? 99 : u, 3.5);
+    },
+    s8(u) {
+      type($('#s8-title'), u, 0.05, 32);
+      tone($('#s8-cap'), u, 0.9);
+      G.ridges.forEach((r, i) => {
+        const p = inout(prog(u, 0.6 + i * 0.12, 1.0));
+        r.path.style.strokeDasharray = r.len; r.path.style.strokeDashoffset = r.len * (1 - p);
+        r.path.style.visibility = p > 0 ? '' : 'hidden';
+        tone(r.lab, u, 0.6 + i * 0.12);
+      });
+      G.ticks.forEach((e) => tone(e, u, 0.5));
+      tone(G.peakDot, u, 3.2); tone(G.peakHalo, u, 3.3); tone(G.peakLab, u, 3.3);
+      type($('#s8-note'), u, 3.8, 46);
+    },
+    s10(u) {
+      $$('#s10-say .pr-word').forEach((w, i) => tone(w, u, 0.2 + i * 0.085, 6.4 + i * 0.012));
+      tone($('#logo2'), u, 3.4);
+      $('#logo2').className = 'pr-at c-logo' + (u >= 4.6 ? '' : ' c-logo--plain');
+      type($('#s10-cap'), u, 3.8, 40);
+      if (u >= 6.45) tone($('#s10-cap'), u, -1, 6.45);
+    },
+  };
+
+  // --- Horloge ------------------------------------------------------------------------------------
+  let overlay = null;
+  function seek(t) {
+    t = Math.max(0, Math.min(DURATION - 1e-6, t));
+    const sc = SCENES.find((s) => t >= s.a && t < s.b) || SCENES[SCENES.length - 1];
+    const u = t - sc.a, n = SCENES.indexOf(sc) + 1;
+    $$('.pr-scene').forEach((e) => e.classList.toggle('is-on', e.id === sc.id));
+
+    // la page : le contour se trace, puis la masse se pose ; l'en-tête et le pied se découvrent
+    const shell = $('#shell'), seg = [[0.3, 0.39], [0.69, 0.21], [0.9, 0.39], [1.29, 0.21]];
+    $$('#contour i').forEach((e, i) => { const p = prog(t, seg[i][0], seg[i][1]); e.style.transform = i % 2 ? `scaleY(${p})` : `scaleX(${p})`; });
+    const closed = t >= 1.5;
+    $('#contour').style.display = closed ? 'none' : '';
+    shell.style.background = closed ? '' : 'var(--desk)';
+    shell.style.borderColor = closed ? '' : 'transparent';
+    pull($('#mast'), out3(prog(t, 1.6, 0.6)));
+    pull($('#colo'), out3(prog(t, 1.75, 0.6)));
+    // chapitre et folio
+    const chap = $('#chap'); if (chap._full !== sc.chap) { chap._full = sc.chap; chap._n = -1; }
+    type(chap, u, sc.id === 's1' ? 2.25 : 0, 40);
+    $('#folio').textContent = String(n).padStart(2, '0') + ' / 10';
+    // le logo est à une extrémité : en pied de page, sauf quand il est le sujet du plan
+    const subject = sc.id === 's1' || sc.id === 's10';
+    $('#colo-ref').hidden = !subject; $('#colo-logo').hidden = subject;
+    // au dernier plan, tout descend les tons sauf le logo et le contour
+    const outT = 60.8 + 6.4;
+    for (const el of [$('#mast'), $('#colo')]) { if (t >= outT) tone(el, t, -1, outT); else dim(el, 99); }
+
+    PLAN[sc.id](u, t, !!sc.themes);
+
+    // les deux thèmes : un volet papier passe sur toute la vue, de gauche à droite
+    if (overlay) { overlay.remove(); overlay = null; }
+    if (sc.themes) {
+      const p = inout(prog(u, 1.5, 0.8));
+      if (p > 0) {
+        overlay = document.createElement('div');
+        overlay.dataset.theme = 'papier';
+        overlay.style.cssText = `position:absolute;inset:0;clip-path:inset(0 ${(100 - p * 100).toFixed(3)}% 0 0)`;
+        const clone = $('#desk').cloneNode(true); clone.removeAttribute('id');
+        $$('[id]', clone).forEach((e) => e.removeAttribute('id'));
+        overlay.append(clone);
+        $('#film').append(overlay);
+      }
+    }
+    return t;
+  }
+
+  // --- Mise à l'échelle et lecture ------------------------------------------------------------------
+  const fit = () => { const s = Math.min(innerWidth / 1280, innerHeight / 720), f = $('#film'); f.style.left = f.style.top = '50%'; f.style.transform = `translate(-50%, -50%) scale(${s})`; };
+  const params = new URLSearchParams(location.search);
+  const ready = (async () => {
+    await Promise.all(['400', '500', '600'].map((w) => document.fonts.load(`${w} 24px "IBM Plex Mono"`)));
+    await document.fonts.ready;
+    build();
+    // valeurs mesurées sur le rendu (scripts/render-video.mjs les vérifie) : vide du plan 05, signal du plan 06
+    G.vide = 62; G.signal = 0.4;
+    seek(0);
+  })();
+  window.MONO_FILM = { DURATION, FPS, seek, ready };
+
+  if (params.has('render')) { document.body.style.background = 'none'; return; }
+  addEventListener('resize', fit); fit();
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  ready.then(() => {
+    if (params.has('t') || still) { seek(params.has('t') ? +params.get('t') : 47.5); return; }
+    let t0 = performance.now(), paused = false, at = 0;
+    const tick = (now) => { if (!paused) { at = ((now - t0) / 1000) % DURATION; seek(at); } requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+    addEventListener('keydown', (e) => {
+      if (e.key === ' ') { paused = !paused; t0 = performance.now() - at * 1000; e.preventDefault(); }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { at = (at + (e.key === 'ArrowRight' ? 1 : -1) + DURATION) % DURATION; t0 = performance.now() - at * 1000; seek(at); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

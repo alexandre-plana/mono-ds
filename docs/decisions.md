@@ -127,6 +127,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-104 | Laboratoire, expérience 04 : les formes du direct | en vigueur, la carte et la couleur reprises par D-105 |
 | D-105 | Expérience 04 : la carte reprise, quatre teintes, le flux qui défile | en vigueur, la couleur et le trait d'ancienne taille repris par D-106 |
 | D-106 | Expérience 04 : la teinte du système par défaut, plus de pointillés, une matrice de chaleur | en vigueur |
+| D-107 | Une présentation du système en mouvement | en vigueur |
 
 ---
 
@@ -1011,3 +1012,13 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Les pointillés** : le trait tireté de l'ancienne taille, à l'intérieur des cases, se lisait comme un défaut d'affichage. Il est retiré, ainsi que les bords tiretés d'une case qui rétrécit ou passe sous 3 M. Une case a un filet plein, toujours. Le mouvement se dit autrement : le mouvement net de la dernière minute est écrit dans la case.
 - **Leçon** : deux fois de suite, une marque censée expliquer un changement de taille a été prise pour un défaut. Sur une surface qui bouge, une marque de plus est de trop ; le chiffre suffit.
 - **La matrice de chaleur**, sixième forme : une ligne par agence, une colonne par tranche de dix secondes, cinq minutes de large, le présent à droite. Le ton dit l'ampleur en quatre paliers ; pleine si l'agence a monté, en contour si elle a baissé.
+
+## D-107 — Une présentation du système en mouvement
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« une vidéo de présentation du design system, en motion design, qui respecte scrupuleusement le système ») · **Relève de** : D-062
+- **Décision** : `docs/video/presentation.html` joue toute la séquence à partir d'une seule horloge (`MONO_FILM.seek(t)`, sans aléatoire non semé) ; `scripts/render-video.mjs` la capture image par image et assemble `docs/video/mono-presentation.mp4` (et `.webm`). 69 s, 30 i/s, 1920 × 1080, sans son. Hors du catalogue : ce n'est ni une démonstration ni un composant.
+- **Le propos** : la phrase de `philosophie.md`, dépliée plan par plan — la page, une encre et un papier, les filets, le vide, une seule couleur —, puis un écran réel (la hiérarchie), des données, les deux thèmes, et la phrase entière avant le logo.
+- **Le mouvement, au vocabulaire du système** : un filet se tire (il se découvre, il ne s'étire pas) ; un texte se compose ; un chiffre roule ; une masse de ton se pose ; ce qui apparaît ou s'efface monte ou descend les tons un à un, jamais par transparence ; les plans changent par coupe franche. Courbes sans rebond, mouvements brefs.
+- **Règles tenues par plan** : une page à contour sur le plan de travail, ferrée à gauche sur trois axes (colonnes 1, 5, 9), trois corps de texte, un seul fait en signal, posé en dernier ; au plus un bloc inversé (le panneau papier du plan 03). Mesures prises sur le rendu, de la même façon que `tonal-audit.mjs` : signal entre 0 et 0,4 %, vide entre 44 et 84 % selon le plan. Les chiffres affichés à l'écran (« vide 62 % », « signal 0,4 % de la vue ») sont ces mesures.
+- **Choix de Claude** : une vue de composition de 1280 × 720 rendue à 1,5 × plutôt qu'une page de 1920 px agrandie — les corps, filets et marges sont exactement ceux du système ; le logo garde 24 px au plus et le point ne grandit pas ; le logo de pied est `--plain` sauf quand il est le sujet du plan.
+- **Limite** : le film est composé pour sa vue ; dans un navigateur, il est mis à l'échelle de la fenêtre, pas recomposé.

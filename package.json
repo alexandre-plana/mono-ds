@@ -13,6 +13,7 @@
     "build:search": "node scripts/build-search-index.mjs",
     "build:icons": "node scripts/build-icons.mjs",
     "check:icons": "node scripts/build-icons.mjs --check",
-    "check:search": "node scripts/build-search-index.mjs --check"
+    "check:search": "node scripts/build-search-index.mjs --check",
+    "render:video": "node scripts/render-video.mjs --webm"
   }
 }
