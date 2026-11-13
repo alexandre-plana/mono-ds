@@ -1,0 +1,53 @@
+.animation-desk { gap: var(--space-2); }
+.animation-desk .c-taskbar { gap: var(--space-3); }
+.animation-desk .c-taskbar__group--windows { padding-inline: var(--space-2); }
+.animation-desk .c-taskbar__item { flex: none; }
+.animation-desk .c-taskbar__meta { gap: var(--space-3); }
+.animation-desk .c-menu__list { max-height: min(18rem, calc(100dvh - 4rem)); overflow-y: auto; }
+.animation-desk .c-window[data-covered] { visibility: hidden; }
+.animation-desk .c-window.is-maximized { padding: 0; }
+.animation-desk .c-window.is-maximized .c-window__bar { cursor: default; }
+.animation-desk .c-window.is-maximized .c-window__frame::after { content: none; }
+
+.animation-empty { height: 100%; padding: var(--page-margin); }
+.animation-empty h1, .animation-heading h2 { color: var(--fg-strong); font-size: var(--text-title); font-weight: var(--weight-medium); line-height: var(--leading-title); }
+.animation-stage { container-type: size; overflow: hidden; }
+.animation-heading { flex: none; padding: clamp(0.75rem, 4cqh, 2.75rem) clamp(0.75rem, 5cqw, 4.5rem) 0; }
+.animation-heading :is(h2, p) { margin: 0; }
+.animation-heading h2 { margin-block: var(--space-1); }
+.animation-heading p { max-width: 55ch; font-size: var(--text-small); }
+.animation-heading [data-category] { font-size: var(--text-micro); }
+.animation-figure { position: relative; flex: 1; min-height: 0; margin: 0 clamp(0.75rem, 5cqw, 4.5rem); }
+.animation-plot { position: relative; min-width: 0; min-height: 0; height: 100%; }
+.animation-plot canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.animation-figure:has(.animation-code:not([hidden])) { display: grid; grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.6fr); gap: var(--space-6); align-items: center; }
+.animation-code { margin: 0; overflow: hidden; align-self: center; color: var(--fg); font: var(--text-small)/var(--leading-base) var(--font-mono); white-space: pre; }
+.animation-status { flex: none; margin-inline: clamp(0.75rem, 5cqw, 4.5rem); gap: var(--space-1) var(--space-3); }
+.animation-reading { color: var(--fg-soft); }
+.animation-controls { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-1); }
+.animation-controls .c-button { min-height: 1.75rem; }
+.animation-controls [data-seed] { font-variant-numeric: tabular-nums; }
+.animation-options { padding: 0; margin: 0; border: 0; display: flex; gap: var(--space-4); }
+.animation-options legend { margin-bottom: var(--space-2); }
+.animation-desk input { accent-color: var(--fg-soft); }
+
+@container (max-width: 540px) {
+  .animation-figure:has(.animation-code:not([hidden])) { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 0; }
+  .animation-code { margin-block-start: var(--space-3); }
+}
+
+@container (max-height: 330px) {
+  .animation-heading [data-description] { display: none; }
+  .animation-heading h2 { font-size: var(--text-base); line-height: var(--leading-base); }
+  .animation-heading { padding-block-start: var(--space-2); }
+  .animation-code { max-height: 4lh; }
+}
+
+@media (max-width: 760px) {
+  .animation-desk.l-desk--os { height: 100dvh; min-height: 0; overflow: hidden; }
+  .animation-desk .l-desk__area { display: block; }
+  .animation-desk .l-desk__area > .c-window { position: absolute; left: 0 !important; top: 0 !important; height: 100% !important; }
+  .animation-desk .c-window__bar { touch-action: auto; }
+  .animation-desk [data-action="maximize"], .animation-desk .c-window__bar > .c-icon { display: none; }
+  .animation-desk .c-taskbar__item { padding-inline: var(--space-2); }
+}

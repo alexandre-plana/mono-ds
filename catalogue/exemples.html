@@ -111,11 +111,16 @@
                 <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="planches" alt="" loading="lazy"></figure>
                 <div class="c-card__body">Quatre animations procédurales, nées d'une graine.</div>
               </a>
+              <a class="c-card" href="exemples.html?e=animations">
+                <h3 class="c-card__title">Animations</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="animations" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Ondes, connexions, frappe et spectre dans des fenêtres plein écran.</div>
+              </a>
             </div>
           </section>
         </div>
 
-        <iframe class="cat-frame" id="ex-frame" title="Exemple" hidden></iframe>
+        <iframe class="cat-frame" id="ex-frame" title="Exemple" allowfullscreen hidden></iframe>
 
       </main>
     </div>
@@ -128,7 +133,7 @@
   <script>
     // Un exemple s'ouvre dans l'onglet : le fil d'Ariane dit où l'on est et ramène à la liste.
     (() => {
-      const NAMES = {"tableau-de-bord": "Tableau de bord", "rapport": "Rapport", "connexion": "Connexion", "application": "Application · chemin", "application-modules": "Application · onglets", "bureau": "Bureau", "collection": "Collection", "kanban": "Dossiers", "carte": "Carte", "plan": "Plan", "planches": "Planches"}, e = new URLSearchParams(location.search).get('e'), frame = document.getElementById('ex-frame');
+      const NAMES = {"tableau-de-bord": "Tableau de bord", "rapport": "Rapport", "connexion": "Connexion", "application": "Application · chemin", "application-modules": "Application · onglets", "bureau": "Bureau", "collection": "Collection", "kanban": "Dossiers", "carte": "Carte", "plan": "Plan", "planches": "Planches", "animations": "Animations"}, e = new URLSearchParams(location.search).get('e'), frame = document.getElementById('ex-frame');
       const thumbs = () => document.querySelectorAll('[data-thumb]').forEach((img) => { img.src = `assets/img/exemples/${img.dataset.thumb}-${document.documentElement.dataset.theme === 'papier' ? 'papier' : 'encre'}.png`; });
       document.addEventListener('mono:theme', thumbs); thumbs();
       if (!NAMES[e]) return;

@@ -146,6 +146,15 @@ de deux mots et porte un seul accent de couleur.
 
 ![Planche Console](docs/captures/planche-console.gif)
 
+### Le bureau des animations
+
+Dans [Exemples → Animations](catalogue/exemples.html?e=animations), le lanceur ouvre
+Oscilloscope, Connexions, Frappe ou Spectre dans sa propre fenêtre. Elle remplit le
+bureau à l’ouverture. « Plein écran » l’affiche à la taille de l’écran avec la barre
+des fenêtres, qui permet de passer d’une scène à l’autre. Chaque fenêtre a sa pause
+et son bouton de nouvelle graine. Les réglages Encre, Papier et Grain sont partagés
+avec le catalogue.
+
 ### Les images
 
 Des photos sans rapport entre elles — studio, nuit, relevé scientifique —
@@ -223,7 +232,7 @@ docs/               les règles
   composants.md     index des composants et de leurs variantes
   dataviz.md        règles et classes de visualisation
 catalogue/          le catalogue navigable (démonstrations + code)
-  exemples/         onze écrans : carte, plan, planches, kanban, tableau de bord, rapport, collection + inspecteur,
+  exemples/         douze écrans : carte, plan, planches, animations, kanban, tableau de bord, rapport, collection + inspecteur,
                     connexion, bureau à fenêtres, et deux gabarits de shell à
                     copier : application.html (arborescente) et
                     application-modules.html (modules séparés)

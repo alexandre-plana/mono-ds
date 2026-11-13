@@ -22,6 +22,7 @@
     ['exemples/plan.html', 'Plan'],
     ['exemples/kanban.html', 'Dossiers'],
     ['exemples/planches.html', 'Planches'],
+    ['exemples/animations.html', 'Animations'],
   ];
   const here = location.pathname.replace(/\/$/, '/index.html');
   const isCurrent = (href) => here.endsWith('/catalogue/' + href) || here.endsWith('/' + href);
@@ -179,6 +180,10 @@
   showGrain(document.documentElement.dataset.grain);
   grainToggle.addEventListener('click', () => changeGrain(document.documentElement.dataset.grain === 'on' ? 'off' : 'on'));
   document.querySelector('iframe.cat-frame')?.addEventListener('load', syncFrameGrain);
+  document.querySelector('iframe.cat-frame')?.addEventListener('mono:example-preference', ({ detail }) => {
+    if (detail.name === 'theme') setTheme(detail.value);
+    if (detail.name === 'grain') setGrain(detail.value);
+  });
 
   // ---------------------------------------------------------------------------
   // Recherche avancée : texte libre + filtres par rubrique et par type.

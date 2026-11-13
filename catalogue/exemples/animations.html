@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animations — exemple MONO</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+  <link rel="stylesheet" href="../assets/animations.css">
+  <script src="../assets/prefs.js"></script>
+</head>
+<body class="l-desk l-desk--os animation-desk">
+  <main class="l-desk__area" id="area" aria-label="Bureau des animations">
+    <div class="l-shell animation-empty" id="empty" hidden>
+      <h1>Animations</h1>
+      <p class="t-muted">Choisir une scène dans « Ouvrir ».</p>
+    </div>
+  </main>
+
+  <footer class="c-taskbar">
+    <div class="c-taskbar__group">
+      <details class="c-menu c-menu--up" id="launcher">
+        <summary class="c-taskbar__item"><i class="c-icon i-grid" aria-hidden="true"></i>Ouvrir</summary>
+        <div class="c-menu__list" id="scenes"></div>
+      </details>
+    </div>
+    <div class="c-taskbar__group c-taskbar__group--windows" id="tasks" role="group" aria-label="Fenêtres ouvertes"></div>
+    <div class="c-taskbar__meta">
+      <button type="button" class="c-taskbar__item" id="settings">Réglages</button>
+      <a class="c-logo c-logo--plain" href="../exemples.html" target="_top" aria-label="Mono — retour aux exemples">Mono</a>
+    </div>
+  </footer>
+
+  <dialog class="c-dialog c-dialog--small" id="preferences" aria-labelledby="preferences-title">
+    <h2 class="c-dialog__title" id="preferences-title">Réglages</h2>
+    <div class="c-dialog__body">
+      <fieldset class="animation-options">
+        <legend class="t-micro">Thème</legend>
+        <label><input type="radio" name="theme" value="encre"> Encre</label>
+        <label><input type="radio" name="theme" value="papier"> Papier</label>
+      </fieldset>
+      <label><input type="checkbox" id="grain"> Grain</label>
+    </div>
+    <form method="dialog" class="c-dialog__actions">
+      <button type="submit" class="c-button">Fermer</button>
+    </form>
+  </dialog>
+
+  <template id="window-template">
+    <section class="c-window c-window--resizable">
+      <div class="c-window__frame">
+        <header class="c-window__bar">
+          <i class="c-icon i-grip" aria-hidden="true"></i>
+          <span class="c-window__title"></span>
+          <span class="c-window__actions">
+            <button class="c-button c-button--quiet" type="button" data-action="minimize" aria-label="Réduire"><i class="c-icon i-minus" aria-hidden="true"></i></button>
+            <button class="c-button c-button--quiet" type="button" data-action="maximize" aria-label="Agrandir"><i class="c-icon i-window" aria-hidden="true"></i></button>
+            <button class="c-button c-button--quiet" type="button" data-action="close" aria-label="Fermer la fenêtre"><i class="c-icon i-close" aria-hidden="true"></i></button>
+          </span>
+        </header>
+        <div class="c-window__body c-window__body--flush animation-stage">
+          <header class="animation-heading">
+            <p class="t-micro" data-category></p>
+            <h2 data-heading></h2>
+            <p class="t-muted" data-description></p>
+          </header>
+          <div class="animation-figure">
+            <pre class="animation-code" hidden aria-hidden="true"></pre>
+            <div class="animation-plot">
+              <canvas data-grid aria-hidden="true"></canvas>
+              <canvas data-trace role="img">Le dessin nécessite un navigateur compatible avec Canvas.</canvas>
+            </div>
+          </div>
+          <footer class="c-statusbar animation-status">
+            <span class="animation-reading" data-reading></span>
+            <div class="animation-controls" role="group" aria-label="Commandes de l’animation">
+              <button class="c-button c-button--quiet" type="button" data-action="seed" aria-label="Nouvelle graine">Graine <span data-seed></span></button>
+              <button class="c-button c-button--quiet" type="button" data-action="pause">Pause</button>
+              <button class="c-button c-button--quiet" type="button" data-action="fullscreen">Plein écran</button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <script src="../assets/vendor/interact.min.js"></script>
+  <script type="module" src="../assets/animations.js"></script>
+</body>
+</html>

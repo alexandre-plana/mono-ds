@@ -108,6 +108,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-085 | Grain fin sur le fond Papier | amendée par D-086 |
 | D-086 | Texture fibreuse en thème Papier | en vigueur |
 | D-087 | Pages du catalogue : une marge à gauche, repliée et discrète | en vigueur |
+| D-088 | Animations procédurales dans un bureau MONO | en vigueur |
 
 ---
 
@@ -821,3 +822,10 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **À droite** : toujours une chose à la fois (D-077). Un clic sur une rubrique ouvre son premier élément — plus de page intermédiaire. Le fil d'Ariane redevient une ligne simple qui situe et ramène. « Suite » et « Avant » restent en pied.
 - **Et le rail interdit ?** Le rail mène d'une partie à l'autre de l'application ; ici ce sont les onglets qui le font. La marge ne sort pas de la page : c'est son sommaire.
 - **Limites** : la marge de la plus longue rubrique (treize éléments) mesure environ 550 px ; sur un écran plus bas, son pied n'est atteint qu'en fin de page. Sur téléphone, elle passe au-dessus du contenu, en lignes.
+
+## D-088 — Animations procédurales dans un bureau MONO
+
+- **Date** 2026-11-13 · **Statut** en vigueur · **Demandée par** le commanditaire.
+- **Composition**. L’exemple Animations reprend les fenêtres et la barre du Bureau. Les quatre scènes agrandies à l’ouverture ont chacune leur graine et leur pause. Le plein écran du navigateur garde la barre accessible. Une fenêtre restaurée peut être déplacée ou redimensionnée sur grand écran.
+- **Dessin**. Les rôles des thèmes donnent les tons des marques, du texte et des repères. Le pointillé situe une mesure, le tireté désigne une relation ou une référence. Le grain suit le réglage partagé du catalogue. Les hachures couvrent le bureau sous la modale des réglages, au sens de D-041.
+- **Rendu**. Deux canevas superposés isolent les repères statiques des marques animées. Une seule fenêtre avance dans le temps. La pause, le mouvement réduit, la modale et un onglet masqué suspendent la boucle. Les deux canevas ont chacun un budget de 1,6 million de pixels pour limiter le coût sur les grands écrans.
