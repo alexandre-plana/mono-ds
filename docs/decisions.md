@@ -108,7 +108,10 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-085 | Grain fin sur le fond Papier | amendée par D-086 |
 | D-086 | Texture fibreuse en thème Papier | en vigueur |
 | D-087 | Pages du catalogue : une marge à gauche, repliée et discrète | en vigueur |
-| D-088 | Animations procédurales dans un bureau MONO | en vigueur |
+| D-088 | Animations procédurales dans un bureau MONO | en vigueur pour le bureau, scènes remplacées par D-091 |
+| D-089 | Trames de signal, matrices de caractères et mosaïques | remplacée par D-091 |
+| D-090 | Densité des planches du bureau | remplacée par D-091 |
+| D-091 | Trois nouvelles animations d’après les références | en vigueur |
 
 ---
 
@@ -825,7 +828,27 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 
 ## D-088 — Animations procédurales dans un bureau MONO
 
-- **Date** 2026-11-13 · **Statut** en vigueur · **Demandée par** le commanditaire.
+- **Date** 2026-11-13 · **Statut** en vigueur pour le bureau, scènes remplacées par D-091 · **Demandée par** le commanditaire.
 - **Composition**. L’exemple Animations reprend les fenêtres et la barre du Bureau. Les quatre scènes agrandies à l’ouverture ont chacune leur graine et leur pause. Le plein écran du navigateur garde la barre accessible. Une fenêtre restaurée peut être déplacée ou redimensionnée sur grand écran.
 - **Dessin**. Les rôles des thèmes donnent les tons des marques, du texte et des repères. Le pointillé situe une mesure, le tireté désigne une relation ou une référence. Le grain suit le réglage partagé du catalogue. Les hachures couvrent le bureau sous la modale des réglages, au sens de D-041.
 - **Rendu**. Deux canevas superposés isolent les repères statiques des marques animées. Une seule fenêtre avance dans le temps. La pause, le mouvement réduit, la modale et un onglet masqué suspendent la boucle. Les deux canevas ont chacun un budget de 1,6 million de pixels pour limiter le coût sur les grands écrans.
+
+## D-089 — Trames de signal, matrices de caractères et mosaïques
+
+- **Date** 2026-11-13 · **Statut** remplacée par D-091 · **Complète** D-088.
+- **Décision**. Les références imprimées fournissent la composition des scènes. Oscilloscope étale l’échantillonnage en bandes interrompues et en points. Connexions trace les relais en registres et les parcours à angle droit. Frappe transforme les commandes en lignes de glyphes. Spectre associe les aplats de sous-bandes à une subdivision en quatre et à un histogramme.
+- **Tons**. Les aplats reprennent les rôles de surface et de filet d’Encre et Papier. Les valeurs actives prennent le ton fort. Le grain de la page reste réglable et les hachures gardent le sens de D-041.
+- **Rendu**. Les trames, les glyphes et les parcours de fond sont précalculés. La mosaïque réutilise sa géométrie et module ses tons d’après l’amplitude.
+
+## D-090 — Densité des planches du bureau
+
+- **Date** 2026-11-13 · **Statut** remplacée par D-091 · **Complète** D-089.
+- **Composition**. Les références montrent un champ presque continu, avec de grands aplats et des grains beaucoup plus fins. Le nom de la scène tient dans la barre de fenêtre. Le dessin prend le corps de la fenêtre et les mesures restent en pied. Les trames alternent lignes, points et bruit de tailles différentes. Spectre concentre les subdivisions sous de grands aplats.
+- **Périmètre**. Le budget de vide et de trame d’une interface s’applique aux commandes du bureau. Les planches occupent leur propre surface dense au titre de D-062. Les tons du système et le réglage du grain restent communs.
+- **Rendu**. Spectre efface l’histogramme à chaque image et repeint les seuls pavés qui changent de ton. Les autres trames denses sont calculées à la préparation du canevas.
+
+## D-091 — Trois nouvelles animations d’après les références
+
+- **Date** 2026-11-13 · **Statut** en vigueur · **Remplace** les scènes de D-088 à D-090.
+- **Décision**. Trois compositions procédurales repartent des quatre références visuelles fournies. Brouillage mêle trames, bruit et déchirures horizontales. Mosaïque anime des aplats et leurs subdivisions. Transmission fait évoluer un champ de glyphes. Le bureau et ses commandes reprennent le fonctionnement de D-088.
+- **Affinement**. Brouillage réserve une bande peu marquée entre deux masses de trame et localise les déchirures. Dans Mosaïque, la partie haute reste fixe et la subdivision se concentre dans la moitié basse. Transmission garde ses caractères en place. De petites empreintes se révèlent horizontalement, avec des écarts de densité entre les zones.

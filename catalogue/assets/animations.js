@@ -28,8 +28,9 @@ function readPalette() {
   const style = getComputedStyle(root);
   const role = name => style.getPropertyValue(name).trim();
   return {
+    sunken: role('--bg-sunken'), surface: role('--surface'), panel: role('--surface-2'), faint: role('--line-faint'), line: role('--line'),
     guide: role('--line-strong'), mark: role('--mark'), soft: role('--fg-soft'),
-    strong: role('--fg-strong'), font: role('--font-mono'), size: role('--text-small'),
+    strong: role('--fg-strong'), signal: role('--signal'), font: role('--font-mono'), size: role('--text-small'),
   };
 }
 
@@ -51,6 +52,7 @@ function prepare(w) {
   ctx.font = `${palette.size} ${palette.font}`;
   w.scene.layout(ctx, width, height, palette);
   w.ctx.setTransform(pixelsWide / width, 0, 0, pixelsHigh / height, 0, 0);
+  w.ctx.font = ctx.font;
   w.width = width;
   w.height = height;
   return true;
@@ -74,9 +76,9 @@ function render(now) {
     const key = w.scene.frameKey?.(w.time);
     if (!w.dirty && key !== undefined && w.lastKey === key) continue;
     if (w.dirty && !prepare(w)) continue;
+    w.ctx.clearRect(0, 0, w.width, w.height);
     w.dirty = false;
     w.lastKey = key;
-    w.ctx.clearRect(0, 0, w.width, w.height);
     w.scene.draw(w.ctx, w.time, palette, key);
     if (now >= w.nextReading) {
       const value = w.scene.readout();
@@ -102,7 +104,7 @@ function invalidate() {
 }
 
 function reset(w, seed = newSeed()) {
-  w.scene = w.definition.create(seeded(seed), $('.animation-code', w.el));
+  w.scene = w.definition.create(seeded(seed));
   w.time = w.definition.start;
   w.nextReading = 0;
   w.dirty = true;
@@ -172,11 +174,7 @@ function open(id, focus = true) {
   el.setAttribute('aria-label', definition.name);
   el.classList.add('is-maximized');
   $('.c-window__title', el).textContent = definition.name;
-  $('[data-category]', el).textContent = definition.category;
-  $('[data-heading]', el).textContent = definition.title;
-  $('[data-description]', el).textContent = definition.description;
-  canvas.setAttribute('aria-label', definition.legend);
-  $('.animation-code', el).hidden = id !== 'frappe';
+  canvas.setAttribute('aria-label', `${definition.category}. ${definition.legend}`);
   task.className = 'c-taskbar__item';
   task.type = 'button';
   task.textContent = definition.name;
@@ -309,4 +307,4 @@ reduced.addEventListener('change', () => { previous = 0; syncControls(); schedul
 compact.addEventListener('change', syncWindows);
 addEventListener('resize', () => { for (const w of windows.values()) place(w); invalidate(); });
 document.fonts.ready.then(invalidate);
-open('oscilloscope', false);
+open(Object.keys(SCENES)[0], false);

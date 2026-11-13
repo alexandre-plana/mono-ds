@@ -149,7 +149,7 @@ de deux mots et porte un seul accent de couleur.
 ### Le bureau des animations
 
 Dans [Exemples → Animations](catalogue/exemples.html?e=animations), le lanceur ouvre
-Oscilloscope, Connexions, Frappe ou Spectre dans sa propre fenêtre. Elle remplit le
+Brouillage, Mosaïque ou Transmission dans sa propre fenêtre. Elle remplit le
 bureau à l’ouverture. « Plein écran » l’affiche à la taille de l’écran avec la barre
 des fenêtres, qui permet de passer d’une scène à l’autre. Chaque fenêtre a sa pause
 et son bouton de nouvelle graine. Les réglages Encre, Papier et Grain sont partagés
