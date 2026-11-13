@@ -179,6 +179,7 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-breadcrumb--head .c-breadcrumb__seg[aria-current] > summary { color: var(--fg-strong); }
 .c-breadcrumb__seg > .c-menu__list { left: auto; right: auto; margin-left: 1.5em; letter-spacing: 0; text-transform: none; max-height: min(60vh, 28rem); overflow-y: auto; }
 .c-breadcrumb--head .c-breadcrumb__seg > .c-menu__list { margin-left: 2em; }
+@media (max-width: 640px) { .c-breadcrumb { position: relative; } .c-breadcrumb .c-breadcrumb__seg { position: static; } .c-breadcrumb .c-breadcrumb__seg > .c-menu__list { left: 0; right: 0; margin-left: 0; min-width: 0; } }
 
 .c-pagination { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-small); }
 .c-pagination a, .c-pagination span { min-width: 1.75rem; height: 1.75rem; display: grid; place-content: center; padding-inline: var(--space-1); text-decoration: none; color: var(--fg-soft); border: var(--hairline) solid transparent; }
