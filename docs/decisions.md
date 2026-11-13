@@ -120,6 +120,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-097 | Laboratoire, expérience 01 : rouge, orange, vert | en vigueur |
 | D-098 | Laboratoire, expérience 02 : douze cas de geste récompensé | en vigueur |
 | D-099 | Laboratoire : chaque atelier dans son propre écran | en vigueur |
+| D-100 | Laboratoire, expérience 03 : la donnée vivante | en vigueur |
 
 ---
 
@@ -931,3 +932,14 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Décision** : chaque atelier est une page plein écran à part (`catalogue/laboratoire/nom.html`), qui ne charge ni le script ni l'habillage du catalogue. L'écran essayé occupe la page, comme un vrai écran de travail. Ce qui appartient à l'essai — le déroulé du scénario, les réglages, le retour — est dessous, sur le plan de travail, hors de ce que l'on juge.
 - **L'onglet Laboratoire** devient le sommaire : pour chaque expérience, l'hypothèse, l'état de l'art, ce qu'on regarde, et le bouton « Ouvrir l'atelier ». « Notice » et « Laboratoire », dans l'atelier, y ramènent.
 - **Inchangé** : une expérience à la fois, hors système, classes `.x-` et couleurs `--x-` confinées.
+
+## D-100 — Laboratoire, expérience 03 : la donnée vivante
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Questions posées** : une collection mise à jour sans rechargement — comment dire qu'une valeur a changé ; faut-il garder l'ancienne ; le dire sur la valeur ou sur la ligne ; que retrouver quand on n'était pas là.
+- **L'atelier** : une liste d'agences alimentée par un flux simulé, en plein écran (D-099). Chaque question a son réglage, pour comparer les réponses une par une. **Montrer sur** : la valeur (les chiffres roulent dans le sens du changement, puis la valeur « refroidit » du clair au ton de lecture — son âge se lit à son ton), la ligne (un filet la souligne, puis s'efface), ou les deux. **Avant** : rien, le fantôme (ancienne valeur barrée, neuf secondes), l'écart (sens et montant, tant que la ligne n'est pas vue), le tracé (dix dernières valeurs). **Arrivées** : insérées, ou retenues derrière une ligne « 2 agences arrivées · Afficher ».
+- **Vu, pas vu** : une ligne modifiée garde le point du non-lu jusqu'au passage du pointeur.
+- **L'absence** : pendant, le titre de l'onglet porte le décompte ; au retour, une ligne résume ce qui a changé et mène au premier ; ensuite, ce qui a changé pendant l'absence porte un repère pointillé. L'absence est réelle (changement d'onglet) ou simulée (bouton).
+- **Hypothèses de départ, à vérifier** : la ligne fait trouver, la valeur fait comprendre ; l'écart est le meilleur compromis pour l'ancienne valeur ; les arrivées doivent attendre le lecteur.
+- **Particularité** : cette expérience n'enfreint aucune règle et n'ajoute aucune couleur ; elle pourrait entrer dans le système si elle convainc.
+- **État de l'art** : la cécité au changement est établie ; les guides demandent stabilité et changement compréhensible. Rien de trouvé qui tranche entre valeur et ligne.

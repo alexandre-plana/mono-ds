@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONO — Atelier · La donnée vivante</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+  <link rel="stylesheet" href="../assets/labo.css">
+  <script src="../assets/prefs.js"></script>
+</head>
+<body class="l-desk x-atelier">
+  <div class="x-stage" id="x3" data-flow="marche" data-where="deux" data-before="ecart" data-arrivals="attente">
+    <div class="l-shell x-screen">
+      <header class="c-masthead">
+        <div class="c-masthead__title">Réseau — Agences en direct</div>
+        <div class="c-masthead__meta"><span class="x-pulse" aria-live="off">En direct</span><span>Vendredi 13 novembre</span><span class="c-logo c-logo--plain">Mono</span></div>
+      </header>
+      <div class="x-banner" data-back hidden aria-live="polite"><span>Pendant votre absence</span><b></b><button type="button" data-first>Voir le premier</button><button type="button" data-seen>Tout marquer vu</button></div>
+      <div class="x-banner" data-arrive hidden aria-live="polite"><b></b><button type="button" data-show>Afficher</button></div>
+      <div class="x-live" tabindex="0" aria-label="Agences — faire défiler">
+        <table>
+          <thead><tr><th>Réf.</th><th>Agence</th><th class="n">Effectif</th><th class="n">Primes (M)</th><th>Avant</th><th>État</th><th class="n">Modifié</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="x-read" aria-live="polite"></div>
+      <div class="x-away" hidden><span>Vous êtes ailleurs</span><small></small></div>
+    </div>
+    <ol class="x-steps">
+      <li class="is-on"><b>1 · Regardez vivre la liste</b>Les valeurs changent sans rechargement. Changez « Montrer sur » : est-ce le chiffre qui parle, ou la ligne ?</li>
+      <li class="is-on"><b>2 · Gardez ou non l'ancienne valeur</b>Rien, le fantôme barré, l'écart, ou le tracé. Passez sur une ligne : elle est « vue », son point disparaît.</li>
+      <li class="is-on"><b>3 · Absentez-vous</b>Huit secondes ailleurs — ou changez vraiment d'onglet. Au retour, l'écran dit ce que vous avez manqué.</li>
+    </ol>
+    <footer class="x-strip">
+      <a class="x-strip__back" href="../laboratoire.html#donnee-vivante"><i class="c-icon i-arrow-left" aria-hidden="true"></i>Laboratoire</a>
+      <span class="x-strip__name">Atelier 03 · La donnée vivante</span>
+      <span class="x-bar__group"><span class="x-bar__label">Flux</span><span class="c-segmented" role="group" aria-label="Flux"><button class="c-segmented__item" type="button" data-set-flow="marche" aria-pressed="true">En marche</button><button class="c-segmented__item" type="button" data-set-flow="pause" aria-pressed="false">En pause</button></span></span>
+      <button class="c-button" type="button" data-once>Une mise à jour</button>
+      <span class="x-bar__group"><span class="x-bar__label">Montrer sur</span><span class="c-segmented" role="group" aria-label="Montrer sur"><button class="c-segmented__item" type="button" data-set-where="valeur" aria-pressed="false">La valeur</button><button class="c-segmented__item" type="button" data-set-where="ligne" aria-pressed="false">La ligne</button><button class="c-segmented__item" type="button" data-set-where="deux" aria-pressed="true">Les deux</button></span></span>
+      <span class="x-bar__group"><span class="x-bar__label">Avant</span><span class="c-segmented" role="group" aria-label="Ancienne valeur"><button class="c-segmented__item" type="button" data-set-before="rien" aria-pressed="false">Rien</button><button class="c-segmented__item" type="button" data-set-before="fantome" aria-pressed="false">Fantôme</button><button class="c-segmented__item" type="button" data-set-before="ecart" aria-pressed="true">Écart</button><button class="c-segmented__item" type="button" data-set-before="trace" aria-pressed="false">Tracé</button></span></span>
+      <span class="x-bar__group"><span class="x-bar__label">Arrivées</span><span class="c-segmented" role="group" aria-label="Arrivées"><button class="c-segmented__item" type="button" data-set-arrivals="inserees" aria-pressed="false">Insérées</button><button class="c-segmented__item" type="button" data-set-arrivals="attente" aria-pressed="true">En attente</button></span></span>
+      <button class="c-button" type="button" data-leave>S'absenter 8 s</button>
+      <button class="c-button c-button--quiet" type="button" data-restart><i class="c-icon i-undo" aria-hidden="true"></i>Recommencer</button>
+      <a class="x-strip__back" href="../laboratoire.html#donnee-vivante">Notice</a>
+    </footer>
+  </div>
+  <script src="../assets/labo.js"></script>
+</body>
+</html>

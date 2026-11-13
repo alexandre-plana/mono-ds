@@ -67,6 +67,24 @@
           </dl>
         </section>
 
+        <section class="cat-section" id="donnee-vivante" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">03</span><span>La donnée vivante</span><span class="c-section-head__aside">Expérience en cours</span></h2>
+          <p><span class="t-strong">Les questions.</span> Une liste se met à jour sous nos yeux, sans rechargement : des valeurs changent, des lignes arrivent. Comment dire qu'une valeur vient de changer ? Faut-il garder l'ancienne ? Est-ce le chiffre qui doit parler, ou la ligne qui le porte ? Et que retrouve-t-on quand on n'était pas là ?</p>
+          <p><a class="c-button x-open" href="laboratoire/donnee-vivante.html">Ouvrir l'atelier<i class="c-icon i-arrow-right" aria-hidden="true"></i></a> <span class="x-note">Plein écran, hors du catalogue : une liste d'agences alimentée par un flux simulé.</span></p>
+
+          <dl class="x-research">
+            <dt>État de l'art</dt><dd>On ne voit pas ce qui change loin de l'endroit où l'on regarde : c'est la <a href="https://www.nngroup.com/articles/change-blindness/">cécité au changement</a>, et un changement instantané est le plus facile à manquer. Les guides de tableaux de bord en direct demandent de <a href="https://smashingmagazine.com/2025/09/ux-strategies-real-time-dashboards/">faire comprendre le changement plutôt que de montrer du mouvement</a>, de garder l'écran stable, et de ne pas appliquer une mise à jour au moment où elle dérange. Je n'ai pas trouvé d'étude qui tranche entre signaler la valeur et signaler la ligne.</dd>
+            <dt>Sur la valeur ou sur la ligne</dt><dd>L'atelier propose les deux, séparément puis ensemble. <span class="t-strong">La valeur</span> : ses chiffres roulent dans le sens du changement, puis elle « refroidit » — en clair à l'instant, elle retombe au ton de lecture en une vingtaine de secondes : l'âge d'une valeur se lit à son ton. <span class="t-strong">La ligne</span> : un filet la souligne d'un bord à l'autre, puis s'efface. Mon hypothèse : la ligne fait trouver, la valeur fait comprendre ; il faut les deux, la ligne s'effaçant vite.</dd>
+            <dt>Garder l'ancienne valeur</dt><dd>Quatre réponses. <span class="t-strong">Rien</span>. <span class="t-strong">Le fantôme</span> : l'ancienne valeur, barrée, neuf secondes. <span class="t-strong">L'écart</span> : le sens et le montant (▲ 0,4), qui reste tant que la ligne n'est pas vue. <span class="t-strong">Le tracé</span> : les dix dernières valeurs en un trait. Mon hypothèse : l'écart est le meilleur compromis — il dit l'évolution sans demander de soustraire ; le tracé convient quand la tendance compte plus que le dernier saut.</dd>
+            <dt>Vu, pas vu</dt><dd>Un changement que personne n'a regardé n'est pas réglé. Chaque ligne modifiée garde le point du non-lu jusqu'à ce que le pointeur passe dessus ; la ligne d'état compte ce qui reste.</dd>
+            <dt>Les arrivées</dt><dd>Une ligne qui s'insère fait descendre ce qu'on lisait. « En attente » les retient derrière une ligne — « 2 agences arrivées · Afficher » — et c'est le lecteur qui décide. « Insérées » les pose tout de suite, en gardant la position de lecture si l'on avait fait défiler.</dd>
+            <dt>Quand on n'est pas là</dt><dd>Trois temps. <span class="t-strong">Pendant</span> : le titre de l'onglet porte le décompte — « (5) Agences en direct » —, seul repère visible partout ; la pastille d'application n'existe que pour une <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/How_to/Display_badge_on_app_icon">application installée</a>, et il ne faut pas s'y fier seule. <span class="t-strong">Au retour</span> : une ligne résume — « 5 valeurs ont changé, 1 agence arrivée » — avec « Voir le premier ». <span class="t-strong">Ensuite</span> : ce qui a changé pendant l'absence porte un repère pointillé, distinct du simple non-vu. L'absence est détectée pour de bon (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API">changement d'onglet</a>) ; le bouton la simule.</dd>
+            <dt>Ce qu'on regarde</dt><dd>Retrouve-t-on plus vite ce qui a changé avec la ligne, la valeur, les deux ? L'écart suffit-il, ou regrette-t-on l'ancienne valeur ? À quel rythme de flux tout cela devient-il du bruit ? Le résumé du retour dispense-t-il de parcourir la liste ?</dd>
+            <dt>Garde-fous</dt><dd>Aucune couleur ajoutée : seul un état « bloqué » porte le signal, comme dans le système. Rien ne se déplace sans que le lecteur le demande. Avec « réduire les animations », les chiffres ne roulent pas et le filet n'apparaît pas ; les marques restent.</dd>
+            <dt>Règle enfreinte</dt><dd>Aucune. Cette expérience pourrait entrer dans le système telle quelle, si elle convainc.</dd>
+          </dl>
+        </section>
+
       </main>
     </div>
 

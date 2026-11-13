@@ -190,3 +190,44 @@
 .x-strip .c-button, .x-strip .c-segmented__item { min-height: 1.75rem; }
 .x-open { margin-right: var(--space-4); }
 @media (max-width: 900px) { .x-atelier > .x-stage { grid-template-rows: auto; } .x-screen { overflow: visible; padding: var(--space-5); } .x-scroll--full { flex: none; height: 26rem; } .x-strip__name { flex-basis: 100%; } }
+
+/* --- Expérience 03 : la donnée vivante -------------------------------------- */
+.x-live { flex: 1; min-height: 0; overflow-y: auto; position: relative; }
+.x-live table { width: 100%; border-collapse: collapse; }
+.x-live th { position: sticky; top: 0; z-index: 3; background: var(--bg); text-align: left; padding: var(--space-2) var(--space-3); font-weight: var(--weight-regular); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); border-bottom: var(--hairline) solid var(--line); white-space: nowrap; }
+.x-live td { position: relative; padding: var(--space-3); color: var(--fg); white-space: nowrap; background: var(--bg); }
+.x-live .n { text-align: right; font-variant-numeric: tabular-nums; }
+.x-live td.ref, .x-live td.t { color: var(--fg-muted); font-size: var(--text-micro); letter-spacing: var(--track-caps); text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.x-live td.st { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
+.x-live td.st[data-st="2"] { color: var(--fg-strong); font-weight: var(--weight-medium); }
+.x-live td.st[data-st="2"]::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: var(--space-2); background: var(--signal); }
+.x-num { display: inline-flex; } .x-num > span { display: inline-block; }
+.x-evo { min-width: 7.5rem; color: var(--fg-muted); font-size: var(--text-small); font-variant-numeric: tabular-nums; }
+.x-evo s { text-decoration-thickness: 1px; } .x-evo svg { display: block; overflow: visible; } .x-evo polyline { fill: none; stroke: var(--fg-soft); stroke-width: 1; } .x-evo rect { fill: var(--fg-strong); }
+.x-evo .d { color: var(--fg-strong); }
+/* Sur la valeur : elle vient d'arriver, elle est en clair ; elle « refroidit » ensuite jusqu'au ton de lecture. */
+.x-stage:is([data-where="valeur"], [data-where="deux"]) .x-num.is-fresh { animation: x-cool var(--x-cool, 18s) linear 1 both; }
+@keyframes x-cool { 0%, 12% { color: var(--fg-strong); font-weight: var(--weight-bold); } 13% { font-weight: inherit; } 100% { color: var(--fg); } }
+/* Sur la ligne : un filet la souligne d'un bord à l'autre, puis s'efface. */
+.x-live tr.is-touched > td::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--fg-strong); opacity: 0; }
+.x-stage:is([data-where="ligne"], [data-where="deux"]) .x-live tr.is-touched > td::after { animation: x-under 2.4s ease-out 1; }
+@keyframes x-under { 0%, 65% { opacity: 1; } 100% { opacity: 0; } }
+/* Pas encore vu : un point et la graisse, comme tout non-lu. Il reste jusqu'à ce qu'on passe sur la ligne. */
+.x-live td.nm > span { position: relative; }
+.x-live tr.is-unseen td.nm > span { font-weight: var(--weight-medium); color: var(--fg-strong); }
+.x-live tr.is-unseen td.nm > span::before { content: ''; position: absolute; left: -14px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: var(--fg-strong); }
+/* Changé pendant qu'on n'était pas là : un repère, donc pointillé, à gauche de la ligne. */
+.x-live tr.is-since > td:first-child { border-left: var(--hairline) dotted var(--fg-soft); }
+.x-live tr.is-new > td { animation: x-rise 320ms ease-out 1; }
+/* Les arrivées en attente, et le résumé du retour : une ligne, en haut, qui ne déplace rien tant qu'on ne le demande pas. */
+.x-banner { flex: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2) var(--space-5); padding: var(--space-2) 0; border-bottom: var(--hairline) dotted var(--line-strong); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
+.x-banner[hidden] { display: none; } .x-banner b { color: var(--fg-strong); font-weight: var(--weight-medium); }
+.x-banner button { appearance: none; padding: 0; background: none; border: 0; border-bottom: var(--hairline) solid var(--line-strong); font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--fg-strong); font-weight: var(--weight-medium); cursor: pointer; }
+.x-pulse { display: inline-flex; align-items: center; gap: var(--space-2); } .x-pulse::before { content: ''; width: 6px; height: 6px; background: var(--fg-strong); }
+.x-pulse.is-off::before { background: none; outline: 1px solid var(--fg-muted); outline-offset: -1px; } .x-pulse.is-beat::before { animation: x-beat 500ms ease-out 1; }
+@keyframes x-beat { 0% { transform: scale(2.2); } 100% { transform: none; } }
+/* S'absenter : l'écran passe hors d'atteinte. */
+.x-away { position: absolute; inset: 0; z-index: 10; display: grid; place-content: center; gap: var(--space-3); text-align: center; background: repeating-linear-gradient(-45deg, transparent 0 8px, var(--line) 8px 9px), color-mix(in srgb, var(--desk) 82%, transparent); text-transform: uppercase; letter-spacing: var(--track-title); color: var(--fg-strong); }
+.x-away[hidden] { display: none; } .x-away small { font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-soft); }
+.x-screen { position: relative; }
+@media (prefers-reduced-motion: reduce) { .x-live tr.is-touched > td::after, .x-num.is-fresh, .x-live tr.is-new > td, .x-pulse.is-beat::before { animation: none !important; } }
