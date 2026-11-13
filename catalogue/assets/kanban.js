@@ -56,15 +56,18 @@ window.MonoKanban = ({ board, inspector, detail, columns, cards, notifs, onChang
   board.addEventListener('pointerdown', (e) => { const el = e.target.closest('[data-card]'); if (!el || e.button) return; const r = el.getBoundingClientRect(); drag = { el, id: el.dataset.card, x: e.clientX, y: e.clientY, dx: e.clientX - r.left, dy: e.clientY - r.top, w: r.width, on: false }; });
   addEventListener('pointermove', (e) => {
     if (!drag) return;
-    if (!drag.on) { if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6) return; drag.on = true; drag.ghost = drag.el.cloneNode(true); drag.ghost.classList.add('c-card--ghost'); drag.ghost.classList.remove('c-card--action'); drag.ghost.removeAttribute('tabindex'); drag.ghost.style.width = drag.w + 'px'; document.body.append(drag.ghost); drag.el.classList.add('is-dragging'); drag.mark = document.createElement('li'); drag.mark.className = 'c-board__drop'; drag.mark.setAttribute('aria-hidden', 'true'); }
+    if (!drag.on) { if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6) return; drag.on = true; drag.ghost = drag.el.cloneNode(true); drag.ghost.classList.add('c-card--ghost'); drag.ghost.classList.remove('c-card--action'); drag.ghost.removeAttribute('tabindex'); drag.ghost.style.width = drag.w + 'px'; document.body.append(drag.ghost); drag.el.classList.add('is-dragging'); drag.mark = document.createElement('li'); drag.mark.className = 'c-board__drop'; drag.mark.setAttribute('aria-hidden', 'true');
+      // L'emplacement : un cadre en tireté de la taille exacte de la fiche. Il prend d'abord sa place d'origine — rien ne saute —,
+      // puis suit le pointeur : on voit où la fiche se posera, et les autres s'écartent, avant de lâcher.
+      drag.li = drag.el.closest('li'); drag.mark.style.height = drag.el.getBoundingClientRect().height + 'px'; drag.li.before(drag.mark); drag.li.hidden = true; }
     drag.ghost.style.left = e.clientX - drag.dx + 'px'; drag.ghost.style.top = e.clientY - drag.dy + 'px';
     const s = spot(e.clientX, e.clientY); board.querySelectorAll('.is-target').forEach((c) => c.classList.remove('is-target'));
-    if (s) { s.col.classList.add('is-target'); const list = s.col.querySelector('.c-board__list'), ref = s.items[s.index]?.closest('li') || null; list.insertBefore(drag.mark, ref); drag.to = { col: s.col.dataset.col, index: s.index }; } else { drag.mark.remove(); drag.to = null; }
+    if (s) { s.col.classList.add('is-target'); const list = s.col.querySelector('.c-board__list'), ref = s.items[s.index]?.closest('li') || null; list.insertBefore(drag.mark, ref); drag.to = { col: s.col.dataset.col, index: s.index }; } else { drag.li.before(drag.mark); drag.to = null; }
   });
   const drop = (e) => {
     if (!drag) return; const d = drag; drag = null;
     if (!d.on) { if (e.type === 'pointerup' && e.target.closest?.('[data-card]')) inspect(d.id); return; }
-    d.ghost.remove(); d.mark.remove(); d.el.classList.remove('is-dragging'); board.querySelectorAll('.is-target').forEach((c) => c.classList.remove('is-target'));
+    d.ghost.remove(); d.mark.remove(); d.li.hidden = false; d.el.classList.remove('is-dragging'); board.querySelectorAll('.is-target').forEach((c) => c.classList.remove('is-target'));
     if (d.to && e.type === 'pointerup') move(d.id, d.to.col, d.to.index); else render();
   };
   addEventListener('pointerup', drop); addEventListener('pointercancel', drop);

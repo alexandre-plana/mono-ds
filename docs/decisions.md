@@ -91,6 +91,9 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-068 | Console : découpage jusqu'au grain, états qui évoluent | en vigueur |
 | D-069 | Logo : le mot et le point, et son animation | en vigueur |
 | D-070 | Console : le volume défile, les blocs s'effacent au bord | en vigueur |
+| D-071 | Le logo dans les écrans | en vigueur |
+| D-072 | Le catalogue applique son propre gabarit | en vigueur |
+| D-073 | Kanban : l'emplacement de la fiche se voit pendant le glissé | en vigueur |
 
 ---
 
@@ -657,3 +660,24 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Date** : 2026-11-12 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Complète** : D-068
 - **Décision** : une commande `défiler`. Le volume glisse le long de la dalle ; à l'approche du bord, chaque bloc réduit son emprise et sa hauteur pour ne jamais dépasser, disparaît au bord, et renaît de l'autre côté en grandissant. Le défilement continue pendant `surveiller` et s'arrête en douceur avec `aplanir`.
 - **Détail** : hauteurs plafonnées et point de vue abaissé pour que les grains les plus hauts restent dans la planche ; le rappel du sommet s'efface quand le défilement commence.
+
+## D-071 — Le logo dans les écrans
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Complète** : D-069
+- **Décision** : le logo figure dans chaque écran, et c'est le lien de retour. Dans une application à onglets, il ferme la rangée d'onglets, à droite, sur le plan de travail. Dans une page à en-tête simple, il est le dernier élément des métadonnées de l'en-tête. Dans un document (rapport, tableau de bord), il est dans le colophon. Sur la page de connexion, il ouvre l'en-tête.
+- **Avec ou sans point** : sans point (`.c-logo--plain`) dans les écrans de travail, qui emploient déjà le signal pour un fait ; avec le point sur la connexion et dans le catalogue, où il est seul.
+- **Raison** : un seul endroit par gabarit, toujours une extrémité — le logo situe sans s'imposer, et remplace le lien « Catalogue » en toutes lettres.
+
+## D-072 — Le catalogue applique son propre gabarit
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« le catalogue n'applique pas parfaitement les principes »)
+- **Constat** (revue de Claude) : le catalogue enfreignait quatre règles qu'il énonce. Il avait un **rail** de navigation à gauche, alors que le système dit « pas de rail » et prescrit des onglets pour une application à parties séparées (D-031, D-034). Les **exemples** étaient une liste dans ce rail, sans page ni description, et l'on n'en revenait que par un lien « Catalogue ». Le contenu s'étirait sur toute la largeur, sans le **tiers vide**. Les fiches de composants avaient un **filet sous chaque ligne**, contre « un filet se mérite » (D-040).
+- **Décision** : le catalogue devient une application à onglets comme les autres — une rangée `.c-doctabs` au-dessus de la page (Présentation, Fondations, Composition, Composants, Visualisations, Exemples), le fil d'Ariane en tête, le logo en bout de rangée. Les exemples ont leur page, en fiches avec une phrase chacune. « Sur cette page » devient une ligne de renvois sous le titre, en mots. Le contenu est ferré à gauche sur 68 rem. Les filets des fiches de composants sont retirés. Chaque onglet retrouve son défilement.
+- **Gardé** : le cadre en tireté des démonstrations — il marque une zone provisoire, c'est le sens du tireté ; la recherche en tête de page.
+- **Reste à faire** : la page Composants est très longue ; une revue composant par composant de ses propres démonstrations n'a pas été refaite.
+
+## D-073 — Kanban : l'emplacement de la fiche se voit pendant le glissé
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Amende** : D-064
+- **Décision** : pendant le glissé, la fiche quitte sa place et un emplacement en tireté, à sa taille exacte, montre où elle se posera ; les autres fiches s'écartent pour lui faire place. L'emplacement occupe d'abord la place d'origine — rien ne saute au départ.
+- **Remplace** : le trait de 2 px au point de chute et la fiche d'origine laissée en tireté, qui ne montraient ni la place prise ni le résultat.

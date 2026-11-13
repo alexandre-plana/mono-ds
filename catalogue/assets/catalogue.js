@@ -8,6 +8,7 @@
     ['composition.html', 'Composition'],
     ['composants.html', 'Composants'],
     ['dataviz.html', 'Visualisations'],
+    ['exemples.html', 'Exemples'],
   ];
   const EXAMPLES = [
     ['exemples/tableau-de-bord.html', 'Tableau de bord'],
@@ -37,17 +38,19 @@
   const forced = new URLSearchParams(location.search).get('theme');
   const initial = forced || saved || document.documentElement.dataset.theme || 'encre';
 
-  const nav = document.getElementById('cat-nav');
-  if (nav) {
-    const item = ([href, label], i) => `<a class="c-nav__item" href="${root}${href}"${isCurrent(href) ? ' aria-current="page"' : ''}><span>${String(i + 1).padStart(2, '0')}</span><span>${label}</span></a>`;
-    let html = '<div class="c-nav__label">Catalogue</div>' + PAGES.map(item).join('');
-    html += '<div class="c-nav__label">Exemples</div>' + EXAMPLES.map(item).join('');
-    const sections = [...document.querySelectorAll('.cat-section[id]')];
-    if (sections.length > 1) {
-      html += '<div class="c-nav__label">Sur cette page</div>' + sections.map((s) => `<a class="c-nav__item" href="#${s.id}"><span>—</span><span>${s.dataset.title || s.querySelector('.c-section-head span:nth-child(2)')?.textContent || s.id}</span></a>`).join('');
-    }
-    nav.innerHTML = html;
-  }
+  // Le catalogue applique son propre gabarit : une application à parties séparées, donc des onglets
+  // persistants au-dessus de la page, le fil d'Ariane en tête — et pas de rail. Le logo ferme la rangée.
+  const tabs = document.createElement('nav'); tabs.className = 'c-doctabs'; tabs.setAttribute('aria-label', 'Catalogue');
+  tabs.innerHTML = PAGES.map(([href, label]) => `<a class="c-doctabs__tab" href="${root}${href}"${isCurrent(href) ? ' aria-current="page"' : ''}><span class="c-doctabs__label">${label}</span></a>`).join('')
+    + `<span class="c-doctabs__spacer"></span><a class="c-logo" href="${root}logo.html" aria-label="Mono — le logo">Mono</a>`;
+  document.body.classList.add('l-desk--tabs'); document.body.prepend(tabs);
+  // Sur cette page : une ligne de renvois sous le titre, en mots, dans le fil de la page.
+  const sections = [...document.querySelectorAll('.cat-section[id]')], intro = document.querySelector('.cat-intro');
+  if (sections.length > 1 && intro) { const toc = document.createElement('nav'); toc.className = 'cat-toc'; toc.setAttribute('aria-label', 'Sur cette page'); toc.innerHTML = sections.map((sec) => `<a href="#${sec.id}">${sec.dataset.title || sec.querySelector('.c-section-head span:nth-child(2)')?.textContent || sec.id}</a>`).join(''); intro.append(toc); }
+  // Un onglet garde l'état de sa page : on retrouve le défilement où on l'avait laissé.
+  const shell = document.querySelector('.l-shell'), key = 'mono-scroll:' + location.pathname;
+  if (shell && !location.hash) { try { shell.scrollTop = +sessionStorage.getItem(key) || 0; } catch {} }
+  addEventListener('pagehide', () => { try { sessionStorage.setItem(key, String(shell.scrollTop)); } catch {} });
   document.querySelectorAll('[data-set-theme]').forEach((b) => b.addEventListener('click', () => setTheme(b.dataset.setTheme)));
   // Accent : discret (défaut), fort (le signal en aplat) ou flash (l'aplat à l'arrivée, puis discret).
   const setAccent = (a) => {

@@ -1,9 +1,15 @@
 /* Habillage du catalogue uniquement (.cat-). Ne fait PAS partie du système :
    ne pas réutiliser ces classes dans un produit. */
 html { scroll-behavior: smooth; scroll-padding-top: var(--space-6); }
-.cat-rail { --rail: 13rem; padding-top: var(--space-7); }
-.cat-nav { padding-top: 0.5rem; position: sticky; top: var(--space-6); align-self: start; max-height: calc(100vh - 4rem); overflow-y: auto; }
-.cat-main { display: flex; flex-direction: column; gap: var(--space-9); min-width: 0; padding-bottom: var(--space-9); }
+/* Pas de rail : la navigation est dans les onglets, au-dessus de la page. Le contenu est ferré à gauche
+   et laisse la droite vide. */
+.cat-rail { display: block; padding-top: var(--space-7); }
+.cat-nav { display: none; }
+.cat-main { display: flex; flex-direction: column; gap: var(--space-9); min-width: 0; max-width: 68rem; padding-bottom: var(--space-9); }
+.cat-toc { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); }
+.cat-toc a { color: var(--fg-soft); text-decoration: none; border-bottom: var(--hairline) solid transparent; }
+.cat-toc a:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
+@media (max-width: 900px) { body > .c-doctabs { flex-wrap: wrap; row-gap: var(--space-1); margin-bottom: var(--space-2); } body > .c-doctabs > .c-doctabs__spacer { display: none; } body > .c-doctabs > .c-logo { margin: var(--space-2) 0 0; flex-basis: 100%; } }
 .cat-section { display: flex; flex-direction: column; gap: var(--space-6); min-width: 0; }
 .cat-intro { display: flex; flex-direction: column; gap: var(--space-5); }
 .cat-lede { font-family: var(--font-sans); font-size: var(--text-large); line-height: var(--leading-large); color: var(--fg-strong); max-width: 46ch; }
@@ -83,9 +89,9 @@ html { scroll-behavior: smooth; scroll-padding-top: var(--space-6); }
 .cat-icons figcaption { font-size: var(--text-micro); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--fg-soft); }
 
 /* Fiche de spécification d'un composant */
-.cat-spec { display: grid; grid-template-columns: 8rem minmax(0, 1fr); column-gap: var(--space-5); max-width: 56rem; border-top: var(--hairline) solid var(--line-faint); }
+.cat-spec { display: grid; grid-template-columns: 8rem minmax(0, 1fr); column-gap: var(--space-5); row-gap: var(--space-1); max-width: 56rem; }
 .cat-spec > div { display: contents; }
-.cat-spec dt, .cat-spec dd { padding-block: var(--space-2); border-bottom: var(--hairline) solid var(--line-faint); }
+.cat-spec dt, .cat-spec dd { padding-block: var(--space-2); }
 .cat-spec dt { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-base); color: var(--fg-muted); }
 .cat-spec dd { color: var(--fg-soft); }
 @media (max-width: 640px) { .cat-spec { grid-template-columns: 1fr; } .cat-spec dt { border-bottom: 0; padding-bottom: 0; } .cat-spec dd { padding-top: 0; } }

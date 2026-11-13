@@ -177,6 +177,12 @@ Onze écrans complets sont dans [`catalogue/exemples/`](catalogue/exemples/).
 
 ## Voir le catalogue
 
+Le catalogue est lui-même bâti avec le système : des onglets au-dessus de la
+page, le fil d'Ariane en tête, le logo en bout de rangée — pas de rail.
+
+![Le catalogue : onglets, fil d'Ariane, recherche](docs/captures/catalogue.png)
+
+
 ```bash
 npm run serve
 ```

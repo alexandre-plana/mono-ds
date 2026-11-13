@@ -100,6 +100,9 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   plan (`.c-plan`), la pose à côté et « Aller à » (`.c-palette`) servent aux
   déplacements hors de l'ordre ; console et aide sont des fenêtres. La navigation
   s'écrit en mots : ni numéros seuls, ni icônes seules, ni texte vertical.
+- Le logo (`.c-logo`, sans point `--plain` dans un écran de travail) figure dans chaque
+  écran, à une extrémité : bout de la rangée d'onglets, fin des métadonnées de l'en-tête,
+  ou colophon. Le catalogue lui-même suit le gabarit à onglets : pas de rail.
 - Le système reste en CSS pur. Les comportements (fenêtres, canevas, menus,
   console) vivent dans `catalogue/assets/` comme démonstrations ; seule la version
   bureau dépend d'une bibliothèque, interact.js, embarquée dans `assets/vendor/`.
