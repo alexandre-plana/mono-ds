@@ -360,19 +360,23 @@
     const lines = s.replace(/\t/g, '  ').split('\n');
     while (lines.length && !lines[0].trim()) lines.shift();
     while (lines.length && !lines.at(-1).trim()) lines.pop();
-    const pad = Math.min(...lines.filter((l) => l.trim()).map((l) => l.match(/^ */)[0].length));
-    return lines.map((l) => l.slice(pad)).join('\n');
+    // Le retrait à ôter est celui de la première ligne ; une ligne qui en a moins (le contenu d'un <pre>) reste telle quelle.
+    const pad = lines.length ? lines[0].match(/^ */)[0].length : 0;
+    return lines.map((l) => l.slice(Math.min(pad, l.match(/^ */)[0].length))).join('\n');
   };
+  // Le bloc à copier du système (.c-snippet) : c'est lui qui montre le code de chaque démonstration.
+  const COPY = '<button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié — sélectionner le texte</span></button>';
+  const snippet = (text, label) => { const f = document.createElement('figure'); f.className = 'c-snippet'; f.innerHTML = `<figcaption class="c-snippet__head"><span class="c-snippet__label">${label}</span>${COPY}</figcaption><pre class="c-snippet__body"></pre>`; f.querySelector('pre').textContent = text; return f; };
   document.querySelectorAll('[data-code]').forEach((demo) => {
     const d = document.createElement('details');
     d.className = 'cat-code';
-    const pre = document.createElement('pre');
-    pre.className = 'c-code';
-    pre.textContent = dedent(demo.innerHTML);
     d.innerHTML = '<summary>Code</summary>';
-    d.appendChild(pre);
+    d.appendChild(snippet(dedent(demo.innerHTML), 'HTML'));
     demo.after(d);
   });
+  // Les blocs de code écrits dans les pages deviennent eux aussi des blocs à copier.
+  document.querySelectorAll('pre.c-code:not(.cat-demo pre)').forEach((pre) => pre.replaceWith(snippet(pre.textContent, pre.dataset.label || 'HTML')));
+  { const sc = document.createElement('script'); sc.src = root + 'assets/copy.js'; document.head.append(sc); }
 
   // Valeurs de tokens et contrastes, lus dans la feuille de style en vigueur.
   const hex = (v) => v.trim().toLowerCase();

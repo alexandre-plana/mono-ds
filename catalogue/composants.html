@@ -599,6 +599,63 @@
             </dl>
           </div>
 
+          <div class="cat-sub" id="c-snippet" data-search="composant">
+            <h3>Bloc à copier — .c-snippet</h3>
+            <p>Un texte que l'on reprend tel quel — du code, une commande, une référence, un message — et le geste pour le prendre. Le bloc est une cuvette, sans contour. « Copier » est un mot, en haut à droite ; il devient « Copié » : le retour se lit là où l'on a cliqué. C'est ce bloc qui montre le code de chaque démonstration de ce catalogue.</p>
+            <div class="cat-demo" data-code>
+              <figure class="c-snippet">
+                <figcaption class="c-snippet__head">
+                  <span class="c-snippet__label">HTML</span>
+                  <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                </figcaption>
+                <pre class="c-snippet__body">&lt;html lang="fr" data-theme="encre"&gt;
+  &lt;link rel="stylesheet" href="src/mono.css"&gt;</pre>
+              </figure>
+            </div>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <div class="c-field l-span-4">
+                  <span class="c-field__label">Lancer le catalogue</span>
+                  <div class="c-snippet c-snippet--inline">
+                    <code class="c-snippet__body">npm run serve</code>
+                    <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                  </div>
+                </div>
+                <div class="c-field l-span-4">
+                  <span class="c-field__label">Référence du dossier</span>
+                  <div class="c-snippet c-snippet--inline c-snippet--plain">
+                    <span class="c-snippet__body">D-041 / WAP375CD</span>
+                    <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                  </div>
+                </div>
+                <div class="c-field l-span-4">
+                  <span class="c-field__label">Token</span>
+                  <div class="c-snippet c-snippet--inline">
+                    <code class="c-snippet__body">--selected-line</code>
+                    <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cat-demo" data-code>
+              <figure class="c-snippet c-snippet--wrap" style="max-width: 40rem">
+                <figcaption class="c-snippet__head">
+                  <span class="c-snippet__label">Message à l'agence</span>
+                  <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                </figcaption>
+                <p class="c-snippet__body">Bonjour, le dossier D-041 est bloqué depuis le 14 novembre : il manque la reprise des contrats de Vizille. Pouvez-vous nous confirmer la date de transmission ?</p>
+              </figure>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Tout texte destiné à être repris ailleurs sans une faute : extrait de code, commande, identifiant, valeur de token, lien, message type. Le bloc pour plusieurs lignes ; <code>--inline</code> pour une seule ; <code>--wrap</code> pour de la prose, qui garde le caractère du texte courant.</dd></div>
+              <div><dt>Éviter</dt><dd>Sur un texte que l'on lit seulement. Sur chaque cellule d'un tableau : une action de ligne suffit. Une icône seule à la place du mot. Un toast pour dire « copié » : le mot change sur place, c'est assez.</dd></div>
+              <div><dt>Variantes</dt><dd><code>__label</code> dit ce que c'est (HTML, CSS, Commande) · <code>--inline</code> une ligne, le mot à la suite · <code>--wrap</code> prose · <code>--plain</code> contour tireté au lieu de la cuvette, quand elle ferait une tache de trop.</dd></div>
+              <div><dt>États</dt><dd>Survol du mot : ton fort et filet dessous. <code>data-state="done"</code> : « Copié », deux secondes, puis retour. <code>data-state="error"</code> : « Non copié », et le texte reste sélectionnable à la main. Une ligne trop longue défile dans le bloc, jamais la page.</dd></div>
+              <div><dt>Branchement</dt><dd>Le système dessine, il ne copie pas : poser l'état revient au produit. <code>catalogue/assets/copy.js</code> en donne la version la plus courte, avec repli quand le presse-papiers est refusé.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Un vrai <code>&lt;button&gt;</code> dont le libellé est le mot ; <code>aria-live="polite"</code> annonce « Copié ». Le texte reste un texte : on peut toujours le sélectionner.</dd></div>
+            </dl>
+          </div>
+
           <div class="cat-sub" id="c-key" data-search="composant">
             <h3>Légende — .c-key</h3>
             <p>Bloc « clé » posé dans un coin libre de la figure. Elle nomme les formes, pas les couleurs.</p>
@@ -1436,6 +1493,102 @@
               <div><dt>Employer</dt><dd>Une opération courte déclenchée par l'utilisateur sur un élément : enregistrer, envoyer, vérifier.</dd></div>
               <div><dt>Éviter</dt><dd>Pour un contenu qui se charge (préférer les points de suspension, le filet de progression ou le gabarit) ; seul, sans mot, hors d'une valeur en cours d'édition.</dd></div>
               <div><dt>Accessibilité</dt><dd>Décoratif (<code>aria-hidden</code>) : le mot à côté, ou un texte masqué, porte l'information. Mouvement réduit : il devient « … ».</dd></div>
+            </dl>
+          </div>
+
+          <div class="cat-sub" id="c-chat" data-search="composant">
+            <h3>Conversation — .c-chat</h3>
+            <p>Une conversation se lit comme un compte rendu : pas de bulle, pas d'avatar, pas de fond. Trois axes — l'heure, qui parle, le texte — et tout est ferré à gauche. Ce que l'on écrit soi-même est en clair ; le reste au ton de lecture. La saisie est un texte sur une ligne pointillée. Deux formes : entre deux personnes, et avec un outil ou une IA.</p>
+            <div class="cat-demo" data-code>
+              <section class="c-chat" aria-label="Conversation sur le dossier D-041">
+                <ol class="c-chat__log" role="log" aria-live="polite">
+                  <li class="c-chat__day">Vendredi 13 novembre</li>
+                  <li class="c-chat__msg">
+                    <time class="c-chat__time">09:12</time>
+                    <span class="c-chat__who">M. Delorme</span>
+                    <div class="c-chat__text"><p>Le dossier D-041 est bloqué depuis ce matin : il manque la reprise des contrats de Vizille.</p></div>
+                  </li>
+                  <li class="c-chat__msg is-own">
+                    <time class="c-chat__time">09:14</time>
+                    <span class="c-chat__who">Vous</span>
+                    <div class="c-chat__text"><p>Je regarde. Tu as la liste des agences concernées ?</p></div>
+                  </li>
+                  <li class="c-chat__msg">
+                    <time class="c-chat__time">09:15</time>
+                    <span class="c-chat__who">M. Delorme</span>
+                    <div class="c-chat__text">
+                      <p>Trois agences du Sud. La requête, si tu veux vérifier :</p>
+                      <figure class="c-snippet">
+                        <figcaption class="c-snippet__head"><span class="c-snippet__label">Requête</span><button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button></figcaption>
+                        <pre class="c-snippet__body">agences --region sud --bloque --depuis 2026-11-01</pre>
+                      </figure>
+                    </div>
+                  </li>
+                  <li class="c-chat__event">M. Delorme a joint agences-sud.csv</li>
+                </ol>
+                <form class="c-chat__compose">
+                  <textarea class="c-chat__input" rows="1" placeholder="Écrire à M. Delorme" aria-label="Écrire à M. Delorme"></textarea>
+                  <button class="c-chat__send" type="submit">Envoyer <kbd class="c-kbd" aria-hidden="true">↵</kbd></button>
+                </form>
+              </section>
+            </div>
+            <div class="cat-demo" data-code>
+              <section class="c-chat c-chat--console" aria-label="Dialogue avec l'assistant">
+                <ol class="c-chat__log" role="log" aria-live="polite">
+                  <li class="c-chat__msg is-own">
+                    <time class="c-chat__time">09:12</time>
+                    <span class="c-chat__who">Vous</span>
+                    <div class="c-chat__text"><p>Quelles agences du Sud sont bloquées depuis le 1er novembre ?</p></div>
+                  </li>
+                  <li class="c-chat__msg">
+                    <time class="c-chat__time">09:12</time>
+                    <span class="c-chat__who">Assistant</span>
+                    <div class="c-chat__text">
+                      <p>Trois agences : Arles, Narbonne et Tarbes. Toutes attendent la reprise des contrats de Vizille (D-041).</p>
+                      <figure class="c-snippet">
+                        <figcaption class="c-snippet__head"><span class="c-snippet__label">Requête</span><button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button></figcaption>
+                        <pre class="c-snippet__body">agences --region sud --bloque --depuis 2026-11-01</pre>
+                      </figure>
+                      <div class="c-chat__meta"><span>Sources</span><a href="#etats">D-041</a><a href="#etats">Agences · T3</a><button type="button" data-copy="Trois agences : Arles, Narbonne et Tarbes. Toutes attendent la reprise des contrats de Vizille (D-041).">Copier la réponse</button></div>
+                    </div>
+                  </li>
+                </ol>
+                <form class="c-chat__compose">
+                  <textarea class="c-chat__input" rows="1" placeholder="Demander" aria-label="Demander à l'assistant"></textarea>
+                  <button class="c-chat__send" type="submit">Envoyer <kbd class="c-kbd" aria-hidden="true">↵</kbd></button>
+                </form>
+              </section>
+            </div>
+            <div class="cat-demo" data-code>
+              <section class="c-chat" aria-label="États d'un message" style="max-width: 30rem">
+                <ol class="c-chat__log">
+                  <li class="c-chat__msg is-own is-sending">
+                    <time class="c-chat__time"><span class="c-spinner" aria-label="Envoi"></span></time>
+                    <span class="c-chat__who">Vous</span>
+                    <div class="c-chat__text"><p>Je relance Vizille.</p></div>
+                  </li>
+                  <li class="c-chat__msg is-own is-failed">
+                    <time class="c-chat__time">09:21</time>
+                    <span class="c-chat__who">Vous</span>
+                    <div class="c-chat__text"><p>Débloqué avant midi.</p><div class="c-chat__meta"><span>Non envoyé — connexion perdue</span><button type="button">Renvoyer</button></div></div>
+                  </li>
+                  <li class="c-chat__day">Non lus</li>
+                  <li class="c-chat__msg is-typing">
+                    <time class="c-chat__time"></time>
+                    <span class="c-chat__who">M. Delorme</span>
+                    <div class="c-chat__text"><span class="c-spinner" aria-hidden="true"></span>écrit</div>
+                  </li>
+                </ol>
+              </section>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Un échange suivi, attaché à un objet (un dossier, une agence) ou à un outil. Dans le corps d'un volet ou dans l'inspecteur : c'est le volet qui défile, et il reste calé sur le dernier message.</dd></div>
+              <div><dt>Éviter</dt><dd>Des bulles, des couleurs par personne, des avatars, l'alignement à droite de ses propres messages : la position de lecture ne change pas, c'est le ton qui dit qui écrit. Un chat pour une question à réponse unique (un champ et son résultat). Le signal pour un message non lu : un repère pointillé « Non lus » suffit.</dd></div>
+              <div><dt>Deux formes</dt><dd>Par défaut, entre personnes : heure, nom, texte. <code>--console</code>, avec un outil ou une IA : une invite « › » devant ce qu'on demande, la réponse en clair, l'heure en marge droite ; le nom n'est plus affiché, il reste lu par les lecteurs d'écran.</dd></div>
+              <div><dt>Dans un message</dt><dd>Du texte, un bloc à copier (<code>.c-snippet</code>) pour le code ou une commande, et <code>__meta</code> pour les sources et les actions d'une réponse, en mots. Pas de fiche dans un message.</dd></div>
+              <div><dt>États</dt><dd><code>.is-own</code> ce que l'on a écrit, en clair · <code>.is-sending</code> en cours d'envoi, ton éteint et spinner à la place de l'heure · <code>.is-failed</code> non parti : dit en mots, avec « Renvoyer » · <code>.is-typing</code> l'autre écrit · <code>.is-streaming</code> la réponse s'écrit, curseur plein en fin de texte · <code>__day</code> un jour ou « Non lus » · <code>__event</code> un fait (pièce jointe, arrivée).</dd></div>
+              <div><dt>Saisie</dt><dd>Une zone de texte qui grandit avec ce qu'on écrit, sur une ligne pointillée qui devient pleine au focus. Entrée envoie, Maj+Entrée va à la ligne. Pendant qu'une réponse s'écrit, « Envoyer » devient « Arrêter ».</dd></div>
+              <div><dt>Accessibilité</dt><dd>Le journal est un <code>role="log"</code> : chaque message arrivé est annoncé. L'heure est un <code>&lt;time&gt;</code>. Pendant qu'une réponse s'écrit, n'annoncer que le texte achevé (<code>aria-busy</code> sur le message).</dd></div>
             </dl>
           </div>
 

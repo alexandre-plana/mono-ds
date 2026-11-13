@@ -93,6 +93,8 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | `.c-calendar` | `__head`, `__grid`, `__day` ; `aria-current="date"`, `aria-pressed`, `.is-between`, `.is-out`, `disabled` | Mois en grille. Aujourd'hui pointillé, choisi en contour de sélection, période tiretée. Pour une simple date : `type="date"` |
 | `.c-dropzone`, `.c-files` | `.is-over` ; `__item`, `__name`, `__size`, `__state`, `__remove` | Dépôt de fichier : emplacement tireté, toujours avec « parcourir ». Une ligne par fichier, jauge pendant l'envoi |
 | `.c-range` | `--value` (0–100), `.c-range__scale` | Curseur de valeur : un filet, une réglette ; la valeur est toujours écrite à côté |
+| `.c-snippet` | `__head`, `__label`, `__copy`, `__body` ; `--inline`, `--wrap`, `--plain` ; `data-state="done\|error"` | Bloc à copier : un texte repris tel quel et le mot « Copier », qui devient « Copié » sur place. Le branchement est au produit (`catalogue/assets/copy.js`) |
+| `.c-chat` | `__log`, `__msg`, `__time`, `__who`, `__text`, `__meta`, `__day`, `__event`, `__compose`, `__input`, `__send` ; `--console` ; `.is-own`, `.is-sending`, `.is-failed`, `.is-typing`, `.is-streaming` | Conversation : un compte rendu sur trois axes, sans bulle ni avatar. `--console` pour le dialogue avec un outil ou une IA (invite « › », heure à droite). Dans un volet étroit, heure et nom passent au-dessus du texte |
 | `.c-input`, `.c-select`, `.c-textarea` | `[aria-invalid="true"]`, `disabled` | Erreur = texte + glyphe ; le signal désigne |
 | `.c-check` (`<label><input><span>`) | checkbox ou radio | Carré = multiple, rond = unique |
 | `.c-switch` (`<label><input role="switch"><span>`) | — | Effet immédiat uniquement |

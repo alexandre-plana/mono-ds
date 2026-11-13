@@ -192,4 +192,19 @@
 
   // ---- Curseur : la part acquise et le nombre suivent
   $$('.c-range').forEach((r) => { const out = document.querySelector(`output[for="${r.id}"]`), sync = () => { r.style.setProperty('--value', (r.value - r.min) / (r.max - r.min) * 100); if (out) out.textContent = r.value + ' %'; }; r.addEventListener('input', sync); sync(); });
+
+  // ---- Conversation : on écrit, cela part ; l'autre écrit puis répond ; l'assistant écrit sa réponse mot à mot
+  (() => { const sub = document.getElementById('c-chat'); if (!sub) return; const chats = $$('.c-chat', sub).filter((c) => $('.c-chat__compose', c));
+    const hm = () => new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }), esc = (v) => v.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const msg = (cls, who, html, time) => { const li = document.createElement('li'); li.className = 'c-chat__msg' + (cls ? ' ' + cls : ''); li.innerHTML = `<time class="c-chat__time">${time ?? hm()}</time><span class="c-chat__who">${who}</span><div class="c-chat__text">${html}</div>`; return li; };
+    const HUMAN = ['D\'accord. Je te préviens dès que Vizille a transmis.', 'Oui, les trois sont dans le fichier joint.', 'Merci. On en reparle à la réunion de 14 h ?'];
+    const AI = ['Arles est bloquée depuis douze jours, Narbonne depuis neuf, Tarbes depuis quatre. Les trois dépendent du même dossier, D-041.', 'Je n\'ai que les données du troisième trimestre : au-delà, je ne peux pas répondre avec certitude.', 'Oui. La reprise des contrats de Vizille est attendue ; une fois reçue, le déblocage est immédiat pour les trois agences.'];
+    chats.forEach((chat) => { const ai = chat.classList.contains('c-chat--console'), log = $('.c-chat__log', chat), form = $('.c-chat__compose', chat), input = $('.c-chat__input', chat), send = $('.c-chat__send', chat), idle = send.innerHTML; let n = 0, timer = null, stop = null;
+      const busy = (on) => { send.innerHTML = on ? 'Arrêter' : idle; send.dataset.busy = on ? '1' : ''; };
+      const answer = () => { if (!ai) { const t = msg('is-typing', 'M. Delorme', '<span class="c-spinner" aria-hidden="true"></span>écrit', ''); log.append(t); timer = setTimeout(() => { t.replaceWith(msg('', 'M. Delorme', `<p>${HUMAN[n++ % HUMAN.length]}</p>`)); }, 1600); return; }
+        const words = AI[n++ % AI.length].split(' '), li = msg('is-streaming', 'Assistant', '<p></p>'), p = $('p', li); li.setAttribute('aria-busy', 'true'); log.append(li); busy(true); let i = 0;
+        const end = (cut) => { clearInterval(timer); li.classList.remove('is-streaming'); li.removeAttribute('aria-busy'); if (cut) p.textContent += ' —'; $('.c-chat__text', li).insertAdjacentHTML('beforeend', `<div class="c-chat__meta">${cut ? '<span>Réponse arrêtée</span>' : '<span>Sources</span><a href="#etats">D-041</a>'}<button type="button" data-copy="${esc(p.textContent)}">Copier la réponse</button></div>`); busy(false); stop = null; };
+        stop = () => end(true); timer = setInterval(() => { p.textContent += (i ? ' ' : '') + words[i++]; if (i >= words.length) end(false); }, 90); };
+      form.addEventListener('submit', (e) => { e.preventDefault(); if (send.dataset.busy) { stop?.(); return; } const v = input.value.trim(); if (!v) return; log.append(msg('is-own', 'Vous', `<p>${esc(v).replace(/\n/g, '<br>')}</p>`)); input.value = ''; setTimeout(answer, ai ? 350 : 700); });
+      input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } }); }); })();
 })();

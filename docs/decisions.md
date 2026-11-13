@@ -108,10 +108,12 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-085 | Grain fin sur le fond Papier | amendée par D-086 |
 | D-086 | Texture fibreuse en thème Papier | en vigueur |
 | D-087 | Pages du catalogue : une marge à gauche, repliée et discrète | en vigueur |
-| D-088 | Animations procédurales dans un bureau MONO | en vigueur pour le bureau, scènes remplacées par D-091 |
-| D-089 | Trames de signal, matrices de caractères et mosaïques | remplacée par D-091 |
-| D-090 | Densité des planches du bureau | remplacée par D-091 |
-| D-091 | Trois nouvelles animations d’après les références | en vigueur |
+| D-088 | Bloc à copier | en vigueur |
+| D-089 | Conversation : un compte rendu, deux formes | en vigueur |
+| D-090 | Animations procédurales dans un bureau MONO | en vigueur pour le bureau, scènes remplacées par D-093 |
+| D-091 | Trames de signal, matrices de caractères et mosaïques | remplacée par D-093 |
+| D-092 | Densité des planches du bureau | remplacée par D-093 |
+| D-093 | Trois nouvelles animations d’après les références | en vigueur |
 
 ---
 
@@ -826,29 +828,52 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Et le rail interdit ?** Le rail mène d'une partie à l'autre de l'application ; ici ce sont les onglets qui le font. La marge ne sort pas de la page : c'est son sommaire.
 - **Limites** : la marge de la plus longue rubrique (treize éléments) mesure environ 550 px ; sur un écran plus bas, son pied n'est atteint qu'en fin de page. Sur téléphone, elle passe au-dessus du contenu, en lignes.
 
-## D-088 — Animations procédurales dans un bureau MONO
+## D-088 — Bloc à copier
 
-- **Date** 2026-11-13 · **Statut** en vigueur pour le bureau, scènes remplacées par D-091 · **Demandée par** le commanditaire.
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : un composant pour tout texte que l'on reprend tel quel — code, commande, référence, message : `.c-snippet`. Le bloc est une cuvette (`--bg-sunken`), sans contour. Le geste est un mot, « Copier », en haut à droite ; il devient « Copié » deux secondes. Trois formes : le bloc (plusieurs lignes), `--inline` (une ligne, le mot à la suite), `--wrap` (de la prose, au caractère du texte courant). `--plain` remplace la cuvette par un contour tireté.
+- **Le retour se lit sur place** : pas de toast. Copier n'a rien à annuler et ne change rien à l'écran ; un toast serait un bruit pour un geste que l'on répète dix fois.
+- **Un mot, pas une icône seule** : l'icône accompagne le mot, comme partout dans le système.
+- **Le système dessine, il ne copie pas** : l'état est un attribut (`data-state`), posé par le produit. `catalogue/assets/copy.js` en donne le branchement le plus court, avec repli quand le presse-papiers est refusé ; l'échec se dit en mots et le texte reste sélectionnable.
+- **Emploi dans le catalogue** : le code de chaque démonstration et les blocs de code des pages sont des blocs à copier. `.c-code` reste pour un extrait que l'on lit seulement.
+- **Écarté** : un bouton « Copier » qui n'apparaît qu'au survol (invisible au toucher et au clavier) ; la copie au clic sur le texte lui-même (elle empêche de le sélectionner).
+
+## D-089 — Conversation : un compte rendu, deux formes
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (usages retenus : dialogue avec une IA, et chat à deux)
+- **Décision** : un seul composant, `.c-chat`. Une conversation se lit comme un compte rendu : trois axes — l'heure, qui parle, le texte —, tout ferré à gauche. Pas de bulle, pas d'avatar, pas de fond, pas d'alignement à droite. Ce que l'on écrit soi-même est en clair (`--fg-strong`), le reste au ton de lecture : c'est le ton qui dit qui écrit, pas la position.
+- **Deux formes** : entre personnes (par défaut) ; avec un outil ou une IA (`--console`), où une invite « › » précède ce qu'on demande, l'heure passe en marge droite et le nom n'est plus affiché — on sait qui répond —, tout en restant lu par les lecteurs d'écran. Elle prolonge la console du système.
+- **Saisie** : un texte sur une ligne pointillée, comme toute valeur écrite en place (`.c-editable`) ; elle devient pleine au focus. Entrée envoie. Pendant qu'une réponse s'écrit, « Envoyer » devient « Arrêter ».
+- **États, tous dits par un trait ou un mot** : en cours d'envoi (ton éteint, spinner à la place de l'heure) ; non parti (en mots, avec le signe d'erreur et « Renvoyer ») ; l'autre écrit (le spinner du système, jamais trois points qui dansent) ; la réponse s'écrit (un curseur plein en fin de texte) ; « Non lus » et les jours sont des repères, donc pointillés. Le signal ne sert qu'au signe d'erreur.
+- **Dans un message** : du texte, un bloc à copier (D-088) pour le code, et une ligne `__meta` pour les sources et les actions d'une réponse, en mots.
+- **Volet étroit** : par requête de conteneur, l'heure et le nom passent au-dessus du texte ; la conversation tient dans l'inspecteur.
+- **Défilement** : le composant ne défile pas de lui-même ; il vit dans le corps du volet, seule zone défilante.
+- **Écarté** (maquettes soumises) : « les deux marges » — ses propres messages décalés sur un second axe — trop proche d'un chat ordinaire et inopérant à plus de deux ; les bulles, les couleurs par personne, les avatars (D-081).
+- **Limite** : `field-sizing: content`, qui fait grandir la saisie, n'existe pas partout ; ailleurs la zone garde une ligne et défile.
+
+## D-090 — Animations procédurales dans un bureau MONO
+
+- **Date** 2026-11-13 · **Statut** en vigueur pour le bureau, scènes remplacées par D-093 · **Demandée par** le commanditaire.
 - **Composition**. L’exemple Animations reprend les fenêtres et la barre du Bureau. Les quatre scènes agrandies à l’ouverture ont chacune leur graine et leur pause. Le plein écran du navigateur garde la barre accessible. Une fenêtre restaurée peut être déplacée ou redimensionnée sur grand écran.
 - **Dessin**. Les rôles des thèmes donnent les tons des marques, du texte et des repères. Le pointillé situe une mesure, le tireté désigne une relation ou une référence. Le grain suit le réglage partagé du catalogue. Les hachures couvrent le bureau sous la modale des réglages, au sens de D-041.
 - **Rendu**. Deux canevas superposés isolent les repères statiques des marques animées. Une seule fenêtre avance dans le temps. La pause, le mouvement réduit, la modale et un onglet masqué suspendent la boucle. Les deux canevas ont chacun un budget de 1,6 million de pixels pour limiter le coût sur les grands écrans.
 
-## D-089 — Trames de signal, matrices de caractères et mosaïques
+## D-091 — Trames de signal, matrices de caractères et mosaïques
 
-- **Date** 2026-11-13 · **Statut** remplacée par D-091 · **Complète** D-088.
+- **Date** 2026-11-13 · **Statut** remplacée par D-093 · **Complète** D-090.
 - **Décision**. Les références imprimées fournissent la composition des scènes. Oscilloscope étale l’échantillonnage en bandes interrompues et en points. Connexions trace les relais en registres et les parcours à angle droit. Frappe transforme les commandes en lignes de glyphes. Spectre associe les aplats de sous-bandes à une subdivision en quatre et à un histogramme.
 - **Tons**. Les aplats reprennent les rôles de surface et de filet d’Encre et Papier. Les valeurs actives prennent le ton fort. Le grain de la page reste réglable et les hachures gardent le sens de D-041.
 - **Rendu**. Les trames, les glyphes et les parcours de fond sont précalculés. La mosaïque réutilise sa géométrie et module ses tons d’après l’amplitude.
 
-## D-090 — Densité des planches du bureau
+## D-092 — Densité des planches du bureau
 
-- **Date** 2026-11-13 · **Statut** remplacée par D-091 · **Complète** D-089.
+- **Date** 2026-11-13 · **Statut** remplacée par D-093 · **Complète** D-091.
 - **Composition**. Les références montrent un champ presque continu, avec de grands aplats et des grains beaucoup plus fins. Le nom de la scène tient dans la barre de fenêtre. Le dessin prend le corps de la fenêtre et les mesures restent en pied. Les trames alternent lignes, points et bruit de tailles différentes. Spectre concentre les subdivisions sous de grands aplats.
 - **Périmètre**. Le budget de vide et de trame d’une interface s’applique aux commandes du bureau. Les planches occupent leur propre surface dense au titre de D-062. Les tons du système et le réglage du grain restent communs.
 - **Rendu**. Spectre efface l’histogramme à chaque image et repeint les seuls pavés qui changent de ton. Les autres trames denses sont calculées à la préparation du canevas.
 
-## D-091 — Trois nouvelles animations d’après les références
+## D-093 — Trois nouvelles animations d’après les références
 
-- **Date** 2026-11-13 · **Statut** en vigueur · **Remplace** les scènes de D-088 à D-090.
-- **Décision**. Trois compositions procédurales repartent des quatre références visuelles fournies. Brouillage mêle trames, bruit et déchirures horizontales. Mosaïque anime des aplats et leurs subdivisions. Transmission fait évoluer un champ de glyphes. Le bureau et ses commandes reprennent le fonctionnement de D-088.
+- **Date** 2026-11-13 · **Statut** en vigueur · **Remplace** les scènes de D-090 à D-092.
+- **Décision**. Trois compositions procédurales repartent des quatre références visuelles fournies. Brouillage mêle trames, bruit et déchirures horizontales. Mosaïque anime des aplats et leurs subdivisions. Transmission fait évoluer un champ de glyphes. Le bureau et ses commandes reprennent le fonctionnement de D-090.
 - **Affinement**. Brouillage réserve une bande peu marquée entre deux masses de trame et localise les déchirures. Dans Mosaïque, la partie haute reste fixe et la subdivision se concentre dans la moitié basse. Transmission garde ses caractères en place. De petites empreintes se révèlent horizontalement, avec des écarts de densité entre les zones.
