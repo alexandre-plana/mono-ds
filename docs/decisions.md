@@ -99,7 +99,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-076 | Les exemples s'ouvrent dans leur onglet, avec le fil d'Ariane | en vigueur |
 | D-077 | Pages du catalogue : un sommaire, puis une chose à la fois | en vigueur, complétée par D-078 |
 | D-078 | Un cran du fil d'Ariane ouvre la liste de ses voisins | en vigueur, la forme (menu) remplacée par D-079 |
-| D-079 | Les voisins du fil se déplient en ligne ; un menu se survole par un filet, jamais par un fond | en vigueur |
+| D-079 | Les voisins du fil se déplient en ligne ; un menu se survole par un filet, jamais par un fond | en vigueur, étendue aux contrôles par D-080 |
+| D-080 | Survol d'un contrôle : le contour se renforce, le fond ne change pas | en vigueur |
 
 ---
 
@@ -742,3 +743,13 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Limite** : dans la liste d'un `.c-select`, le filet de survol n'a pas de pointe (les options natives n'acceptent pas le dessin) ; et la rangée de voisins fait descendre le contenu d'une ligne quand on la déplie.
 - **Écarté** : une liste flottante écrite en capitales comme le fil (un second style de menu à entretenir, et trop large) ; ne corriger que le menu du fil (la cause est dans `.c-menu`).
 - **Hors de cette décision** : les boutons et le sélecteur segmenté changent encore de fond au survol. Ce sont des contrôles, pas des lignes ; à trancher à part.
+
+## D-080 — Survol d'un contrôle : le contour se renforce, le fond ne change pas
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Étend** : D-044 et D-079
+- **Constat** : après D-079, les boutons, le sélecteur segmenté et la fiche encadrée étaient les derniers à changer de fond au survol.
+- **Décision** : plus aucun survol ne change un fond. Une ligne (tableau, menu, fiche) reçoit un filet à pointe ; un contrôle voit son contour se renforcer. En détail : bouton à contour et segment — le contour passe au ton fort ; bouton discret, sans contour — un filet dessous ; bouton plein (primaire, signal en accent fort), qui n'a plus de contour à renforcer — un second contour d'un pixel, détaché de deux, dans sa propre teinte ; bouton signal — son contour ne se remplit plus au survol ; fiche encadrée — son contour seul. Un menu ouvert marque son bouton de la même façon.
+- **Raison** : une seule grammaire. Le fond dit un état durable (bloc inversé, appui en cours) ; le trait dit l'intention.
+- **Ce qui garde un fond** : l'appui (`:active`) — c'est le retour d'un geste, pas une annonce — et le bouton primaire lui-même, qui reste la tache claire de l'écran.
+- **Conséquence** : `--inverse-bg-hover` n'est plus consommé par aucun composant ; le rôle reste défini dans `tokens.css` pour ne rien casser chez qui l'emploierait.
+- **Distinction avec le focus** : focus clavier, 2 px au ton fort, à 3 px ; survol d'un bouton plein, 1 px dans la teinte du bouton, à 2 px. Le focus prime quand les deux coïncident.

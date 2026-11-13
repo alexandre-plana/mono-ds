@@ -57,15 +57,20 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
    Un seul bouton primaire (bloc inversé) par vue : c'est la tache la plus
    claire de l'écran, elle désigne l'action. */
 .c-button { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--control-height); padding: 0 var(--space-4); border: var(--hairline) solid var(--line-strong); background: transparent; color: var(--fg-strong); font-size: var(--text-micro); line-height: 1; font-weight: var(--weight-medium); text-transform: uppercase; letter-spacing: var(--track-caps); text-decoration: none; white-space: nowrap; cursor: pointer; transition: background var(--duration), border-color var(--duration), color var(--duration); }
-.c-button:hover { border-color: var(--fg-strong); background: var(--surface-2); color: var(--fg-strong); }
+/* Survol d'un contrôle : son contour se renforce, son fond ne change pas. Un bouton plein, qui n'a plus de
+   contour à renforcer, en reçoit un second, détaché d'un pas. */
+.c-button:hover { border-color: var(--fg-strong); color: var(--fg-strong); }
 .c-button:active { background: var(--line-faint); }
 .c-button--primary { background: var(--inverse-bg); border-color: var(--inverse-bg); color: var(--inverse-fg); }
-.c-button--primary:hover { background: var(--inverse-bg-hover); border-color: var(--inverse-bg-hover); color: var(--inverse-fg); }
+.c-button--primary:hover { border-color: var(--inverse-bg); color: var(--inverse-fg); }
+.c-button--primary:hover:not(:disabled, [aria-disabled="true"], :focus-visible), .c-button--signal:hover:not(:disabled, [aria-disabled="true"], :focus-visible) { outline: var(--hairline) solid var(--signal); outline-offset: 2px; }
+.c-button--primary:hover:not(:disabled, [aria-disabled="true"], :focus-visible) { outline-color: var(--inverse-bg); }
 .c-button--primary:active { background: var(--fg-soft); border-color: var(--fg-soft); }
 .c-button--quiet { border-color: transparent; color: var(--fg); padding-inline: var(--space-2); }
-.c-button--quiet:hover { border-color: transparent; }
+/* Sans contour, le bouton discret se souligne d'un filet. */
+.c-button--quiet:hover { border-color: transparent; border-bottom-color: var(--line-strong); }
 .c-button--signal { border-color: var(--signal); color: var(--signal); }
-.c-button--signal:hover { background: var(--signal); border-color: var(--signal); color: var(--on-signal); }
+.c-button--signal:hover { border-color: var(--signal); color: var(--signal); }
 .c-button--large { min-height: var(--control-height-large); padding-inline: var(--space-5); }
 .c-button:disabled, .c-button[aria-disabled="true"] { border-style: dashed; border-color: var(--line); background: transparent; color: var(--fg-muted); cursor: not-allowed; }
 
@@ -128,7 +133,8 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-segmented { display: inline-flex; }
 .c-segmented__item { appearance: none; position: relative; background: none; border: var(--hairline) solid var(--line-strong); margin-left: -1px; min-height: var(--control-height); padding: 0 var(--space-3); color: var(--fg-soft); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--track-caps); cursor: pointer; transition: background var(--duration), color var(--duration), border-color var(--duration); }
 .c-segmented__item:first-child { margin-left: 0; }
-.c-segmented__item:hover { color: var(--fg-strong); background: var(--surface-2); }
+.c-segmented__item:hover { color: var(--fg-strong); }
+.c-segmented__item:hover:not([aria-pressed="true"], [aria-checked="true"], :disabled) { z-index: 1; border-color: var(--fg-strong); }
 .c-segmented__item[aria-pressed="true"], .c-segmented__item[aria-checked="true"] { z-index: 1; border: var(--stroke) solid var(--selected-line); padding-inline: calc(var(--space-3) - 1px); color: var(--fg); font-weight: var(--weight-medium); }
 
 /* --- Navigation ------------------------------------------------------------ */
@@ -440,7 +446,7 @@ a.c-card:not(.c-card--boxed), .c-card--action:not(.c-card--boxed) { position: re
 a.c-card:not(.c-card--boxed)::after, .c-card--action:not(.c-card--boxed)::after { content: ''; position: absolute; right: 1px; top: -4px; width: 6px; height: 6px; border-top: var(--hairline) solid var(--fg-strong); border-right: var(--hairline) solid var(--fg-strong); transform: rotate(45deg); opacity: 0; transition: opacity var(--duration); }
 a.c-card:not(.c-card--boxed):hover::after, .c-card--action:not(.c-card--boxed):hover::after { opacity: 1; }
 a.c-card:hover .c-card__foot, .c-card--action:hover .c-card__foot { color: var(--fg-strong); }
-a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color: var(--fg-soft); border-top-color: var(--fg-strong); background: var(--surface); }
+a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color: var(--fg-soft); border-top-color: var(--fg-strong); }
 /* Sélection : le filet passe à 2 px, en gris moyen. Le fond ne change pas. */
 .c-card[aria-selected="true"], .c-card[aria-current], .c-card.is-selected { border-top: var(--stroke) solid var(--selected-line); padding-top: calc(var(--space-3) - 1px); }
 .c-card--boxed[aria-selected="true"], .c-card--boxed[aria-current], .c-card--boxed.is-selected { border: var(--stroke) solid var(--selected-line); padding: calc(var(--space-4) - 1px) calc(var(--space-5) - 1px) calc(var(--space-5) - 1px); }
@@ -473,7 +479,8 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 .c-menu { position: relative; display: inline-block; }
 .c-menu > summary { list-style: none; }
 .c-menu > summary::-webkit-details-marker { display: none; }
-.c-menu[open] > summary.c-button { border-color: var(--fg-strong); background: var(--surface-2); }
+.c-menu[open] > summary.c-button { border-color: var(--fg-strong); color: var(--fg-strong); }
+.c-menu[open] > summary.c-button--quiet { border-color: transparent; border-bottom-color: var(--line-strong); }
 .c-menu__list { position: absolute; z-index: 20; top: calc(100% + var(--space-1)); left: 0; min-width: 14rem; padding: var(--space-1) 0; background: var(--bg); border: var(--hairline) solid var(--line-strong); display: flex; flex-direction: column; }
 .c-menu--end .c-menu__list { left: auto; right: 0; }
 .c-menu__label { padding: var(--space-2) var(--space-3) var(--space-1); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }

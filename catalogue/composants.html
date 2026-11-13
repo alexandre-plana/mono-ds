@@ -490,7 +490,7 @@
               <div><dt>Employer</dt><dd>Des données à comparer sur plusieurs colonnes. Les unités vont dans la légende ou l'en-tête, pas dans chaque cellule.</dd></div>
               <div><dt>Éviter</dt><dd>Filets verticaux, lignes zébrées, fond d'en-tête. Plus d'une cellule en signal. Du texte centré.</dd></div>
               <div><dt>Sélection</dt><dd>Ligne sélectionnable : <code>&lt;tr tabindex="0" aria-selected&gt;</code>. Sélectionnée, elle prend deux filets de 2 px, dessus et dessous ; le contour reste ouvert sur les côtés pour que le texte garde son axe.</dd></div>
-              <div><dt>États</dt><dd>Survol : la ligne passe sur <code>--surface</code>. <code>tr.is-key</code> ligne commentée · <code>tr.is-muted</code> ligne provisoire · <code>tfoot</code> total.</dd></div>
+              <div><dt>États</dt><dd>Survol : un filet sous la ligne, terminé en pointe si elle est cliquable ; le fond ne change pas. <code>tr.is-key</code> ligne commentée · <code>tr.is-muted</code> ligne provisoire · <code>tfoot</code> total.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;caption&gt;</code>, <code>&lt;th&gt;</code> d'en-tête et de ligne. Envelopper dans <code>.c-table-wrap</code> pour le défilement horizontal en étroit.</dd></div>
             </dl>
           </div>
@@ -645,7 +645,7 @@
               <div><dt>Employer</dt><dd>Déclencher une action. Le libellé est un verbe, deux mots au plus.</dd></div>
               <div><dt>Éviter</dt><dd>Deux primaires sur une vue. Un primaire sur un écran de consultation, où rien ne conclut une tâche. Un bouton pour naviguer (un lien). Le signal pour une action courante. Une icône seule sans <code>aria-label</code>.</dd></div>
               <div><dt>Hiérarchie</dt><dd><code>--primary</code> zéro ou une fois par vue : seulement quand l'écran existe pour accomplir une action (formulaire, connexion, modale) · défaut (contour) pour le reste · <code>--quiet</code> pour l'action tertiaire ou dans une ligne · <code>--signal</code> pour l'irréversible.</dd></div>
-              <div><dt>États</dt><dd>Survol : bordure au ton fort et fond d'un cran. Inactif : contour tireté, texte encore lisible. Focus clavier : contour de 2 px.</dd></div>
+              <div><dt>États</dt><dd>Survol : le contour passe au ton fort, le fond ne change pas. Bouton plein (primaire, signal en accent fort) : un second contour d'un pixel, détaché d'un pas. Bouton discret : un filet dessous. Inactif : contour tireté, texte encore lisible. Focus clavier : contour de 2 px.</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;button type&gt;</code> ; 32 px de haut au moins, 40 px en <code>--large</code> sur écran tactile.</dd></div>
             </dl>
           </div>
