@@ -120,7 +120,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-097 | Laboratoire, expérience 01 : rouge, orange, vert | en vigueur |
 | D-098 | Laboratoire, expérience 02 : douze cas de geste récompensé | en vigueur |
 | D-099 | Laboratoire : chaque atelier dans son propre écran | en vigueur |
-| D-100 | Laboratoire, expérience 03 : la donnée vivante | en vigueur |
+| D-100 | Laboratoire, expérience 03 : la donnée vivante | en vigueur, étendue par D-101 |
+| D-101 | Expérience 03 : l'ordre et le rythme | en vigueur |
 
 ---
 
@@ -943,3 +944,14 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Hypothèses de départ, à vérifier** : la ligne fait trouver, la valeur fait comprendre ; l'écart est le meilleur compromis pour l'ancienne valeur ; les arrivées doivent attendre le lecteur.
 - **Particularité** : cette expérience n'enfreint aucune règle et n'ajoute aucune couleur ; elle pourrait entrer dans le système si elle convainc.
 - **État de l'art** : la cécité au changement est établie ; les guides demandent stabilité et changement compréhensible. Rien de trouvé qui tranche entre valeur et ligne.
+
+## D-101 — Expérience 03 : l'ordre et le rythme
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Étend** : D-100
+- **Questions posées** : dans une liste classée, reclasse-t-on à la mise à jour ; comment le montrer ; que faire quand les mises à jour sont rapides et touchent plusieurs lignes à la fois.
+- **Reclassement, trois réponses à comparer** : immédiat (la ligne glisse aussitôt) ; différé (l'ordre affiché ne bouge pas, chaque ligne mal placée annonce son rang à venir « → 06 » en tireté, une ligne propose « Reclasser maintenant ») ; au calme (comme différé, mais la liste se range seule après deux secondes sans mise à jour, si le pointeur n'est pas sur elle).
+- **Montrer** : les lignes glissent ensemble, d'un seul mouvement ; le rang garde ensuite la trace du déplacement (« ▲ 2 ») jusqu'à ce que la ligne soit vue.
+- **Le rythme** : trois cadences (calme, vif, rafale de six lignes) et quatre garde-fous — l'affichage par lots (ce qui arrive en moins de deux secondes se montre en une fois), l'écart cumulé depuis la dernière vue, le soulignement limité à une fois par deux secondes et par ligne, un seul reclassement à la fois.
+- **Principe sous-jacent** : une mise à jour se fait en deux temps, le modèle puis l'écran. Les séparer permet de régler le rythme de l'écran sur celui de l'œil, non sur celui du flux.
+- **Hypothèse de départ** : « au calme » est le bon défaut ; rien ne doit bouger sous un pointeur.
+- **État de l'art** : la plainte « les lignes sautent » est partout chez les bibliothèques de tableaux, et la parade courante est de différer le tri. Rien de trouvé qui chiffre un rythme acceptable : les seuils de l'atelier sont des choix.

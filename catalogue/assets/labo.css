@@ -231,3 +231,10 @@
 .x-away[hidden] { display: none; } .x-away small { font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-soft); }
 .x-screen { position: relative; }
 @media (prefers-reduced-motion: reduce) { .x-live tr.is-touched > td::after, .x-num.is-fresh, .x-live tr.is-new > td, .x-pulse.is-beat::before { animation: none !important; } }
+
+/* Expérience 03, suite : l'ordre. Le rang, son mouvement (▲ 2) ou la place qui attend (→ 03). */
+.x-live td.rk { color: var(--fg-muted); font-size: var(--text-micro); letter-spacing: var(--track-caps); font-variant-numeric: tabular-nums; white-space: nowrap; width: 6.5rem; }
+.x-rk { display: inline-block; min-width: 2ch; } .x-mv { margin-left: var(--space-3); color: var(--fg-strong); }
+.x-mv.is-pending { color: var(--fg-soft); border-bottom: var(--hairline) dashed var(--fg-soft); }
+.x-atelier .x-steps--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--space-5); }
+@media (max-width: 900px) { .x-atelier .x-steps--4 { grid-template-columns: minmax(0, 1fr); } }

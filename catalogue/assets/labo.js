@@ -103,46 +103,75 @@
 
   // ===== Expérience 03 — la donnée vivante ===================================
   (() => { const stage = document.getElementById('x3'); if (!stage) return;
-    const box = $('.x-live', stage), body = $('tbody', stage), read = $('.x-read', stage), pulse = $('.x-pulse', stage), arrive = $('[data-arrive]', stage), back = $('[data-back]', stage), away = $('.x-away', stage), title0 = document.title;
-    const fr = (v) => v.toFixed(1).replace('.', ','), hms = () => new Date().toLocaleTimeString('fr-FR'), ST = ['Normal', 'À surveiller', 'Bloqué'];
+    const box = $('.x-live', stage), body = $('tbody', stage), read = $('.x-read', stage), pulse = $('.x-pulse', stage), arrive = $('[data-arrive]', stage), back = $('[data-back]', stage), reorderBar = $('[data-reorder]', stage), away = $('.x-away', stage), title0 = document.title;
+    const fr = (v) => v.toFixed(1).replace('.', ','), hms = () => new Date().toLocaleTimeString('fr-FR'), ST = ['Normal', 'À surveiller', 'Bloqué'], cfg = (k) => stage.dataset[k];
     const SEED = [['A-102', 'Annecy', 9, 6.2], ['A-117', 'Arles', 7, 4.9], ['A-124', 'Arras', 11, 8.1], ['A-131', 'Bar-le-Duc', 6, 3.8], ['A-140', 'Bayonne', 8, 5.5], ['A-152', 'Brest', 12, 9.4], ['A-166', 'Carcassonne', 5, 3.1], ['A-181', 'Colmar', 9, 12.1], ['A-195', 'Dax', 5, 3.2], ['A-214', 'Narbonne', 10, 7.0], ['A-226', 'Tarbes', 14, 7.8]];
     const POOL = [['A-262', 'Vizille', 4, 2.4], ['A-270', 'Valence', 8, 5.9], ['A-281', 'Vannes', 6, 4.4], ['A-290', 'Lorient', 7, 5.1], ['A-298', 'Chartres', 9, 6.6]];
-    let rows = [], queue = [], timer = null, gone = false, awayCount = { v: 0, n: 0 }, last = null, pool = [];
+    let rows = [], queue = [], timer = null, flushTimer = null, calm = null, gone = false, awayCount = { v: 0, n: 0 }, last = null, pool = [], dirty = new Map(), hover = false, lot = '';
     const digits = (el, txt, dir) => { const old = el.textContent; el.innerHTML = [...txt].map((c, i) => `<span${dir && !still && c !== old.padStart(txt.length, ' ')[i] ? ` style="animation: x-${dir} 260ms ease-out 1 both"` : ''}>${c}</span>`).join(''); };
     const spark = (h) => { const lo = Math.min(...h), hi = Math.max(...h), W = 72, H = 14, pts = h.map((v, i) => [i * W / Math.max(1, h.length - 1), H - (hi === lo ? H / 2 : (v - lo) / (hi - lo) * H)]); const [x, y] = pts.at(-1);
       return `<svg width="${W + 4}" height="${H + 4}" viewBox="-2 -2 ${W + 4} ${H + 4}" aria-hidden="true"><polyline points="${pts.map((p) => p.join(',')).join(' ')}"></polyline><rect x="${x - 1.5}" y="${y - 1.5}" width="3" height="3"></rect></svg>`; };
-    // Ce que l'on garde de l'ancienne valeur : rien, le fantôme (barré, un temps), l'écart (sens et montant), ou le tracé.
-    const evo = (r) => { const m = stage.dataset.before, c = r.change; const td = $('.x-evo', r.tr); if (m === 'trace') { td.innerHTML = spark(r.hist); return; } if (!c || m === 'rien') { td.innerHTML = ''; return; }
-      const d = c.now - c.old; td.innerHTML = m === 'fantome' ? `<s>${c.txt}</s>` : `<span class="d">${d > 0 ? '▲' : '▼'} ${c.f === 'pr' ? fr(Math.abs(d)) : Math.abs(d)}</span>`;
-      clearTimeout(r.ghost); if (m === 'fantome') r.ghost = setTimeout(() => { if (stage.dataset.before === 'fantome') td.innerHTML = ''; }, 9000); };
-    const make = (d, isNew) => { const r = { ref: d[0], name: d[1], eff: d[2], pr: d[3], st: 0, hist: [d[3]], change: null }; const tr = document.createElement('tr'); r.tr = tr;
-      tr.innerHTML = `<td class="ref">${r.ref}</td><td class="nm"><span>${r.name}</span></td><td class="n"><span class="x-num" data-f="eff"></span></td><td class="n"><span class="x-num" data-f="pr"></span></td><td class="x-evo"></td><td class="st" data-st="0">${ST[0]}</td><td class="t n">${isNew ? hms() : '—'}</td>`;
-      digits($('[data-f="eff"]', tr), String(r.eff)); digits($('[data-f="pr"]', tr), fr(r.pr)); tr.addEventListener('pointerenter', () => { tr.classList.remove('is-unseen', 'is-since'); report(); }); if (isNew) tr.classList.add('is-new', 'is-unseen'); if (stage.dataset.before === 'trace') $('.x-evo', tr).innerHTML = spark(r.hist); return r; };
-    const report = () => { const u = rows.filter((r) => r.tr.classList.contains('is-unseen')).length; read.innerHTML = `<span><b>${rows.length}</b> agences</span><span><b>${u}</b> non vu${u > 1 ? 's' : ''}</span><span>Dernière mise à jour ${last || '—'}</span>`;
+    // Ce que l'on garde de l'ancienne valeur : rien, le fantôme (barré, un temps), l'écart, ou le tracé.
+    // L'écart est CUMULÉ depuis la dernière fois que la ligne a été vue : dix sauts rapides se lisent comme un seul.
+    const evo = (r) => { const m = cfg('before'), td = $('.x-evo', r.tr); if (m === 'trace') { td.innerHTML = spark(r.hist); return; } const f = r.lastF, d = f ? +(r[f] - r.base[f]).toFixed(1) : 0; if (!f || !d || m === 'rien') { td.innerHTML = ''; return; }
+      td.innerHTML = m === 'fantome' ? `<s>${f === 'pr' ? fr(r.base[f]) : r.base[f]}</s>` : `<span class="d">${d > 0 ? '▲' : '▼'} ${f === 'pr' ? fr(Math.abs(d)) : Math.abs(d)}</span>`;
+      clearTimeout(r.ghost); if (m === 'fantome') r.ghost = setTimeout(() => { if (cfg('before') === 'fantome') td.innerHTML = ''; }, 9000); };
+    const seen = (r) => { r.tr.classList.remove('is-unseen', 'is-since'); r.base = { eff: r.eff, pr: r.pr }; r.lastF = null; r.seenRank = rows.indexOf(r); evo(r); rank(); };
+    const make = (d, isNew) => { const r = { ref: d[0], name: d[1], eff: d[2], pr: d[3], st: 0, hist: [d[3]], base: { eff: d[2], pr: d[3] }, lastF: null, seenRank: null, touched: 0 }; const tr = document.createElement('tr'); r.tr = tr;
+      tr.innerHTML = `<td class="rk"><span class="x-rk"></span><span class="x-mv"></span></td><td class="nm"><span>${r.name}</span></td><td class="n"><span class="x-num" data-f="eff"></span></td><td class="n"><span class="x-num" data-f="pr"></span></td><td class="x-evo"></td><td class="st" data-st="0">${ST[0]}</td><td class="t n">${isNew ? hms() : '—'}</td>`;
+      digits($('[data-f="eff"]', tr), String(r.eff)); digits($('[data-f="pr"]', tr), fr(r.pr)); tr.addEventListener('pointerenter', () => { seen(r); report(); }); if (isNew) tr.classList.add('is-new', 'is-unseen'); if (cfg('before') === 'trace') $('.x-evo', tr).innerHTML = spark(r.hist); return r; };
+    // ---- L'ordre. La liste est classée par primes. `rows` est l'ordre AFFICHÉ ; l'ordre juste se calcule.
+    const sorted = () => rows.slice().sort((a, b) => b.pr - a.pr || a.name.localeCompare(b.name, 'fr'));
+    // Le rang et son mouvement. Reclassé : ▲2 depuis la dernière fois qu'on a vu la ligne. En attente : « → 3 », la place qu'elle prendra.
+    const rank = () => { const want = sorted(); let pending = 0; rows.forEach((r, i) => { const w = want.indexOf(r), mv = $('.x-mv', r.tr); $('.x-rk', r.tr).textContent = String(i + 1).padStart(2, '0');
+      if (w !== i) { pending++; mv.textContent = `→ ${String(w + 1).padStart(2, '0')}`; mv.className = 'x-mv is-pending'; }
+      else if (r.seenRank != null && r.seenRank !== i) { const d = r.seenRank - i; mv.textContent = `${d > 0 ? '▲' : '▼'} ${Math.abs(d)}`; mv.className = 'x-mv'; }
+      else { mv.textContent = ''; mv.className = 'x-mv'; } });
+      reorderBar.hidden = !pending || cfg('order') === 'immediat'; if (pending) { $('b', reorderBar).textContent = `${pending} ligne${pending > 1 ? 's' : ''} à reclasser`; $('span', reorderBar).textContent = cfg('order') === 'calme' ? (hover ? 'Le pointeur est sur la liste : rien ne bouge' : 'Reclassement à la prochaine accalmie') : 'L\'ordre affiché n\'est plus le bon'; $('button', reorderBar).hidden = false; }
+      return pending; };
+    // Reclasser : chaque ligne glisse de sa place à la nouvelle, en un seul mouvement pour tout le lot.
+    const reorder = () => { const want = sorted(); if (want.every((r, i) => r === rows[i])) return; const before = new Map(rows.map((r) => [r, r.tr.getBoundingClientRect().top]));
+      rows.forEach((r, i) => { if (r.seenRank == null) r.seenRank = i; }); rows = want; rows.forEach((r) => body.append(r.tr));
+      if (!still) rows.forEach((r) => { const dy = before.get(r) - r.tr.getBoundingClientRect().top; if (dy) { r.tr.style.position = 'relative'; r.tr.style.zIndex = dy > 0 ? 2 : 1; r.tr.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.2, .8, .2, 1)' }).onfinish = () => { r.tr.style.zIndex = ''; }; } });
+      rows.forEach((r, i) => { if (r.seenRank !== i) r.tr.classList.add('is-unseen'); }); rank(); report(); };
+    const settle = () => { const m = cfg('order'); clearTimeout(calm); if (m === 'immediat') reorder(); else { rank(); if (m === 'calme') calm = setTimeout(() => { if (hover) settle(); else reorder(); }, 2600); } };
+    const report = () => { const u = rows.filter((r) => r.tr.classList.contains('is-unseen')).length; read.innerHTML = `<span><b>${rows.length}</b> agences, classées par primes</span><span><b>${u}</b> non vu${u > 1 ? 's' : ''}</span><span>Dernière mise à jour ${last || '—'}</span>${lot ? `<span>${lot}</span>` : ''}`;
       arrive.hidden = !queue.length; if (queue.length) $('b', arrive).textContent = `${queue.length} agence${queue.length > 1 ? 's' : ''} arrivée${queue.length > 1 ? 's' : ''}`;
       document.title = gone && (awayCount.v + awayCount.n) ? `(${awayCount.v + awayCount.n}) ${title0}` : title0; };
-    const insert = (list) => { const h0 = box.scrollHeight, top = box.scrollTop; list.forEach((r) => { body.prepend(r.tr); rows.unshift(r); }); if (top > 4) box.scrollTop = top + box.scrollHeight - h0; };   // on ne fait pas sauter ce qu'on lit
-    const touch = (r) => { const tr = r.tr; tr.classList.remove('is-touched'); void tr.offsetWidth; tr.classList.add('is-touched', 'is-unseen'); if (gone) tr.classList.add('is-since'); $('.t', tr).textContent = hms(); };
-    const update = () => { last = hms(); pulse.classList.remove('is-beat'); void pulse.offsetWidth; pulse.classList.add('is-beat'); const k = Math.random();
-      if (k < 0.14 && pool.length) { const r = make(pool.shift(), true); if (gone) { awayCount.n++; r.tr.classList.add('is-since'); } if (stage.dataset.arrivals === 'attente') queue.push(r); else insert([r]); report(); return; }
-      const r = rows[Math.floor(Math.random() * rows.length)]; if (!r) return;
-      if (k < 0.24) { const st = (r.st + 1 + Math.floor(Math.random() * 2)) % 3, td = $('.st', r.tr); r.st = st; td.dataset.st = st; td.textContent = ST[st]; r.change = null; }
-      else { const f = k < 0.45 ? 'eff' : 'pr', old = r[f], now = f === 'eff' ? Math.max(1, old + (Math.random() < 0.5 ? -1 : 1) * (1 + Math.floor(Math.random() * 2))) : Math.max(0.5, +(old + (Math.random() - 0.45) * 1.6).toFixed(1)); if (now === old) return;
-        r[f] = now; r.change = { f, old, now, txt: f === 'pr' ? fr(old) : String(old) }; if (f === 'pr') { r.hist.push(now); if (r.hist.length > 10) r.hist.shift(); }
-        const el = $(`[data-f="${f}"]`, r.tr); digits(el, f === 'pr' ? fr(now) : String(now), ['valeur', 'deux'].includes(stage.dataset.where) ? (now > old ? 'up' : 'down') : null); el.classList.remove('is-fresh'); void el.offsetWidth; el.classList.add('is-fresh'); evo(r); }
-      touch(r); if (gone) awayCount.v++; report(); };
-    const run = () => { clearInterval(timer); const on = stage.dataset.flow === 'marche'; pulse.classList.toggle('is-off', !on); pulse.lastChild.textContent = on ? 'En direct' : 'Flux en pause'; if (on) timer = setInterval(update, 2600); };
+    const insert = (list) => { const h0 = box.scrollHeight, top = box.scrollTop; list.forEach((r) => { body.prepend(r.tr); rows.unshift(r); }); if (top > 4) box.scrollTop = top + box.scrollHeight - h0; settle(); };   // on ne fait pas sauter ce qu'on lit
+    // ---- Une mise à jour se fait en deux temps : le modèle change (mutate), puis l'écran le montre (paint).
+    // « Par lots » sépare les deux : les changements d'une fenêtre de temps sont montrés en une fois.
+    const mutate = () => { last = hms(); const k = Math.random();
+      if (k < 0.1 && pool.length) { const r = make(pool.shift(), true); if (gone) { awayCount.n++; r.tr.classList.add('is-since'); } if (cfg('arrivals') === 'attente') queue.push(r); else insert([r]); return; }
+      const r = rows[Math.floor(Math.random() * rows.length)]; if (!r) return; const d = dirty.get(r) || { was: { eff: r.eff, pr: r.pr } };
+      if (k < 0.18) { r.st = (r.st + 1 + Math.floor(Math.random() * 2)) % 3; d.st = true; }
+      else { const f = k < 0.36 ? 'eff' : 'pr', old = r[f], now = f === 'eff' ? Math.max(1, old + (Math.random() < 0.5 ? -1 : 1) * (1 + Math.floor(Math.random() * 2))) : Math.max(0.5, +(old + (Math.random() - 0.47) * 2.2).toFixed(1)); if (now === old) return; r[f] = now; r.lastF = f; d[f] = true; if (f === 'pr') { r.hist.push(now); if (r.hist.length > 10) r.hist.shift(); } }
+      dirty.set(r, d); if (gone) awayCount.v++; };
+    const paint = () => { if (!dirty.size) { report(); return; } const n = dirty.size, t = performance.now(); pulse.classList.remove('is-beat'); void pulse.offsetWidth; pulse.classList.add('is-beat');
+      dirty.forEach((d, r) => { const tr = r.tr, roll = ['valeur', 'deux'].includes(cfg('where'));
+        ['eff', 'pr'].forEach((f) => { if (!d[f]) return; const el = $(`[data-f="${f}"]`, tr); digits(el, f === 'pr' ? fr(r[f]) : String(r[f]), roll ? (r[f] > d.was[f] ? 'up' : 'down') : null); el.classList.remove('is-fresh'); void el.offsetWidth; el.classList.add('is-fresh'); });
+        if (d.st) { const td = $('.st', tr); td.dataset.st = r.st; td.textContent = ST[r.st]; }
+        // Une ligne qui vient d'être soulignée ne l'est pas de nouveau avant deux secondes : le rythme du flux n'est pas celui de l'œil.
+        if (t - r.touched > 2000) { tr.classList.remove('is-touched'); void tr.offsetWidth; tr.classList.add('is-touched'); r.touched = t; }
+        tr.classList.add('is-unseen'); if (gone) tr.classList.add('is-since'); $('.t', tr).textContent = hms(); evo(r); });
+      dirty.clear(); const p0 = rank(); settle(); lot = cfg('batch') === 'lots' ? `Dernier lot : ${n} ligne${n > 1 ? 's' : ''}${p0 ? `, ${p0} à reclasser` : ''}` : ''; report(); };
+    const tick = () => { const burst = cfg('pace') === 'rafale' ? 6 : 1; for (let i = 0; i < burst; i++) mutate(); if (cfg('batch') !== 'lots') paint(); else report(); };
+    const run = () => { clearInterval(timer); clearInterval(flushTimer); const on = cfg('flow') === 'marche'; pulse.classList.toggle('is-off', !on); pulse.lastChild.textContent = on ? 'En direct' : 'Flux en pause'; if (!on) { paint(); return; }
+      timer = setInterval(tick, { calme: 2600, vif: 420, rafale: 2200 }[cfg('pace')]); if (cfg('batch') === 'lots') flushTimer = setInterval(paint, 1800); };
     const leave = () => { if (gone) return; gone = true; awayCount = { v: 0, n: 0 }; back.hidden = true; };
-    const ret = () => { if (!gone) return; gone = false; const { v, n } = awayCount; if (v + n) { back.hidden = false; $('b', back).textContent = `${v} valeur${v > 1 ? 's' : ''} ${v > 1 ? 'ont' : 'a'} changé` + (n ? ` · ${n} agence${n > 1 ? 's' : ''} arrivée${n > 1 ? 's' : ''}` : ''); } report(); };
-    const reset = () => { body.innerHTML = ''; rows = []; queue = []; pool = POOL.slice(); SEED.forEach((d) => { const r = make(d); body.append(r.tr); rows.push(r); }); back.hidden = true; last = null; report(); run(); };
-    $('[data-show]', arrive).addEventListener('click', () => { insert(queue.reverse()); queue = []; report(); });
+    const ret = () => { if (!gone) return; gone = false; const { v, n } = awayCount; if (v + n) { back.hidden = false; $('b', back).textContent = `${v} changement${v > 1 ? 's' : ''} de valeur` + (n ? ` · ${n} agence${n > 1 ? 's' : ''} arrivée${n > 1 ? 's' : ''}` : ''); } report(); };
+    const reset = () => { body.innerHTML = ''; rows = []; queue = []; dirty.clear(); lot = ''; pool = POOL.slice(); SEED.slice().sort((a, b) => b[3] - a[3]).forEach((d) => { const r = make(d); body.append(r.tr); rows.push(r); }); rows.forEach((r, i) => (r.seenRank = i)); back.hidden = true; last = null; rank(); report(); run(); };
+    box.addEventListener('pointerenter', () => { hover = true; rank(); }); box.addEventListener('pointerleave', () => { hover = false; rank(); });
+    $('button', reorderBar).addEventListener('click', reorder);
+    $('[data-show]', arrive).addEventListener('click', () => { const q = queue.reverse(); queue = []; insert(q); report(); });
     $('[data-first]', back).addEventListener('click', () => { $('.is-since', body)?.scrollIntoView({ block: 'center' }); });
-    $('[data-seen]', back).addEventListener('click', () => { $$('tr', body).forEach((tr) => tr.classList.remove('is-unseen', 'is-since')); back.hidden = true; report(); });
-    $('[data-once]', stage).addEventListener('click', update);
+    $('[data-seen]', back).addEventListener('click', () => { rows.forEach(seen); back.hidden = true; report(); });
+    $('[data-once]', stage).addEventListener('click', () => { tick(); if (cfg('batch') === 'lots') paint(); });
     $('[data-restart]', stage).addEventListener('click', reset);
-    $('[data-leave]', stage).addEventListener('click', () => { leave(); away.hidden = false; let s = 8; const out = $('small', away); out.textContent = `Retour dans ${s} s`; const fast = setInterval(update, 900);
-      const t = setInterval(() => { s--; out.textContent = `Retour dans ${s} s`; if (s <= 0) { clearInterval(t); clearInterval(fast); away.hidden = true; ret(); } }, 1000); });
+    $('[data-leave]', stage).addEventListener('click', () => { leave(); away.hidden = false; let s = 8; const out = $('small', away); out.textContent = `Retour dans ${s} s`; const fast = setInterval(tick, 900);
+      const t = setInterval(() => { s--; out.textContent = `Retour dans ${s} s`; if (s <= 0) { clearInterval(t); clearInterval(fast); away.hidden = true; paint(); ret(); } }, 1000); });
     document.addEventListener('visibilitychange', () => (document.hidden ? leave() : ret()));   // le vrai départ : changer d'onglet
-    seg(stage, 'flow', run); seg(stage, 'where'); seg(stage, 'before', () => rows.forEach(evo)); seg(stage, 'arrivals', () => { if (stage.dataset.arrivals === 'inserees' && queue.length) { insert(queue.reverse()); queue = []; } report(); });
+    seg(stage, 'flow', run); seg(stage, 'pace', run); seg(stage, 'batch', run); seg(stage, 'where'); seg(stage, 'before', () => rows.forEach(evo)); seg(stage, 'order', settle);
+    seg(stage, 'arrivals', () => { if (cfg('arrivals') === 'inserees' && queue.length) { const q = queue.reverse(); queue = []; insert(q); } report(); });
     reset(); })();
 })();
