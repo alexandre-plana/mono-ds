@@ -27,7 +27,7 @@
   const seed = () => { events = []; const now = Date.now(); let t = now - 300000; while (t < now - 1500) { events.push(gen(t, false)); t += 600 + Math.random() * 2600; } };
   const canvas = (el) => { const c = document.createElement('canvas'); c.style.cssText = 'display: block; width: 100%; height: 100%'; el.append(c); const ctx = c.getContext('2d'); const fit = () => { const r = c.getBoundingClientRect(), d = devicePixelRatio || 1; c.width = Math.max(1, Math.round(r.width * d)); c.height = Math.max(1, Math.round(r.height * d)); ctx.setTransform(d, 0, 0, d, 0, 0); c.w = r.width; c.h = r.height; }; new ResizeObserver(fit).observe(c); fit(); return { c, ctx }; };
   const hue = (v) => getComputedStyle(stage).getPropertyValue(v).trim();
-  const ink = () => ({ pos: hue('--x-pos'), neg: hue('--x-neg'), neg2: hue('--x-neg2'), mono: cfg('hue') === 'encre', fg: tok('--fg'), strong: tok('--fg-strong'), soft: tok('--fg-soft'), muted: tok('--fg-muted'), line: tok('--line'), lineS: tok('--line-strong'), signal: tok('--signal'), bg: tok('--bg'), font: getComputedStyle(document.body).fontFamily });
+  const ink = () => ({ pos: hue('--x-pos'), neg: hue('--x-neg'), neg2: hue('--x-neg2'), mono: cfg('hue') === 'systeme', fg: tok('--fg'), s2: tok('--surface-2'), mark: tok('--mark'), strong: tok('--fg-strong'), soft: tok('--fg-soft'), muted: tok('--fg-muted'), line: tok('--line'), lineS: tok('--line-strong'), signal: tok('--signal'), bg: tok('--bg'), font: getComputedStyle(document.body).fontFamily });
   const label = (ctx, K, txt, x, y, color, align = 'left') => { ctx.font = `11px ${K.font}`; ctx.letterSpacing = '1px'; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillStyle = color; ctx.fillText(txt.toUpperCase(), x, y); };
 
   // ===== 1. La carte qui respire ============================================
@@ -37,15 +37,13 @@
   const Carte = () => { let el, cells = new Map(), cols = new Map(), t = null;
     const size = () => REG.forEach((r) => { cols.get(r).style.flexGrow = A.filter((a) => a.region === r).reduce((s, a) => s + a.v, 0); });
     // La chaleur d'une case : la somme de ses variations récentes, chacune s'effaçant avec une demi-vie de douze secondes.
-    const heat = () => { const now = Date.now(); A.forEach((a) => { const c = cells.get(a.i); let h = 0; for (let k = events.length - 1; k >= 0; k--) { const e = events[k], age = (now - e.t) / 1000; if (age > 60) break; if (e.a === a) h += (e.d > 0 ? 1 : -1) * e.pct * Math.pow(0.5, age / 12); }
-      const m = Math.min(1, Math.abs(h) / 22); c.style.setProperty('--heat', a.blocked ? 0.9 : m.toFixed(3)); c.dataset.dir = a.blocked ? 'block' : h > 0 ? 'up' : m > 0.55 ? 'down2' : 'down'; c.classList.toggle('is-hot', a.blocked || m > 0.5);
-      $('.x-map__st', c).textContent = a.blocked ? 'Bloquée' : a.v < 3 ? 'Sous 3 M' : ''; c.classList.toggle('is-low', !a.blocked && a.v < 3); }); };
-    return { mount(e) { el = e; el.className = 'x-map'; el.innerHTML = REG.map((r) => `<div class="x-map__col" data-r="${r}"><span class="x-map__reg">${r}</span>${A.filter((a) => a.region === r).map((a) => `<div class="x-map__cell" data-a="${a.i}" style="flex-grow: ${a.v}"><i class="x-map__was"></i><span class="x-map__name">${a.name}</span><span class="x-map__val">${fr(a.v)}</span><span class="x-map__d"></span><span class="x-map__st"></span></div>`).join('')}</div>`).join('');
+    const heat = () => { const now = Date.now(); A.forEach((a) => { const c = cells.get(a.i); let h = 0, net = 0; for (let k = events.length - 1; k >= 0; k--) { const e = events[k], age = (now - e.t) / 1000; if (age > 60) break; if (e.a === a) { h += (e.d > 0 ? 1 : -1) * e.pct * Math.pow(0.5, age / 12); if (e.id > 0) net += e.d; } }
+      // Trois paliers nets, pas un dégradé : calme, léger, net, fort.
+      const m = Math.abs(h), lvl = a.blocked ? 3 : m > 26 ? 3 : m > 11 ? 2 : m > 3 ? 1 : 0; c.dataset.level = lvl; c.dataset.dir = a.blocked ? 'block' : h > 0 ? 'up' : lvl === 3 ? 'down2' : 'down';
+      net = +net.toFixed(1); $('.x-map__d', c).textContent = lvl && net ? `${net > 0 ? '▲' : '▼'} ${fr(Math.abs(net))}` : ''; $('.x-map__st', c).textContent = a.blocked ? 'Bloquée' : a.v < 3 ? 'Sous 3 M' : ''; }); };
+    return { mount(e) { el = e; el.className = 'x-map'; el.innerHTML = REG.map((r) => `<div class="x-map__col" data-r="${r}"><span class="x-map__reg">${r}</span>${A.filter((a) => a.region === r).map((a) => `<div class="x-map__cell" data-a="${a.i}" style="flex-grow: ${a.v}" data-level="0"><span class="x-map__name">${a.name}</span><span class="x-map__val">${fr(a.v)}</span><span class="x-map__d"></span><span class="x-map__st"></span></div>`).join('')}</div>`).join('');
         $$('.x-map__col', el).forEach((c) => cols.set(c.dataset.r, c)); $$('.x-map__cell', el).forEach((c) => cells.set(+c.dataset.a, c)); size(); heat(); t = setInterval(heat, 400); if (chosen) this.select(chosen.a); },
-      on(ev) { const c = cells.get(ev.a.i); if (!c) return; c.style.flexGrow = ev.a.v; size(); $('.x-map__val', c).textContent = fr(ev.a.v); const d = $('.x-map__d', c); d.textContent = `${ev.d > 0 ? '▲' : '▼'} ${fr(Math.abs(ev.d))}`; clearTimeout(c.dt); c.dt = setTimeout(() => { d.textContent = ''; }, 5000);
-        // L'ancienne taille, à l'intérieur de la case : elle ne déborde jamais sur une voisine.
-        const was = $('.x-map__was', c); was.style.setProperty('--was', Math.min(1, ev.old / ev.a.v).toFixed(3)); was.classList.remove('is-on'); if (ev.d > 0 && !still) { void was.offsetWidth; was.classList.add('is-on'); }
-        c.classList.toggle('is-shrunk', ev.d < 0); clearTimeout(c.st); c.st = setTimeout(() => c.classList.remove('is-shrunk'), 2600); heat(); },
+      on(ev) { const c = cells.get(ev.a.i); if (!c) return; c.style.flexGrow = ev.a.v; size(); $('.x-map__val', c).textContent = fr(ev.a.v); heat(); },
       select(a) { cells.forEach((c, i) => c.classList.toggle('is-sel', !!a && a.i === i)); }, unmount() { clearInterval(t); } }; };
 
   // ===== 2. La bande à temps élastique ======================================
@@ -107,8 +105,24 @@
         if (chosen) pickEv(chosen); },
       on(ev) { if (paused) { pending.push(ev); note(); } else insert([ev]); }, unmount() { if (chosen) { chosen = null; views.forEach((v) => v.select && v.select(null)); } } }; };
 
+  // ===== 6. La matrice de chaleur ============================================
+  // Une ligne par agence, une colonne par tranche de dix secondes, cinq minutes de large ; le présent est à droite
+  // et la matrice glisse vers la gauche. Le ton d'une case dit combien l'agence a bougé dans la tranche : quatre
+  // paliers nets. Pleine si elle a monté, en contour si elle a baissé : la forme dit le sens, le ton l'ampleur.
+  const Chaleur = () => { let cv, K; const N = 30, STEP = 10000;
+    return { mount(e) { e.className = 'x-canvas'; cv = canvas(e); K = ink(); },
+      frame(now) { const { ctx, c } = cv, W = c.w, H = c.h; ctx.clearRect(0, 0, W, H); const x0 = 108, P = W - x0 - 8, top = 26, rows = A.length + REG.length - 1, rh = (H - top - 6) / rows, cw = P / N, t0 = Math.floor(now / STEP) * STEP, shift = (now - t0) / STEP * cw;
+        const grid = new Map(); for (const ev of events) { const k = Math.floor((t0 - Math.floor(ev.t / STEP) * STEP) / STEP); if (k < 0 || k > N) continue; const key = ev.a.i * 100 + k, g = grid.get(key) || { m: 0, s: 0, block: false }; g.m += ev.pct; g.s += ev.d; g.block = g.block || ev.block; grid.set(key, g); }
+        [[0, 'maintenant'], [6, '1 min'], [18, '3 min'], [30, '5 min']].forEach(([k, txt]) => label(ctx, K, txt, x0 + P - k * cw - 2, 10, k ? K.muted : K.soft, 'right'));
+        ctx.save(); ctx.beginPath(); ctx.rect(x0, top - 2, P, H - top); ctx.clip(); let y = top, reg = null; const rowY = [];
+        A.forEach((a) => { if (reg && reg !== a.region) y += rh; reg = a.region; rowY[a.i] = y; for (let k = 0; k <= N; k++) { const g = grid.get(a.i * 100 + k); if (!g) continue; const lvl = g.m > 40 ? 4 : g.m > 20 ? 3 : g.m > 8 ? 2 : 1, x = x0 + P - (k + 1) * cw - shift + cw, w = Math.max(2, cw - 2), h = Math.max(2, rh - 2), up = g.s >= 0;
+            const tone = K.mono ? [K.s2, K.lineS, K.mark, K.strong][lvl - 1] : (up ? K.pos : lvl > 2 ? K.neg2 : K.neg); ctx.globalAlpha = K.mono ? 1 : [0.32, 0.55, 0.8, 1][lvl - 1];
+            if (up) { ctx.fillStyle = tone; ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); } else { ctx.strokeStyle = K.mono && lvl === 1 ? K.lineS : tone; ctx.lineWidth = lvl > 2 ? 2 : 1; const o = ctx.lineWidth / 2; ctx.strokeRect(Math.round(x) + o, Math.round(y) + o, Math.round(w) - ctx.lineWidth, Math.round(h) - ctx.lineWidth); ctx.lineWidth = 1; }
+            ctx.globalAlpha = 1; if (g.block) { ctx.fillStyle = K.signal; ctx.fillRect(Math.round(x + w / 2 - 3), Math.round(y + h / 2 - 3), 6, 6); } } y += rh; }); ctx.restore();
+        A.forEach((a) => { const mid = rowY[a.i] + (rh - 2) / 2; label(ctx, K, a.name, 0, mid, a.blocked || (chosen && chosen.a === a) ? K.strong : K.soft); if (a.blocked) { ctx.fillStyle = K.signal; ctx.fillRect(x0 - 12, mid - 3, 6, 6); } }); } }; };
+
   // ---- Le choix de la forme : une à la fois, ou les quatre côte à côte sur le même flux.
-  const FORMS = { carte: ['La carte qui respire', Carte], bande: ['La bande à temps élastique', Bande], flux: ['Le flux qui défile', Flux], journal: ['Le journal qui se résume', Journal], sediments: ['Les sédiments', Sediments] };
+  const FORMS = { carte: ['La carte qui respire', Carte], bande: ['La bande à temps élastique', Bande], flux: ['Le flux qui défile', Flux], chaleur: ['La matrice de chaleur', Chaleur], journal: ['Le journal qui se résume', Journal], sediments: ['Les sédiments', Sediments] };
   const mount = () => { views.forEach((v) => v.unmount && v.unmount()); views = []; host.innerHTML = ''; const f = cfg('form'), list = f === 'quatre' ? ['carte', 'bande', 'flux', 'sediments'] : [f]; host.classList.toggle('is-four', f === 'quatre');
     list.forEach((k) => { const pane = document.createElement('section'); pane.className = 'x-pane'; pane.innerHTML = `<h4>${FORMS[k][0]}</h4><div></div>`; host.append(pane); const v = FORMS[k][1](); v.mount(pane.lastChild); views.push(v); }); };
   const loop = () => { const now = Date.now(), perf = performance.now(); views.forEach((v) => v.frame && v.frame(now, perf)); requestAnimationFrame(loop); };

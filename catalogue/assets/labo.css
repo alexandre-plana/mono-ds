@@ -322,28 +322,30 @@
 @media (max-width: 900px) { .x-strip > .x-bar__group { flex: 0 1 auto; min-width: 0; } .x-strip .c-segmented { flex-wrap: wrap; row-gap: 1px; } .x-map { flex-wrap: wrap; } .x-map__col { flex-basis: 40%; min-height: 12rem; } }
 
 /* --- Expérience 04, reprise : la couleur, les teintes, le flux qui défile ---- */
-/* Quatre teintes au choix. Chacune donne une couleur à la hausse, à la baisse, à la forte baisse. */
-.x-stage[data-hue="feu"] { --x-pos: #5fae6a; --x-neg: #e08a2c; --x-neg2: var(--signal); }
+/* La teinte. Par défaut, celle du système : ses tons, par paliers nets, et son signal pour le blocage.
+   Trois autres, hors système, pour comparer : feu, chaud-froid, ambre. */
+.x-stage[data-hue="systeme"] { --x-pos: var(--fg-strong); --x-neg: var(--fg-soft); --x-neg2: var(--fg-soft); }
+.x-stage[data-hue="feu"] { --x-pos: var(--x-p3); --x-neg: var(--x-p2); --x-neg2: var(--x-p1); }
 .x-stage[data-hue="chaudfroid"] { --x-pos: #e0603a; --x-neg: #5a9bd8; --x-neg2: #3f7fc4; }
 .x-stage[data-hue="ambre"] { --x-pos: #d9a13b; --x-neg: #d9a13b; --x-neg2: #d9a13b; }
-.x-stage[data-hue="encre"] { --x-pos: var(--fg-strong); --x-neg: var(--fg-soft); --x-neg2: var(--fg-soft); }
-:root[data-theme="papier"] .x-stage[data-hue="feu"] { --x-pos: #3f8f52; --x-neg: #c9700f; }
 :root[data-theme="papier"] .x-stage[data-hue="chaudfroid"] { --x-pos: #c94a26; --x-neg: #2f76b8; --x-neg2: #1f5f9c; }
 :root[data-theme="papier"] .x-stage[data-hue="ambre"] { --x-pos: #b9820f; --x-neg: #b9820f; --x-neg2: #b9820f; }
 [data-dir="up"] { --x-c: var(--x-pos); } [data-dir="down"] { --x-c: var(--x-neg); } [data-dir="down2"] { --x-c: var(--x-neg2); } [data-dir="block"] { --x-c: var(--signal); }
-/* La carte : la couleur remplit la case selon la chaleur du mouvement récent (--heat, de 0 à 1). */
-.x-map__cell { position: relative; background-color: color-mix(in srgb, var(--x-c, transparent) calc(var(--heat, 0) * 92%), transparent); transition: flex-grow 800ms cubic-bezier(.2, .8, .2, 1), background-color 500ms linear, border-color 400ms; }
-.x-map__cell:not([data-dir="block"]) { border-color: color-mix(in srgb, var(--x-c, var(--line-strong)) calc(30% + var(--heat, 0) * 70%), var(--line-strong)); }
-.x-map__cell.is-hot, .x-map__cell.is-hot .x-map__val, .x-map__cell.is-hot .x-map__d, .x-map__cell.is-hot .x-map__st { color: var(--x-ink); }
-.x-stage[data-hue="encre"] .x-map__cell { background-color: color-mix(in srgb, var(--fg-strong) calc(var(--heat, 0) * 22%), transparent); } .x-stage[data-hue="encre"] .x-map__cell.is-hot, .x-stage[data-hue="encre"] .x-map__cell.is-hot :is(.x-map__val, .x-map__d, .x-map__st) { color: var(--fg-strong); }
-.x-stage[data-hue="encre"] .x-map__cell[data-dir="block"] { background-color: color-mix(in srgb, var(--signal) 85%, transparent); color: var(--x-ink); } .x-stage[data-hue="encre"] .x-map__cell[data-dir="block"] :is(.x-map__val, .x-map__d, .x-map__st) { color: var(--x-ink); }
-.x-map__name, .x-map__val, .x-map__d, .x-map__st { position: relative; z-index: 1; }
+/* La carte. Un filet plein autour de chaque case, toujours ; le fond passe par trois paliers nets. */
+.x-map__cell { position: relative; transition: flex-grow 800ms cubic-bezier(.2, .8, .2, 1), background-color 400ms linear, color 400ms linear; }
+.x-map__name, .x-map__val, .x-map__d, .x-map__st { position: relative; z-index: 1; transition: color 400ms linear; }
 .x-map__st { flex-basis: 100%; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); font-weight: var(--weight-medium); color: var(--fg-strong); } .x-map__st:empty { display: none; }
-.x-map__cell.is-low:not(.is-hot) { border-style: dashed; }
-/* L'ancienne taille, DANS la case : un contour tireté parti du coin, qui reste un instant puis s'efface. */
-.x-map__was { position: absolute; z-index: 0; left: 0; top: 0; width: 100%; height: calc(var(--was, 1) * 100%); border-bottom: var(--hairline) dashed currentColor; opacity: 0; pointer-events: none; }
-.x-map__was.is-on { animation: x-thread 3s ease-out 1 both; }
-.x-map__cell.is-shrunk { border-bottom-style: dashed; }
+/* Teinte du système : --surface-2, --line, puis --mark, sur lequel le texte passe au ton du fond. */
+.x-stage[data-hue="systeme"] .x-map__cell[data-level="1"] { background-color: var(--surface-2); }
+.x-stage[data-hue="systeme"] .x-map__cell[data-level="2"] { background-color: var(--line); color: var(--fg); } .x-stage[data-hue="systeme"] .x-map__cell[data-level="2"] :is(.x-map__val, .x-map__d) { color: var(--fg-strong); }
+.x-stage[data-hue="systeme"] .x-map__cell[data-level="3"]:not([data-dir="block"]) { background-color: var(--mark); border-color: var(--mark); } .x-stage[data-hue="systeme"] .x-map__cell[data-level="3"]:not([data-dir="block"]), .x-stage[data-hue="systeme"] .x-map__cell[data-level="3"]:not([data-dir="block"]) :is(.x-map__val, .x-map__d, .x-map__st) { color: var(--inverse-fg); }
+/* Teintes hors système : la couleur du sens, à 30, 60 puis 100 %. */
+.x-stage:not([data-hue="systeme"]) .x-map__cell[data-level="1"] { background-color: color-mix(in srgb, var(--x-c) 30%, var(--bg)); }
+.x-stage:not([data-hue="systeme"]) .x-map__cell[data-level="2"] { background-color: color-mix(in srgb, var(--x-c) 62%, var(--bg)); border-color: color-mix(in srgb, var(--x-c) 62%, var(--bg)); }
+.x-stage:not([data-hue="systeme"]) .x-map__cell[data-level="3"] { background-color: var(--x-c); border-color: var(--x-c); }
+.x-stage:not([data-hue="systeme"]) .x-map__cell:is([data-level="2"], [data-level="3"]), .x-stage:not([data-hue="systeme"]) .x-map__cell:is([data-level="2"], [data-level="3"]) :is(.x-map__val, .x-map__d, .x-map__st) { color: var(--x-ink); }
+/* Bloquée : l'aplat du signal, dans toutes les teintes — c'est celui du système. */
+.x-stage .x-map__cell[data-dir="block"] { background-color: var(--signal); border-color: var(--signal); } .x-stage .x-map__cell[data-dir="block"], .x-stage .x-map__cell[data-dir="block"] :is(.x-map__val, .x-map__d, .x-map__st) { color: var(--on-signal); }
 .x-map__cell.is-sel { outline: var(--stroke) solid var(--selected-line); outline-offset: 2px; z-index: 2; }
 /* Le flux qui défile. */
 .x-feed { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 1fr); column-gap: var(--space-8); overflow: hidden; }
@@ -359,7 +361,7 @@
 .x-feed__kicker { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
 .x-feed__title { text-transform: uppercase; letter-spacing: var(--track-title); font-size: var(--text-large, 1.25rem); color: var(--fg-strong); }
 .x-feed__big { display: flex; align-items: baseline; gap: var(--space-4); font-size: 1.75rem; line-height: 1.2; color: var(--x-c); font-variant-numeric: tabular-nums; } .x-feed__big small { font-size: var(--text-base); color: var(--fg-soft); }
-.x-stage[data-hue="encre"] .x-feed__big { color: var(--fg-strong); }
+.x-stage[data-hue="systeme"] .x-feed__big { color: var(--fg-strong); }
 .x-feed__kv { margin: var(--space-2) 0 var(--space-4); display: grid; gap: var(--space-2); } .x-feed__kv > div { display: grid; grid-template-columns: 7rem minmax(0, 1fr); } .x-feed__kv dt { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); } .x-feed__kv dd { margin: 0; color: var(--fg); font-variant-numeric: tabular-nums; }
 .x-feed__hist { list-style: none; margin: 0; padding: 0; display: grid; } .x-feed__hist li { display: grid; grid-template-columns: 4.75rem 4.5rem minmax(0, 1fr); column-gap: var(--space-3); padding: 3px 0; font-size: var(--text-small); color: var(--fg-soft); font-variant-numeric: tabular-nums; } .x-feed__hist time { font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-muted); } .x-feed__hist li.is-this { color: var(--fg-strong); font-weight: var(--weight-medium); }
 .x-forms.is-four .x-feed { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; } .x-forms.is-four .x-feed__detail { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: var(--space-2) var(--space-5); padding-top: var(--space-3); border-top: var(--hairline) dotted var(--line-strong); } .x-forms.is-four .x-feed__detail :is(.x-feed__kv, .x-feed__hist, .x-feed__kicker:last-of-type) { display: none; } .x-forms.is-four .x-feed__big { font-size: var(--text-base); } .x-forms.is-four .x-feed__title { font-size: var(--text-base); }
