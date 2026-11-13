@@ -13,7 +13,7 @@
     document.body.append(t); t.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} t.remove(); return ok;
   };
   document.addEventListener('click', async (e) => {
-    const b = e.target.closest('.c-snippet__copy, [data-copy]'); if (!b) return;
+    const b = e.target.closest('.c-snippet__copy, [data-copy], [data-copy-target]'); if (!b) return;
     const src = b.dataset.copyTarget ? document.querySelector(b.dataset.copyTarget) : b.closest('.c-snippet')?.querySelector('.c-snippet__body');
     const text = b.dataset.copy ?? src?.textContent ?? ''; if (!text) return;
     b.dataset.state = (await write(text)) ? 'done' : 'error';

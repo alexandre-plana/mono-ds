@@ -109,6 +109,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-086 | Texture fibreuse en thème Papier | en vigueur |
 | D-087 | Pages du catalogue : une marge à gauche, repliée et discrète | en vigueur |
 | D-088 | Bloc à copier | en vigueur |
+| D-089 | Conversation : un compte rendu, deux formes | en vigueur |
 
 ---
 
@@ -832,3 +833,16 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Le système dessine, il ne copie pas** : l'état est un attribut (`data-state`), posé par le produit. `catalogue/assets/copy.js` en donne le branchement le plus court, avec repli quand le presse-papiers est refusé ; l'échec se dit en mots et le texte reste sélectionnable.
 - **Emploi dans le catalogue** : le code de chaque démonstration et les blocs de code des pages sont des blocs à copier. `.c-code` reste pour un extrait que l'on lit seulement.
 - **Écarté** : un bouton « Copier » qui n'apparaît qu'au survol (invisible au toucher et au clavier) ; la copie au clic sur le texte lui-même (elle empêche de le sélectionner).
+
+## D-089 — Conversation : un compte rendu, deux formes
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (usages retenus : dialogue avec une IA, et chat à deux)
+- **Décision** : un seul composant, `.c-chat`. Une conversation se lit comme un compte rendu : trois axes — l'heure, qui parle, le texte —, tout ferré à gauche. Pas de bulle, pas d'avatar, pas de fond, pas d'alignement à droite. Ce que l'on écrit soi-même est en clair (`--fg-strong`), le reste au ton de lecture : c'est le ton qui dit qui écrit, pas la position.
+- **Deux formes** : entre personnes (par défaut) ; avec un outil ou une IA (`--console`), où une invite « › » précède ce qu'on demande, l'heure passe en marge droite et le nom n'est plus affiché — on sait qui répond —, tout en restant lu par les lecteurs d'écran. Elle prolonge la console du système.
+- **Saisie** : un texte sur une ligne pointillée, comme toute valeur écrite en place (`.c-editable`) ; elle devient pleine au focus. Entrée envoie. Pendant qu'une réponse s'écrit, « Envoyer » devient « Arrêter ».
+- **États, tous dits par un trait ou un mot** : en cours d'envoi (ton éteint, spinner à la place de l'heure) ; non parti (en mots, avec le signe d'erreur et « Renvoyer ») ; l'autre écrit (le spinner du système, jamais trois points qui dansent) ; la réponse s'écrit (un curseur plein en fin de texte) ; « Non lus » et les jours sont des repères, donc pointillés. Le signal ne sert qu'au signe d'erreur.
+- **Dans un message** : du texte, un bloc à copier (D-088) pour le code, et une ligne `__meta` pour les sources et les actions d'une réponse, en mots.
+- **Volet étroit** : par requête de conteneur, l'heure et le nom passent au-dessus du texte ; la conversation tient dans l'inspecteur.
+- **Défilement** : le composant ne défile pas de lui-même ; il vit dans le corps du volet, seule zone défilante.
+- **Écarté** (maquettes soumises) : « les deux marges » — ses propres messages décalés sur un second axe — trop proche d'un chat ordinaire et inopérant à plus de deux ; les bulles, les couleurs par personne, les avatars (D-081).
+- **Limite** : `field-sizing: content`, qui fait grandir la saisie, n'existe pas partout ; ailleurs la zone garde une ligne et défile.

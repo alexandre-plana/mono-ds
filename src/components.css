@@ -897,3 +897,66 @@ summary.c-select .c-icon { flex: none; color: var(--fg-soft); }
 .c-snippet--wrap > .c-snippet__body { white-space: pre-wrap; overflow-wrap: anywhere; font-family: inherit; font-size: var(--text-base); color: var(--fg); max-width: none; }
 /* Sur le fond de la page, quand la cuvette ferait une tache de trop : un contour tireté à la place. */
 .c-snippet--plain { background: none; border: var(--hairline) dashed var(--line); }
+
+/* === Conversation (D-089) ===================================================
+   Une conversation se lit comme un compte rendu : pas de bulle, pas d'avatar, pas de fond. Trois axes —
+   l'heure, qui parle, le texte — et tout est ferré à gauche. Ce que l'on écrit soi-même est en clair.
+   <section class="c-chat"><ol class="c-chat__log" role="log">
+     <li class="c-chat__day">Vendredi 13 novembre</li>
+     <li class="c-chat__msg is-own"><time class="c-chat__time">09:14</time><span class="c-chat__who">Vous</span>
+       <div class="c-chat__text"><p>…</p></div></li> …
+   </ol><form class="c-chat__compose">…</form></section>
+   --console : le dialogue avec un outil ou une IA — une invite devant ce qu'on demande, la réponse en clair.
+   Le journal ne défile pas de lui-même : il vit dans le corps du volet, qui est la zone défilante. */
+.c-chat { container-type: inline-size; display: flex; flex-direction: column; min-width: 0; }
+.c-chat__log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.c-chat__msg { display: grid; grid-template-columns: 3.5rem 8.5rem minmax(0, 36rem); column-gap: var(--space-4); align-items: baseline; padding: var(--space-2) 0; }
+.c-chat__time, .c-chat__who, .c-chat__day, .c-chat__event, .c-chat__meta { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-chat__time { font-variant-numeric: tabular-nums; }
+.c-chat__who { color: var(--fg-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.c-chat__text { min-width: 0; display: flex; flex-direction: column; gap: var(--space-3); color: var(--fg); overflow-wrap: anywhere; }
+.c-chat__text > p { margin: 0; max-width: none; }
+.c-chat__msg.is-own .c-chat__who, .c-chat__msg.is-own .c-chat__text { color: var(--fg-strong); }
+/* Sous une réponse : ses sources, ses actions. Des mots, au ton éteint. */
+.c-chat__meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-5); }
+.c-chat__meta a, .c-chat__meta button { appearance: none; padding: 0; background: none; border: 0; border-bottom: var(--hairline) solid transparent; font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--fg-soft); text-decoration: none; cursor: pointer; }
+.c-chat__meta a:hover, .c-chat__meta button:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
+/* Un jour, « non lus », un fait (une pièce jointe, une arrivée) : un repère, donc pointillé. */
+.c-chat__day { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-5) 0 var(--space-2); }
+.c-chat__day::after { content: ''; flex: 1; border-top: var(--hairline) dotted var(--line-strong); }
+.c-chat__day:first-child { padding-top: 0; }
+.c-chat__event { padding: var(--space-2) 0 var(--space-2) calc(3.5rem + var(--space-4)); }
+/* États d'un message. En cours d'envoi : ton éteint. Non parti : dit en mots, avec le signe d'erreur. */
+.c-chat__msg.is-sending .c-chat__text { color: var(--fg-muted); }
+.c-chat__msg.is-failed .c-chat__meta { color: var(--fg-strong); }
+.c-chat__msg.is-failed .c-chat__meta::before { content: '▲'; color: var(--signal); font-size: 0.75em; margin-right: calc(var(--space-2) - var(--space-5)); }
+/* L'autre écrit, ou la réponse s'écrit encore : le spinner du système, ou un curseur plein en fin de texte. */
+.c-chat__msg.is-typing .c-chat__text { flex-direction: row; align-items: baseline; gap: var(--space-2); color: var(--fg-muted); }
+.c-chat__msg.is-streaming .c-chat__text > :last-child::after { content: ''; display: inline-block; width: 0.5em; height: 1em; margin-left: 2px; vertical-align: -0.15em; background: var(--fg-strong); }
+/* La saisie : un texte sur une ligne pointillée, comme toute valeur que l'on écrit en place. */
+.c-chat__compose { display: flex; align-items: flex-end; gap: var(--space-4); margin-top: var(--space-5); padding-bottom: var(--space-2); border-bottom: var(--hairline) dotted var(--fg-soft); transition: border-color var(--duration); }
+.c-chat__compose:focus-within { border-bottom-style: solid; border-bottom-color: var(--fg-strong); }
+.c-chat__input { appearance: none; flex: 1; min-width: 0; min-height: 1.5rem; max-height: 10rem; margin: 0; padding: 0; background: none; border: 0; outline: 0; resize: none; field-sizing: content; color: var(--fg-strong); font: inherit; line-height: var(--leading-base); }
+.c-chat__input::placeholder { color: var(--fg-muted); opacity: 1; }
+.c-chat__send { appearance: none; flex: none; display: inline-flex; align-items: center; gap: var(--space-2); min-height: 1.5rem; padding: 0; background: none; border: 0; color: var(--fg-soft); font-size: var(--text-micro); font-weight: var(--weight-medium); text-transform: uppercase; letter-spacing: var(--track-caps); cursor: pointer; }
+.c-chat__send:hover { color: var(--fg-strong); }
+.c-chat__send:disabled { color: var(--fg-muted); cursor: not-allowed; }
+/* Console : l'invite « › » devant ce qu'on demande, l'heure en marge droite, le nom tu (on sait qui répond). */
+.c-chat--console .c-chat__msg { grid-template-columns: 1.25rem minmax(0, 40rem) minmax(max-content, 1fr); column-gap: var(--space-2); }
+.c-chat--console .c-chat__msg::before { content: ''; grid-column: 1; grid-row: 1; color: var(--fg-strong); }
+.c-chat--console .c-chat__msg.is-own::before { content: '›'; }
+.c-chat--console .c-chat__text { grid-column: 2; grid-row: 1; }
+.c-chat--console .c-chat__time { grid-column: 3; grid-row: 1; text-align: right; }
+.c-chat--console .c-chat__who { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.c-chat--console .c-chat__msg { position: relative; padding-block: var(--space-3); }
+.c-chat--console .c-chat__compose::before { content: '›'; flex: none; width: 1.25rem; margin-right: calc(var(--space-2) - var(--space-4)); color: var(--fg-strong); align-self: flex-start; }
+/* Dans un volet étroit, l'heure et le nom passent au-dessus du texte. */
+@container (max-width: 34rem) {
+  .c-chat:not(.c-chat--console) .c-chat__msg { grid-template-columns: max-content minmax(0, 1fr); row-gap: var(--space-1); }
+  .c-chat:not(.c-chat--console) .c-chat__who { grid-column: 1; grid-row: 1; }
+  .c-chat:not(.c-chat--console) .c-chat__time { grid-column: 2; grid-row: 1; }
+  .c-chat:not(.c-chat--console) .c-chat__text { grid-column: 1 / -1; }
+  .c-chat__event { padding-left: 0; }
+}
+@media (prefers-reduced-motion: no-preference) { .c-chat__msg.is-streaming .c-chat__text > :last-child::after { animation: c-chat-cursor 1s steps(2, jump-none) infinite; } }
+@keyframes c-chat-cursor { to { opacity: 0; } }
