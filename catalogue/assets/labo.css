@@ -2,8 +2,9 @@
    Les classes .x- et les couleurs --x- vivent dans cette page et n'en sortent pas : une expérience
    peut enfreindre une règle de MONO (ici : plus d'une couleur), c'est même son objet. Pour entrer dans
    le système, une idée passe par docs/decisions.md et se réécrit avec les rôles de tokens.css. */
-:root { --x-ink: #131415; --x-p1: var(--signal); --x-p2: #d9a13b; --x-p3: #5aa7c7; --x-on-p1: var(--on-signal); }
-:root[data-theme="papier"] { --x-p2: #c98a1b; --x-p3: #3f8fb0; }
+/* Le langage du feu tricolore : rouge, orange, vert. */
+:root { --x-ink: #131415; --x-p1: var(--signal); --x-p2: #e08a2c; --x-p3: #5fae6a; --x-on-p1: var(--on-signal); }
+:root[data-theme="papier"] { --x-p2: #c9700f; --x-p3: #3f8f52; }
 .x-stage { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
 .x-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); }
 .x-bar__group { display: inline-flex; align-items: center; gap: var(--space-3); }
@@ -30,9 +31,10 @@
 .x-state { display: inline-flex; align-items: center; gap: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
 .x-row[data-p] .x-state { color: var(--fg-strong); font-weight: var(--weight-medium); }
 .x-row[data-p] .x-state::before { content: ''; width: 8px; height: 8px; background: var(--x-c); }
-/* En une seule couleur, la priorité se dit encore par la forme : plein, à demi, contour. */
-.x-stage[data-colors="une"] .x-row[data-p="2"] .x-state::before { background: linear-gradient(90deg, var(--x-c) 50%, transparent 50%); outline: 1px solid var(--x-c); outline-offset: -1px; }
-.x-stage[data-colors="une"] .x-row[data-p="3"] .x-state::before { background: none; outline: 1px solid var(--x-c); outline-offset: -1px; }
+/* La forme double toujours la couleur — plein, à demi, contour — pour qui confond le rouge et le vert,
+   et pour le réglage « une seule ». */
+.x-row[data-p="2"] .x-state::before { background: linear-gradient(90deg, var(--x-c) 50%, transparent 50%); outline: 1px solid var(--x-c); outline-offset: -1px; }
+.x-row[data-p="3"] .x-state::before { background: none; outline: 1px solid var(--x-c); outline-offset: -1px; }
 /* Tant qu'une ligne n'a pas été « vue », sa marque attend ; le flash la révèle, puis elle reste. */
 .x-row[data-p]:not(.x-seen):not(.x-flash) .x-state { opacity: 0; }
 @keyframes x-fill { 0%, 55% { background-color: var(--x-c); color: var(--x-on); } 100% { background-color: transparent; } }
@@ -44,7 +46,8 @@
 /* Ce qui attend hors de vue s'annonce au bord, dans l'ordre de priorité. */
 .x-below { position: sticky; bottom: 0; display: flex; gap: var(--space-5); justify-content: flex-end; padding: var(--space-2) var(--space-3); background: var(--bg); border-top: var(--hairline) dotted var(--line-strong); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
 .x-below:empty { display: none; }
-.x-below span { display: inline-flex; align-items: center; gap: var(--space-2); } .x-below span::before { content: ''; width: 8px; height: 8px; background: var(--x-c); }
+.x-below span { display: inline-flex; align-items: center; gap: var(--space-2); } .x-below span::before { content: ''; width: 8px; height: 8px; background: var(--x-c); outline: 1px solid var(--x-c); outline-offset: -1px; }
+.x-below [data-p="2"]::before { background: linear-gradient(90deg, var(--x-c) 50%, transparent 50%); } .x-below [data-p="3"]::before { background: none; }
 .x-below [data-p="1"] { --x-c: var(--x-p1); color: var(--fg-strong); } .x-below [data-p="2"] { --x-c: var(--x-p2); } .x-below [data-p="3"] { --x-c: var(--x-p3); }
 .x-stage[data-colors="une"] .x-below [data-p] { --x-c: var(--x-p1); }
 .x-read { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); } .x-read b { color: var(--fg-strong); font-weight: var(--weight-medium); }

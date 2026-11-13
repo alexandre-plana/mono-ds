@@ -35,12 +35,12 @@
 
         <section class="cat-section" id="mise-en-valeur" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>La mise en valeur ordonnée</span><span class="c-section-head__aside">Expérience en cours</span></h2>
-          <p><span class="t-strong">L'hypothèse.</span> Quand on arrive sur un écran, tout ce qui compte se présente en même temps, et l'œil choisit au hasard. Si l'on faisait l'inverse : ce qui compte se signale un instant, dans l'ordre de son importance — le critique d'abord, seul ; puis ce qui est à surveiller ; puis ce qui est nouveau — et retombe aussitôt en simple marque. Même chose quand on fait défiler : une ligne ne se signale qu'au moment où on la découvre, une seule fois.</p>
+          <p><span class="t-strong">L'hypothèse.</span> Quand on arrive sur un écran, tout ce qui compte se présente en même temps, et l'œil choisit au hasard. Si l'on faisait l'inverse : ce qui compte se signale un instant, dans l'ordre de son importance — le critique d'abord, seul ; puis ce qui est à surveiller ; puis ce qui est rétabli — et retombe aussitôt en simple marque. Même chose quand on fait défiler : une ligne ne se signale qu'au moment où on la découvre, une seule fois.</p>
 
           <div class="cat-demo">
             <div class="x-stage" id="x1" data-colors="trois" data-order="priorite">
               <ol class="x-steps">
-                <li class="is-on"><b>1 · Vous arrivez</b>Le critique s'allume seul, puis les lignes à surveiller, puis les nouvelles. Chacune retombe en marque.</li>
+                <li class="is-on"><b>1 · Vous arrivez</b>Le rouge s'allume seul, puis l'orange, puis le vert : bloqué, à surveiller, rétabli. Chacune retombe en marque.</li>
                 <li><b>2 · Vous faites défiler</b>Ce qui attend plus bas est annoncé au bord. Chaque ligne se signale quand vous la découvrez.</li>
                 <li><b>3 · Un état change</b>Une ligne devient critique sous vos yeux : elle seule se signale. Rien de ce qui est déjà vu ne rejoue.</li>
               </ol>
@@ -63,10 +63,10 @@
 
           <dl class="x-research">
             <dt>État de l'art</dt><dd>Le <a href="https://www.oreilly.com/library/view/ajax-design-patterns/0596101805/ch16.html">« fondu jaune »</a> des débuts d'Ajax fait déjà cela pour un changement : une teinte vive qui retombe, le temps que l'œil se pose. La pratique le recommande ; je n'ai pas trouvé d'étude contrôlée qui en mesure l'effet.</dd>
-            <dt>Couleur par priorité</dt><dd>Les salles de contrôle (<a href="https://blog.isa.org/the-high-performance-hmi">interfaces « haute performance »</a>) travaillent sur fond gris et réservent la couleur vive à l'anormal, avec une teinte par niveau d'alarme. Les sources consultées ne s'accordent pas sur les teintes ; l'ordre retenu ici — rouge, ambre, bleu froid — est un choix, pas une norme.</dd>
+            <dt>Couleur par priorité</dt><dd>Les salles de contrôle (<a href="https://blog.isa.org/the-high-performance-hmi">interfaces « haute performance »</a>) travaillent sur fond gris et réservent la couleur vive à l'anormal, avec une teinte par niveau d'alarme. Les sources consultées ne s'accordent pas sur les teintes de chaque niveau. L'essai prend le langage le plus répandu, celui du feu tricolore : rouge pour ce qui bloque, orange pour ce qui est à surveiller, vert pour ce qui est rétabli.</dd>
             <dt>Ce qui est nouveau ici</dt><dd>L'ordre dans le temps. Les teintes ne s'allument pas ensemble : la priorité se lit d'abord par qui passe en premier. Et l'annonce au bord de ce qui attend hors de vue, dans le même ordre.</dd>
-            <dt>Ce qu'on regarde</dt><dd>Trouve-t-on le critique plus vite « par priorité » que « tout ensemble » ? Trois couleurs aident-elles, ou l'ordre et la forme (plein, à demi, contour) suffisent-ils avec une seule ? À quel moment le flash répété devient-il une gêne ?</dd>
-            <dt>Garde-fous</dt><dd>Un flash par ligne, jamais rejoué ; pas plus d'un par seconde et par niveau ; aucun flash si le système demande de réduire les animations — les marques s'affichent d'emblée. La couleur est toujours doublée d'un mot.</dd>
+            <dt>Ce qu'on regarde</dt><dd>Trouve-t-on le critique plus vite « par priorité » que « tout ensemble » ? Trois couleurs aident-elles, ou l'ordre et la forme suffisent-ils avec une seule ? Le vert, une bonne nouvelle, mérite-t-il d'être signalé ou distrait-il du reste ? À quel moment le flash répété devient-il une gêne ?</dd>
+            <dt>Garde-fous</dt><dd>Un flash par ligne, jamais rejoué ; pas plus d'un par seconde et par niveau ; aucun flash si le système demande de réduire les animations — les marques s'affichent d'emblée. La couleur est toujours doublée d'un mot et d'une forme — plein, à demi, contour — car une personne sur douze environ distingue mal le rouge du vert.</dd>
             <dt>Règle enfreinte</dt><dd>« Une seule couleur ». C'est l'objet de l'essai ; le réglage « Une seule » montre la version qui resterait dans la règle.</dd>
           </dl>
         </section>

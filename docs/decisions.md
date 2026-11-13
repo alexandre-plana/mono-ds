@@ -116,7 +116,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-093 | Trois nouvelles animations d’après les références | en vigueur |
 | D-094 | Catalogue : le logo est le premier onglet | en vigueur |
 | D-095 | Composants : une rubrique « Échanges » | en vigueur |
-| D-096 | Un laboratoire, hors système | en vigueur |
+| D-096 | Un laboratoire, hors système | en vigueur, les teintes de l'expérience 01 changées par D-097 |
+| D-097 | Laboratoire, expérience 01 : rouge, orange, vert | en vigueur |
 
 ---
 
@@ -904,3 +905,10 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Expérience 02 — le geste récompensé** : un geste qui aboutit reçoit un mouvement bref (160 à 320 ms), typographique, sans couleur — une case qui se pose, un filet qui se tire, un mot qui se compose, un cachet. La récompense s'use : après trois gestes, elle dure moitié moins. Se compare « avec » et « sans ».
 - **Garde-fous communs** : rien ne joue si le système demande de réduire les animations ; aucun mouvement ne retarde une action.
 - **Statut des expériences** : en cours, sans verdict. Aucune n'est dans le système.
+
+## D-097 — Laboratoire, expérience 01 : rouge, orange, vert
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Amende** : D-096 (teintes de l'expérience 01)
+- **Décision** : les trois priorités prennent le langage du feu tricolore, plus universel que rouge, ambre, bleu : rouge pour ce qui bloque, orange pour ce qui est à surveiller, vert pour ce qui est rétabli. Le troisième niveau change donc de sens : il n'annonce plus du « nouveau » mais une bonne nouvelle.
+- **Conséquence** : la forme double la couleur dans tous les réglages — plein, à demi, contour —, parce que rouge et vert sont la paire que l'on confond le plus.
+- **Toujours hors système** : ces teintes vivent dans `catalogue/assets/labo.css` ; MONO garde une seule couleur.
