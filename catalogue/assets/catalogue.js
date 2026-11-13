@@ -92,57 +92,46 @@
     logoDlg.showModal();
   });
 
-  // ---- Organisation d'une page : un sommaire, puis une chose à la fois.
-  // La page s'ouvre sur son sommaire — rubriques numérotées et, dessous, leurs éléments. On descend d'un
-  // cran : la rubrique (ou l'élément, quand la rubrique en compte au moins trois) s'affiche seule, sur toute
-  // la largeur. Le fil d'Ariane dit où l'on est et ramène ; « Suite » mène à la vue suivante. Rien d'autre
-  // à l'écran que ce qu'on lit : ni colonne d'index, ni onglets de page.
+  // ---- Organisation d'une page : une marge à gauche, une chose à la fois à droite.
+  // La marge est le sommaire de la page : toutes les rubriques y sont, repliées sur leur seul nom ; celle
+  // qu'on lit est ouverte sur ses éléments. Elle reste en place quand on défile, et se tient en ton éteint
+  // tant qu'on ne s'en approche pas : pendant la lecture, il n'y a presque rien à côté du texte.
+  // À droite, la rubrique (ou l'élément, quand la rubrique en compte au moins trois) s'affiche seule.
   const shell = document.querySelector('.l-shell'), sections = [...document.querySelectorAll('.cat-section[id]')], intro = document.querySelector('.cat-intro');
+  const rail = document.querySelector('.cat-rail'), margin = document.getElementById('cat-nav');
   const crumb = document.querySelector('.c-breadcrumb--head'), crumb0 = crumb?.innerHTML, pageName = crumb?.querySelector('[aria-current]')?.textContent || document.title;
   const label = (sec) => sec.dataset.title || sec.querySelector('.c-section-head span:nth-child(2)')?.textContent || sec.id;
   const short = (sub) => (sub.querySelector('h3')?.textContent || sub.id).split(' — ')[0];
-  const num = (i) => String(i + 1).padStart(2, '0');
-  const paged = sections.length > 1 && intro;
+  const paged = sections.length > 1 && intro && rail && margin;
   const views = [];   // l'ordre de lecture : une rubrique entière, ou un élément
-  let toc = null;
   if (paged) {
-    sections.forEach((sec, i) => {
-      sec.subs = [...sec.querySelectorAll(':scope > .cat-sub[id]')]; sec.split = sec.subs.length >= 3; sec.n = i;
-      if (sec.split) {
-        sec.subs.forEach((sub) => views.push({ el: sub, sec, name: short(sub) }));
-        sec.menu = document.createElement('nav'); sec.menu.className = 'cat-toc__subs cat-toc__subs--list'; sec.menu.setAttribute('aria-label', label(sec));
-        sec.menu.innerHTML = sec.subs.map((sub) => `<a href="#${sub.id}">${short(sub)}</a>`).join(''); sec.subs[0].before(sec.menu);
-      } else views.push({ el: sec, sec, name: label(sec) });
+    sections.forEach((sec) => {
+      sec.subs = [...sec.querySelectorAll(':scope > .cat-sub[id]')]; sec.split = sec.subs.length >= 3; sec.first = sec.split ? sec.subs[0] : sec;
+      if (sec.split) sec.subs.forEach((sub) => views.push({ el: sub, sec, name: short(sub) })); else views.push({ el: sec, sec, name: label(sec) });
     });
-    toc = document.createElement('nav'); toc.className = 'cat-toc'; toc.setAttribute('aria-label', 'Sommaire');
-    toc.innerHTML = sections.map((sec, i) => {
-      const note = sec.querySelector('.c-section-head__aside')?.textContent || '';
-      return `<div class="cat-toc__row"><span class="cat-toc__num">${num(i)}</span><a class="cat-toc__title" href="#${sec.id}">${label(sec)}</a>${sec.subs.length ? `<span class="cat-toc__subs">${sec.subs.map((sub) => `<a href="#${sub.id}">${short(sub)}</a>`).join('')}</span>` : `<span class="cat-toc__note">${note}</span>`}</div>`;
-    }).join(''); intro.after(toc);
+    rail.classList.add('cat-rail--margin'); rail.before(intro);
+    margin.className = 'cat-margin'; margin.setAttribute('aria-label', 'Dans cette page');
+    margin.innerHTML = sections.map((sec) => `<a class="cat-margin__sec" href="#${sec.first.id}" data-sec="${sec.id}">${label(sec)}</a>` + (sec.split ? `<div class="cat-margin__subs" hidden>${sec.subs.map((sub) => `<a href="#${sub.id}">${short(sub)}</a>`).join('')}</div>` : '')).join('');
     views.forEach((v, i) => {
       const prev = views[i - 1], next = views[i + 1], f = document.createElement('nav'); f.className = 'cat-next'; f.setAttribute('aria-label', 'Lire dans l’ordre');
       f.innerHTML = (next ? `<a href="#${next.el.id}"><span class="t-micro">Suite</span><span>${next.name}</span><i class="c-icon i-arrow-right" aria-hidden="true"></i></a>` : '') + (prev ? `<a href="#${prev.el.id}"><span class="t-micro">Avant</span><span>${prev.name}</span></a>` : '');
-      v.foot = f; v.el.append(f);
+      v.el.append(f);
     });
   }
-  // Un seul cran déplié à la fois (l'attribut name le dit déjà ; ceci couvre les navigateurs qui l'ignorent).
-  document.addEventListener('toggle', (e) => { const d = e.target; if (d.matches?.('.c-breadcrumb__seg') && d.open) d.parentElement.querySelectorAll('.c-breadcrumb__seg[open]').forEach((x) => { if (x !== d) x.open = false; }); }, true);
   // Dans une démonstration, un lien d'ancre ne fait pas quitter la vue.
   document.addEventListener('click', (e) => { if (e.target.closest('.cat-demo a[href^="#"]')) e.preventDefault(); });
   const key = 'mono-scroll:' + location.pathname;
   const go = (id, first) => {
     if (!paged) { if (!first && id) document.getElementById(id)?.scrollIntoView({ block: 'start' }); return; }
-    const el = id ? document.getElementById(id) : null, sec = el?.closest('.cat-section') || null;
-    const sub = sec?.split ? sec.subs.find((x) => x.contains(el)) : null, root = !sec;
-    intro.hidden = toc.hidden = !root;
+    const el = id ? document.getElementById(id) : null, root = !el?.closest('.cat-section'), sec = el?.closest('.cat-section') || sections[0];
+    const sub = sec.split ? sec.subs.find((x) => x.contains(el)) || sec.subs[0] : null;
+    intro.hidden = !root;
     sections.forEach((x) => { x.hidden = x !== sec; });
-    if (sec?.split) { sec.subs.forEach((x) => { x.hidden = x !== sub; }); sec.menu.hidden = !!sub; sec.classList.toggle('is-leaf', !!sub); }
-    // Le fil d'Ariane ramène, et chaque cran déplie ses voisins en ligne sous le fil : on passe d'un
-    // composant au suivant sans remonter. La rangée reste dépliée tant qu'on navigue à ce niveau.
-    const was = crumb?.querySelector('.c-breadcrumb__seg[open]')?.dataset.level;
-    const seg = (level, name, items) => `<details class="c-breadcrumb__seg" name="fil" data-level="${level}"${was === level ? ' open' : ''}><summary>${name}<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary></details><div class="c-breadcrumb__row">${items}</div>`;
-    const link = (x, name, on) => `<a href="#${x.id}"${on ? ' aria-current="true"' : ''}>${name}</a>`;
-    if (crumb) { crumb.innerHTML = root ? crumb0 : crumb0.replace(/<span aria-current="page">[^<]*<\/span>/, `<a href="#">${pageName}</a>`) + seg('rubrique', label(sec), sections.map((x) => link(x, label(x), x === sec)).join('')) + (sub ? seg('element', short(sub), sec.subs.map((x) => link(x, short(x), x === sub)).join('')) : ''); crumb.querySelector(':scope > details:last-of-type')?.setAttribute('aria-current', 'page'); }
+    if (sec.split) sec.subs.forEach((x) => { x.hidden = x !== sub; });
+    sec.classList.toggle('is-leaf', !!sub);
+    margin.querySelectorAll('.cat-margin__sec').forEach((a) => { const on = a.dataset.sec === sec.id; on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current'); const subs = a.nextElementSibling; if (subs?.classList.contains('cat-margin__subs')) subs.hidden = !on; });
+    margin.querySelectorAll('.cat-margin__subs a').forEach((a) => (sub && a.getAttribute('href') === '#' + sub.id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+    if (crumb) crumb.innerHTML = root ? crumb0 : crumb0.replace(/<span aria-current="page">[^<]*<\/span>/, `<a href="#">${pageName}</a>`) + (sub ? `<a href="#${sec.first.id}">${label(sec)}</a><span aria-current="page">${short(sub)}</span>` : `<span aria-current="page">${label(sec)}</span>`);
     if (first) return;
     if (el && el !== sec && el !== sub) el.scrollIntoView({ block: 'start' }); else if (shell) shell.scrollTop = 0;
   };

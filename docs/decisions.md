@@ -97,7 +97,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-074 | La liste déroulante suit le système | en vigueur |
 | D-075 | Catalogue : « Aller à » pour tout ce qui est global ; un index par page ; démonstrations vivantes | en vigueur pour les démonstrations ; l'index de page remplacé par D-077, « Aller à » par D-083 |
 | D-076 | Les exemples s'ouvrent dans leur onglet, avec le fil d'Ariane | en vigueur |
-| D-077 | Pages du catalogue : un sommaire, puis une chose à la fois | en vigueur, complétée par D-078 |
+| D-077 | Pages du catalogue : un sommaire, puis une chose à la fois | « une chose à la fois » en vigueur ; le sommaire d'ouverture et l'absence de navigation permanente remplacés par D-087 |
 | D-078 | Un cran du fil d'Ariane ouvre la liste de ses voisins | en vigueur, la forme (menu) remplacée par D-079 |
 | D-079 | Les voisins du fil se déplient en ligne ; un menu se survole par un filet, jamais par un fond | en vigueur, étendue aux contrôles par D-080 |
 | D-080 | Survol d'un contrôle : le contour se renforce, le fond ne change pas | en vigueur |
@@ -107,6 +107,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-084 | Grain fin sur le fond Encre | amendée par D-085 |
 | D-085 | Grain fin sur le fond Papier | amendée par D-086 |
 | D-086 | Texture fibreuse en thème Papier | en vigueur |
+| D-087 | Pages du catalogue : une marge à gauche, repliée et discrète | en vigueur |
 
 ---
 
@@ -810,3 +811,13 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 
 - **Date** 2026-11-13 · **Statut** en vigueur · **Demandée par** le commanditaire · **Amende** D-085.
 - **Décision**. Le fond Papier reçoit une texture de fibres courtes et irrégulières, avec des variations de ton plus visibles sur le fond clair. La texture garde le ton moyen de la page et se règle dans « Réglages ».
+## D-087 — Pages du catalogue : une marge à gauche, repliée et discrète
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Remplace** : dans les pages du catalogue, le sommaire d'ouverture de D-077 et les voisins dépliés du fil (D-078, D-079) ; le cran dépliable reste un composant du système et sert encore aux exemples
+- **Constat** : la navigation par le fil d'Ariane ne suffisait pas — on le perdait en défilant, et il ne montrait qu'un niveau de voisins. Quatre pistes sans colonne (réglette, colonnes, folio, recul) ont été maquettées et écartées. Le commanditaire a demandé de réexaminer une navigation à gauche, à condition qu'elle reste légère et respirante.
+- **Pourquoi la première colonne avait échoué (D-075)** : elle avait un titre, des numéros, un filet pointillé reliant deux niveaux ; elle se lisait comme un panneau à côté du texte.
+- **Décision** : une marge. Toutes les rubriques y sont, repliées sur leur seul nom ; celle qu'on lit est ouverte sur ses éléments. Ni titre, ni numéro, ni filet, ni fond : les deux niveaux se disent par la casse et l'espace. Un grand blanc la sépare du texte. Elle reste en place quand on défile.
+- **Discrète** : au repos la marge est au ton éteint (`--fg-muted`, qui tient le seuil de lecture) ; seul ce qu'on lit est en clair, l'élément courant portant le contour de sélection. Elle revient au ton de lecture quand le pointeur ou le clavier y entre. Sans survol possible (toucher), elle est d'emblée au ton de lecture.
+- **À droite** : toujours une chose à la fois (D-077). Un clic sur une rubrique ouvre son premier élément — plus de page intermédiaire. Le fil d'Ariane redevient une ligne simple qui situe et ramène. « Suite » et « Avant » restent en pied.
+- **Et le rail interdit ?** Le rail mène d'une partie à l'autre de l'application ; ici ce sont les onglets qui le font. La marge ne sort pas de la page : c'est son sommaire.
+- **Limites** : la marge de la plus longue rubrique (treize éléments) mesure environ 550 px ; sur un écran plus bas, son pied n'est atteint qu'en fin de page. Sur téléphone, elle passe au-dessus du contenu, en lignes.

@@ -1,27 +1,36 @@
 /* Habillage du catalogue uniquement (.cat-). Ne fait PAS partie du système :
    ne pas réutiliser ces classes dans un produit. */
 html { scroll-behavior: smooth; scroll-padding-top: var(--space-6); }
-/* Pas de rail, pas d'index : la page s'ouvre sur son sommaire, puis montre une chose à la fois. */
+/* Pas de rail de navigation : on change de page par les onglets. À gauche, une marge : le sommaire de la
+   page, léger — ni titre, ni numéro, ni filet, ni fond. Un grand blanc la sépare du texte. */
 .cat-rail { display: block; padding-top: var(--space-7); }
+.cat-rail--margin { display: grid; grid-template-columns: 12rem minmax(0, 1fr); column-gap: var(--space-9); align-items: start; }
 .cat-nav { display: none; }
-.cat-main { display: flex; flex-direction: column; gap: var(--space-7); min-width: 0; max-width: 76rem; padding-bottom: var(--space-9); }
-/* Sommaire : trois axes — le numéro, le titre, ce que la rubrique contient. Aucun filet. */
-.cat-toc { display: flex; flex-direction: column; gap: var(--space-5); margin-top: var(--space-4); }
-.cat-toc__row { display: grid; grid-template-columns: 2.5rem 15rem minmax(0, 1fr); column-gap: var(--space-5); align-items: baseline; }
-.cat-toc__num { font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-muted); }
-.cat-toc__title { color: var(--fg-strong); font-weight: var(--weight-medium); text-decoration: none; }
-.cat-toc__note { color: var(--fg-muted); font-size: var(--text-small); }
-.cat-toc__subs { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); font-size: var(--text-small); }
-.cat-toc__subs a { color: var(--fg-soft); text-decoration: none; }
-.cat-toc a:hover, .cat-toc__subs a:hover { color: var(--fg-strong); text-decoration: underline; text-underline-offset: 0.3em; }
-.cat-toc__subs--list { flex-direction: column; gap: var(--space-3); font-size: inherit; }
-.cat-toc__subs--list a { color: var(--fg); }
+.cat-intro { padding-top: var(--space-7); }
+.cat-main { display: flex; flex-direction: column; gap: var(--space-7); min-width: 0; max-width: 60rem; padding-bottom: var(--space-9); }
+.cat-margin { position: sticky; top: var(--space-6); display: flex; flex-direction: column; font-size: var(--text-small); line-height: var(--leading-small); }
+.cat-margin a { display: block; padding: var(--space-1) 0; color: var(--fg-muted); text-decoration: none; transition: color var(--duration); }
+/* Deux niveaux, dits par la casse et l'espace seuls. Une rubrique repliée n'est que son nom. */
+.cat-margin__sec { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); padding-block: 6px !important; }
+.cat-margin__subs { display: flex; flex-direction: column; margin: var(--space-1) 0 var(--space-4); }
+.cat-margin__subs[hidden] { display: none; }
+/* Au repos la marge s'efface ; elle revient au ton de lecture quand le pointeur ou le clavier y entre.
+   Ce qu'on lit reste toujours en clair. Sans survol possible (toucher), elle est d'emblée lisible. */
+.cat-margin:hover a, .cat-margin:focus-within a { color: var(--fg-soft); }
+.cat-margin a:hover { color: var(--fg-strong); text-decoration: underline; text-underline-offset: 0.3em; }
+.cat-margin a[aria-current] { color: var(--fg-strong); font-weight: var(--weight-medium); }
+.cat-margin__subs a[aria-current] { margin-left: calc(-1 * var(--space-3) - var(--stroke)); padding-left: var(--space-3); border-left: var(--stroke) solid var(--selected-line); }
+@media (hover: none) { .cat-margin a { color: var(--fg-soft); } }
 .cat-next { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-8); margin-top: var(--space-8); }
 .cat-next a { display: inline-flex; align-items: baseline; gap: var(--space-4); color: var(--fg); text-decoration: none; }
 .cat-next a > .t-micro { color: var(--fg-muted); }
 .cat-next .c-icon { align-self: center; color: var(--fg-muted); }
 .cat-next a:hover, .cat-next a:hover .c-icon { color: var(--fg-strong); }
-@media (max-width: 900px) { .cat-toc__row { grid-template-columns: 2.5rem minmax(0, 1fr); row-gap: var(--space-2); } .cat-toc__subs, .cat-toc__note { grid-column: 2; } }
+@media (max-width: 900px) {
+  .cat-rail--margin { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); }
+  .cat-margin { position: static; flex-direction: row; flex-wrap: wrap; column-gap: var(--space-5); } .cat-margin a { color: var(--fg-soft); }
+  .cat-margin__subs { order: 1; flex: 0 0 100%; flex-direction: row; flex-wrap: wrap; column-gap: var(--space-5); margin: var(--space-2) 0 0; } .cat-margin__subs a[aria-current] { margin-left: 0; padding-left: 0; border-left: 0; text-decoration: underline; text-underline-offset: 0.3em; }
+}
 /* La ligne système : ce qui vaut pour toute l'application, au-dessus des onglets, sur le plan de travail.
    Le logo, la recherche qui prend la largeur libre, puis notifications, thème, réglages. */
 body.cat-has-sys { grid-template-rows: auto auto minmax(0, 1fr); }
