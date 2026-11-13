@@ -83,6 +83,7 @@ Préfixes : `.t-` texte · `.l-` mise en page · `.c-` composant · `.v-` donné
 | Composant | Éléments et variantes | Règle d'emploi |
 |---|---|---|
 | `.c-field` | `__label`, `__hint`, `__error` | Label toujours visible, au-dessus |
+| `.c-select` (liste ouverte) | `appearance: base-select` | La liste déroulante suit le système là où le navigateur le permet : surface de menu, option visée au ton d'un cran, option choisie marquée par le contour de sélection. Ailleurs, liste native |
 | `.c-input`, `.c-select`, `.c-textarea` | `[aria-invalid="true"]`, `disabled` | Erreur = texte + glyphe ; le signal désigne |
 | `.c-check` (`<label><input><span>`) | checkbox ou radio | Carré = multiple, rond = unique |
 | `.c-switch` (`<label><input role="switch"><span>`) | — | Effet immédiat uniquement |

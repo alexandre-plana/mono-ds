@@ -14,19 +14,8 @@
       <nav class="c-breadcrumb c-breadcrumb--head" aria-label="Fil d'Ariane"><a href="index.html">Catalogue</a><span aria-current="page">Composants</span></nav>
       <div class="c-masthead__meta">
         <span>v0.4</span>
-        <span class="c-segmented" role="group" aria-label="Thème">
-          <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
-          <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
-        </span>
-        <span class="c-segmented" role="group" aria-label="Accent">
-          <button class="c-segmented__item" type="button" data-set-accent="discret">Discret</button>
-          <button class="c-segmented__item" type="button" data-set-accent="fort">Fort</button>
-          <button class="c-segmented__item" type="button" data-set-accent="flash">Flash</button>
-        </span>
       </div>
     </header>
-
-    <div id="cat-search" class="cat-search" role="search"></div>
 
     <div class="l-rail cat-rail">
       <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
@@ -333,7 +322,7 @@
                 </section>
               </div>
             </div>
-            <p>L'écran complet, avec glissé-déposé, création et édition par l'inspecteur : <a href="exemples/kanban.html">exemple Dossiers</a>.</p>
+            <p>L'écran complet, avec glissé-déposé, création et édition par l'inspecteur : <a href="exemples.html?e=kanban">exemple Dossiers</a>.</p>
             <dl class="cat-spec">
               <div><dt>Anatomie</dt><dd><code>.c-board</code> · <code>__col</code> (filet au-dessus) · <code>__head</code> (nom, compte entre crochets) · <code>__list</code> de <code>.c-card</code> (<code>__title--small</code>) · <code>__add</code> au pied de la colonne.</dd></div>
               <div><dt>Employer</dt><dd>Des objets qui avancent par étapes, en nombre limité : dossiers, demandes, tâches. Trois à cinq colonnes.</dd></div>
@@ -1227,7 +1216,7 @@
                 </div>
               </div>
             </div>
-            <p>Le parcours complet se joue dans l'exemple <a href="exemples/application-modules.html">Application · onglets</a> : ouvrir une agence, changer son responsable ou la supprimer, puis <kbd class="c-kbd">Z</kbd> pour annuler, <kbd class="c-kbd">N</kbd> pour le centre, et l'onglet Journal pour l'écran complet.</p>
+            <p>Le parcours complet se joue dans l'exemple <a href="exemples.html?e=application-modules">Application · onglets</a> : ouvrir une agence, changer son responsable ou la supprimer, puis <kbd class="c-kbd">Z</kbd> pour annuler, <kbd class="c-kbd">N</kbd> pour le centre, et l'onglet Journal pour l'écran complet.</p>
             <dl class="cat-spec">
               <div><dt>Annuler plutôt que confirmer</dt><dd>Toute action réversible s'exécute sans question et laisse une annulation : dans le toast pendant 8 s, puis au centre et au journal sans limite de durée. La modale de confirmation est réservée à ce que rien ne peut défaire — un envoi, un paiement, une purge.</dd></div>
               <div><dt>Mots</dt><dd>« Annuler » défait une modification, « Rétablir » ramène ce qui a été supprimé. Une fois fait : « Annulé », « Rétabli », en ton éteint. L'événement dit ce qui a changé, avec l'ancienne et la nouvelle valeur.</dd></div>
@@ -1575,6 +1564,10 @@
   </div>
   <script src="assets/search-index.js"></script>
   <script src="assets/catalogue.js"></script>
+  <script src="assets/console.js"></script>
+  <script src="assets/notifs.js"></script>
+  <script src="assets/kanban.js"></script>
+  <script src="assets/demos.js"></script>
   <script>
     // Démonstrations : onglets et segments réagissent au clic.
     // Onglets : l'onglet choisi reste en retrait, c'est le panneau qui change.

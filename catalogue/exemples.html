@@ -11,91 +11,110 @@
   <div class="l-shell">
   <div class="l-page">
     <header class="c-masthead">
-      <nav class="c-breadcrumb c-breadcrumb--head" aria-label="Fil d'Ariane"><a href="index.html">Catalogue</a><span aria-current="page">Exemples</span></nav>
+      <nav class="c-breadcrumb c-breadcrumb--head" aria-label="Fil d'Ariane" id="ex-crumbs"><a href="index.html">Catalogue</a><span aria-current="page">Exemples</span></nav>
       <div class="c-masthead__meta">
-        <span>v0.4</span>
-        <span class="c-segmented" role="group" aria-label="Thème">
-          <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
-          <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
-        </span>
-        <span class="c-segmented" role="group" aria-label="Accent">
-          <button class="c-segmented__item" type="button" data-set-accent="discret">Discret</button>
-          <button class="c-segmented__item" type="button" data-set-accent="fort">Fort</button>
-          <button class="c-segmented__item" type="button" data-set-accent="flash">Flash</button>
-        </span>
+        <span>v0.4</span><a id="ex-alone" href="#" target="_blank" rel="noopener" hidden>Ouvrir seul <i class="c-icon i-external" aria-hidden="true"></i></a>
       </div>
     </header>
-
-    <div id="cat-search" class="cat-search" role="search"></div>
 
     <div class="l-rail cat-rail">
       <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
       <main class="cat-main">
 
-        <section class="cat-intro">
-          <h1 class="t-spaced t-large">Exemples</h1>
-          <p class="cat-lede">Onze écrans complets, bâtis avec les seules classes du système. Chacun s'ouvre à la place du catalogue ; le logo, en haut ou en bas de l'écran, y ramène.</p>
-        </section>
+        <div class="l-stack" id="ex-list" style="--gap: var(--space-8)">
+          <section class="cat-intro">
+            <h1 class="t-spaced t-large">Exemples</h1>
+            <p class="cat-lede">Onze écrans complets, bâtis avec les seules classes du système. Chacun s'ouvre ici, dans cet onglet ; le fil d'Ariane en fait revenir.</p>
+          </section>
+          <section class="l-stack" style="--gap: var(--space-5)">
+            <h2 class="c-section-head"><span>Documents</span><span class="c-section-head__aside">Une page que l'on lit.</span></h2>
+            <div class="c-cards" style="--card-min: 17rem">
+              <a class="c-card" href="exemples.html?e=tableau-de-bord">
+                <div class="c-card__head"><span>Exemple 01</span></div>
+                <h3 class="c-card__title">Tableau de bord</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="tableau-de-bord" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Un chiffre héros, un graphique, un fait en signal.</div>
+              </a>
+              <a class="c-card" href="exemples.html?e=rapport">
+                <div class="c-card__head"><span>Exemple 02</span></div>
+                <h3 class="c-card__title">Rapport</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="rapport" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Une page de rapport annuel, bloc inversé et texte courant.</div>
+              </a>
+              <a class="c-card" href="exemples.html?e=connexion">
+                <div class="c-card__head"><span>Exemple 03</span></div>
+                <h3 class="c-card__title">Connexion</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="connexion" alt="" loading="lazy"></figure>
+                <div class="c-card__body">La page d'entrée : un formulaire, un bouton primaire.</div>
+              </a>
+            </div>
+          </section>
+          <section class="l-stack" style="--gap: var(--space-5)">
+            <h2 class="c-section-head"><span>Gabarits d'application</span><span class="c-section-head__aside">À copier pour démarrer.</span></h2>
+            <div class="c-cards" style="--card-min: 17rem">
+              <a class="c-card" href="exemples.html?e=application">
+                <div class="c-card__head"><span>Exemple 04</span></div>
+                <h3 class="c-card__title">Application · chemin</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="application" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Arborescente : le chemin est la navigation.</div>
+              </a>
+              <a class="c-card" href="exemples.html?e=application-modules">
+                <div class="c-card__head"><span>Exemple 05</span></div>
+                <h3 class="c-card__title">Application · onglets</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="application-modules" alt="" loading="lazy"></figure>
+                <div class="c-card__body">À parties séparées : onglets persistants, inspecteur, notifications.</div>
+              </a>
+              <a class="c-card" href="exemples.html?e=bureau">
+                <div class="c-card__head"><span>Exemple 06</span></div>
+                <h3 class="c-card__title">Bureau</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="bureau" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Fenêtres flottantes aimantées, barre des fenêtres, canevas.</div>
+              </a>
+            </div>
+          </section>
+          <section class="l-stack" style="--gap: var(--space-5)">
+            <h2 class="c-section-head"><span>Écrans de travail</span><span class="c-section-head__aside">Un usage, un écran.</span></h2>
+            <div class="c-cards" style="--card-min: 17rem">
+              <a class="c-card" href="exemples.html?e=collection">
+                <div class="c-card__head"><span>Exemple 07</span></div>
+                <h3 class="c-card__title">Collection</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="collection" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Une liste et son inspecteur, valeurs modifiables en place.</div>
+              </a>
+              <a class="c-card" href="exemples.html?e=kanban">
+                <div class="c-card__head"><span>Exemple 08</span></div>
+                <h3 class="c-card__title">Dossiers</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="kanban" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Tableau de cartes : glisser-déposer, création, inspecteur.</div>
+              </a>
+              <a class="c-card" href="exemples.html?e=carte">
+                <div class="c-card__head"><span>Exemple 09</span></div>
+                <h3 class="c-card__title">Carte</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="carte" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Atlas embarqué : monde entier, cadrages, anneaux.</div>
+              </a>
+              <a class="c-card" href="exemples.html?e=plan">
+                <div class="c-card__head"><span>Exemple 10</span></div>
+                <h3 class="c-card__title">Plan</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="plan" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Jusqu'à la rue : relief, routes, bâti, en calques.</div>
+              </a>
+            </div>
+          </section>
+          <section class="l-stack" style="--gap: var(--space-5)">
+            <h2 class="c-section-head"><span>À regarder</span><span class="c-section-head__aside">Hors interface.</span></h2>
+            <div class="c-cards" style="--card-min: 17rem">
+              <a class="c-card" href="exemples.html?e=planches">
+                <div class="c-card__head"><span>Exemple 11</span></div>
+                <h3 class="c-card__title">Planches</h3>
+                <figure class="c-card__media c-media" style="--ratio: 16 / 10"><img class="cat-thumb" data-thumb="planches" alt="" loading="lazy"></figure>
+                <div class="c-card__body">Quatre animations procédurales, nées d'une graine.</div>
+              </a>
+            </div>
+          </section>
+        </div>
 
-        <section class="cat-section" id="ecrans" data-title="Écrans">
-          <div class="c-cards" style="--card-min: 18rem">
-            <a class="c-card" href="exemples/tableau-de-bord.html">
-              <div class="c-card__head"><span>Exemple 01</span><span>Document</span></div>
-              <h3 class="c-card__title">Tableau de bord</h3>
-              <div class="c-card__body">Une vue de synthèse : un chiffre héros, un graphique, un fait en signal.</div>
-            </a>
-            <a class="c-card" href="exemples/rapport.html">
-              <div class="c-card__head"><span>Exemple 02</span><span>Document</span></div>
-              <h3 class="c-card__title">Rapport</h3>
-              <div class="c-card__body">Une page de rapport annuel, bloc inversé et texte courant.</div>
-            </a>
-            <a class="c-card" href="exemples/collection.html">
-              <div class="c-card__head"><span>Exemple 03</span><span>Deux pages</span></div>
-              <h3 class="c-card__title">Collection</h3>
-              <div class="c-card__body">Une liste et son inspecteur, côte à côte, valeurs modifiables en place.</div>
-            </a>
-            <a class="c-card" href="exemples/application.html">
-              <div class="c-card__head"><span>Exemple 04</span><span>Gabarit</span></div>
-              <h3 class="c-card__title">Application · chemin</h3>
-              <div class="c-card__body">Gabarit arborescent : le chemin est la navigation.</div>
-            </a>
-            <a class="c-card" href="exemples/application-modules.html">
-              <div class="c-card__head"><span>Exemple 05</span><span>Gabarit</span></div>
-              <h3 class="c-card__title">Application · onglets</h3>
-              <div class="c-card__body">Gabarit à parties séparées : onglets persistants, inspecteur attaché, notifications.</div>
-            </a>
-            <a class="c-card" href="exemples/connexion.html">
-              <div class="c-card__head"><span>Exemple 06</span><span>Document</span></div>
-              <h3 class="c-card__title">Connexion</h3>
-              <div class="c-card__body">La page d'entrée : un formulaire, un bouton primaire.</div>
-            </a>
-            <a class="c-card" href="exemples/bureau.html">
-              <div class="c-card__head"><span>Exemple 07</span><span>Bureau</span></div>
-              <h3 class="c-card__title">Bureau</h3>
-              <div class="c-card__body">Fenêtres flottantes aimantées, barre des fenêtres, canevas, clic droit.</div>
-            </a>
-            <a class="c-card" href="exemples/carte.html">
-              <div class="c-card__head"><span>Exemple 08</span><span>Application</span></div>
-              <h3 class="c-card__title">Carte</h3>
-              <div class="c-card__body">Atlas embarqué : monde entier, cadrages, anneaux proportionnels.</div>
-            </a>
-            <a class="c-card" href="exemples/plan.html">
-              <div class="c-card__head"><span>Exemple 09</span><span>Application</span></div>
-              <h3 class="c-card__title">Plan</h3>
-              <div class="c-card__body">Jusqu'à la rue : relief en courbes, routes, bâti, en calques.</div>
-            </a>
-            <a class="c-card" href="exemples/kanban.html">
-              <div class="c-card__head"><span>Exemple 10</span><span>Application</span></div>
-              <h3 class="c-card__title">Dossiers</h3>
-              <div class="c-card__body">Tableau de cartes : glisser-déposer, création, édition par l'inspecteur.</div>
-            </a>
-            <a class="c-card" href="exemples/planches.html">
-              <div class="c-card__head"><span>Exemple 11</span><span>À regarder</span></div>
-              <h3 class="c-card__title">Planches</h3>
-              <div class="c-card__body">Quatre animations procédurales, nées d'une graine de deux mots.</div>
-            </a>
-          </div>
-        </section>
+        <iframe class="cat-frame" id="ex-frame" title="Exemple" hidden></iframe>
 
       </main>
     </div>
@@ -105,5 +124,22 @@
   </div>
   <script src="assets/search-index.js"></script>
   <script src="assets/catalogue.js"></script>
+  <script>
+    // Un exemple s'ouvre dans l'onglet : le fil d'Ariane dit où l'on est et ramène à la liste.
+    (() => {
+      const NAMES = {"tableau-de-bord": "Tableau de bord", "rapport": "Rapport", "connexion": "Connexion", "application": "Application · chemin", "application-modules": "Application · onglets", "bureau": "Bureau", "collection": "Collection", "kanban": "Dossiers", "carte": "Carte", "plan": "Plan", "planches": "Planches"}, e = new URLSearchParams(location.search).get('e'), frame = document.getElementById('ex-frame');
+      const thumbs = () => document.querySelectorAll('[data-thumb]').forEach((img) => { img.src = `assets/img/exemples/${img.dataset.thumb}-${document.documentElement.dataset.theme === 'papier' ? 'papier' : 'encre'}.png`; });
+      document.addEventListener('mono:theme', thumbs); thumbs();
+      if (!NAMES[e]) return;
+      document.getElementById('ex-list').hidden = true; frame.hidden = false; frame.src = `exemples/${e}.html`; frame.title = NAMES[e];
+      document.getElementById('ex-crumbs').innerHTML = `<a href="index.html">Catalogue</a><a href="exemples.html">Exemples</a><span aria-current="page">${NAMES[e]}</span>`;
+      const alone = document.getElementById('ex-alone'); alone.hidden = false; alone.href = `exemples/${e}.html`;
+      document.title = `${NAMES[e]} — Exemples — MONO`;
+      const rail = document.querySelector('.cat-rail'); rail.style.paddingTop = 'var(--space-4)'; document.querySelector('.cat-main').style.cssText = 'max-width: none; padding-bottom: 0';
+      const fit = () => { const shell = document.querySelector('.l-shell'); frame.style.height = Math.max(360, shell.clientHeight - (frame.getBoundingClientRect().top - shell.getBoundingClientRect().top + shell.scrollTop) - 28) + 'px'; };
+      document.querySelector('.c-colophon').hidden = true;
+      const settle = () => { document.querySelector('.l-shell').scrollTop = 0; fit(); }; settle(); requestAnimationFrame(settle); frame.addEventListener('load', settle); addEventListener('resize', fit);
+    })();
+  </script>
 </body>
 </html>

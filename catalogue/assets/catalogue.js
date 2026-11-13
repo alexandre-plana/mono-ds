@@ -31,6 +31,7 @@
     document.documentElement.dataset.theme = t;
     try { localStorage.setItem('mono-theme', t); } catch {}
     document.querySelectorAll('[data-set-theme]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.setTheme === t)));
+    document.querySelectorAll('[data-set-theme]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.setTheme === t)));
     document.dispatchEvent(new CustomEvent('mono:theme', { detail: t }));
   };
   let saved = null;
@@ -39,24 +40,94 @@
   const initial = forced || saved || document.documentElement.dataset.theme || 'encre';
 
   // Le catalogue applique son propre gabarit : une application à parties séparées, donc des onglets
-  // persistants au-dessus de la page, le fil d'Ariane en tête — et pas de rail. Le logo ferme la rangée.
+  // persistants au-dessus de la page, le fil d'Ariane en tête — et pas de rail. Ce qui vaut pour toute
+  // l'application tient en un seul bouton au bout de la rangée, « Aller à » : il ouvre la palette, où l'on
+  // cherche, où l'on change de page et où l'on règle l'affichage. Le logo ferme la rangée.
   const tabs = document.createElement('nav'); tabs.className = 'c-doctabs'; tabs.setAttribute('aria-label', 'Catalogue');
   tabs.innerHTML = PAGES.map(([href, label]) => `<a class="c-doctabs__tab" href="${root}${href}"${isCurrent(href) ? ' aria-current="page"' : ''}><span class="c-doctabs__label">${label}</span></a>`).join('')
-    + `<span class="c-doctabs__spacer"></span><a class="c-logo" href="${root}logo.html" aria-label="Mono — le logo">Mono</a>`;
+    + `<span class="c-doctabs__spacer"></span><div class="c-doctabs__tools">
+        <button class="c-button c-button--quiet" type="button" id="cat-go" aria-haspopup="dialog" aria-keyshortcuts="/ Control+K"><i class="c-icon i-search" aria-hidden="true"></i>Aller à<kbd class="c-kbd" aria-hidden="true">/</kbd></button>
+        <button class="c-logo" type="button" id="cat-logo" aria-haspopup="dialog" aria-label="Mono — le logo" style="appearance: none; background: none; border: 0; padding: 0; cursor: pointer">Mono</button>
+      </div>`;
   document.body.classList.add('l-desk--tabs'); document.body.prepend(tabs);
-  // Sur cette page : une ligne de renvois sous le titre, en mots, dans le fil de la page.
-  const sections = [...document.querySelectorAll('.cat-section[id]')], intro = document.querySelector('.cat-intro');
-  if (sections.length > 1 && intro) { const toc = document.createElement('nav'); toc.className = 'cat-toc'; toc.setAttribute('aria-label', 'Sur cette page'); toc.innerHTML = sections.map((sec) => `<a href="#${sec.id}">${sec.dataset.title || sec.querySelector('.c-section-head span:nth-child(2)')?.textContent || sec.id}</a>`).join(''); intro.append(toc); }
-  // Un onglet garde l'état de sa page : on retrouve le défilement où on l'avait laissé.
-  const shell = document.querySelector('.l-shell'), key = 'mono-scroll:' + location.pathname;
-  if (shell && !location.hash) { try { shell.scrollTop = +sessionStorage.getItem(key) || 0; } catch {} }
-  addEventListener('pagehide', () => { try { sessionStorage.setItem(key, String(shell.scrollTop)); } catch {} });
+  const palette = document.createElement('dialog'); palette.className = 'c-dialog c-dialog--large c-palette cat-palette'; palette.setAttribute('aria-label', 'Aller à');
+  palette.innerHTML = '<div id="cat-search" class="cat-search" role="search"></div>'; document.body.append(palette);
+  palette.addEventListener('click', (e) => { if (e.target === palette) palette.close(); });
+  // Un exemple ouvert dans l'onglet Exemples suit le thème et l'accent choisis ici.
+  const frame = () => document.querySelector('iframe.cat-frame')?.contentDocument?.documentElement;
+  document.addEventListener('mono:theme', (e) => { const d = frame(); if (d) d.dataset.theme = e.detail; });
+  document.addEventListener('mono:accent', (e) => { const d = frame(); if (d) { if (e.detail === 'discret') delete d.dataset.accent; else d.dataset.accent = e.detail; } });
+
+  // Le logo : une grande modale, pas une page — on y entre et on en sort sans perdre sa place.
+  let logoDlg = null;
+  document.getElementById('cat-logo').addEventListener('click', () => {
+    if (!logoDlg) {
+      logoDlg = document.createElement('dialog'); logoDlg.className = 'c-dialog c-dialog--large'; logoDlg.setAttribute('aria-labelledby', 'cat-logo-title');
+      logoDlg.innerHTML = `<h3 class="c-dialog__title" id="cat-logo-title">Le logo</h3>
+        <div class="c-dialog__body">
+          <canvas id="cat-logo-anim" style="display: block; width: 100%; height: 13rem" role="img" aria-label="Le logo MONO s'écrit lettre par lettre ; le curseur devient le point de signal"></canvas>
+          <p>Le nom, composé comme le titre courant de chaque page, puis un carré de quatre pixels en signal. Le curseur qui l'écrit devient le point.</p>
+          <dl class="c-kv c-kv--plain" style="max-width: 34rem"><div><dt>Caractère</dt><dd>IBM Plex Mono, capitales, 0,42 em</dd></div><div><dt>Point</dt><dd>4 px, en signal, toujours</dd></div><div><dt>Tailles</dt><dd>de 13 à 24 px</dd></div><div><dt>Classe</dt><dd>.c-logo, .c-logo--plain sans point</dd></div></dl>
+        </div>
+        <form method="dialog" class="c-dialog__actions"><span class="c-dialog__aside"><kbd class="c-kbd">Échap</kbd></span><a class="c-button c-button--quiet" href="${root}logo.html">Fiche complète</a><button class="c-button" type="submit" autofocus>Fermer</button></form>`;
+      document.body.append(logoDlg);
+      const sc = document.createElement('script'); sc.src = root + 'assets/logo-anim.js'; sc.onload = () => { logoDlg.anim = window.MonoLogo(logoDlg.querySelector('canvas'), { size: 26 }); }; document.head.append(sc);
+    } else logoDlg.anim?.restart();
+    logoDlg.showModal();
+  });
+
+  // ---- Organisation d'une page : un seul index, à gauche, qui dit toute la hiérarchie.
+  // Les rubriques y sont numérotées ; celle qu'on lit est dépliée et montre ses éléments, celui qui est à
+  // l'écran est marqué et suit le défilement. À droite, une rubrique à la fois. Un niveau = un retrait,
+  // une seule direction de lecture : pas d'onglets de page par-dessus.
+  const shell = document.querySelector('.l-shell'), sections = [...document.querySelectorAll('.cat-section[id]')], intro = document.querySelector('.cat-intro');
+  const rail = document.querySelector('.cat-rail'), index = document.getElementById('cat-nav');
+  const label = (sec) => sec.dataset.title || sec.querySelector('.c-section-head span:nth-child(2)')?.textContent || sec.id;
+  const subsOf = (sec) => [...sec.querySelectorAll('.cat-sub[id]')];
+  const short = (sub) => (sub.querySelector('h3')?.textContent || sub.id).split(' — ')[0];
+  const indexed = sections.length > 1 && rail && index;
+  if (indexed) {
+    rail.classList.add('cat-rail--index'); if (intro) rail.before(intro);
+    index.className = 'cat-index'; index.setAttribute('aria-label', 'Dans cette page');
+    index.innerHTML = '<div class="cat-index__title">Dans cette page</div><ol>' + sections.map((sec, i) => {
+      const subs = subsOf(sec);
+      return `<li><a class="cat-index__sec" href="#${sec.id}"><span class="cat-index__num">${String(i + 1).padStart(2, '0')}</span><span>${label(sec)}</span></a>${subs.length ? `<ol class="cat-index__subs" hidden>${subs.map((sub) => `<li><a href="#${sub.id}">${short(sub)}</a></li>`).join('')}</ol>` : ''}</li>`;
+    }).join('') + '</ol>';
+    // Au bout d'une rubrique, la suivante : on peut lire la page dans l'ordre sans revenir à l'index.
+    sections.forEach((sec, i) => { const nx = sections[i + 1]; if (!nx) return; const a = document.createElement('a'); a.className = 'cat-next'; a.href = '#' + nx.id; a.innerHTML = `<span class="t-micro">Suite</span><span>${String(i + 2).padStart(2, '0')} — ${label(nx)}</span><i class="c-icon i-arrow-right" aria-hidden="true"></i>`; sec.append(a); });
+  }
+  let currentSec = null;
+  const markSub = (id) => index.querySelectorAll('.cat-index__subs a').forEach((a) => (a.getAttribute('href') === '#' + id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+  const spy = () => {
+    if (!indexed || !currentSec) return;
+    const top = shell.getBoundingClientRect().top + 96; let cur = null;
+    for (const sub of subsOf(currentSec)) { if (sub.getBoundingClientRect().top <= top) cur = sub; else break; }
+    markSub(cur ? cur.id : '');
+  };
+  if (indexed && shell) shell.addEventListener('scroll', spy, { passive: true });
+  const key = 'mono-scroll:' + location.pathname;
+  const go = (id, first) => {
+    const el = id ? document.getElementById(id) : null, sec = el?.closest('.cat-section') || (first ? sections[0] : null); if (!sec) return;
+    if (indexed) {
+      currentSec = sec; sections.forEach((x) => { x.hidden = x !== sec; });
+      index.querySelectorAll('.cat-index__sec').forEach((a) => { const on = a.getAttribute('href') === '#' + sec.id; on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current'); const subs = a.nextElementSibling; if (subs) subs.hidden = !on; });
+    }
+    if (first) { spy(); return; }
+    if (el && el !== sec) el.scrollIntoView({ block: 'start' }); else if (shell) shell.scrollTop = 0;
+    spy();
+  };
+  if (sections.length) { go(location.hash.slice(1), true); if (location.hash) requestAnimationFrame(() => go(location.hash.slice(1))); }
+  addEventListener('hashchange', () => go(location.hash.slice(1)));
+  // Un onglet garde l'état de sa page : on retrouve la rubrique et le défilement où on les avait laissés.
+  if (shell && !location.hash) { try { const sv = JSON.parse(sessionStorage.getItem(key) || 'null'); if (sv?.hash) { history.replaceState(null, '', sv.hash); go(sv.hash.slice(1), true); } if (sv) shell.scrollTop = sv.top || 0; } catch {} }
+  addEventListener('pagehide', () => { try { sessionStorage.setItem(key, JSON.stringify({ top: shell.scrollTop, hash: location.hash })); } catch {} });
   document.querySelectorAll('[data-set-theme]').forEach((b) => b.addEventListener('click', () => setTheme(b.dataset.setTheme)));
   // Accent : discret (défaut), fort (le signal en aplat) ou flash (l'aplat à l'arrivée, puis discret).
   const setAccent = (a) => {
     if (a === 'fort' || a === 'flash') document.documentElement.dataset.accent = a; else { a = 'discret'; delete document.documentElement.dataset.accent; }
     try { localStorage.setItem('mono-accent', a); } catch {}
-    document.querySelectorAll('[data-set-accent]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.setAccent === a)));
+    document.querySelectorAll('[data-set-accent]').forEach((b) => { b.setAttribute('aria-pressed', String(b.dataset.setAccent === a)); b.setAttribute('aria-checked', String(b.dataset.setAccent === a)); });
+    document.dispatchEvent(new CustomEvent('mono:accent', { detail: a }));
   };
   let savedAccent = null; try { savedAccent = localStorage.getItem('mono-accent'); } catch {}
   setAccent(new URLSearchParams(location.search).get('accent') || savedAccent || 'discret');
@@ -76,16 +147,16 @@
     const TYPE_LABEL = Object.fromEntries(TYPES);
     const norm = (v) => v.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’]/g, "'");
     const esc = (v) => v.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-    const entries = INDEX.entries.map((e, i) => ({ ...e, i, page: e.p < 0 ? 'Exemples' : INDEX.pages[e.p][1], href: root + (e.u || INDEX.pages[e.p][0] + (e.id ? '#' + e.id : '')), nt: norm(e.t), nc: norm(e.c), nk: norm(e.k), nx: norm(e.x) }));
+    const entries = INDEX.entries.map((e, i) => ({ ...e, i, page: e.p < 0 ? 'Exemples' : INDEX.pages[e.p][1], href: root + (e.u ? e.u.replace(/^exemples\/([a-z-]+)\.html$/, 'exemples.html?e=$1') : INDEX.pages[e.p][0] + (e.id ? '#' + e.id : '')), nt: norm(e.t), nc: norm(e.c), nk: norm(e.k), nx: norm(e.x) }));
     const RUBRIQUES = [...INDEX.pages.map((p) => p[1]), 'Exemples'];
 
     host.innerHTML = `
-      <label class="c-search c-search--large">
+      <label class="c-search">
         <i class="c-icon i-search" aria-hidden="true"></i>
-        <input type="search" id="cat-q" autocomplete="off" spellcheck="false" placeholder="Rechercher une règle, un composant, une classe, un token…" aria-label="Rechercher dans le catalogue" role="combobox" aria-expanded="false" aria-controls="cat-results" aria-autocomplete="list">
-        <span class="c-kbd" aria-hidden="true">/</span>
+        <input type="search" id="cat-q" autocomplete="off" spellcheck="false" placeholder="Une page, un composant, une règle, un token — ou « thème », « accent »" aria-label="Rechercher dans le catalogue" role="combobox" aria-expanded="false" aria-controls="cat-results" aria-autocomplete="list">
+        <span class="c-kbd" aria-hidden="true">esc</span>
       </label>
-      <div class="cat-search__panel" hidden>
+      <div class="cat-search__panel">
         <div class="cat-search__filters">
           <div class="cat-search__group" role="group" aria-label="Filtrer par rubrique"><span class="t-micro">Rubrique</span>${RUBRIQUES.map((r) => `<button class="c-chip" type="button" aria-pressed="false" data-rub="${r}">${r} <span class="c-chip__count"></span></button>`).join('')}</div>
           <div class="cat-search__group" role="group" aria-label="Filtrer par type"><span class="t-micro">Type</span>${TYPES.map(([k, l]) => `<button class="c-chip" type="button" aria-pressed="false" data-type="${k}">${l} <span class="c-chip__count"></span></button>`).join('')}</div>
@@ -97,6 +168,10 @@
     const input = host.querySelector('input'), panel = host.querySelector('.cat-search__panel');
     const results = host.querySelector('.cat-search__results'), status = host.querySelector('.cat-search__status');
     const state = { rub: new Set(), type: new Set(), active: -1, shown: [] };
+    // L'affichage se règle ici aussi : ce sont des commandes, trouvées comme le reste.
+    const CMDS = [['theme', 'encre', 'Thème encre', 'Fond sombre'], ['theme', 'papier', 'Thème papier', 'Fond clair'], ['accent', 'discret', 'Accent discret', 'Le signal en trait'], ['accent', 'fort', 'Accent fort', 'Le signal en aplat'], ['accent', 'flash', 'Accent flash', 'L’aplat à l’arrivée, puis discret']]
+      .map(([kind, val, t, x]) => ({ cmd: kind, val, t, x, n: norm(t + ' affichage apparence ' + x) }));
+    const cmdOn = (c) => (c.cmd === 'theme' ? document.documentElement.dataset.theme === c.val : (document.documentElement.dataset.accent || 'discret') === c.val);
 
     const parse = (q) => {
       const inc = [], exc = [];
@@ -153,6 +228,7 @@
       host.querySelectorAll('[data-rub]').forEach((b) => { const n = matched.filter(({ e }) => e.page === b.dataset.rub && inType(e)).length; b.querySelector('.c-chip__count').textContent = n; b.disabled = !n && b.getAttribute('aria-pressed') !== 'true'; });
       host.querySelectorAll('[data-type]').forEach((b) => { const n = matched.filter(({ e }) => e.y === b.dataset.type && inRub(e)).length; b.querySelector('.c-chip__count').textContent = n; b.disabled = !n && b.getAttribute('aria-pressed') !== 'true'; });
       const browsing = !inc.length && !state.rub.size && !state.type.size;
+      host.classList.toggle('is-browsing', browsing);
       let list = matched.filter(({ e }) => inRub(e) && inType(e));
       if (browsing) list = list.filter(({ e }) => e.y === 'rubrique' && !e.s || e.y === 'exemple');
       list.sort((a, b) => b.s - a.s || a.e.i - b.e.i);
@@ -163,15 +239,17 @@
       const best = (r) => Math.max(0, ...list.filter(({ e }) => e.page === r).map(({ s }) => s));
       const order = browsing || !inc.length ? RUBRIQUES : [...RUBRIQUES].sort((a, b) => best(b) - best(a));
       const groups = order.map((r) => [r, list.filter(({ e }) => e.page === r)]).filter(([, g]) => g.length);
-      state.shown = groups.flatMap(([, g]) => g.map(({ e }) => e));
-      state.active = inc.length && list.length ? 0 : -1;
-      status.textContent = browsing ? 'Parcourir les rubriques — ou saisir un mot, une classe, un code de règle'
+      const cmds = state.rub.size || state.type.size ? [] : CMDS.filter((c) => inc.every((t) => c.n.includes(t)) && !exc.some((t) => c.n.includes(t)));
+      state.shown = [...cmds, ...groups.flatMap(([, g]) => g.map(({ e }) => e))];
+      const cmdHtml = () => (cmds.length ? `<div class="cat-search__heading"><span>Affichage</span><span>${cmds.length}</span></div>` + cmds.map((c) => { const pos = state.shown.indexOf(c); return `<button type="button" class="cat-result" role="option" id="cat-opt-${pos}" data-pos="${pos}" data-cmd="${c.cmd}" data-val="${c.val}" aria-selected="${pos === state.active}"><span class="cat-result__type">Réglage</span><span class="cat-result__main"><span class="cat-result__title">${mark(c.t, inc)}</span><span class="cat-result__text">${c.x}</span></span><span class="cat-result__where">${cmdOn(c) ? 'En vigueur' : ''}</span></button>`; }).join('') : '');
+      state.active = inc.length && state.shown.length ? 0 : -1;
+      status.textContent = browsing ? ''
         : total ? `${total} résultat${total > 1 ? 's' : ''}${total > 60 ? ' — 60 affichés, préciser la recherche' : ''}` : '';
-      if (!total) {
+      if (!total && !cmds.length) {
         results.innerHTML = `<div class="c-empty c-empty--plain"><span class="c-empty__label">Aucun résultat</span><div class="c-empty__title">Rien ne correspond à « ${esc(input.value.trim())} »</div><p class="c-empty__text">Essayez un mot plus court, une classe (.c-card), un token (--fg) ou retirez un filtre.</p>${state.rub.size || state.type.size ? '<div class="c-empty__actions"><button class="c-button" type="button" data-reset>Retirer les filtres</button></div>' : ''}</div>`;
         return;
       }
-      let html = '';
+      let html = cmdHtml();
       for (const [r, group] of groups) {
         html += `<div class="cat-search__heading"><span>${r}</span><span>${group.length}</span></div>`;
         for (const { e } of group) {
@@ -184,8 +262,10 @@
       }
       results.innerHTML = html;
     };
-    const open = () => { if (!panel.hidden) return; panel.hidden = false; input.setAttribute('aria-expanded', 'true'); render(); };
-    const close = () => { panel.hidden = true; input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); };
+    const open = () => { if (palette.open) return; palette.showModal(); input.setAttribute('aria-expanded', 'true'); render(); input.focus(); input.select(); };
+    const close = () => { if (palette.open) palette.close(); };
+    palette.addEventListener('close', () => { input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); });
+    document.getElementById('cat-go').addEventListener('click', open);
     const setActive = (pos) => {
       if (!state.shown.length) return;
       state.active = (pos + state.shown.length) % state.shown.length;
@@ -194,13 +274,12 @@
       if (el) { el.scrollIntoView({ block: 'nearest' }); input.setAttribute('aria-activedescendant', el.id); }
     };
 
-    input.addEventListener('focus', open);
-    input.addEventListener('input', () => { open(); render(); });
+    input.addEventListener('input', render);
     input.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowDown') { e.preventDefault(); open(); setActive(state.active + 1); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(state.active - 1); }
       else if (e.key === 'Enter') { const el = results.querySelector(`#cat-opt-${state.active}`); if (el) { e.preventDefault(); el.click(); } }
-      else if (e.key === 'Escape') { if (input.value) { input.value = ''; render(); } else { close(); input.blur(); } }
+      else if (e.key === 'Escape' && input.value) { e.preventDefault(); input.value = ''; render(); }
     });
     host.addEventListener('click', (e) => {
       const chip = e.target.closest('.c-chip');
@@ -211,15 +290,17 @@
         render(); input.focus(); return;
       }
       if (e.target.closest('[data-reset]')) { state.rub.clear(); state.type.clear(); host.querySelectorAll('.c-chip').forEach((c) => c.setAttribute('aria-pressed', 'false')); render(); input.focus(); return; }
+      const cmd = e.target.closest('[data-cmd]');
+      if (cmd) { (cmd.dataset.cmd === 'theme' ? setTheme : setAccent)(cmd.dataset.val); const keep = state.active; render(); state.active = keep; setActive(keep); input.focus(); return; }
       if (e.target.closest('.cat-result')) close();
     });
-    document.addEventListener('pointerdown', (e) => { if (!host.contains(e.target)) close(); });
     document.addEventListener('keydown', (e) => {
-      if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && !document.querySelector('dialog[open]')) { e.preventDefault(); input.focus(); input.select(); }
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) || document.activeElement.isContentEditable;
+      if (((e.key === '/' && !typing) || (e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey))) && !document.querySelector('dialog[open]')) { e.preventDefault(); open(); }
     });
     // ?q=… préremplit la recherche : une recherche se partage par son adresse.
     const preset = new URLSearchParams(location.search).get('q');
-    if (preset) { input.value = preset; input.focus(); open(); }
+    if (preset) { input.value = preset; open(); }
   }
 
   // Extraits : le code affiché EST le DOM de la démo, jamais une copie.

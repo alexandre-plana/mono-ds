@@ -86,6 +86,21 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-textarea { min-height: 6rem; resize: vertical; }
 .c-select { appearance: none; padding-right: var(--space-6); cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, var(--fg-soft) 50%, var(--fg-soft) calc(50% + 1px), transparent calc(50% + 1px)), linear-gradient(-45deg, transparent 50%, var(--fg-soft) 50%, var(--fg-soft) calc(50% + 1px), transparent calc(50% + 1px)); background-size: 5px 5px, 5px 5px; background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%; background-repeat: no-repeat; }
 .c-select option { background: var(--surface); color: var(--fg-strong); }
+/* La liste ouverte suit le système là où le navigateur sait l'habiller (appearance: base-select) :
+   même surface et même contour qu'un menu, l'option visée au ton d'un cran, l'option choisie marquée
+   par le contour de sélection — jamais par une couleur. Ailleurs, la liste native reste en place. */
+@supports (appearance: base-select) {
+  .c-select, .c-select::picker(select) { appearance: base-select; }
+  .c-select { background-image: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding-right: var(--space-3); }
+  .c-select::picker-icon { content: ''; flex: none; width: 1rem; height: 1rem; background: var(--fg-soft); mask: var(--i-chevron-down) center / contain no-repeat; }
+  .c-select::picker(select) { margin-top: var(--space-1); padding: var(--space-1) 0; background: var(--surface-2); border: var(--hairline) solid var(--line-strong); border-radius: 0; box-shadow: none; color: var(--fg); }
+  .c-select option { display: flex; align-items: baseline; gap: var(--space-3); padding: 6px var(--space-3); background: none; color: var(--fg); font-size: var(--text-small); line-height: var(--leading-base); cursor: pointer; border-left: var(--stroke) solid transparent; outline: 0; }
+  .c-select option::checkmark { display: none; }
+  .c-select option:hover, .c-select option:focus-visible { background: var(--line-faint); color: var(--fg-strong); }
+  .c-select option:checked { border-left-color: var(--selected-line); color: var(--fg); font-weight: var(--weight-medium); background: none; }
+  .c-select option:checked:hover, .c-select option:checked:focus-visible { background: var(--line-faint); }
+  .c-select option:disabled { color: var(--fg-muted); cursor: not-allowed; }
+}
 
 /* Case, radio, interrupteur : formes pleines, pas de coche dessinée. */
 .c-check { display: inline-flex; align-items: center; gap: var(--space-3); cursor: pointer; color: var(--fg); min-height: 1.5rem; }
@@ -445,7 +460,7 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 .c-menu__label { padding: var(--space-2) var(--space-3) var(--space-1); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
 .c-menu__item { appearance: none; display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-5); width: 100%; padding: 6px var(--space-3); background: none; border: 0; text-align: left; text-decoration: none; color: var(--fg); font-size: var(--text-small); line-height: var(--leading-base); white-space: nowrap; cursor: pointer; }
 .c-menu__item:hover, .c-menu__item:focus-visible { background: var(--line-faint); color: var(--fg-strong); outline-offset: -2px; }
-.c-menu__item[aria-checked="true"], .c-menu__item[aria-current] { border-left: var(--stroke) solid var(--selected-line); padding-left: calc(var(--space-3) - 2px); color: var(--fg); font-weight: var(--weight-medium); }
+.c-menu__item[aria-checked="true"], .c-menu__item[aria-pressed="true"], .c-menu__item[aria-current] { border-left: var(--stroke) solid var(--selected-line); padding-left: calc(var(--space-3) - 2px); color: var(--fg); font-weight: var(--weight-medium); }
 .c-menu__item:disabled, .c-menu__item[aria-disabled="true"] { color: var(--fg-muted); cursor: not-allowed; background: none; }
 .c-menu__item--signal { color: var(--signal); }
 .c-menu__item--signal:hover { color: var(--signal); }
@@ -651,6 +666,7 @@ textarea.c-editable__input { field-sizing: content; min-height: var(--leading-ba
 .c-doctabs__tab:hover { color: var(--fg-strong); }
 .c-doctabs__tab[aria-current], .c-doctabs__tab[aria-selected="true"] { border-top: var(--stroke) solid var(--selected-line); border-bottom-color: var(--bg); color: var(--fg); font-weight: var(--weight-medium); }
 a.c-doctabs__tab { text-decoration: none; }
+.c-doctabs__tools { display: flex; align-items: center; gap: var(--space-2); align-self: center; min-width: 0; }
 .c-doctabs > .c-logo { align-self: center; margin-left: var(--space-5); }
 .c-doctabs__label { overflow: hidden; text-overflow: ellipsis; }
 .c-doctabs__tab--add { padding-inline: var(--space-2); }

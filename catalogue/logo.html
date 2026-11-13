@@ -16,11 +16,6 @@
     <header class="c-masthead">
       <nav class="c-breadcrumb c-breadcrumb--head" aria-label="Fil d'Ariane"><a href="index.html">Catalogue</a><span aria-current="page">Logo</span></nav>
       <div class="c-masthead__meta">
-        
-        <span class="c-segmented" role="group" aria-label="Thème">
-          <button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button>
-          <button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button>
-        </span>
       </div>
     </header>
     <main class="l-stack" style="--gap: var(--space-7); padding-block: var(--space-7)">
@@ -57,10 +52,9 @@
     <footer class="c-colophon"><span>Mono — système monochrome</span><span>Logo — le mot et le point</span></footer>
   </div>
   </div>
+  <script src="assets/search-index.js"></script>
+  <script src="assets/catalogue.js"></script>
   <script src="assets/logo-anim.js"></script>
-  <script>
-    window.logo = MonoLogo(document.getElementById('logo-anim'));
-    document.querySelectorAll('[data-set-theme]').forEach((b) => b.addEventListener('click', () => { document.documentElement.dataset.theme = b.dataset.setTheme; try { localStorage.setItem('mono-theme', b.dataset.setTheme); } catch {} }));
-  </script>
+  <script>window.logo = MonoLogo(document.getElementById('logo-anim'));</script>
 </body>
 </html>

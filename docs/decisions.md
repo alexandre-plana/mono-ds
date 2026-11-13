@@ -92,8 +92,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-069 | Logo : le mot et le point, et son animation | en vigueur |
 | D-070 | Console : le volume défile, les blocs s'effacent au bord | en vigueur |
 | D-071 | Le logo dans les écrans | en vigueur |
-| D-072 | Le catalogue applique son propre gabarit | en vigueur |
+| D-072 | Le catalogue applique son propre gabarit | en vigueur, complétée par D-075 et D-076 |
 | D-073 | Kanban : l'emplacement de la fiche se voit pendant le glissé | en vigueur |
+| D-074 | La liste déroulante suit le système | en vigueur |
+| D-075 | Catalogue : « Aller à » pour tout ce qui est global ; un index par page ; démonstrations vivantes | en vigueur |
+| D-076 | Les exemples s'ouvrent dans leur onglet, avec le fil d'Ariane | en vigueur |
 
 ---
 
@@ -681,3 +684,30 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Amende** : D-064
 - **Décision** : pendant le glissé, la fiche quitte sa place et un emplacement en tireté, à sa taille exacte, montre où elle se posera ; les autres fiches s'écartent pour lui faire place. L'emplacement occupe d'abord la place d'origine — rien ne saute au départ.
 - **Remplace** : le trait de 2 px au point de chute et la fiche d'origine laissée en tireté, qui ne montraient ni la place prise ni le résultat.
+
+## D-074 — La liste déroulante suit le système
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Signalée par** : le commanditaire (capture : option surlignée en bleu)
+- **Constat** : la liste ouverte d'un `<select>` était celle du navigateur — fond bleu sur l'option visée, hors du système.
+- **Décision** : `.c-select` adopte `appearance: base-select`, qui rend la liste ouverte stylable en CSS pur. Elle prend la surface et le contour d'un menu ; l'option visée passe au ton d'un cran, comme une entrée de menu ; l'option choisie se marque par le contour de sélection (2 px à gauche) et la graisse, jamais par une couleur. Le chevron vient du jeu d'icônes.
+- **Limite** : la règle est sous `@supports`. Un navigateur qui ne connaît pas `base-select` garde sa liste native ; le champ fermé, lui, est identique partout.
+- **Écarté** : remplacer le `<select>` par un composant en JavaScript — le système reste en CSS pur, et l'élément natif garde son clavier et son accessibilité.
+
+## D-075 — Catalogue : « Aller à » pour tout ce qui est global ; un index par page ; démonstrations vivantes
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Complète** : D-072
+- **Global, donc hors de la page** : la recherche, le thème et l'accent quittent l'en-tête de chaque page. Première tentative, écartée par le commanditaire : un champ de recherche et un menu « Affichage » dans la rangée d'onglets — le champ ne tenait pas les espacements et aurait gêné dès que les onglets sont nombreux. Retenu : un seul bouton au bout de la rangée, « Aller à », qui ouvre la palette (`.c-palette`, déjà au système). On y cherche, on y change de page, et l'affichage s'y règle par des commandes (« Thème papier », « Accent fort »…), listées d'emblée et trouvées en tapant. Touche `/` ou Ctrl+K, depuis n'importe où. L'encombrement est constant quel que soit le nombre d'onglets. Le logo ferme la rangée et ouvre une grande modale — animation et règles — au lieu d'une page dont on ne revenait pas.
+- **Autres voies envisagées pour la recherche** : une ligne de commande dans la ligne d'état, en bas de la page (écartée : le catalogue est un document, sans ligne d'état) ; la frappe directe n'importe où (écartée : elle entre en conflit avec les démonstrations qui prennent le clavier).
+- **Moins vertical, une seule hiérarchie** : première tentative, écartée par le commanditaire : des onglets de rubrique horizontaux plus une liste verticale d'éléments — deux directions pour deux niveaux, on ne s'y repérait pas. Retenu : un seul index, à gauche, sous le titre de la page. Les rubriques y sont numérotées ; celle qu'on lit est dépliée et montre ses éléments ; l'élément à l'écran est marqué par le contour de sélection et suit le défilement. À droite, une rubrique à la fois, qui se termine par « Suite » vers la suivante. Un niveau = un retrait ; tout se lit de haut en bas.
+- **Pourquoi ce n'est pas le rail retiré en D-072** : le rail menait d'une page à l'autre et doublait les onglets. L'index ne sort pas de la page : c'est son sommaire.
+- **Adresses** : chaque rubrique et chaque élément garde son ancre ; un lien ou un résultat de recherche ouvre la bonne rubrique à la bonne hauteur. La page retrouve sa rubrique et son défilement quand on y revient.
+- **Téléphone** : l'index se réduit aux rubriques, en ligne, au-dessus du contenu ; « Aller à » et le logo passent au-dessus des onglets.
+- **Démonstrations vivantes** (`catalogue/assets/demos.js`) : onglets persistants, séparateur, valeur modifiable, plan, « Aller à », console, menu contextuel (clic droit), fenêtre flottante, barre des fenêtres (un bureau miniature), canevas (déplacer, échelle, ajouter, supprimer), recherche, étapes, notifications, tableau de cartes. Chaque cadre est à la taille de ce qu'il montre. Le code affiché reste le balisage statique.
+- **Reste statique, par nature** : en-têtes, clé-valeur, statuts, jauges, états vides — il n'y a rien à y manœuvrer.
+
+## D-076 — Les exemples s'ouvrent dans leur onglet, avec le fil d'Ariane
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« pas clair au premier coup d'œil », « on ne peut pas revenir »)
+- **Décision** : la page Exemples range les onze écrans en quatre familles — documents, gabarits d'application, écrans de travail, à regarder — avec une vignette de chacun, dans le thème courant. Un exemple s'ouvre dans l'onglet Exemples : le fil d'Ariane devient « Catalogue / Exemples / Dossiers » et ramène à la liste ; « Ouvrir seul » le sort dans sa propre fenêtre.
+- **Raison** : c'est le cas d'usage du fil d'Ariane — on descend d'un cran sans quitter l'onglet. L'écran affiché dans la page garde son propre plan de travail : on voit que c'est un écran, pas un morceau du catalogue.
+- **Conséquence** : le thème et l'accent choisis dans « Aller à » s'appliquent aussitôt à l'exemple affiché.
