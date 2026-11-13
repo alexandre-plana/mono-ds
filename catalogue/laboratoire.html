@@ -73,51 +73,111 @@
 
         <section class="cat-section" id="geste-recompense" data-search="rubrique">
           <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Le geste récompensé</span><span class="c-section-head__aside">Expérience en cours</span></h2>
-          <p><span class="t-strong">L'hypothèse.</span> Une interface sobre peut encore faire plaisir à manier. Chaque geste qui aboutit — cocher, arriver au bout d'un texte, ouvrir une rubrique, tout finir — reçoit en retour un petit mouvement net, plus généreux que le geste ne l'exige, mais bref, typographique et sans couleur. Et la récompense s'use : répétée, elle s'abrège, pour ne jamais devenir une attente.</p>
+          <p><span class="t-strong">L'hypothèse.</span> Une interface sobre peut encore faire plaisir à manier. Chaque geste qui aboutit — cocher, appuyer, trier, saisir juste, envoyer, arriver au bout — reçoit en retour un petit mouvement net, plus généreux que le geste ne l'exige, mais bref, typographique et sans couleur. Et la récompense s'use : répétée, elle s'abrège, pour ne jamais devenir une attente.</p>
 
           <div class="cat-demo">
             <div class="x-stage" id="x2" data-reward="avec">
               <div class="x-bar">
                 <span class="x-bar__group"><span class="x-bar__label">Récompenses</span><span class="c-segmented" role="group" aria-label="Récompenses"><button class="c-segmented__item" type="button" data-set-reward="avec" aria-pressed="true">Avec</button><button class="c-segmented__item" type="button" data-set-reward="sans" aria-pressed="false">Sans</button></span></span>
                 <button class="c-button" type="button" data-reset><i class="c-icon i-undo" aria-hidden="true"></i>Recommencer</button>
-                <span class="x-bar__label" data-uses aria-live="polite">0 geste</span>
+                <span class="x-bar__group"><span class="x-bar__label">Gestes aboutis</span><span class="x-tally" data-tally aria-hidden="true"></span><span class="x-bar__label" data-uses aria-live="polite">0</span></span>
               </div>
-              <div class="x-reward">
-                <div class="x-block">
-                  <h4>Clôture du matin <span><span class="x-count">0</span> / 5</span></h4>
+              <div class="x-cases">
+
+                <section class="x-case" data-case="cocher">
+                  <h4>Cocher <span>Le tampon, le filet, puis le cachet</span></h4>
                   <ul class="x-tasks">
                     <li><label class="x-task"><input type="checkbox"><span>Relever les agences bloquées</span></label></li>
                     <li><label class="x-task"><input type="checkbox"><span>Relancer Vizille</span></label></li>
                     <li><label class="x-task"><input type="checkbox"><span>Valider le barème santé</span></label></li>
-                    <li><label class="x-task"><input type="checkbox"><span>Joindre le rapport du trimestre</span></label></li>
-                    <li><label class="x-task"><input type="checkbox"><span>Prévenir M. Delorme</span></label></li>
                   </ul>
                   <span class="x-stamp" aria-live="polite">Clôturé</span>
-                </div>
-                <div class="x-block">
-                  <h4>Note de service <span class="x-done">[ lu ]</span></h4>
+                </section>
+
+                <section class="x-case" data-case="frappe">
+                  <h4>Appuyer <span>La frappe : le contour fait écho</span></h4>
+                  <div class="l-cluster"><button class="c-button x-hit" type="button">Exporter</button><button class="c-button c-button--primary x-hit" type="button">Enregistrer</button></div>
+                  <p class="x-note">Un bouton répond à l'appui comme une touche de machine : son contour part en onde, une fois.</p>
+                </section>
+
+                <section class="x-case" data-case="maintenir">
+                  <h4>Maintenir <span>Le contour se trace, puis le mot bascule</span></h4>
+                  <div class="l-cluster"><button class="c-button c-button--signal x-hold" type="button"><svg aria-hidden="true"><rect pathLength="100" x="1" y="1"></rect></svg><span data-flap>Maintenir pour supprimer</span></button></div>
+                  <p class="x-note">Pour l'irréversible : pas de fenêtre de confirmation, on garde le doigt appuyé une seconde. Relâcher plus tôt annule.</p>
+                </section>
+
+                <section class="x-case" data-case="palettes">
+                  <h4>Basculer <span>Le mot change comme un tableau d'affichage</span></h4>
+                  <label class="c-switch"><input type="checkbox" role="switch"><span class="x-flapword" data-flap>Suivi inactif</span></label>
+                  <p class="x-note">Les lettres défilent puis se fixent, de gauche à droite. Le mot dit l'état ; son changement se voit.</p>
+                </section>
+
+                <section class="x-case" data-case="compteur">
+                  <h4>Compter <span>Les chiffres roulent, un par un</span></h4>
+                  <div class="x-odo-row"><button class="c-button c-button--icon" type="button" data-odo="-37" aria-label="Moins"><i class="c-icon i-minus" aria-hidden="true"></i></button><span class="x-odo" data-value="412" aria-live="polite"></span><button class="c-button c-button--icon" type="button" data-odo="37" aria-label="Plus"><i class="c-icon i-plus" aria-hidden="true"></i></button><span class="x-bar__label">agences</span></div>
+                  <p class="x-note">Seuls les chiffres qui changent bougent, vers le haut si la valeur monte, vers le bas si elle descend.</p>
+                </section>
+
+                <section class="x-case" data-case="trier">
+                  <h4>Trier <span>Chaque ligne glisse à sa place</span></h4>
+                  <div class="l-cluster" style="--gap: var(--space-2)"><button class="c-chip" type="button" data-sort="nom" aria-pressed="true">Par nom</button><button class="c-chip" type="button" data-sort="effectif" aria-pressed="false">Par effectif</button><button class="c-chip" type="button" data-sort="primes" aria-pressed="false">Par primes</button></div>
+                  <ol class="x-sortlist"></ol>
+                </section>
+
+                <section class="x-case" data-case="saisir">
+                  <h4>Saisir juste <span>Le pointillé se tire en plein</span></h4>
+                  <label class="x-valid"><input type="text" maxlength="8" placeholder="WAP375CD" spellcheck="false" autocomplete="off" aria-label="Référence : trois lettres, trois chiffres, deux lettres"><span class="x-valid__ok" aria-live="polite">[ ok ]</span></label>
+                  <p class="x-note">Trois lettres, trois chiffres, deux lettres. Au huitième caractère juste, la ligne se ferme.</p>
+                </section>
+
+                <section class="x-case" data-case="copier">
+                  <h4>Copier <span>Le double carbone</span></h4>
+                  <div class="x-carbon"><code class="x-carbon__text">D-041 / WAP375CD</code><button class="c-button c-button--quiet" type="button" data-carbon><i class="c-icon i-copy" aria-hidden="true"></i><span>Copier</span></button></div>
+                  <p class="x-note">Un double du texte se décolle, d'un cran, puis s'efface : on a vu ce qui est parti.</p>
+                </section>
+
+                <section class="x-case" data-case="regler">
+                  <h4>Régler <span>Les crans répondent, la butée se ferme</span></h4>
+                  <input class="c-range x-detent" type="range" min="0" max="100" step="10" value="40" style="--value: 40" aria-label="Seuil">
+                  <div class="x-ticks" aria-hidden="true"></div>
+                  <div class="x-read"><span>Seuil <b data-detent>40 %</b></span><span class="x-butee">[ butée ]</span></div>
+                </section>
+
+                <section class="x-case" data-case="envoyer">
+                  <h4>Envoyer <span>La ligne part au journal</span></h4>
+                  <ol class="x-log" aria-live="polite"><li><time>09:12</time><span>Vizille relancée.</span></li></ol>
+                  <form class="x-send"><input type="text" placeholder="Écrire, puis Entrée" autocomplete="off" aria-label="Message"><kbd class="c-kbd" aria-hidden="true">↵</kbd></form>
+                </section>
+
+                <section class="x-case" data-case="lire">
+                  <h4>Lire jusqu'au bout <span class="x-done">[ lu ]</span></h4>
                   <div class="x-readbox" tabindex="0" aria-label="Note de service — faire défiler jusqu'au bout">
-                    <p>La reprise des contrats de Vizille est attendue pour la fin de semaine. D'ici là, les trois agences du Sud restent en attente ; aucune écriture ne doit être passée sur leurs comptes.</p>
-                    <p>Le barème santé entre en vigueur au premier du mois. Les agences reçoivent leur grille lundi ; chaque responsable confirme sa lecture avant mercredi.</p>
-                    <p>Le rapport du troisième trimestre est clos. Les écarts de plus de deux points sont commentés en annexe, agence par agence.</p>
-                    <p>Prochaine réunion de réseau : jeudi, 14 heures. Ordre du jour en pièce jointe.</p>
+                    <p>La reprise des contrats de Vizille est attendue pour la fin de semaine. D'ici là, les trois agences du Sud restent en attente.</p>
+                    <p>Le barème santé entre en vigueur au premier du mois. Chaque responsable confirme sa lecture avant mercredi.</p>
+                    <p>Le rapport du troisième trimestre est clos. Les écarts de plus de deux points sont commentés en annexe.</p>
+                    <p>Prochaine réunion de réseau : jeudi, 14 heures.</p>
                   </div>
                   <div class="x-progress" role="progressbar" aria-label="Lecture" aria-valuemin="0" aria-valuemax="100"></div>
+                </section>
+
+                <section class="x-case" data-case="ouvrir">
+                  <h4>Ouvrir <span>Le titre se compose</span></h4>
                   <details class="x-fold"><summary><span>Pièces jointes</span></summary><p>Rapport T3 (PDF, 3,1 Mo) · Barème santé (CSV, 248 Ko).</p></details>
                   <details class="x-fold"><summary><span>Destinataires</span></summary><p>M. Delorme, P. Vidal, L. Brun, S. Garcin.</p></details>
                   <details class="x-fold"><summary><span>Historique</span></summary><p>Rédigée le 12 novembre, relue le 13.</p></details>
-                </div>
+                </section>
+
               </div>
             </div>
           </div>
 
           <dl class="x-research">
             <dt>État de l'art</dt><dd>Le jeu vidéo appelle cela le « jus » : une réponse plus riche que le geste ne le demande (la conférence <a href="https://hn.jakechampion.name/reader/https://medium.com/@mezoistvan/juicy-ui-why-the-smallest-interactions-make-the-biggest-difference-5cb5a5ffc752">« Juice it or lose it »</a>, 2012). Les guides d'interface en font un retour d'état utile. Les chiffres de satisfaction ou de fidélité que l'on voit cités viennent de blogs sans source vérifiable : je ne les reprends pas.</dd>
-            <dt>Durées</dt><dd>Le Nielsen Norman Group situe la plupart des animations <a href="https://nngroup.com/articles/animation-duration">entre 100 et 500 ms</a> et note qu'une animation longue lasse dès qu'elle se répète. Ici : 160 à 320 ms.</dd>
-            <dt>Ce qui est nouveau ici</dt><dd>Des récompenses sans couleur ni confetti, faites de la matière du système : une case qui se pose comme un tampon, un filet qui se tire, un mot qui se compose (son interlettrage se resserre), un cachet « Clôturé ». Et l'usure : après trois gestes, la récompense dure moitié moins.</dd>
-            <dt>Les quatre gestes</dt><dd>Cocher une tâche · faire défiler la note jusqu'au bout · ouvrir une rubrique · tout cocher. Basculer sur « Sans » pour comparer le même parcours, à sec.</dd>
-            <dt>Ce qu'on regarde</dt><dd>Le parcours « avec » paraît-il plus agréable sans paraître plus lent ? L'usure se remarque-t-elle, et faut-il l'accentuer ? Quel geste ne mérite pas de récompense ?</dd>
-            <dt>Garde-fous</dt><dd>Aucun mouvement ne retarde l'action : la case est cochée tout de suite, l'animation suit. Rien ne bouge si le système demande de réduire les animations. Aucun son.</dd>
+            <dt>Durées</dt><dd>Le Nielsen Norman Group situe la plupart des animations <a href="https://nngroup.com/articles/animation-duration">entre 100 et 500 ms</a> et note qu'une animation longue lasse dès qu'elle se répète. Ici : 160 à 320 ms pour un retour, jusqu'à 500 ms pour un mot à palettes, 900 ms pour un maintien, qui est une durée de sécurité et non d'agrément.</dd>
+            <dt>Ce qui est nouveau ici</dt><dd>Des récompenses sans couleur ni confetti, faites de la matière du système — le filet, le caractère, le contour. Douze cas : le tampon et le cachet, la frappe d'un bouton, le maintien qui trace son contour, le mot à palettes, le compteur qui roule, les lignes qui glissent à leur place, le pointillé qui se ferme, le double carbone, les crans et la butée, la ligne qui part au journal, « lu », le titre qui se compose. Deux idées les relient : le comptage en bâtons, qui garde la trace des gestes aboutis, et l'usure — après trois gestes, la récompense dure moitié moins.</dd>
+            <dt>Trois familles</dt><dd><span class="t-strong">L'empreinte</span> — le geste laisse une marque : tampon, cachet, frappe, bâtons. <span class="t-strong">Le trajet</span> — on voit où va ce qu'on a fait : la ligne part au journal, le double se décolle, les lignes se rangent. <span class="t-strong">La fermeture</span> — quelque chose se termine net : le pointillé devient plein, la butée, « lu », le contour bouclé. Basculer sur « Sans » pour refaire le même parcours, à sec.</dd>
+            <dt>Ce qu'on regarde</dt><dd>Le parcours « avec » paraît-il plus agréable sans paraître plus lent ? Quels cas méritent d'entrer dans le système, lesquels amusent une fois et lassent ensuite ? Le maintien pour confirmer peut-il remplacer la fenêtre de confirmation de l'irréversible ? Les bâtons motivent-ils ou surveillent-ils ?</dd>
+            <dt>Garde-fous</dt><dd>Aucun mouvement ne retarde l'action : la case est cochée tout de suite, l'animation suit. Une seule exception, voulue : le maintien, dont l'attente est la sécurité. Rien ne bouge si le système demande de réduire les animations. Aucun son.</dd>
             <dt>Règle enfreinte</dt><dd>Aucune règle écrite, mais l'esprit : MONO ne bouge presque pas. L'essai mesure jusqu'où il peut bouger sans cesser d'être lui-même.</dd>
           </dl>
         </section>

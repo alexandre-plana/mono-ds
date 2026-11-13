@@ -118,6 +118,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-095 | Composants : une rubrique « Échanges » | en vigueur |
 | D-096 | Un laboratoire, hors système | en vigueur, les teintes de l'expérience 01 changées par D-097 |
 | D-097 | Laboratoire, expérience 01 : rouge, orange, vert | en vigueur |
+| D-098 | Laboratoire, expérience 02 : douze cas de geste récompensé | en vigueur |
 
 ---
 
@@ -912,3 +913,12 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Décision** : les trois priorités prennent le langage du feu tricolore, plus universel que rouge, ambre, bleu : rouge pour ce qui bloque, orange pour ce qui est à surveiller, vert pour ce qui est rétabli. Le troisième niveau change donc de sens : il n'annonce plus du « nouveau » mais une bonne nouvelle.
 - **Conséquence** : la forme double la couleur dans tous les réglages — plein, à demi, contour —, parce que rouge et vert sont la paire que l'on confond le plus.
 - **Toujours hors système** : ces teintes vivent dans `catalogue/assets/labo.css` ; MONO garde une seule couleur.
+
+## D-098 — Laboratoire, expérience 02 : douze cas de geste récompensé
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« pousse beaucoup plus loin, d'autres composants, d'autres cas ») · **Étend** : D-096
+- **Décision** : l'expérience passe de quatre gestes à douze cas, sur autant de composants, toujours sans couleur et faits de la matière du système. Trois familles. **L'empreinte** — le geste laisse une marque : le tampon d'une case et le cachet « Clôturé », la frappe d'un bouton (son contour part en onde). **Le trajet** — on voit où va ce qu'on a fait : la ligne envoyée part au journal, le double carbone d'un texte copié, les lignes d'une liste triée glissent à leur place, les chiffres d'un compteur roulent, le mot d'un interrupteur bascule comme un tableau à palettes. **La fermeture** — quelque chose se termine net : le pointillé d'une saisie juste se tire en plein, les crans et la butée d'un curseur, « lu », le titre qui se compose, le contour qui se boucle.
+- **Deux idées transversales** : le comptage en bâtons — un trait par geste abouti, le cinquième barre les quatre — et l'usure, déjà posée en D-096.
+- **Une proposition qui dépasse la récompense** : maintenir pour confirmer. Pour l'irréversible, on garde l'appui une seconde ; le contour du bouton se trace pendant ce temps, relâcher annule. C'est une alternative à la fenêtre de confirmation, à juger à part si elle convainc.
+- **Durées** : 160 à 340 ms pour un retour, une demi-seconde au plus pour un mot à palettes quelle que soit sa longueur, 900 ms pour le maintien — une durée de sécurité, non d'agrément.
+- **Statut** : en cours, sans verdict ; aucun cas n'est dans le système.

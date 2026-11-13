@@ -99,3 +99,75 @@
 @keyframes x-set { 0% { letter-spacing: 0.6em; opacity: .4; } 100% { opacity: 1; } }
 @keyframes x-rise { 0% { opacity: 0; transform: translateY(-4px); } 100% { opacity: 1; transform: none; } }
 .x-done { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-strong); opacity: 0; } .x-done.is-on { opacity: 1; }
+
+/* --- Expérience 02, suite : douze cas ------------------------------------- */
+.x-cases { display: grid; grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); gap: var(--space-7) var(--space-7); align-items: start; }
+.x-case { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; padding-top: var(--space-3); border-top: var(--hairline) solid var(--line); }
+.x-case > h4 { margin: 0; display: flex; flex-direction: column; gap: 2px; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); font-weight: var(--weight-medium); color: var(--fg-strong); }
+.x-case > h4 > span { color: var(--fg-muted); font-weight: var(--weight-regular); }
+.x-note { margin: 0; max-width: none; font-size: var(--text-small); line-height: var(--leading-small); color: var(--fg-muted); }
+/* Le comptage en bâtons : un trait par geste abouti, le cinquième barre les quatre. */
+.x-tally { display: inline-flex; gap: 7px; align-items: center; min-height: 14px; }
+.x-tally__five { position: relative; display: inline-flex; gap: 3px; height: 14px; }
+.x-tally__five > i { width: 1px; height: 14px; background: var(--fg-strong); transform-origin: bottom; }
+.x-tally__five > b { position: absolute; left: -3px; right: -3px; top: 50%; height: 1px; background: var(--fg-strong); transform: rotate(-24deg); }
+/* La frappe : l'écho du contour. */
+@keyframes x-echo { 0% { outline: 1px solid var(--x-echo, var(--fg-strong)); outline-offset: 0; } 100% { outline: 1px solid transparent; outline-offset: 10px; } }
+.c-button--primary.x-hit { --x-echo: var(--inverse-bg); }
+/* Le maintien : le contour se trace le temps de l'appui. */
+.x-hold { position: relative; user-select: none; touch-action: none; }
+.x-hold svg { position: absolute; inset: -4px; width: calc(100% + 8px); height: calc(100% + 8px); overflow: visible; pointer-events: none; }
+.x-hold rect { width: calc(100% - 2px); height: calc(100% - 2px); fill: none; stroke: var(--signal); stroke-width: 2; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 180ms ease-out; }
+.x-hold.is-holding rect { stroke-dashoffset: 0; transition: stroke-dashoffset 900ms linear; }
+.x-hold.is-done { border-style: dashed; border-color: var(--line); color: var(--fg-muted); pointer-events: none; } .x-hold.is-done rect { stroke-dashoffset: 100; transition: none; }
+/* Le mot à palettes : chasse fixe, les lettres défilent puis se fixent. */
+.x-flapword, .x-hold [data-flap] { font-family: var(--font-mono); white-space: pre; }
+/* Le compteur. */
+.x-odo-row { display: flex; align-items: center; gap: var(--space-3); }
+.x-odo { display: inline-flex; font-size: var(--text-title, 1.75rem); line-height: 1.2; font-variant-numeric: tabular-nums; color: var(--fg-strong); min-width: 4ch; justify-content: center; overflow: hidden; }
+.x-odo > span { display: inline-block; }
+@keyframes x-up { 0% { transform: translateY(70%); opacity: 0; } 100% { transform: none; opacity: 1; } }
+@keyframes x-down { 0% { transform: translateY(-70%); opacity: 0; } 100% { transform: none; opacity: 1; } }
+/* Le tri. */
+.x-sortlist { list-style: none; margin: 0; padding: 0; display: grid; }
+.x-sortlist li { display: grid; grid-template-columns: minmax(0, 1fr) 3rem 4rem; column-gap: var(--space-3); padding: var(--space-2) 0; align-items: baseline; color: var(--fg); background: var(--bg); }
+.x-sortlist li > :not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; font-size: var(--text-small); color: var(--fg-soft); }
+/* La saisie juste. */
+.x-valid { position: relative; display: flex; align-items: baseline; gap: var(--space-3); padding-bottom: var(--space-2); border-bottom: var(--hairline) dotted var(--fg-soft); }
+.x-valid::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--fg-strong); transform: scaleX(0); transform-origin: left; }
+.x-valid.is-ok::after { transform: scaleX(1); }
+.x-valid input { appearance: none; flex: 1; min-width: 0; background: none; border: 0; outline: 0; padding: 0; color: var(--fg-strong); font: inherit; font-family: var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.x-valid input::placeholder { color: var(--fg-muted); opacity: 1; }
+.x-valid__ok { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-strong); opacity: 0; } .x-valid.is-ok .x-valid__ok { opacity: 1; }
+/* Le double carbone. */
+.x-carbon { position: relative; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); background: var(--bg-sunken); }
+.x-carbon__text { background: none !important; padding: 0 !important; color: var(--fg-strong); }
+.x-carbon__ghost { position: absolute; left: var(--space-4); top: 50%; translate: 0 -50%; font-family: var(--font-mono); font-size: 0.92em; color: var(--fg-soft); pointer-events: none; opacity: 0; }
+@keyframes x-carbon { 0% { opacity: .9; transform: none; } 60% { opacity: .7; transform: translate(10px, -9px); } 100% { opacity: 0; transform: translate(14px, -12px); } }
+/* Les crans. */
+.x-ticks { display: flex; justify-content: space-between; align-items: flex-end; height: 12px; padding-inline: 2px; margin-top: calc(-1 * var(--space-2)); }
+.x-ticks i { width: 1px; height: 5px; background: var(--fg-muted); transform-origin: bottom; } .x-ticks i.is-under { background: var(--fg-strong); }
+@keyframes x-tick { 0% { transform: scaleY(2.4); } 100% { transform: none; } }
+.x-butee { color: var(--fg-strong); opacity: 0; } .x-butee.is-on { opacity: 1; }
+/* Le journal. */
+.x-log { list-style: none; margin: 0; padding: 0; display: grid; min-height: 5.5rem; align-content: end; }
+.x-log li { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); column-gap: var(--space-3); padding: var(--space-1) 0; align-items: baseline; color: var(--fg); overflow-wrap: anywhere; }
+.x-log time { font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-muted); font-variant-numeric: tabular-nums; }
+.x-send { display: flex; align-items: baseline; gap: var(--space-3); padding-bottom: var(--space-2); border-bottom: var(--hairline) dotted var(--fg-soft); }
+.x-send:focus-within { border-bottom-style: solid; border-bottom-color: var(--fg-strong); }
+.x-send input { appearance: none; flex: 1; min-width: 0; background: none; border: 0; outline: 0; padding: 0; color: var(--fg-strong); font: inherit; }
+.x-send input::placeholder { color: var(--fg-muted); opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .x-stage[data-reward="avec"] .x-tally__five > i:last-of-type { animation: x-bar calc(200ms * var(--x-gain, 1)) ease-out 1; }
+  .x-stage[data-reward="avec"] .x-tally__five > b { animation: x-strike 260ms ease-out 1; }
+  .x-stage[data-reward="avec"] .x-hit.is-hit { animation: x-echo calc(320ms * var(--x-gain, 1)) ease-out 1; }
+  .x-stage[data-reward="avec"] .x-odo > span.is-up { animation: x-up calc(240ms * var(--x-gain, 1)) ease-out 1 both; }
+  .x-stage[data-reward="avec"] .x-odo > span.is-down { animation: x-down calc(240ms * var(--x-gain, 1)) ease-out 1 both; }
+  .x-stage[data-reward="avec"] .x-valid::after { transition: transform calc(300ms * var(--x-gain, 1)) ease-out; }
+  .x-stage[data-reward="avec"] .x-valid.is-ok .x-valid__ok { animation: x-set 300ms ease-out 1; }
+  .x-stage[data-reward="avec"] .x-carbon__ghost.is-on { animation: x-carbon 520ms ease-out 1; }
+  .x-stage[data-reward="avec"] .x-ticks i.is-hit { animation: x-tick calc(200ms * var(--x-gain, 1)) ease-out 1; }
+  .x-stage[data-reward="avec"] .x-butee.is-on { animation: x-set 280ms ease-out 1; }
+}
+@keyframes x-bar { 0% { transform: scaleY(0); } 100% { transform: none; } }
+@keyframes x-strike { 0% { clip-path: inset(0 100% 0 0); } 100% { clip-path: inset(0); } }
