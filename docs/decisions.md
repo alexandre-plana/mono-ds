@@ -119,6 +119,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-096 | Un laboratoire, hors système | en vigueur, les teintes de l'expérience 01 changées par D-097 |
 | D-097 | Laboratoire, expérience 01 : rouge, orange, vert | en vigueur |
 | D-098 | Laboratoire, expérience 02 : douze cas de geste récompensé | en vigueur |
+| D-099 | Laboratoire : chaque atelier dans son propre écran | en vigueur |
 
 ---
 
@@ -922,3 +923,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Une proposition qui dépasse la récompense** : maintenir pour confirmer. Pour l'irréversible, on garde l'appui une seconde ; le contour du bouton se trace pendant ce temps, relâcher annule. C'est une alternative à la fenêtre de confirmation, à juger à part si elle convainc.
 - **Durées** : 160 à 340 ms pour un retour, une demi-seconde au plus pour un mot à palettes quelle que soit sa longueur, 900 ms pour le maintien — une durée de sécurité, non d'agrément.
 - **Statut** : en cours, sans verdict ; aucun cas n'est dans le système.
+
+## D-099 — Laboratoire : chaque atelier dans son propre écran
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« pour ne pas être influencé par l'application actuelle ») · **Amende** : D-096 (où vivent les expériences)
+- **Constat** : essayée dans une page du catalogue, une expérience était jugée au milieu de la ligne système, des onglets et de la marge — autant de choses qui pèsent sur l'impression.
+- **Décision** : chaque atelier est une page plein écran à part (`catalogue/laboratoire/nom.html`), qui ne charge ni le script ni l'habillage du catalogue. L'écran essayé occupe la page, comme un vrai écran de travail. Ce qui appartient à l'essai — le déroulé du scénario, les réglages, le retour — est dessous, sur le plan de travail, hors de ce que l'on juge.
+- **L'onglet Laboratoire** devient le sommaire : pour chaque expérience, l'hypothèse, l'état de l'art, ce qu'on regarde, et le bouton « Ouvrir l'atelier ». « Notice » et « Laboratoire », dans l'atelier, y ramènent.
+- **Inchangé** : une expérience à la fois, hors système, classes `.x-` et couleurs `--x-` confinées.

@@ -171,3 +171,22 @@
 }
 @keyframes x-bar { 0% { transform: scaleY(0); } 100% { transform: none; } }
 @keyframes x-strike { 0% { clip-path: inset(0 100% 0 0); } 100% { clip-path: inset(0); } }
+
+/* --- L'atelier : un écran à lui, plein cadre, hors du catalogue --------------
+   L'écran essayé occupe la page ; les réglages de l'essai sont dessous, sur le plan de travail, pour ne
+   pas se mêler à ce que l'on juge. */
+.x-atelier > .x-stage { display: grid; grid-template-rows: minmax(0, 1fr); grid-auto-rows: auto; gap: var(--space-3); min-height: 0; }
+/* Le commentaire du scénario est hors de l'écran essayé, sur le plan de travail. */
+.x-atelier .x-steps li { border-top-color: var(--line-strong); }
+.x-screen { display: flex; flex-direction: column; gap: var(--space-5); min-height: 0; overflow: hidden; padding: var(--space-6) var(--space-8) var(--space-5); }
+.x-screen--scroll { overflow-y: auto; gap: var(--space-7); padding-bottom: var(--space-8); }
+.x-screen > .c-masthead { flex: none; }
+.x-screen > .x-steps { flex: none; }
+.x-scroll--full { flex: 1; min-height: 0; height: auto; border: 0; padding: 0; }
+.x-strip { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); min-height: 2rem; }
+.x-strip__name { margin-right: auto; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
+.x-strip__back { display: inline-flex; align-items: center; gap: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); font-weight: var(--weight-medium); color: var(--fg); text-decoration: none; border-bottom: var(--hairline) solid transparent; }
+.x-strip__back:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
+.x-strip .c-button, .x-strip .c-segmented__item { min-height: 1.75rem; }
+.x-open { margin-right: var(--space-4); }
+@media (max-width: 900px) { .x-atelier > .x-stage { grid-template-rows: auto; } .x-screen { overflow: visible; padding: var(--space-5); } .x-scroll--full { flex: none; height: 26rem; } .x-strip__name { flex-basis: 100%; } }

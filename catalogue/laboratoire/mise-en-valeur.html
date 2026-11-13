@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONO — Atelier · La mise en valeur ordonnée</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+  <link rel="stylesheet" href="../assets/labo.css">
+  <script src="../assets/prefs.js"></script>
+</head>
+<body class="l-desk x-atelier">
+  <div class="x-stage" id="x1" data-colors="trois" data-order="priorite">
+    <div class="l-shell x-screen">
+      <header class="c-masthead">
+        <div class="c-masthead__title">Réseau — Relevé du matin</div>
+        <div class="c-masthead__meta"><span>Vendredi 13 novembre</span><span>16 agences</span><span class="c-logo c-logo--plain">Mono</span></div>
+      </header>
+      <div class="x-scroll x-scroll--full" tabindex="0" aria-label="Relevé du matin — faire défiler">
+                <table>
+                  <thead><tr><th>Réf.</th><th>Agence</th><th>État</th><th style="text-align: right">Relevé</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+                <div class="x-below" aria-live="polite"></div>
+              </div>
+      <div class="x-read" aria-live="polite"></div>
+    </div>
+    <ol class="x-steps">
+                <li class="is-on"><b>1 · Vous arrivez</b>Le rouge s'allume seul, puis l'orange, puis le vert : bloqué, à surveiller, rétabli. Chacune retombe en marque.</li>
+                <li><b>2 · Vous faites défiler</b>Ce qui attend plus bas est annoncé au bord. Chaque ligne se signale quand vous la découvrez.</li>
+                <li><b>3 · Un état change</b>Une ligne devient critique sous vos yeux : elle seule se signale. Rien de ce qui est déjà vu ne rejoue.</li>
+              </ol>
+    <footer class="x-strip">
+      <a class="x-strip__back" href="../laboratoire.html#mise-en-valeur"><i class="c-icon i-arrow-left" aria-hidden="true"></i>Laboratoire</a>
+      <span class="x-strip__name">Atelier 01 · La mise en valeur ordonnée</span>
+
+                <button class="c-button" type="button" data-replay><i class="c-icon i-refresh" aria-hidden="true"></i>Rejouer l'arrivée</button>
+                <button class="c-button" type="button" data-change>Simuler un changement</button>
+                <span class="x-bar__group"><span class="x-bar__label">Couleurs</span><span class="c-segmented" role="group" aria-label="Couleurs"><button class="c-segmented__item" type="button" data-set-colors="trois" aria-pressed="true">Trois</button><button class="c-segmented__item" type="button" data-set-colors="une" aria-pressed="false">Une seule</button></span></span>
+                <span class="x-bar__group"><span class="x-bar__label">Ordre</span><span class="c-segmented" role="group" aria-label="Ordre"><button class="c-segmented__item" type="button" data-set-order="priorite" aria-pressed="true">Par priorité</button><button class="c-segmented__item" type="button" data-set-order="ensemble" aria-pressed="false">Tout ensemble</button></span></span>
+      <a class="x-strip__back" href="../laboratoire.html#mise-en-valeur">Notice</a>
+    </footer>
+  </div>
+  <script src="../assets/labo.js"></script>
+</body>
+</html>

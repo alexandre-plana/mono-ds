@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONO — Atelier · Le geste récompensé</title>
+  <link rel="stylesheet" href="../../src/mono.css">
+  <link rel="stylesheet" href="../assets/labo.css">
+  <script src="../assets/prefs.js"></script>
+</head>
+<body class="l-desk x-atelier">
+  <div class="x-stage" id="x2" data-reward="avec">
+    <div class="l-shell x-screen x-screen--scroll">
+      <header class="c-masthead">
+        <div class="c-masthead__title">Réseau — Clôture du matin</div>
+        <div class="c-masthead__meta"><span>Vendredi 13 novembre</span><span>12 gestes</span><span class="c-logo c-logo--plain">Mono</span></div>
+      </header>
+      <div class="x-cases">
+
+                <section class="x-case" data-case="cocher">
+                  <h4>Cocher <span>Le tampon, le filet, puis le cachet</span></h4>
+                  <ul class="x-tasks">
+                    <li><label class="x-task"><input type="checkbox"><span>Relever les agences bloquées</span></label></li>
+                    <li><label class="x-task"><input type="checkbox"><span>Relancer Vizille</span></label></li>
+                    <li><label class="x-task"><input type="checkbox"><span>Valider le barème santé</span></label></li>
+                  </ul>
+                  <span class="x-stamp" aria-live="polite">Clôturé</span>
+                </section>
+
+                <section class="x-case" data-case="frappe">
+                  <h4>Appuyer <span>La frappe : le contour fait écho</span></h4>
+                  <div class="l-cluster"><button class="c-button x-hit" type="button">Exporter</button><button class="c-button c-button--primary x-hit" type="button">Enregistrer</button></div>
+                  <p class="x-note">Un bouton répond à l'appui comme une touche de machine : son contour part en onde, une fois.</p>
+                </section>
+
+                <section class="x-case" data-case="maintenir">
+                  <h4>Maintenir <span>Le contour se trace, puis le mot bascule</span></h4>
+                  <div class="l-cluster"><button class="c-button c-button--signal x-hold" type="button"><svg aria-hidden="true"><rect pathLength="100" x="1" y="1"></rect></svg><span data-flap>Maintenir pour supprimer</span></button></div>
+                  <p class="x-note">Pour l'irréversible : pas de fenêtre de confirmation, on garde le doigt appuyé une seconde. Relâcher plus tôt annule.</p>
+                </section>
+
+                <section class="x-case" data-case="palettes">
+                  <h4>Basculer <span>Le mot change comme un tableau d'affichage</span></h4>
+                  <label class="c-switch"><input type="checkbox" role="switch"><span class="x-flapword" data-flap>Suivi inactif</span></label>
+                  <p class="x-note">Les lettres défilent puis se fixent, de gauche à droite. Le mot dit l'état ; son changement se voit.</p>
+                </section>
+
+                <section class="x-case" data-case="compteur">
+                  <h4>Compter <span>Les chiffres roulent, un par un</span></h4>
+                  <div class="x-odo-row"><button class="c-button c-button--icon" type="button" data-odo="-37" aria-label="Moins"><i class="c-icon i-minus" aria-hidden="true"></i></button><span class="x-odo" data-value="412" aria-live="polite"></span><button class="c-button c-button--icon" type="button" data-odo="37" aria-label="Plus"><i class="c-icon i-plus" aria-hidden="true"></i></button><span class="x-bar__label">agences</span></div>
+                  <p class="x-note">Seuls les chiffres qui changent bougent, vers le haut si la valeur monte, vers le bas si elle descend.</p>
+                </section>
+
+                <section class="x-case" data-case="trier">
+                  <h4>Trier <span>Chaque ligne glisse à sa place</span></h4>
+                  <div class="l-cluster" style="--gap: var(--space-2)"><button class="c-chip" type="button" data-sort="nom" aria-pressed="true">Par nom</button><button class="c-chip" type="button" data-sort="effectif" aria-pressed="false">Par effectif</button><button class="c-chip" type="button" data-sort="primes" aria-pressed="false">Par primes</button></div>
+                  <ol class="x-sortlist"></ol>
+                </section>
+
+                <section class="x-case" data-case="saisir">
+                  <h4>Saisir juste <span>Le pointillé se tire en plein</span></h4>
+                  <label class="x-valid"><input type="text" maxlength="8" placeholder="WAP375CD" spellcheck="false" autocomplete="off" aria-label="Référence : trois lettres, trois chiffres, deux lettres"><span class="x-valid__ok" aria-live="polite">[ ok ]</span></label>
+                  <p class="x-note">Trois lettres, trois chiffres, deux lettres. Au huitième caractère juste, la ligne se ferme.</p>
+                </section>
+
+                <section class="x-case" data-case="copier">
+                  <h4>Copier <span>Le double carbone</span></h4>
+                  <div class="x-carbon"><code class="x-carbon__text">D-041 / WAP375CD</code><button class="c-button c-button--quiet" type="button" data-carbon><i class="c-icon i-copy" aria-hidden="true"></i><span>Copier</span></button></div>
+                  <p class="x-note">Un double du texte se décolle, d'un cran, puis s'efface : on a vu ce qui est parti.</p>
+                </section>
+
+                <section class="x-case" data-case="regler">
+                  <h4>Régler <span>Les crans répondent, la butée se ferme</span></h4>
+                  <input class="c-range x-detent" type="range" min="0" max="100" step="10" value="40" style="--value: 40" aria-label="Seuil">
+                  <div class="x-ticks" aria-hidden="true"></div>
+                  <div class="x-read"><span>Seuil <b data-detent>40 %</b></span><span class="x-butee">[ butée ]</span></div>
+                </section>
+
+                <section class="x-case" data-case="envoyer">
+                  <h4>Envoyer <span>La ligne part au journal</span></h4>
+                  <ol class="x-log" aria-live="polite"><li><time>09:12</time><span>Vizille relancée.</span></li></ol>
+                  <form class="x-send"><input type="text" placeholder="Écrire, puis Entrée" autocomplete="off" aria-label="Message"><kbd class="c-kbd" aria-hidden="true">↵</kbd></form>
+                </section>
+
+                <section class="x-case" data-case="lire">
+                  <h4>Lire jusqu'au bout <span class="x-done">[ lu ]</span></h4>
+                  <div class="x-readbox" tabindex="0" aria-label="Note de service — faire défiler jusqu'au bout">
+                    <p>La reprise des contrats de Vizille est attendue pour la fin de semaine. D'ici là, les trois agences du Sud restent en attente.</p>
+                    <p>Le barème santé entre en vigueur au premier du mois. Chaque responsable confirme sa lecture avant mercredi.</p>
+                    <p>Le rapport du troisième trimestre est clos. Les écarts de plus de deux points sont commentés en annexe.</p>
+                    <p>Prochaine réunion de réseau : jeudi, 14 heures.</p>
+                  </div>
+                  <div class="x-progress" role="progressbar" aria-label="Lecture" aria-valuemin="0" aria-valuemax="100"></div>
+                </section>
+
+                <section class="x-case" data-case="ouvrir">
+                  <h4>Ouvrir <span>Le titre se compose</span></h4>
+                  <details class="x-fold"><summary><span>Pièces jointes</span></summary><p>Rapport T3 (PDF, 3,1 Mo) · Barème santé (CSV, 248 Ko).</p></details>
+                  <details class="x-fold"><summary><span>Destinataires</span></summary><p>M. Delorme, P. Vidal, L. Brun, S. Garcin.</p></details>
+                  <details class="x-fold"><summary><span>Historique</span></summary><p>Rédigée le 12 novembre, relue le 13.</p></details>
+                </section>
+
+              </div>
+    </div>
+    <footer class="x-strip">
+      <a class="x-strip__back" href="../laboratoire.html#geste-recompense"><i class="c-icon i-arrow-left" aria-hidden="true"></i>Laboratoire</a>
+      <span class="x-strip__name">Atelier 02 · Le geste récompensé</span>
+
+                <span class="x-bar__group"><span class="x-bar__label">Récompenses</span><span class="c-segmented" role="group" aria-label="Récompenses"><button class="c-segmented__item" type="button" data-set-reward="avec" aria-pressed="true">Avec</button><button class="c-segmented__item" type="button" data-set-reward="sans" aria-pressed="false">Sans</button></span></span>
+                <button class="c-button" type="button" data-reset><i class="c-icon i-undo" aria-hidden="true"></i>Recommencer</button>
+                <span class="x-bar__group"><span class="x-bar__label">Gestes aboutis</span><span class="x-tally" data-tally aria-hidden="true"></span><span class="x-bar__label" data-uses aria-live="polite">0</span></span>
+      <a class="x-strip__back" href="../laboratoire.html#geste-recompense">Notice</a>
+    </footer>
+  </div>
+  <script src="../assets/labo.js"></script>
+</body>
+</html>

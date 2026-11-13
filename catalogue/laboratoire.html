@@ -27,7 +27,8 @@
           <h1 class="t-spaced t-large">Laboratoire</h1>
           <p class="cat-lede">Des idées d'interface peu communes, essayées une par une. Rien ici ne fait partie du système : une expérience peut enfreindre une règle de MONO, c'est même parfois son objet.</p>
           <dl class="x-research">
-            <dt>Une à la fois</dt><dd>Chaque expérience a sa rubrique et son scénario. Elles ne se combinent pas : on ne juge bien qu'une idée isolée.</dd>
+            <dt>Une à la fois</dt><dd>Chaque expérience a sa rubrique et son atelier. Elles ne se combinent pas : on ne juge bien qu'une idée isolée.</dd>
+            <dt>Dans son propre écran</dt><dd>Un atelier s'ouvre en plein écran, sans la ligne système, les onglets ni la marge de ce catalogue : rien autour ne doit influencer ce que l'on juge. Cette page n'en garde que la notice — l'hypothèse, l'état de l'art, ce qu'on regarde.</dd>
             <dt>D'abord l'état de l'art</dt><dd>Chaque expérience s'ouvre sur ce que l'on sait déjà, sources à l'appui, et dit ce qui n'est pas établi.</dd>
             <dt>Sortir du laboratoire</dt><dd>Une idée n'entre dans le système que par une décision écrite, et réécrite avec ses rôles. Les classes <code>.x-</code> et les couleurs <code>--x-</code> restent ici.</dd>
           </dl>
@@ -37,29 +38,7 @@
           <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>La mise en valeur ordonnée</span><span class="c-section-head__aside">Expérience en cours</span></h2>
           <p><span class="t-strong">L'hypothèse.</span> Quand on arrive sur un écran, tout ce qui compte se présente en même temps, et l'œil choisit au hasard. Si l'on faisait l'inverse : ce qui compte se signale un instant, dans l'ordre de son importance — le critique d'abord, seul ; puis ce qui est à surveiller ; puis ce qui est rétabli — et retombe aussitôt en simple marque. Même chose quand on fait défiler : une ligne ne se signale qu'au moment où on la découvre, une seule fois.</p>
 
-          <div class="cat-demo">
-            <div class="x-stage" id="x1" data-colors="trois" data-order="priorite">
-              <ol class="x-steps">
-                <li class="is-on"><b>1 · Vous arrivez</b>Le rouge s'allume seul, puis l'orange, puis le vert : bloqué, à surveiller, rétabli. Chacune retombe en marque.</li>
-                <li><b>2 · Vous faites défiler</b>Ce qui attend plus bas est annoncé au bord. Chaque ligne se signale quand vous la découvrez.</li>
-                <li><b>3 · Un état change</b>Une ligne devient critique sous vos yeux : elle seule se signale. Rien de ce qui est déjà vu ne rejoue.</li>
-              </ol>
-              <div class="x-bar">
-                <button class="c-button" type="button" data-replay><i class="c-icon i-refresh" aria-hidden="true"></i>Rejouer l'arrivée</button>
-                <button class="c-button" type="button" data-change>Simuler un changement</button>
-                <span class="x-bar__group"><span class="x-bar__label">Couleurs</span><span class="c-segmented" role="group" aria-label="Couleurs"><button class="c-segmented__item" type="button" data-set-colors="trois" aria-pressed="true">Trois</button><button class="c-segmented__item" type="button" data-set-colors="une" aria-pressed="false">Une seule</button></span></span>
-                <span class="x-bar__group"><span class="x-bar__label">Ordre</span><span class="c-segmented" role="group" aria-label="Ordre"><button class="c-segmented__item" type="button" data-set-order="priorite" aria-pressed="true">Par priorité</button><button class="c-segmented__item" type="button" data-set-order="ensemble" aria-pressed="false">Tout ensemble</button></span></span>
-              </div>
-              <div class="x-scroll" tabindex="0" aria-label="Relevé du matin — faire défiler">
-                <table>
-                  <thead><tr><th>Réf.</th><th>Agence</th><th>État</th><th style="text-align: right">Relevé</th></tr></thead>
-                  <tbody></tbody>
-                </table>
-                <div class="x-below" aria-live="polite"></div>
-              </div>
-              <div class="x-read" aria-live="polite"></div>
-            </div>
-          </div>
+          <p><a class="c-button x-open" href="laboratoire/mise-en-valeur.html">Ouvrir l'atelier<i class="c-icon i-arrow-right" aria-hidden="true"></i></a> <span class="x-note">Plein écran, hors du catalogue : un relevé du matin de seize agences.</span></p>
 
           <dl class="x-research">
             <dt>État de l'art</dt><dd>Le <a href="https://www.oreilly.com/library/view/ajax-design-patterns/0596101805/ch16.html">« fondu jaune »</a> des débuts d'Ajax fait déjà cela pour un changement : une teinte vive qui retombe, le temps que l'œil se pose. La pratique le recommande ; je n'ai pas trouvé d'étude contrôlée qui en mesure l'effet.</dd>
@@ -75,101 +54,7 @@
           <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Le geste récompensé</span><span class="c-section-head__aside">Expérience en cours</span></h2>
           <p><span class="t-strong">L'hypothèse.</span> Une interface sobre peut encore faire plaisir à manier. Chaque geste qui aboutit — cocher, appuyer, trier, saisir juste, envoyer, arriver au bout — reçoit en retour un petit mouvement net, plus généreux que le geste ne l'exige, mais bref, typographique et sans couleur. Et la récompense s'use : répétée, elle s'abrège, pour ne jamais devenir une attente.</p>
 
-          <div class="cat-demo">
-            <div class="x-stage" id="x2" data-reward="avec">
-              <div class="x-bar">
-                <span class="x-bar__group"><span class="x-bar__label">Récompenses</span><span class="c-segmented" role="group" aria-label="Récompenses"><button class="c-segmented__item" type="button" data-set-reward="avec" aria-pressed="true">Avec</button><button class="c-segmented__item" type="button" data-set-reward="sans" aria-pressed="false">Sans</button></span></span>
-                <button class="c-button" type="button" data-reset><i class="c-icon i-undo" aria-hidden="true"></i>Recommencer</button>
-                <span class="x-bar__group"><span class="x-bar__label">Gestes aboutis</span><span class="x-tally" data-tally aria-hidden="true"></span><span class="x-bar__label" data-uses aria-live="polite">0</span></span>
-              </div>
-              <div class="x-cases">
-
-                <section class="x-case" data-case="cocher">
-                  <h4>Cocher <span>Le tampon, le filet, puis le cachet</span></h4>
-                  <ul class="x-tasks">
-                    <li><label class="x-task"><input type="checkbox"><span>Relever les agences bloquées</span></label></li>
-                    <li><label class="x-task"><input type="checkbox"><span>Relancer Vizille</span></label></li>
-                    <li><label class="x-task"><input type="checkbox"><span>Valider le barème santé</span></label></li>
-                  </ul>
-                  <span class="x-stamp" aria-live="polite">Clôturé</span>
-                </section>
-
-                <section class="x-case" data-case="frappe">
-                  <h4>Appuyer <span>La frappe : le contour fait écho</span></h4>
-                  <div class="l-cluster"><button class="c-button x-hit" type="button">Exporter</button><button class="c-button c-button--primary x-hit" type="button">Enregistrer</button></div>
-                  <p class="x-note">Un bouton répond à l'appui comme une touche de machine : son contour part en onde, une fois.</p>
-                </section>
-
-                <section class="x-case" data-case="maintenir">
-                  <h4>Maintenir <span>Le contour se trace, puis le mot bascule</span></h4>
-                  <div class="l-cluster"><button class="c-button c-button--signal x-hold" type="button"><svg aria-hidden="true"><rect pathLength="100" x="1" y="1"></rect></svg><span data-flap>Maintenir pour supprimer</span></button></div>
-                  <p class="x-note">Pour l'irréversible : pas de fenêtre de confirmation, on garde le doigt appuyé une seconde. Relâcher plus tôt annule.</p>
-                </section>
-
-                <section class="x-case" data-case="palettes">
-                  <h4>Basculer <span>Le mot change comme un tableau d'affichage</span></h4>
-                  <label class="c-switch"><input type="checkbox" role="switch"><span class="x-flapword" data-flap>Suivi inactif</span></label>
-                  <p class="x-note">Les lettres défilent puis se fixent, de gauche à droite. Le mot dit l'état ; son changement se voit.</p>
-                </section>
-
-                <section class="x-case" data-case="compteur">
-                  <h4>Compter <span>Les chiffres roulent, un par un</span></h4>
-                  <div class="x-odo-row"><button class="c-button c-button--icon" type="button" data-odo="-37" aria-label="Moins"><i class="c-icon i-minus" aria-hidden="true"></i></button><span class="x-odo" data-value="412" aria-live="polite"></span><button class="c-button c-button--icon" type="button" data-odo="37" aria-label="Plus"><i class="c-icon i-plus" aria-hidden="true"></i></button><span class="x-bar__label">agences</span></div>
-                  <p class="x-note">Seuls les chiffres qui changent bougent, vers le haut si la valeur monte, vers le bas si elle descend.</p>
-                </section>
-
-                <section class="x-case" data-case="trier">
-                  <h4>Trier <span>Chaque ligne glisse à sa place</span></h4>
-                  <div class="l-cluster" style="--gap: var(--space-2)"><button class="c-chip" type="button" data-sort="nom" aria-pressed="true">Par nom</button><button class="c-chip" type="button" data-sort="effectif" aria-pressed="false">Par effectif</button><button class="c-chip" type="button" data-sort="primes" aria-pressed="false">Par primes</button></div>
-                  <ol class="x-sortlist"></ol>
-                </section>
-
-                <section class="x-case" data-case="saisir">
-                  <h4>Saisir juste <span>Le pointillé se tire en plein</span></h4>
-                  <label class="x-valid"><input type="text" maxlength="8" placeholder="WAP375CD" spellcheck="false" autocomplete="off" aria-label="Référence : trois lettres, trois chiffres, deux lettres"><span class="x-valid__ok" aria-live="polite">[ ok ]</span></label>
-                  <p class="x-note">Trois lettres, trois chiffres, deux lettres. Au huitième caractère juste, la ligne se ferme.</p>
-                </section>
-
-                <section class="x-case" data-case="copier">
-                  <h4>Copier <span>Le double carbone</span></h4>
-                  <div class="x-carbon"><code class="x-carbon__text">D-041 / WAP375CD</code><button class="c-button c-button--quiet" type="button" data-carbon><i class="c-icon i-copy" aria-hidden="true"></i><span>Copier</span></button></div>
-                  <p class="x-note">Un double du texte se décolle, d'un cran, puis s'efface : on a vu ce qui est parti.</p>
-                </section>
-
-                <section class="x-case" data-case="regler">
-                  <h4>Régler <span>Les crans répondent, la butée se ferme</span></h4>
-                  <input class="c-range x-detent" type="range" min="0" max="100" step="10" value="40" style="--value: 40" aria-label="Seuil">
-                  <div class="x-ticks" aria-hidden="true"></div>
-                  <div class="x-read"><span>Seuil <b data-detent>40 %</b></span><span class="x-butee">[ butée ]</span></div>
-                </section>
-
-                <section class="x-case" data-case="envoyer">
-                  <h4>Envoyer <span>La ligne part au journal</span></h4>
-                  <ol class="x-log" aria-live="polite"><li><time>09:12</time><span>Vizille relancée.</span></li></ol>
-                  <form class="x-send"><input type="text" placeholder="Écrire, puis Entrée" autocomplete="off" aria-label="Message"><kbd class="c-kbd" aria-hidden="true">↵</kbd></form>
-                </section>
-
-                <section class="x-case" data-case="lire">
-                  <h4>Lire jusqu'au bout <span class="x-done">[ lu ]</span></h4>
-                  <div class="x-readbox" tabindex="0" aria-label="Note de service — faire défiler jusqu'au bout">
-                    <p>La reprise des contrats de Vizille est attendue pour la fin de semaine. D'ici là, les trois agences du Sud restent en attente.</p>
-                    <p>Le barème santé entre en vigueur au premier du mois. Chaque responsable confirme sa lecture avant mercredi.</p>
-                    <p>Le rapport du troisième trimestre est clos. Les écarts de plus de deux points sont commentés en annexe.</p>
-                    <p>Prochaine réunion de réseau : jeudi, 14 heures.</p>
-                  </div>
-                  <div class="x-progress" role="progressbar" aria-label="Lecture" aria-valuemin="0" aria-valuemax="100"></div>
-                </section>
-
-                <section class="x-case" data-case="ouvrir">
-                  <h4>Ouvrir <span>Le titre se compose</span></h4>
-                  <details class="x-fold"><summary><span>Pièces jointes</span></summary><p>Rapport T3 (PDF, 3,1 Mo) · Barème santé (CSV, 248 Ko).</p></details>
-                  <details class="x-fold"><summary><span>Destinataires</span></summary><p>M. Delorme, P. Vidal, L. Brun, S. Garcin.</p></details>
-                  <details class="x-fold"><summary><span>Historique</span></summary><p>Rédigée le 12 novembre, relue le 13.</p></details>
-                </section>
-
-              </div>
-            </div>
-          </div>
+          <p><a class="c-button x-open" href="laboratoire/geste-recompense.html">Ouvrir l'atelier<i class="c-icon i-arrow-right" aria-hidden="true"></i></a> <span class="x-note">Plein écran, hors du catalogue : douze gestes à essayer, avec ou sans récompense.</span></p>
 
           <dl class="x-research">
             <dt>État de l'art</dt><dd>Le jeu vidéo appelle cela le « jus » : une réponse plus riche que le geste ne le demande (la conférence <a href="https://hn.jakechampion.name/reader/https://medium.com/@mezoistvan/juicy-ui-why-the-smallest-interactions-make-the-biggest-difference-5cb5a5ffc752">« Juice it or lose it »</a>, 2012). Les guides d'interface en font un retour d'état utile. Les chiffres de satisfaction ou de fidélité que l'on voit cités viennent de blogs sans source vérifiable : je ne les reprends pas.</dd>
@@ -190,6 +75,5 @@
   </div>
   <script src="assets/search-index.js"></script>
   <script src="assets/catalogue.js"></script>
-  <script src="assets/labo.js"></script>
 </body>
 </html>
