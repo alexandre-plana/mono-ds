@@ -124,6 +124,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-101 | Expérience 03 : l'ordre et le rythme | remplacée par D-103 (les reclassements comparés disparaissent) |
 | D-102 | Laboratoire, expérience 04 : l'attention arbitrée ; la bande des ateliers tient en une ligne | l'expérience fondue dans D-103 ; la bande en vigueur |
 | D-103 | Laboratoire : les expériences 03 et 04 n'en font qu'une, avec le langage visuel de la 01 | en vigueur |
+| D-104 | Laboratoire, expérience 04 : les formes du direct | en vigueur |
 
 ---
 
@@ -978,3 +979,16 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Ce qui disparaît** : la comparaison des trois reclassements (immédiat, différé, au calme), de l'affichage par lots et des arrivées insérées ou en attente (D-101). L'arbitrage les remplace : l'important tout de suite, le reste à l'accalmie, en une vague et un seul reclassement ; les arrivées passent avec la réserve.
 - **Conséquence pour les règles** : l'atelier enfreint désormais « une seule couleur », comme la 01. « Une seule » montre la version qui resterait dans la règle.
 - **Statut** : en cours, sans verdict.
+
+## D-104 — Laboratoire, expérience 04 : les formes du direct
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« d'autres modes de visualisation de données en temps réel : carte proportionnelle, flux d'activité… des choses novatrices »)
+- **La question** : quelle forme donner à un flux pour y lire à la fois ce qui vient d'arriver, ce qui s'est passé depuis un moment, et où l'on en est.
+- **L'atelier** : un seul flux simulé (douze agences, quatre régions), quatre formes, une à la fois ou côte à côte — c'est la forme que l'on juge, non les données. Le numéro 04, libéré par D-103, est repris.
+- **La carte qui respire** : carte proportionnelle dont les cases ne changent jamais de place ; quand l'une change, le contour tireté de son ancienne taille reste un instant.
+- **La bande à temps élastique** : un trait par événement, le temps qui coule ; les quinze dernières secondes occupent plus de la moitié de la largeur, les cinq minutes d'avant se serrent dans le reste.
+- **Le journal qui se résume** : une ligne par événement, puis une par agence après douze secondes, puis une par région après une minute ; le compte reste juste.
+- **Les sédiments** : un grain par événement, qui tombe et s'empile ; les anciens se tassent en strates. Repris de la « sédimentation visuelle » (Huron, Vuillemot, Fekete, 2013).
+- **Principes communs** : rien ne défile, rien ne déplace ce qu'on lit ; ce qui vieillit se compresse au lieu de disparaître ; aucune couleur hormis le signal, la direction se dit par la forme.
+- **Particularité** : aucune règle enfreinte ; ces formes pourraient rejoindre les visualisations du système.
+- **Technique** : `catalogue/assets/labo-formes.js`, deux des formes dessinées sur canevas avec les rôles lus dans la feuille de style.

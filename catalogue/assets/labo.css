@@ -289,3 +289,38 @@
 .x-live .x-row.x-flash td.nm > span::before, .x-live .x-row.x-flash .x-held { background: var(--x-on); outline-color: var(--x-on); }
 .x-live .x-row.x-flash .x-follow { border-bottom-color: transparent; }
 .x-live .x-below { z-index: 4; }
+
+/* --- Expérience 04 : les formes du direct ----------------------------------- */
+.x-forms { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6) var(--space-8); }
+.x-forms.is-four { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); }
+.x-pane { min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.x-pane > h4 { flex: none; margin: 0; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); font-weight: var(--weight-medium); color: var(--fg-strong); }
+.x-pane > div { flex: 1; min-height: 0; position: relative; }
+.x-canvas { overflow: hidden; }
+/* La carte : des colonnes par région, des cases par agence. Aucun fond : des filets, et le blanc entre les cases. */
+.x-map { display: flex; gap: var(--space-3); }
+.x-map__col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--space-2); transition: flex-grow 700ms cubic-bezier(.2, .8, .2, 1); }
+.x-map__reg { flex: none; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
+.x-map__cell { flex: 1 1 0; min-height: 1.75rem; overflow: hidden; display: flex; flex-wrap: wrap; align-items: baseline; align-content: flex-start; gap: 0 var(--space-3); padding: var(--space-2) var(--space-3); border: var(--hairline) solid var(--line-strong); color: var(--fg-soft); transition: flex-grow 700ms cubic-bezier(.2, .8, .2, 1), border-color 400ms; }
+.x-map__name { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); white-space: nowrap; }
+.x-map__name { flex: 1 1 auto; }
+.x-map__val { font-size: var(--text-base); line-height: var(--leading-base); font-variant-numeric: tabular-nums; color: var(--fg); }
+.x-map__d { font-size: var(--text-small); font-variant-numeric: tabular-nums; color: var(--fg-strong); min-height: 1em; }
+.x-map__cell.is-fresh { animation: x-mapfresh 14s linear 1 both; } .x-map__cell.is-fresh .x-map__val { animation: x-cool 14s linear 1 both; }
+@keyframes x-mapfresh { 0%, 15% { border-color: var(--fg-strong); } 100% { border-color: var(--line-strong); } }
+.x-map__cell.is-blocked .x-map__name::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: var(--space-2); background: var(--signal); }
+/* L'ancienne taille : un contour tireté — une relation entre avant et maintenant — qui s'efface. */
+.x-map__ghost { position: absolute; z-index: 2; border: var(--hairline) dashed var(--fg-strong); pointer-events: none; animation: x-thread 3.4s ease-out 1 both; }
+/* Le journal en trois strates : l'instant, la minute, l'avant. */
+.x-fold3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-7); align-content: start; overflow: hidden; }
+.x-forms.is-four .x-fold3 { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } .x-forms.is-four .x-fold3 > section:last-child { display: none; }
+.x-fold3 h5 { margin: 0 0 var(--space-2); display: flex; justify-content: space-between; padding-bottom: var(--space-2); border-bottom: var(--hairline) solid var(--line); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); font-weight: var(--weight-regular); color: var(--fg-muted); } .x-fold3 h5 span { color: var(--fg-strong); font-variant-numeric: tabular-nums; }
+.x-jl { list-style: none; margin: 0; padding: 0; display: grid; }
+.x-jl li { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr) 4.5rem minmax(0, 7.5rem); column-gap: var(--space-3); align-items: baseline; padding: 3px 0; font-size: var(--text-small); color: var(--fg-soft); white-space: nowrap; overflow: hidden; }
+.x-jl time { font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-muted); font-variant-numeric: tabular-nums; } .x-jl b { color: var(--fg); font-weight: var(--weight-regular); overflow: hidden; text-overflow: ellipsis; } .x-jl li > span { font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
+.x-jl li.is-in b { color: var(--fg-strong); font-weight: var(--weight-medium); } .x-jl li.is-in { animation: x-rise 260ms ease-out 1; } .x-jl li.is-empty { display: block; color: var(--fg-muted); }
+@media (max-width: 900px) { .x-forms.is-four, .x-fold3 { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; row-gap: var(--space-5); } .x-pane > div { min-height: 18rem; } .x-screen:has(.x-forms) { overflow: visible; } }
+
+.x-forms.is-four .x-jl li { grid-template-columns: 4.5rem minmax(5rem, 1fr) 5.5rem; } .x-forms.is-four .x-jl li > span:last-child { display: none; }
+.x-forms:not(.is-four) .x-map__val { font-size: var(--text-large, 1.25rem); line-height: 1.2; flex-basis: 100%; } .x-forms:not(.is-four) .x-map__cell { padding: var(--space-3) var(--space-4); }
+@media (max-width: 900px) { .x-strip > .x-bar__group { flex: 0 1 auto; min-width: 0; } .x-strip .c-segmented { flex-wrap: wrap; row-gap: 1px; } .x-map { flex-wrap: wrap; } .x-map__col { flex-basis: 40%; min-height: 12rem; } }
