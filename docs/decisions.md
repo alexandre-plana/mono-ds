@@ -102,6 +102,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-079 | Les voisins du fil se déplient en ligne ; un menu se survole par un filet, jamais par un fond | en vigueur, étendue aux contrôles par D-080 |
 | D-080 | Survol d'un contrôle : le contour se renforce, le fond ne change pas | en vigueur |
 | D-081 | Saisie : les contrôles courants qui manquaient | en vigueur |
+| D-082 | Fil d'Ariane : la rangée de voisins est la sœur du cran ; le serveur local interdit le cache | en vigueur |
 
 ---
 
@@ -768,3 +769,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Non retenu : l'avatar.** Une personne s'écrit par son nom — « M. Delorme » —, comme dans les références. Une pastille d'initiales serait un rond décoratif de plus, et le rayon est nul. À rouvrir seulement si un écran doit distinguer des personnes d'un coup d'œil dans une colonne étroite.
 - **Catalogue** : le fil d'Ariane et la pagination ont chacun leur fiche. Toutes les nouvelles démonstrations répondent (D-075).
 - **Limites** : le format affiché d'une date native dépend de la langue du navigateur ; la liste ouverte d'un `<select>` reste native hors de `base-select` (D-074).
+
+## D-082 — Fil d'Ariane : la rangée de voisins est la sœur du cran ; le serveur local interdit le cache
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Signalée par** : le commanditaire (captures : le cran à la ligne avec sa flèche native, les voisins collés sans espace) · **Amende** : le balisage de D-079 (le dessin ne change pas)
+- **Constat** : chez le commanditaire, le fil s'affichait sans ses styles. Deux causes possibles, toutes deux réelles. Le serveur local (`python -m http.server`) laisse le navigateur garder en cache les feuilles importées : un script à jour tournait sur une feuille périmée. Et le balisage de D-079 rangeait la rangée dans le `<details>` puis l'en sortait par `display: contents` et `::details-content`, que tous les navigateurs ne connaissent pas ; je n'ai pu le vérifier que sous Chromium.
+- **Décision 1** : la rangée (`.c-breadcrumb__row`) s'écrit juste après son cran, comme sa sœur ; le cran fermé la masque par un simple sélecteur d'adjacence. Plus aucune dépendance à une fonction récente.
+- **Décision 2** : `npm run serve` lance un serveur Node sans dépendance qui répond `Cache-Control: no-store`. Il remplace l'appel à Python (et la différence `py -3` / `python3`).
+- **Limite** : vérifié sous Chromium seulement, faute d'autre moteur dans l'environnement de travail. Derrière un hébergement statique, le cache reste celui de l'hébergeur.

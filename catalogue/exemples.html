@@ -132,7 +132,7 @@
       document.addEventListener('mono:theme', thumbs); thumbs();
       if (!NAMES[e]) return;
       document.getElementById('ex-list').hidden = true; frame.hidden = false; frame.src = `exemples/${e}.html`; frame.title = NAMES[e];
-      document.getElementById('ex-crumbs').innerHTML = `<a href="index.html">Catalogue</a><a href="exemples.html">Exemples</a><details class="c-breadcrumb__seg" name="fil" aria-current="page"><summary>${NAMES[e]}<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary><div class="c-breadcrumb__row">${Object.entries(NAMES).map(([k, n]) => `<a href="exemples.html?e=${k}"${k === e ? ' aria-current="true"' : ''}>${n}</a>`).join('')}</div></details>`;
+      document.getElementById('ex-crumbs').innerHTML = `<a href="index.html">Catalogue</a><a href="exemples.html">Exemples</a><details class="c-breadcrumb__seg" name="fil" aria-current="page"><summary>${NAMES[e]}<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary></details><div class="c-breadcrumb__row">${Object.entries(NAMES).map(([k, n]) => `<a href="exemples.html?e=${k}"${k === e ? ' aria-current="true"' : ''}>${n}</a>`).join('')}</div>`;
       const alone = document.getElementById('ex-alone'); alone.hidden = false; alone.href = `exemples/${e}.html`;
       document.title = `${NAMES[e]} — Exemples — MONO`;
       const rail = document.querySelector('.cat-rail'); rail.style.paddingTop = 'var(--space-4)'; document.querySelector('.cat-main').style.cssText = 'max-width: none; padding-bottom: 0';

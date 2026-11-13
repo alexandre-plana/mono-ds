@@ -172,23 +172,23 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-breadcrumb--head [aria-current] { color: var(--fg-strong); }
 .c-breadcrumb [aria-current] { color: var(--fg); }
 /* Un cran du fil peut déplier ses voisins (même niveau, même parent) : une rangée sous le fil, dans la
-   page — rien ne flotte. On change de voisin sans remonter.
-   <details class="c-breadcrumb__seg" name="fil"><summary>Plan<i class="c-icon i-chevron-down"></i></summary>
-     <div class="c-breadcrumb__row"><a href>Menu</a><a href aria-current="true">Plan</a>…</div></details>
+   page — rien ne flotte. On change de voisin sans remonter. La rangée est la sœur du cran, pas son enfant :
+   <details class="c-breadcrumb__seg" name="fil"><summary>Plan<i class="c-icon i-chevron-down"></i></summary></details>
+   <div class="c-breadcrumb__row"><a href>Menu</a><a href aria-current="true">Plan</a>…</div>
    Le même name sur tous les crans : un seul déplié à la fois. Le premier cran reste un lien. */
 .c-breadcrumb { align-items: baseline; }
-.c-breadcrumb__seg { display: contents; }
-.c-breadcrumb > .c-breadcrumb__seg::before { margin-right: 0; }
+.c-breadcrumb__seg { display: inline-flex; align-items: baseline; }
 .c-breadcrumb__seg > summary { list-style: none; display: inline-flex; align-items: baseline; gap: var(--space-1); color: var(--fg-soft); cursor: pointer; transition: color var(--duration); }
 .c-breadcrumb__seg > summary::-webkit-details-marker { display: none; }
+.c-breadcrumb__seg > summary::marker { content: ''; }
 .c-breadcrumb__seg > summary .c-icon { align-self: center; color: var(--fg-muted); }
 .c-breadcrumb__seg[open] > summary .c-icon { transform: scaleY(-1); }
 .c-breadcrumb__seg > summary:hover, .c-breadcrumb__seg[open] > summary, .c-breadcrumb__seg > summary:hover .c-icon, .c-breadcrumb__seg[open] > summary .c-icon { color: var(--fg-strong); }
 .c-breadcrumb__seg[aria-current] > summary { color: var(--fg); }
 .c-breadcrumb--head .c-breadcrumb__seg[aria-current] > summary { color: var(--fg-strong); }
-.c-breadcrumb__seg::details-content { display: contents; }
 .c-breadcrumb__row { order: 1; flex: 0 0 100%; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-6); margin-top: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); }
-.c-breadcrumb__seg:not([open]) > .c-breadcrumb__row { display: none; }
+.c-breadcrumb > .c-breadcrumb__row::before { content: none; }
+.c-breadcrumb__seg:not([open]) + .c-breadcrumb__row { display: none; }
 .c-breadcrumb__row a { padding-bottom: var(--space-1); border-bottom: var(--stroke) solid transparent; color: var(--fg-soft); }
 .c-breadcrumb__row a[aria-current] { border-bottom-color: var(--selected-line); color: var(--fg-strong); }
 

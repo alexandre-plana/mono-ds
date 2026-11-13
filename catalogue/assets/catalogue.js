@@ -126,7 +126,7 @@
     // Le fil d'Ariane ramène, et chaque cran déplie ses voisins en ligne sous le fil : on passe d'un
     // composant au suivant sans remonter. La rangée reste dépliée tant qu'on navigue à ce niveau.
     const was = crumb?.querySelector('.c-breadcrumb__seg[open]')?.dataset.level;
-    const seg = (level, name, items) => `<details class="c-breadcrumb__seg" name="fil" data-level="${level}"${was === level ? ' open' : ''}><summary>${name}<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary><div class="c-breadcrumb__row">${items}</div></details>`;
+    const seg = (level, name, items) => `<details class="c-breadcrumb__seg" name="fil" data-level="${level}"${was === level ? ' open' : ''}><summary>${name}<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary></details><div class="c-breadcrumb__row">${items}</div>`;
     const link = (x, name, on) => `<a href="#${x.id}"${on ? ' aria-current="true"' : ''}>${name}</a>`;
     if (crumb) { crumb.innerHTML = root ? crumb0 : crumb0.replace(/<span aria-current="page">[^<]*<\/span>/, `<a href="#">${pageName}</a>`) + seg('rubrique', label(sec), sections.map((x) => link(x, label(x), x === sec)).join('')) + (sub ? seg('element', short(sub), sec.subs.map((x) => link(x, short(x), x === sub)).join('')) : ''); crumb.querySelector(':scope > details:last-of-type')?.setAttribute('aria-current', 'page'); }
     if (first) return;

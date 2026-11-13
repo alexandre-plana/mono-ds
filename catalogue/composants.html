@@ -1222,17 +1222,17 @@
                 <a href="#navigation">Réseau</a>
                 <details class="c-breadcrumb__seg" name="fil-demo" aria-current="page" open>
                   <summary>Agences<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary>
-                  <div class="c-breadcrumb__row">
-                    <a href="#navigation">Synthèse</a>
-                    <a href="#navigation" aria-current="true">Agences</a>
-                    <a href="#navigation">Branches</a>
-                  </div>
                 </details>
+                <div class="c-breadcrumb__row">
+                  <a href="#navigation">Synthèse</a>
+                  <a href="#navigation" aria-current="true">Agences</a>
+                  <a href="#navigation">Branches</a>
+                </div>
               </nav>
             </div>
             <dl class="cat-spec">
               <div><dt>Employer</dt><dd>Situer une page à plus de deux niveaux de profondeur. Avec <code>--head</code>, il tient lieu de titre en tête d'une page à onglets.</dd></div>
-              <div><dt>Voisins</dt><dd>Un cran peut déplier ses voisins (<code>.c-breadcrumb__seg</code>, <code>.c-breadcrumb__row</code>) : une rangée sous le fil, dans la page, le courant souligné du contour de sélection. Rien ne flotte. Un seul cran déplié à la fois (même <code>name</code>). À réserver aux crans à l'intérieur de la page ; le premier cran reste un lien, un cran sans voisin reste un texte.</dd></div>
+              <div><dt>Voisins</dt><dd>Un cran peut déplier ses voisins (<code>.c-breadcrumb__seg</code>, <code>.c-breadcrumb__row</code>) : une rangée sous le fil, dans la page, le courant souligné du contour de sélection. Rien ne flotte. La rangée est écrite juste après son cran, comme sa sœur. Un seul cran déplié à la fois (même <code>name</code>). À réserver aux crans à l'intérieur de la page ; le premier cran reste un lien, un cran sans voisin reste un texte.</dd></div>
               <div><dt>Éviter</dt><dd>Sur une page de premier niveau. Comme navigation principale d'une application arborescente : c'est la ligne de tête (<code>.c-pathnav</code>).</dd></div>
               <div><dt>Accessibilité</dt><dd><code>&lt;nav aria-label&gt;</code> ; position courante en <code>aria-current</code>. Un cran dépliable est un <code>&lt;details&gt;</code> : Entrée ou Espace l'ouvre.</dd></div>
             </dl>

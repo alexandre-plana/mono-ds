@@ -181,7 +181,8 @@ Le catalogue est lui-même bâti avec le système : des onglets au-dessus de la
 page, le fil d'Ariane en tête, le logo en bout de rangée — pas de rail.
 
 ![Le catalogue : onglets, fil d'Ariane, recherche](docs/captures/catalogue.png)
-La commande utilise Python 3 via `py -3` sous Windows et `python3` sous macOS et Linux.
+La commande lance un petit serveur Node, sans dépendance ni Python ; il interdit le cache du navigateur,
+pour qu'une feuille de style périmée ne côtoie jamais un script à jour.
 
 ```bash
 npm run serve
