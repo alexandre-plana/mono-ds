@@ -122,6 +122,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-099 | Laboratoire : chaque atelier dans son propre écran | en vigueur |
 | D-100 | Laboratoire, expérience 03 : la donnée vivante | en vigueur, étendue par D-101 |
 | D-101 | Expérience 03 : l'ordre et le rythme | en vigueur |
+| D-102 | Laboratoire, expérience 04 : l'attention arbitrée ; la bande des ateliers tient en une ligne | en vigueur |
 
 ---
 
@@ -955,3 +956,13 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Principe sous-jacent** : une mise à jour se fait en deux temps, le modèle puis l'écran. Les séparer permet de régler le rythme de l'écran sur celui de l'œil, non sur celui du flux.
 - **Hypothèse de départ** : « au calme » est le bon défaut ; rien ne doit bouger sous un pointeur.
 - **État de l'art** : la plainte « les lignes sautent » est partout chez les bibliothèques de tableaux, et la parade courante est de différer le tri. Rien de trouvé qui chiffre un rythme acceptable : les seuils de l'atelier sont des choix.
+
+## D-102 — Laboratoire, expérience 04 : l'attention arbitrée ; la bande des ateliers tient en une ligne
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« on n'est pas là pour relayer des décisions prises par des bibliothèques ; jamais de choses faites sans raison ; l'animation du réagencement doit expliquer pourquoi »)
+- **Constat** : l'expérience 03 comparait des parades connues. Le commanditaire demande d'inventer : une application qui met à jour en priorité ce qui est important, diffère le reste à un moment de moindre activité, peut passer au-dessus du tri de l'utilisateur — et s'en explique.
+- **L'expérience** : chaque changement est jugé par des règles nommées (état bloqué, franchissement de seuil, saut d'au moins 20 %, agence suivie). L'important passe tout de suite et sa ligne monte au-dessus d'une frontière écrite ; le mineur attend l'accalmie (deux secondes et demie sans pointeur, défilement ni touche) et passe alors en une vague, suivie d'un seul reclassement. Une valeur dont la mise à jour attend le dit par un carré vide.
+- **Le principe éprouvé** : rien ne bouge sans dire pourquoi, et l'animation porte l'explication. Trois temps : la cause s'écrit dans la ligne ; un silence ; la ligne se déplace en laissant un mot à sa place et un fil tireté le long de son trajet. Le retour suit le même chemin, après « Vue ».
+- **Garde-fous** : trois lignes remontées au plus ; un journal de toutes les décisions de l'application, avec leur règle ; un réglage pour interdire la remontée ; « Suivre » rend la main à l'utilisateur sur ce qui compte.
+- **Appui et limite** : reporter une interruption au moment d'une pause en réduit le coût (Iqbal et Bailey) ; rien trouvé sur l'animation explicative, qui est donc une invention à éprouver.
+- **La bande des ateliers** : jugée trop imposante, elle tient désormais en une ligne dans les quatre ateliers. Le mode d'emploi, les réglages et le journal sont repliés et s'ouvrent vers le haut ; seules les actions du scénario restent visibles.

@@ -174,4 +174,81 @@
     seg(stage, 'flow', run); seg(stage, 'pace', run); seg(stage, 'batch', run); seg(stage, 'where'); seg(stage, 'before', () => rows.forEach(evo)); seg(stage, 'order', settle);
     seg(stage, 'arrivals', () => { if (cfg('arrivals') === 'inserees' && queue.length) { const q = queue.reverse(); queue = []; insert(q); } report(); });
     reset(); })();
+
+  // Les volets de la bande (mode d'emploi, réglages, journal) : un seul ouvert, fermé d'un clic ailleurs ou par Échap.
+  document.addEventListener('click', (e) => $$('.x-pop[open]').forEach((d) => { if (!d.contains(e.target)) d.open = false; }));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $$('.x-pop[open]').forEach((d) => { d.open = false; }); });
+  document.addEventListener('toggle', (e) => { if (e.target.matches?.('.x-pop') && e.target.open) $$('.x-pop[open]').forEach((d) => { if (d !== e.target) d.open = false; }); }, true);
+
+  // ===== Expérience 04 — l'attention arbitrée ================================
+  // L'application juge chaque changement. Important : il passe tout de suite, et sa ligne remonte au-dessus du
+  // tri de l'utilisateur. Mineur : il attend une accalmie. Rien ne bouge sans dire pourquoi : la cause s'écrit
+  // d'abord, puis la ligne se déplace en laissant la trace de son trajet.
+  (() => { const stage = document.getElementById('x4'); if (!stage) return;
+    const box = $('.x-live', stage), body = $('tbody', stage), read = $('.x-read', stage), mood = $('.x-mood', stage), reserve = $('[data-reserve]', stage), calmBar = $('[data-calm]', stage), journal = $('.x-journal', stage);
+    const fr = (v) => v.toFixed(1).replace('.', ','), hms = () => new Date().toLocaleTimeString('fr-FR'), ST = ['Normal', 'À surveiller', 'Bloqué'], cfg = (k) => stage.dataset[k], wait = (ms) => new Promise((r) => setTimeout(r, still ? 0 : ms));
+    const SEED = [['Annecy', 6.2], ['Arles', 4.9], ['Arras', 8.1], ['Bar-le-Duc', 3.8], ['Bayonne', 5.5], ['Brest', 9.4], ['Carcassonne', 3.4], ['Colmar', 12.1], ['Dax', 3.2], ['Narbonne', 7.0], ['Tarbes', 7.8], ['Valence', 5.9]];
+    let rows = [], sep = null, timer = null, chain = Promise.resolve(), lastAct = performance.now(), busy = false, waiting = [];
+    const TH = () => ({ stricte: 30, normale: 20, large: 10 }[cfg('sense')]);
+    const log = (what, why) => { const li = document.createElement('li'); li.innerHTML = `<time>${hms()}</time><span><b></b><small></small></span>`; $('b', li).textContent = what; $('small', li).textContent = why; journal.prepend(li); while (journal.children.length > 14) journal.lastElementChild.remove(); };
+    const digits = (el, txt, dir) => { const old = el.textContent; el.innerHTML = [...txt].map((c, i) => `<span${dir && !still && c !== old.padStart(txt.length, ' ')[i] ? ` style="animation: x-${dir} 260ms ease-out 1 both"` : ''}>${c}</span>`).join(''); };
+    // Le jugement. Chaque règle a un nom que l'on peut lire : c'est la raison qui s'écrira dans la ligne.
+    const judge = (r, kind, old, now) => { const pct = kind === 'pr' ? Math.abs(now - old) / old * 100 : 0;
+      if (kind === 'st' && now === 2) return { txt: 'Bloquée', rule: 'Un état bloqué passe avant tout', level: 1 };
+      if (kind === 'pr' && old >= 3 && now < 3) return { txt: 'Passe sous 3 M', rule: 'Franchissement du seuil de 3 M', level: 2 };
+      if (kind === 'pr' && pct >= TH()) return { txt: `${now > old ? '+' : '−'} ${Math.round(pct)} % d'un coup`, rule: `Un saut d'au moins ${TH()} %`, level: 2 };
+      if (r.follow) return { txt: 'Suivie par vous', rule: 'Vous suivez cette agence : tout changement compte', level: 3 };
+      return null; };
+    const make = ([name, pr]) => { const r = { name, pr, shown: pr, st: 0, follow: false, up: false, held: false, reason: null }; const tr = document.createElement('tr'); r.tr = tr;
+      tr.innerHTML = `<td class="rk"><span class="x-rk"></span></td><td class="nm"><span>${name}</span></td><td class="n pr"><span class="x-num"></span><i class="x-held" title="Une mise à jour mineure attend"></i></td><td class="st" data-st="0">${ST[0]}</td><td class="x-why"></td><td class="n"><button class="x-follow" type="button" aria-pressed="false">Suivre</button></td>`;
+      digits($('.x-num', tr), fr(pr)); $('.x-follow', tr).addEventListener('click', (e) => { r.follow = !r.follow; e.target.setAttribute('aria-pressed', String(r.follow)); e.target.textContent = r.follow ? 'Suivie' : 'Suivre'; log(`${name} ${r.follow ? 'est suivie' : 'n\'est plus suivie'}`, 'Décision de l\'utilisateur'); });
+      tr.addEventListener('pointerenter', () => { if (r.up && !r.leaving) { r.leaving = true; chain = chain.then(() => demote(r)); } }); return r; };
+    const sorted = () => rows.slice().sort((a, b) => b.shown - a.shown || a.name.localeCompare(b.name, 'fr'));
+    // L'ordre voulu : ce que l'application a remonté (le plus grave d'abord), la frontière, puis le tri de l'utilisateur.
+    const want = () => { const all = sorted(), ups = all.filter((r) => r.up).sort((a, b) => a.reason.level - b.reason.level || a.since - b.since); return [...ups.map((r) => r.tr), ...(ups.length ? [sep] : []), ...all.filter((r) => !r.up).map((r) => r.tr)]; };
+    const number = () => { sorted().forEach((r, i) => { $('.x-rk', r.tr).textContent = String(i + 1).padStart(2, '0'); }); const ups = rows.filter((r) => r.up).length; sep.hidden = !ups; };
+    const top = (el) => el.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
+    // Déplacer : on note où est chaque ligne, on range, on anime l'écart — toutes ensemble, d'un seul mouvement.
+    const place = (g) => (g.anchor && g.anchor.isConnected ? g.anchor.after(g) : body.prepend(g));
+    const layout = (ms = 520, fresh) => { const trs = [...body.children], before = new Map(trs.map((t) => [t, t.getBoundingClientRect().top])); number(); const old = $$('.x-ghost', body); want().forEach((t) => body.append(t)); old.forEach(place); if (fresh) place(fresh);
+      if (!still) [...body.children].forEach((t) => { const a = before.get(t); if (a == null) return; const dy = a - t.getBoundingClientRect().top; if (dy) { t.style.position = 'relative'; t.style.zIndex = Math.abs(dy) > 60 ? 3 : 1; t.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: ms, easing: 'cubic-bezier(.2, .8, .2, 1)' }).onfinish = () => { t.style.zIndex = ''; }; } }); return wait(ms); };
+    const why = (r, txt, rule) => { const td = $('.x-why', r.tr); td.innerHTML = txt ? `<span class="is-in"></span><small></small>` : ''; if (txt) { td.firstChild.textContent = txt; td.lastChild.textContent = rule || ''; } };
+    const show = (r) => { const dir = r.pr > r.shown ? 'up' : r.pr < r.shown ? 'down' : null; r.shown = r.pr; r.held = false; r.tr.classList.remove('is-held'); if (dir) { const el = $('.x-num', r.tr); digits(el, fr(r.pr), dir); el.classList.remove('is-fresh'); void el.offsetWidth; el.classList.add('is-fresh'); }
+      const st = $('.st', r.tr); st.dataset.st = r.st; st.textContent = ST[r.st]; r.tr.classList.remove('is-touched'); void r.tr.offsetWidth; r.tr.classList.add('is-touched'); };
+    // La place quittée garde un mot ; un fil tireté relie le départ à l'arrivée.
+    const above = (tr) => { let p = tr.previousElementSibling; while (p && p.classList.contains('x-ghost')) p = p.previousElementSibling; return p; };
+    const ghost = (anchor, text) => { const g = document.createElement('tr'); g.className = 'x-ghost'; g.innerHTML = '<td colspan="6"><div></div></td>'; $('div', g).textContent = text; g.anchor = anchor; setTimeout(() => { g.classList.add('is-closing'); setTimeout(() => g.remove(), 460); }, still ? 1200 : 2400); return g; };
+    const thread = (y0, y1) => { const t = document.createElement('div'); t.className = 'x-thread'; t.style.top = Math.min(y0, y1) + 12 + 'px'; t.style.height = Math.abs(y1 - y0) + 'px'; box.append(t); setTimeout(() => t.remove(), 2700); };
+    // Remonter, en trois temps que l'œil peut suivre : la cause s'écrit ; un silence ; la ligne monte en laissant sa trace.
+    const promote = async (r, reason) => { busy = true; r.reason = reason; show(r); why(r, reason.txt, reason.rule); log(`${r.name} — ${reason.txt.toLowerCase()}`, `Montré tout de suite. Règle : ${reason.rule.toLowerCase()}`); report(); await wait(800);
+      if (cfg('lift') === 'non' || r.up) { await layout(); busy = false; report(); return; }
+      if (rows.filter((x) => x.up).length >= 3) { waiting.push(r); why(r, reason.txt, 'En attente : trois lignes sont déjà remontées'); log(`${r.name} attend`, 'Budget d\'attention : trois lignes remontées au plus'); await layout(); busy = false; report(); return; }
+      const y0 = top(r.tr), g = ghost(above(r.tr), `↑ ${r.name} remontée — ${reason.txt.toLowerCase()}`); r.up = true; r.since = performance.now(); r.tr.classList.add('is-up'); await layout(520, g);
+      thread(y0, top(r.tr)); log(`${r.name} remontée en tête`, 'Au-dessus de votre tri, jusqu\'à ce que vous l\'ayez vue'); busy = false; report(); };
+    // Redescendre : dès que la ligne a été vue. La raison se met à jour d'abord — « vue » —, puis le même trajet, à l'envers.
+    const demote = async (r) => { busy = true; const rankTxt = String(sorted().indexOf(r) + 1).padStart(2, '0'); why(r, 'Vue', `Elle retourne à son rang, le ${rankTxt}`); await wait(900); const y0 = top(r.tr); r.up = false; r.leaving = false; r.tr.classList.remove('is-up');
+      const g = ghost(above(r.tr), `↓ ${r.name} vue — retourne au rang ${rankTxt}`); await layout(520, g); thread(y0, top(r.tr)); log(`${r.name} redescend au rang ${rankTxt}`, 'Vous l\'avez vue'); await wait(1400); if (!r.up) why(r, r.st === 2 ? 'Bloquée' : '', '');
+      const next = waiting.shift(); busy = false; report(); if (next && next.reason) chain = chain.then(() => promote(next, next.reason)); };
+    // L'accalmie : les changements mineurs s'appliquent en une vague, de haut en bas, puis la liste se range une fois.
+    const flush = async () => { const held = [...body.children].map((t) => rows.find((r) => r.tr === t)).filter((r) => r && r.held); if (!held.length) return; busy = true; calmBar.hidden = false; $('b', calmBar).textContent = `Accalmie — ${held.length} changement${held.length > 1 ? 's' : ''} mineur${held.length > 1 ? 's' : ''} appliqué${held.length > 1 ? 's' : ''}`;
+      const before = sorted().map((r) => r.name).join(); for (const r of held) { show(r); await wait(90); } await wait(500); const moved = sorted().map((r) => r.name).join() !== before; $('span', calmBar).textContent = moved ? 'puis la liste se range, une seule fois' : 'l\'ordre ne change pas'; await layout(620);
+      log(`${held.length} changement${held.length > 1 ? 's' : ''} mineur${held.length > 1 ? 's' : ''} appliqué${held.length > 1 ? 's' : ''}`, 'Accalmie : vous ne lisiez plus la liste'); setTimeout(() => { calmBar.hidden = true; }, 3600); busy = false; report(); };
+    const report = () => { const h = rows.filter((r) => r.held).length, ups = rows.filter((r) => r.up).length; reserve.hidden = !h; if (h) $('b', reserve).textContent = `${h} changement${h > 1 ? 's' : ''} mineur${h > 1 ? 's' : ''} en réserve`;
+      read.innerHTML = `<span><b>${rows.length}</b> agences, votre tri : primes décroissantes</span><span><b>${ups}</b> remontée${ups > 1 ? 's' : ''} par l'application</span>${waiting.length ? `<span><b>${waiting.length}</b> en attente de place</span>` : ''}`; };
+    // Le flux : surtout du mineur, parfois de l'important.
+    const event = (force) => { const k = force ? 0.99 : Math.random(), pool = rows.filter((r) => !r.up && !r.leaving && !waiting.includes(r)), r = pool[Math.floor(Math.random() * pool.length)]; if (!r) return;
+      let reason = null; if (k > 0.965) { if (r.st === 2) return; r.st = 2; reason = judge(r, 'st', 0, 2); }
+      else { const old = r.pr, amp = k > 0.9 ? 0.2 + Math.random() * 0.2 : k > 0.78 ? 0.09 + Math.random() * 0.07 : 0.01 + Math.random() * 0.05, now = Math.max(0.6, +(old * (1 + (Math.random() < 0.5 ? -1 : 1) * amp)).toFixed(1)); if (now === old) return; r.pr = now; reason = judge(r, 'pr', r.shown, now); }
+      if (reason) chain = chain.then(() => promote(r, reason)); else { r.held = true; r.tr.classList.add('is-held'); report(); } };
+    const run = () => { clearInterval(timer); if (cfg('flow') === 'marche') timer = setInterval(() => event(false), cfg('pace') === 'vif' ? 520 : 1500); };
+    // L'accalmie se détecte : ni pointeur, ni défilement, ni touche depuis deux secondes et demie, et aucun déplacement en cours.
+    const act = () => { lastAct = performance.now(); mood.classList.remove('is-calm'); mood.lastChild.textContent = 'Vous lisez'; };
+    ['pointermove', 'wheel', 'keydown', 'pointerdown'].forEach((ev) => $('.x-screen', stage).addEventListener(ev, act, { passive: true }));
+    setInterval(() => { const calm = performance.now() - lastAct > 2500; if (calm) { mood.classList.add('is-calm'); mood.lastChild.textContent = 'Accalmie'; if (!busy && rows.some((r) => r.held)) chain = chain.then(flush); } }, 600);
+    const reset = () => { body.innerHTML = ''; journal.innerHTML = ''; waiting = []; rows = SEED.map(make); sep = document.createElement('tr'); sep.className = 'x-sep'; sep.innerHTML = '<td colspan="6"><div>↑ Remonté par l\'application · ↓ Votre tri</div></td>'; sep.hidden = true; sorted().forEach((r) => body.append(r.tr)); body.prepend(sep); number(); calmBar.hidden = true; report(); run(); log('Liste ouverte', 'Votre tri : primes décroissantes'); };
+    $('[data-apply]', reserve).addEventListener('click', () => { chain = chain.then(flush); });
+    $('[data-important]', stage).addEventListener('click', () => event(true));
+    $('[data-restart]', stage).addEventListener('click', reset);
+    seg(stage, 'flow', run); seg(stage, 'pace', run); seg(stage, 'sense'); seg(stage, 'lift', () => { if (cfg('lift') === 'non') rows.filter((r) => r.up).forEach((r) => { r.leaving = true; chain = chain.then(() => demote(r)); }); });
+    reset(); })();
 })();
