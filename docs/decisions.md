@@ -104,6 +104,9 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-081 | Saisie : les contrôles courants qui manquaient | en vigueur |
 | D-082 | Fil d'Ariane : la rangée de voisins est la sœur du cran ; le serveur local interdit le cache | en vigueur |
 | D-083 | Catalogue : une ligne système au-dessus des onglets | en vigueur |
+| D-084 | Grain fin sur le fond Encre | amendée par D-085 |
+| D-085 | Grain fin sur le fond Papier | amendée par D-086 |
+| D-086 | Texture fibreuse en thème Papier | en vigueur |
 
 ---
 
@@ -790,3 +793,20 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Coût assumé** : une ligne de plus, environ 48 px de hauteur. Le logo quitte la rangée d'onglets pour cette ligne.
 - **Écarté** (maquettes soumises) : une ligne d'état sous la page, façon console — la plus singulière, mais chercher en bas de l'écran est inhabituel ; des mots au bout de la rangée d'onglets — aucune hauteur perdue, mais serré dès six onglets, le défaut déjà relevé pour le champ dans la rangée.
 - **Téléphone** : la ligne se replie — le logo et les outils, puis la recherche sur toute la largeur.
+
+## D-084 — Grain fin sur le fond Encre
+
+- **Date** 2026-11-13 · **Statut** amendée par D-085 · **Demandée par** le commanditaire.
+- **Décision**. Une texture monochrome, fixe et fine évoque le papier imprimé de la référence. Elle est peinte dans le fond des pages Encre et de leurs fenêtres. Le plan de travail reste uni selon D-041.
+- **Réglage**. Le bouton « Grain » dans « Réglages » et les commandes de recherche « Activer le grain » et « Désactiver le grain » permettent de comparer les deux états. Le catalogue et les exemples partagent le choix. Le grain est activé par défaut en thème Encre.
+- **Limites**. Le thème Papier, l’impression et les couleurs forcées utilisent un fond uni.
+
+## D-085 — Grain fin sur le fond Papier
+
+- **Date** 2026-11-13 · **Statut** amendée par D-086 · **Demandée par** le commanditaire · **Amende** D-084.
+- **Décision**. Le thème Papier reçoit le même grain fin, adapté au ton clair. Le réglage du grain s’applique aux deux thèmes et mémorise un seul choix. À l’impression et en couleurs forcées, le fond reste uni.
+
+## D-086 — Texture fibreuse en thème Papier
+
+- **Date** 2026-11-13 · **Statut** en vigueur · **Demandée par** le commanditaire · **Amende** D-085.
+- **Décision**. Le fond Papier reçoit une texture de fibres courtes et irrégulières, avec des variations de ton plus visibles sur le fond clair. La texture garde le ton moyen de la page et se règle dans « Réglages ».

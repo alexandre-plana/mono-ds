@@ -78,7 +78,7 @@ hr { border: 0; border-top: var(--hairline) solid var(--line); margin: 0; }
 /* --- Mise en page --------------------------------------------------------- */
 /* Plan de travail et page.
    <body class="l-desk"> est le plan de travail : un fond uni, un ton plus sombre que la page, visible sur
-   20 à 24 px autour de la page. .l-shell est la page : fond uni, contour d'un
+   20 à 24 px autour de la page. .l-shell est la page : fond encre ou papier, contour d'un
    pixel. Plusieurs .l-shell côte à côte (page + inspecteur) sont séparés par la
    même bande de plan de travail, grâce à la gouttière de la grille.
    Le plan de travail est uni : aucun motif. Les hachures sont réservées au fond des

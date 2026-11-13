@@ -1,0 +1,16 @@
+/* Grain peint avec le fond de la page, dans les tons du thème. */
+@media screen and (forced-colors: none) {
+  [data-theme="encre"] {
+    --page-grain: url('grain.png');
+    --page-grain-size: 224px 224px;
+  }
+  [data-theme="papier"] {
+    --page-grain: url('grain-papier.png');
+    --page-grain-size: 256px 256px;
+  }
+
+  :where(html[data-grain="on"]) :is(.l-shell, .c-window__frame) {
+    background-image: var(--page-grain, none);
+    background-size: var(--page-grain-size, auto);
+  }
+}

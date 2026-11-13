@@ -67,7 +67,9 @@ part de pixels de la vue (1440 × 900) par `scripts/tonal-audit.mjs`.
 
 La page est une feuille posée sur un plan de travail. `<body class="l-desk">` est
 le plan : un fond uni, un ton plus sombre que la page, visible sur une bande de 24 px autour de la page.
-`.l-shell` est la page : fond uni, contour d'un pixel.
+`.l-shell` est la page. Elle porte un contour d'un pixel. En thèmes Encre et
+Papier, son fond peut recevoir un grain fin (`data-grain="on"` sur `<html>`).
+Dans le catalogue, il se règle dans « Réglages » (D-084 à D-086).
 
 - **K1 — Un contour, toujours.** Toute page a son contour. C'est le seul cadre
   systématique ; à l'intérieur, la règle reste le filet avant la boîte.

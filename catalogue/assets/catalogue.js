@@ -54,6 +54,8 @@
           <button class="c-menu__item" type="button" role="menuitemradio" data-set-accent="discret">Discret <span class="c-menu__hint">En trait</span></button>
           <button class="c-menu__item" type="button" role="menuitemradio" data-set-accent="fort">Fort <span class="c-menu__hint">En aplat</span></button>
           <button class="c-menu__item" type="button" role="menuitemradio" data-set-accent="flash">Flash <span class="c-menu__hint">Aplat à l'arrivée</span></button>
+          <hr class="c-menu__sep">
+          <button class="c-menu__item c-menu__item--check" type="button" role="menuitemcheckbox" data-toggle-grain>Grain <span class="c-menu__hint" aria-hidden="true"></span></button>
         </div></details>
     </div>`;
   const tabs = document.createElement('nav'); tabs.className = 'c-doctabs'; tabs.setAttribute('aria-label', 'Catalogue');
@@ -67,7 +69,7 @@
   let notifs = null; const bootNotifs = () => { notifs = window.MonoNotifs({ toasts, center: sys.querySelector('.c-notifs'), badge: sys.querySelector('[data-badge]') }); };
   addEventListener('load', () => { if (window.MonoNotifs) bootNotifs(); else { const sc = document.createElement('script'); sc.src = root + 'assets/notifs.js'; sc.onload = bootNotifs; document.head.append(sc); } });
   addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'z' && !e.ctrlKey && !e.metaKey && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && toasts.childElementCount && notifs?.undoLast()) e.preventDefault(); });
-  // Un exemple ouvert dans l'onglet Exemples suit le thème et l'accent choisis ici.
+  // Un exemple ouvert dans l'onglet Exemples suit les réglages choisis ici.
   const frame = () => document.querySelector('iframe.cat-frame')?.contentDocument?.documentElement;
   document.addEventListener('mono:theme', (e) => { const d = frame(); if (d) d.dataset.theme = e.detail; });
   document.addEventListener('mono:accent', (e) => { const d = frame(); if (d) { if (e.detail === 'discret') delete d.dataset.accent; else d.dataset.accent = e.detail; } });
@@ -163,6 +165,32 @@
   document.querySelectorAll('[data-set-accent]').forEach((b) => b.addEventListener('click', () => { const prev = document.documentElement.dataset.accent || 'discret', next = b.dataset.setAccent; if (prev === next) return; setAccent(next); notifs?.push({ kind: 'Réglage', text: NAME[next], undo: () => setAccent(prev) }); }));
   setTheme(initial);
 
+  const syncFrameGrain = () => {
+    const example = frame();
+    if (example) example.dataset.grain = document.documentElement.dataset.grain;
+  };
+  const grainToggle = sys.querySelector('[data-toggle-grain]');
+  const grainHint = grainToggle.querySelector('.c-menu__hint');
+  const showGrain = (grain) => {
+    grainToggle.setAttribute('aria-checked', String(grain === 'on'));
+    grainHint.textContent = grain === 'on' ? 'Activé' : 'Désactivé';
+  };
+  const setGrain = (grain) => {
+    document.documentElement.dataset.grain = grain;
+    try { localStorage.setItem('mono-grain', grain); } catch {}
+    showGrain(grain);
+    syncFrameGrain();
+  };
+  const changeGrain = (grain) => {
+    const previous = document.documentElement.dataset.grain;
+    if (previous === grain) return;
+    setGrain(grain);
+    notifs?.push({ kind: 'Réglage', text: grain === 'on' ? 'Grain activé' : 'Grain désactivé', undo: () => setGrain(previous) });
+  };
+  showGrain(document.documentElement.dataset.grain);
+  grainToggle.addEventListener('click', () => changeGrain(document.documentElement.dataset.grain === 'on' ? 'off' : 'on'));
+  document.querySelector('iframe.cat-frame')?.addEventListener('load', syncFrameGrain);
+
   // ---------------------------------------------------------------------------
   // Recherche avancée : texte libre + filtres par rubrique et par type.
   // L'index (search-index.js) est généré par scripts/build-search-index.mjs.
@@ -198,9 +226,10 @@
     const results = host.querySelector('.cat-search__results'), status = host.querySelector('.cat-search__status');
     const state = { rub: new Set(), type: new Set(), active: -1, shown: [] };
     // L'affichage se règle ici aussi : ce sont des commandes, trouvées comme le reste.
-    const CMDS = [['theme', 'encre', 'Thème encre', 'Fond sombre'], ['theme', 'papier', 'Thème papier', 'Fond clair'], ['accent', 'discret', 'Accent discret', 'Le signal en trait'], ['accent', 'fort', 'Accent fort', 'Le signal en aplat'], ['accent', 'flash', 'Accent flash', 'L’aplat à l’arrivée, puis discret']]
+    const CMDS = [['theme', 'encre', 'Thème encre', 'Fond sombre'], ['theme', 'papier', 'Thème papier', 'Fond clair'], ['accent', 'discret', 'Accent discret', 'Le signal en trait'], ['accent', 'fort', 'Accent fort', 'Le signal en aplat'], ['accent', 'flash', 'Accent flash', 'L’aplat à l’arrivée, puis discret'], ['grain', 'on', 'Activer le grain', 'Fond texturé'], ['grain', 'off', 'Désactiver le grain', 'Fond uni']]
       .map(([kind, val, t, x]) => ({ cmd: kind, val, t, x, n: norm(t + ' affichage apparence ' + x) }));
-    const cmdOn = (c) => (c.cmd === 'theme' ? document.documentElement.dataset.theme === c.val : (document.documentElement.dataset.accent || 'discret') === c.val);
+    const applySetting = { theme: setTheme, accent: setAccent, grain: changeGrain };
+    const cmdOn = (c) => (document.documentElement.dataset[c.cmd] ?? (c.cmd === 'accent' ? 'discret' : '')) === c.val;
 
     const parse = (q) => {
       const inc = [], exc = [];
@@ -319,7 +348,7 @@
       }
       if (e.target.closest('[data-reset]')) { state.rub.clear(); state.type.clear(); host.querySelectorAll('.c-chip').forEach((c) => c.setAttribute('aria-pressed', 'false')); render(); input.focus(); return; }
       const cmd = e.target.closest('[data-cmd]');
-      if (cmd) { (cmd.dataset.cmd === 'theme' ? setTheme : setAccent)(cmd.dataset.val); const keep = state.active; render(); state.active = keep; setActive(keep); input.focus(); return; }
+      if (cmd) { applySetting[cmd.dataset.cmd](cmd.dataset.val); const keep = state.active; render(); state.active = keep; setActive(keep); input.focus(); return; }
       if (e.target.closest('.cat-result')) close();
     });
     document.addEventListener('pointerdown', (e) => { if (!host.contains(e.target)) close(); });
