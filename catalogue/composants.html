@@ -599,6 +599,63 @@
             </dl>
           </div>
 
+          <div class="cat-sub" id="c-snippet" data-search="composant">
+            <h3>Bloc à copier — .c-snippet</h3>
+            <p>Un texte que l'on reprend tel quel — du code, une commande, une référence, un message — et le geste pour le prendre. Le bloc est une cuvette, sans contour. « Copier » est un mot, en haut à droite ; il devient « Copié » : le retour se lit là où l'on a cliqué. C'est ce bloc qui montre le code de chaque démonstration de ce catalogue.</p>
+            <div class="cat-demo" data-code>
+              <figure class="c-snippet">
+                <figcaption class="c-snippet__head">
+                  <span class="c-snippet__label">HTML</span>
+                  <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                </figcaption>
+                <pre class="c-snippet__body">&lt;html lang="fr" data-theme="encre"&gt;
+  &lt;link rel="stylesheet" href="src/mono.css"&gt;</pre>
+              </figure>
+            </div>
+            <div class="cat-demo" data-code>
+              <div class="l-grid">
+                <div class="c-field l-span-4">
+                  <span class="c-field__label">Lancer le catalogue</span>
+                  <div class="c-snippet c-snippet--inline">
+                    <code class="c-snippet__body">npm run serve</code>
+                    <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                  </div>
+                </div>
+                <div class="c-field l-span-4">
+                  <span class="c-field__label">Référence du dossier</span>
+                  <div class="c-snippet c-snippet--inline c-snippet--plain">
+                    <span class="c-snippet__body">D-041 / WAP375CD</span>
+                    <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                  </div>
+                </div>
+                <div class="c-field l-span-4">
+                  <span class="c-field__label">Token</span>
+                  <div class="c-snippet c-snippet--inline">
+                    <code class="c-snippet__body">--selected-line</code>
+                    <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cat-demo" data-code>
+              <figure class="c-snippet c-snippet--wrap" style="max-width: 40rem">
+                <figcaption class="c-snippet__head">
+                  <span class="c-snippet__label">Message à l'agence</span>
+                  <button class="c-snippet__copy" type="button" aria-live="polite"><span data-idle><i class="c-icon i-copy" aria-hidden="true"></i>Copier</span><span data-done><i class="c-icon i-check" aria-hidden="true"></i>Copié</span><span data-error>Non copié</span></button>
+                </figcaption>
+                <p class="c-snippet__body">Bonjour, le dossier D-041 est bloqué depuis le 14 novembre : il manque la reprise des contrats de Vizille. Pouvez-vous nous confirmer la date de transmission ?</p>
+              </figure>
+            </div>
+            <dl class="cat-spec">
+              <div><dt>Employer</dt><dd>Tout texte destiné à être repris ailleurs sans une faute : extrait de code, commande, identifiant, valeur de token, lien, message type. Le bloc pour plusieurs lignes ; <code>--inline</code> pour une seule ; <code>--wrap</code> pour de la prose, qui garde le caractère du texte courant.</dd></div>
+              <div><dt>Éviter</dt><dd>Sur un texte que l'on lit seulement. Sur chaque cellule d'un tableau : une action de ligne suffit. Une icône seule à la place du mot. Un toast pour dire « copié » : le mot change sur place, c'est assez.</dd></div>
+              <div><dt>Variantes</dt><dd><code>__label</code> dit ce que c'est (HTML, CSS, Commande) · <code>--inline</code> une ligne, le mot à la suite · <code>--wrap</code> prose · <code>--plain</code> contour tireté au lieu de la cuvette, quand elle ferait une tache de trop.</dd></div>
+              <div><dt>États</dt><dd>Survol du mot : ton fort et filet dessous. <code>data-state="done"</code> : « Copié », deux secondes, puis retour. <code>data-state="error"</code> : « Non copié », et le texte reste sélectionnable à la main. Une ligne trop longue défile dans le bloc, jamais la page.</dd></div>
+              <div><dt>Branchement</dt><dd>Le système dessine, il ne copie pas : poser l'état revient au produit. <code>catalogue/assets/copy.js</code> en donne la version la plus courte, avec repli quand le presse-papiers est refusé.</dd></div>
+              <div><dt>Accessibilité</dt><dd>Un vrai <code>&lt;button&gt;</code> dont le libellé est le mot ; <code>aria-live="polite"</code> annonce « Copié ». Le texte reste un texte : on peut toujours le sélectionner.</dd></div>
+            </dl>
+          </div>
+
           <div class="cat-sub" id="c-key" data-search="composant">
             <h3>Légende — .c-key</h3>
             <p>Bloc « clé » posé dans un coin libre de la figure. Elle nomme les formes, pas les couleurs.</p>

@@ -66,7 +66,7 @@ button.cat-result { appearance: none; width: 100%; background: none; border-top:
 .cat-code summary::before { content: '+ '; }
 .cat-code[open] summary::before { content: '− '; }
 .cat-code summary:hover { color: var(--fg-strong); }
-.cat-code pre { margin: var(--space-2) 0 0; }
+.cat-code > .c-snippet { margin-top: var(--space-2); }
 
 /* Règles : numéro, énoncé, raison */
 .cat-rules { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: var(--space-6) var(--gutter); }

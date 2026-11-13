@@ -869,3 +869,31 @@ summary.c-select .c-icon { flex: none; color: var(--fg-soft); }
 .c-calendar__day.is-between { border-top: var(--hairline) dashed var(--line-strong); border-bottom: var(--hairline) dashed var(--line-strong); }
 .c-calendar__day[aria-pressed="true"] { border: var(--stroke) solid var(--selected-line); color: var(--fg-strong); font-weight: var(--weight-medium); }
 .c-calendar__day:disabled { color: var(--fg-muted); text-decoration: line-through; cursor: not-allowed; border-color: transparent; }
+
+/* === Bloc à copier (D-088) ==================================================
+   Un texte que l'on reprend tel quel — du code, une commande, une référence, un message — et le geste
+   pour le prendre. Le bloc est une cuvette (--bg-sunken), sans contour ; « Copier » est un mot, en haut à
+   droite, qui devient « Copié » : le retour se lit là où l'on a cliqué, sans toast.
+   <figure class="c-snippet"><figcaption class="c-snippet__head"><span class="c-snippet__label">HTML</span>
+     <button class="c-snippet__copy" type="button"><span data-idle>…Copier</span><span data-done>…Copié</span><span data-error>Non copié</span></button>
+   </figcaption><pre class="c-snippet__body">…</pre></figure>
+   L'état est porté par data-state="done|error" sur le bouton ; le posé de l'attribut est l'affaire du produit. */
+.c-snippet { margin: 0; min-width: 0; display: flex; flex-direction: column; background: var(--bg-sunken); }
+.c-snippet__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); padding: var(--space-2) var(--space-2) 0 var(--space-4); }
+.c-snippet__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
+.c-snippet__body { margin: 0; padding: var(--space-2) var(--space-4) var(--space-4); overflow-x: auto; white-space: pre; tab-size: 2; font-family: var(--font-mono); font-size: var(--text-small); line-height: var(--leading-base); color: var(--fg-soft); }
+.c-snippet__copy { appearance: none; flex: none; margin-left: auto; display: inline-flex; align-items: center; min-height: 1.5rem; padding: 0 var(--space-2); background: none; border: 0; border-bottom: var(--hairline) solid transparent; color: var(--fg-soft); font-size: var(--text-micro); line-height: 1; font-weight: var(--weight-medium); text-transform: uppercase; letter-spacing: var(--track-caps); white-space: nowrap; cursor: pointer; transition: color var(--duration), border-color var(--duration); }
+.c-snippet__copy > span { display: inline-flex; align-items: center; gap: var(--space-2); }
+.c-snippet__copy:hover { color: var(--fg-strong); border-bottom-color: var(--line-strong); }
+.c-snippet__copy [data-done], .c-snippet__copy [data-error] { display: none; }
+.c-snippet__copy[data-state="done"], .c-snippet__copy[data-state="error"] { color: var(--fg-strong); }
+.c-snippet__copy[data-state="done"] [data-idle], .c-snippet__copy[data-state="error"] [data-idle] { display: none; }
+.c-snippet__copy[data-state="done"] [data-done], .c-snippet__copy[data-state="error"] [data-error] { display: inline-flex; }
+/* Une seule ligne : une commande, une référence, la valeur d'un token. Le mot « Copier » suit le texte. */
+.c-snippet--inline { flex-direction: row; align-items: center; }
+.c-snippet--inline > .c-snippet__body { flex: 1; min-width: 0; padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4); white-space: nowrap; background: none; font-size: var(--text-small); color: var(--fg-strong); }
+.c-snippet--inline > .c-snippet__copy { margin-right: var(--space-2); }
+/* De la prose à reprendre (un message, une formule) : elle garde le caractère du texte courant et va à la ligne. */
+.c-snippet--wrap > .c-snippet__body { white-space: pre-wrap; overflow-wrap: anywhere; font-family: inherit; font-size: var(--text-base); color: var(--fg); max-width: none; }
+/* Sur le fond de la page, quand la cuvette ferait une tache de trop : un contour tireté à la place. */
+.c-snippet--plain { background: none; border: var(--hairline) dashed var(--line); }

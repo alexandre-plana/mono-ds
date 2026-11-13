@@ -108,6 +108,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-085 | Grain fin sur le fond Papier | amendée par D-086 |
 | D-086 | Texture fibreuse en thème Papier | en vigueur |
 | D-087 | Pages du catalogue : une marge à gauche, repliée et discrète | en vigueur |
+| D-088 | Bloc à copier | en vigueur |
 
 ---
 
@@ -821,3 +822,13 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **À droite** : toujours une chose à la fois (D-077). Un clic sur une rubrique ouvre son premier élément — plus de page intermédiaire. Le fil d'Ariane redevient une ligne simple qui situe et ramène. « Suite » et « Avant » restent en pied.
 - **Et le rail interdit ?** Le rail mène d'une partie à l'autre de l'application ; ici ce sont les onglets qui le font. La marge ne sort pas de la page : c'est son sommaire.
 - **Limites** : la marge de la plus longue rubrique (treize éléments) mesure environ 550 px ; sur un écran plus bas, son pied n'est atteint qu'en fin de page. Sur téléphone, elle passe au-dessus du contenu, en lignes.
+
+## D-088 — Bloc à copier
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : un composant pour tout texte que l'on reprend tel quel — code, commande, référence, message : `.c-snippet`. Le bloc est une cuvette (`--bg-sunken`), sans contour. Le geste est un mot, « Copier », en haut à droite ; il devient « Copié » deux secondes. Trois formes : le bloc (plusieurs lignes), `--inline` (une ligne, le mot à la suite), `--wrap` (de la prose, au caractère du texte courant). `--plain` remplace la cuvette par un contour tireté.
+- **Le retour se lit sur place** : pas de toast. Copier n'a rien à annuler et ne change rien à l'écran ; un toast serait un bruit pour un geste que l'on répète dix fois.
+- **Un mot, pas une icône seule** : l'icône accompagne le mot, comme partout dans le système.
+- **Le système dessine, il ne copie pas** : l'état est un attribut (`data-state`), posé par le produit. `catalogue/assets/copy.js` en donne le branchement le plus court, avec repli quand le presse-papiers est refusé ; l'échec se dit en mots et le texte reste sélectionnable.
+- **Emploi dans le catalogue** : le code de chaque démonstration et les blocs de code des pages sont des blocs à copier. `.c-code` reste pour un extrait que l'on lit seulement.
+- **Écarté** : un bouton « Copier » qui n'apparaît qu'au survol (invisible au toucher et au clavier) ; la copie au clic sur le texte lui-même (elle empêche de le sélectionner).
