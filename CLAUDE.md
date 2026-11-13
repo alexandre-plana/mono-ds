@@ -103,7 +103,8 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
 - Le logo (`.c-logo`, sans point `--plain` dans un écran de travail) figure dans chaque
   écran, à une extrémité : bout de la rangée d'onglets, fin des métadonnées de l'en-tête,
   ou colophon. Le catalogue lui-même suit le gabarit à onglets : pas de rail. Ce qui est global
-  (recherche, thème, accent) passe par « Aller à » (touche /), jamais par l'en-tête d'une page ; une
+  (logo, recherche, notifications, thème, réglages) tient sur une ligne système au-dessus des onglets,
+  jamais dans l'en-tête d'une page ; le panneau de recherche est calé sur son champ (touche /) ; une
   page s'ouvre sur son sommaire puis montre une rubrique ou un élément à la fois, le fil d'Ariane
   ramène et chacun de ses crans déplie ses voisins en ligne sous le fil (`.c-breadcrumb__seg`) — pas d'index
   latéral, pas d'onglets de page ; un exemple s'ouvre dans

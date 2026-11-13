@@ -22,11 +22,23 @@ html { scroll-behavior: smooth; scroll-padding-top: var(--space-6); }
 .cat-next .c-icon { align-self: center; color: var(--fg-muted); }
 .cat-next a:hover, .cat-next a:hover .c-icon { color: var(--fg-strong); }
 @media (max-width: 900px) { .cat-toc__row { grid-template-columns: 2.5rem minmax(0, 1fr); row-gap: var(--space-2); } .cat-toc__subs, .cat-toc__note { grid-column: 2; } }
-/* « Aller à » : la recherche, les pages et l'affichage dans une palette, ouverte d'un bouton ou de la touche /. */
+/* La ligne système : ce qui vaut pour toute l'application, au-dessus des onglets, sur le plan de travail.
+   Le logo, la recherche qui prend la largeur libre, puis notifications, thème, réglages. */
+body.cat-has-sys { grid-template-rows: auto auto minmax(0, 1fr); }
+body.cat-has-sys > .l-shell { grid-row: 3; }
+.cat-sys { position: relative; z-index: 40; display: flex; align-items: center; gap: var(--space-6); margin-bottom: var(--space-4); min-width: 0; }
+.cat-sys > .cat-search { flex: 1 1 16rem; max-width: 60rem; min-width: 0; margin: 0; }
+.cat-sys .c-search { min-height: var(--control-height); }
+.cat-sys__tools { display: flex; align-items: center; gap: var(--space-4); margin-left: auto; }
+.cat-sys__tools .c-segmented__item { min-height: 1.75rem; }
+.cat-sys [data-badge] { margin-left: var(--space-2); color: var(--fg-strong); }
+.cat-sys [data-show-all] { display: none; }
 body > .c-doctabs { z-index: 30; }
-.cat-palette .cat-search { margin: 0; display: flex; flex-direction: column; height: min(38rem, 78dvh); }
-.cat-palette .c-search { flex: none; border: 0; outline: 0; min-height: var(--control-height-large); padding: 0 var(--space-5); border-bottom: var(--hairline) solid var(--line); }
-.cat-palette .cat-search__panel { position: static; flex: 1; min-height: 0; max-height: none; border: 0; background: none; }
+/* Le panneau de recherche est calé sur son champ : mêmes bords gauche et droit. */
+.cat-sys .cat-search__panel { background: var(--bg); }
+@media (max-width: 900px) { .cat-sys { flex-wrap: wrap; gap: var(--space-3) var(--space-4); } .cat-sys > .cat-search { order: 3; flex-basis: 100%; max-width: none; } .cat-sys__tools { gap: var(--space-2); } }
+@media (max-width: 900px) { body > .c-doctabs { flex-wrap: wrap; row-gap: var(--space-1); margin-bottom: var(--space-2); } }
+@media (max-width: 480px) { .cat-sys__tools { flex-basis: 100%; margin-left: 0; justify-content: space-between; } }
 button.cat-result { appearance: none; width: 100%; background: none; border-top: 0; border-right: 0; border-bottom: 0; font: inherit; text-align: left; cursor: pointer; }
 /* Un exemple, affiché dans l'onglet Exemples : l'écran dans la page. */
 .cat-frame { display: block; width: 100%; height: calc(100dvh - 2 * var(--shell-inset) - 9.5rem); min-height: 28rem; border: 0; background: var(--desk); }
@@ -147,7 +159,6 @@ button.cat-result { appearance: none; width: 100%; background: none; border-top:
 .cat-result__code { color: var(--fg-muted); font-weight: var(--weight-regular); margin-right: var(--space-3); }
 .cat-result__text { color: var(--fg-soft); font-size: var(--text-small); line-height: var(--leading-base); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 @media (max-width: 640px) { .cat-result { grid-template-columns: 1fr; } .cat-result__where { display: none; } .cat-result__text { white-space: normal; } .cat-search__help { display: none; } }
-@media (max-width: 900px) { body > .c-doctabs { flex-wrap: wrap; row-gap: var(--space-1); margin-bottom: var(--space-2); } body > .c-doctabs > .c-doctabs__spacer { display: none; } body > .c-doctabs > .c-doctabs__tools { order: -1; flex-basis: 100%; justify-content: space-between; margin-bottom: var(--space-2); } }
 .cat-search.is-browsing .cat-search__filters { display: none; }
 /* Un élément affiché seul : son titre suffit, le fil d'Ariane dit déjà la rubrique. */
 .cat-section.is-leaf > :not(.cat-sub) { display: none; }

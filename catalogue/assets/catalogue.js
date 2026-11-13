@@ -41,20 +41,32 @@
 
   // Le catalogue applique son propre gabarit : une application à parties séparées, donc des onglets
   // persistants au-dessus de la page, le fil d'Ariane en tête — et pas de rail. Ce qui vaut pour toute
-  // l'application tient en un seul bouton au bout de la rangée, « Aller à » : il ouvre la palette, où l'on
-  // cherche, où l'on change de page et où l'on règle l'affichage. Le logo ferme la rangée.
+  // l'application a sa propre ligne, au-dessus des onglets : le logo, la recherche — un vrai champ, qui
+  // prend la largeur libre —, puis les notifications, le thème et les réglages. Tout s'y écrit en mots.
+  const sys = document.createElement('div'); sys.className = 'cat-sys';
+  sys.innerHTML = `<button class="c-logo" type="button" id="cat-logo" aria-haspopup="dialog" aria-label="Mono — le logo" style="appearance: none; background: none; border: 0; padding: 0; cursor: pointer">Mono</button>
+    <div id="cat-search" class="cat-search" role="search"></div>
+    <div class="cat-sys__tools">
+      <details class="c-menu c-menu--end" id="cat-notifs"><summary class="c-button c-button--quiet">Notifications<span class="g-bracket" data-badge hidden></span></summary><div class="c-menu__list c-notifs" aria-label="Notifications"></div></details>
+      <div class="c-segmented" role="group" aria-label="Thème"><button class="c-segmented__item" type="button" data-set-theme="encre">Encre</button><button class="c-segmented__item" type="button" data-set-theme="papier">Papier</button></div>
+      <details class="c-menu c-menu--end" id="cat-settings"><summary class="c-button c-button--quiet">Réglages</summary>
+        <div class="c-menu__list" role="menu" aria-label="Réglages"><span class="c-menu__label">Accent — comment le signal se montre</span>
+          <button class="c-menu__item" type="button" role="menuitemradio" data-set-accent="discret">Discret <span class="c-menu__hint">En trait</span></button>
+          <button class="c-menu__item" type="button" role="menuitemradio" data-set-accent="fort">Fort <span class="c-menu__hint">En aplat</span></button>
+          <button class="c-menu__item" type="button" role="menuitemradio" data-set-accent="flash">Flash <span class="c-menu__hint">Aplat à l'arrivée</span></button>
+        </div></details>
+    </div>`;
   const tabs = document.createElement('nav'); tabs.className = 'c-doctabs'; tabs.setAttribute('aria-label', 'Catalogue');
-  tabs.innerHTML = PAGES.map(([href, label]) => `<a class="c-doctabs__tab" href="${root}${href}"${isCurrent(href) ? ' aria-current="page"' : ''}><span class="c-doctabs__label">${label}</span></a>`).join('')
-    + `<span class="c-doctabs__spacer"></span><div class="c-doctabs__tools">
-        <button class="c-button c-button--quiet" type="button" id="cat-go" aria-haspopup="dialog" aria-keyshortcuts="/ Control+K"><i class="c-icon i-search" aria-hidden="true"></i>Aller à<kbd class="c-kbd" aria-hidden="true">/</kbd></button>
-        <button class="c-logo" type="button" id="cat-logo" aria-haspopup="dialog" aria-label="Mono — le logo" style="appearance: none; background: none; border: 0; padding: 0; cursor: pointer">Mono</button>
-      </div>`;
-  document.body.classList.add('l-desk--tabs'); document.body.prepend(tabs);
-  const palette = document.createElement('dialog'); palette.className = 'c-dialog c-dialog--large c-palette cat-palette'; palette.setAttribute('aria-label', 'Aller à');
-  palette.innerHTML = '<div id="cat-search" class="cat-search" role="search"></div>'; document.body.append(palette);
-  palette.addEventListener('click', (e) => { if (e.target === palette) palette.close(); });
+  tabs.innerHTML = PAGES.map(([href, label]) => `<a class="c-doctabs__tab" href="${root}${href}"${isCurrent(href) ? ' aria-current="page"' : ''}><span class="c-doctabs__label">${label}</span></a>`).join('');
+  document.body.classList.add('l-desk--tabs', 'cat-has-sys'); document.body.prepend(sys, tabs);
   document.addEventListener('click', (e) => { document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item:not(.c-menu__item--check)')) m.open = false; }); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-breadcrumb__seg[open]').forEach((m) => { m.open = false; }); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-breadcrumb__seg[open], .cat-sys .c-menu[open]').forEach((m) => { m.open = false; }); });
+  // Notifications : un réglage changé est une action réversible — elle s'exécute, puis offre son annulation
+  // (toast, et centre ouvert depuis cette ligne). Le journal vit le temps de la page.
+  const toasts = document.createElement('div'); toasts.className = 'c-toasts'; toasts.setAttribute('aria-live', 'polite'); document.body.append(toasts);
+  let notifs = null; const bootNotifs = () => { notifs = window.MonoNotifs({ toasts, center: sys.querySelector('.c-notifs'), badge: sys.querySelector('[data-badge]') }); };
+  addEventListener('load', () => { if (window.MonoNotifs) bootNotifs(); else { const sc = document.createElement('script'); sc.src = root + 'assets/notifs.js'; sc.onload = bootNotifs; document.head.append(sc); } });
+  addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'z' && !e.ctrlKey && !e.metaKey && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && toasts.childElementCount && notifs?.undoLast()) e.preventDefault(); });
   // Un exemple ouvert dans l'onglet Exemples suit le thème et l'accent choisis ici.
   const frame = () => document.querySelector('iframe.cat-frame')?.contentDocument?.documentElement;
   document.addEventListener('mono:theme', (e) => { const d = frame(); if (d) d.dataset.theme = e.detail; });
@@ -137,7 +149,8 @@
   // Un onglet garde l'état de sa page : on retrouve la rubrique et le défilement où on les avait laissés.
   if (shell && !location.hash) { try { const sv = JSON.parse(sessionStorage.getItem(key) || 'null'); if (sv?.hash) { history.replaceState(null, '', sv.hash); go(sv.hash.slice(1), true); } if (sv) shell.scrollTop = sv.top || 0; } catch {} }
   addEventListener('pagehide', () => { try { sessionStorage.setItem(key, JSON.stringify({ top: shell.scrollTop, hash: location.hash })); } catch {} });
-  document.querySelectorAll('[data-set-theme]').forEach((b) => b.addEventListener('click', () => setTheme(b.dataset.setTheme)));
+  const NAME = { encre: 'Thème encre', papier: 'Thème papier', discret: 'Accent discret', fort: 'Accent fort', flash: 'Accent flash' };
+  document.querySelectorAll('[data-set-theme]').forEach((b) => b.addEventListener('click', () => { const prev = document.documentElement.dataset.theme, next = b.dataset.setTheme; if (prev === next) return; setTheme(next); notifs?.push({ kind: 'Réglage', text: NAME[next], undo: () => setTheme(prev) }); }));
   // Accent : discret (défaut), fort (le signal en aplat) ou flash (l'aplat à l'arrivée, puis discret).
   const setAccent = (a) => {
     if (a === 'fort' || a === 'flash') document.documentElement.dataset.accent = a; else { a = 'discret'; delete document.documentElement.dataset.accent; }
@@ -147,7 +160,7 @@
   };
   let savedAccent = null; try { savedAccent = localStorage.getItem('mono-accent'); } catch {}
   setAccent(new URLSearchParams(location.search).get('accent') || savedAccent || 'discret');
-  document.querySelectorAll('[data-set-accent]').forEach((b) => b.addEventListener('click', () => setAccent(b.dataset.setAccent)));
+  document.querySelectorAll('[data-set-accent]').forEach((b) => b.addEventListener('click', () => { const prev = document.documentElement.dataset.accent || 'discret', next = b.dataset.setAccent; if (prev === next) return; setAccent(next); notifs?.push({ kind: 'Réglage', text: NAME[next], undo: () => setAccent(prev) }); }));
   setTheme(initial);
 
   // ---------------------------------------------------------------------------
@@ -169,10 +182,10 @@
     host.innerHTML = `
       <label class="c-search">
         <i class="c-icon i-search" aria-hidden="true"></i>
-        <input type="search" id="cat-q" autocomplete="off" spellcheck="false" placeholder="Une page, un composant, une règle, un token — ou « thème », « accent »" aria-label="Rechercher dans le catalogue" role="combobox" aria-expanded="false" aria-controls="cat-results" aria-autocomplete="list">
-        <span class="c-kbd" aria-hidden="true">esc</span>
+        <input type="search" id="cat-q" autocomplete="off" spellcheck="false" placeholder="Rechercher une page, un composant, une règle, un token" aria-label="Rechercher dans le catalogue" role="combobox" aria-expanded="false" aria-controls="cat-results" aria-autocomplete="list">
+        <span class="c-kbd" aria-hidden="true">/</span>
       </label>
-      <div class="cat-search__panel">
+      <div class="cat-search__panel" hidden>
         <div class="cat-search__filters">
           <div class="cat-search__group" role="group" aria-label="Filtrer par rubrique"><span class="t-micro">Rubrique</span>${RUBRIQUES.map((r) => `<button class="c-chip" type="button" aria-pressed="false" data-rub="${r}">${r} <span class="c-chip__count"></span></button>`).join('')}</div>
           <div class="cat-search__group" role="group" aria-label="Filtrer par type"><span class="t-micro">Type</span>${TYPES.map(([k, l]) => `<button class="c-chip" type="button" aria-pressed="false" data-type="${k}">${l} <span class="c-chip__count"></span></button>`).join('')}</div>
@@ -278,10 +291,8 @@
       }
       results.innerHTML = html;
     };
-    const open = () => { if (palette.open) return; palette.showModal(); input.setAttribute('aria-expanded', 'true'); render(); input.focus(); input.select(); };
-    const close = () => { if (palette.open) palette.close(); };
-    palette.addEventListener('close', () => { input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); });
-    document.getElementById('cat-go').addEventListener('click', open);
+    const open = () => { if (!panel.hidden) return; panel.hidden = false; input.setAttribute('aria-expanded', 'true'); render(); };
+    const close = () => { panel.hidden = true; input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); };
     const setActive = (pos) => {
       if (!state.shown.length) return;
       state.active = (pos + state.shown.length) % state.shown.length;
@@ -290,12 +301,13 @@
       if (el) { el.scrollIntoView({ block: 'nearest' }); input.setAttribute('aria-activedescendant', el.id); }
     };
 
-    input.addEventListener('input', render);
+    input.addEventListener('focus', open);
+    input.addEventListener('input', () => { open(); render(); });
     input.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowDown') { e.preventDefault(); open(); setActive(state.active + 1); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(state.active - 1); }
       else if (e.key === 'Enter') { const el = results.querySelector(`#cat-opt-${state.active}`); if (el) { e.preventDefault(); el.click(); } }
-      else if (e.key === 'Escape' && input.value) { e.preventDefault(); input.value = ''; render(); }
+      else if (e.key === 'Escape') { if (input.value) { input.value = ''; render(); } else { close(); input.blur(); } }
     });
     host.addEventListener('click', (e) => {
       const chip = e.target.closest('.c-chip');
@@ -310,13 +322,14 @@
       if (cmd) { (cmd.dataset.cmd === 'theme' ? setTheme : setAccent)(cmd.dataset.val); const keep = state.active; render(); state.active = keep; setActive(keep); input.focus(); return; }
       if (e.target.closest('.cat-result')) close();
     });
+    document.addEventListener('pointerdown', (e) => { if (!host.contains(e.target)) close(); });
     document.addEventListener('keydown', (e) => {
       const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) || document.activeElement.isContentEditable;
-      if (((e.key === '/' && !typing) || (e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey))) && !document.querySelector('dialog[open]')) { e.preventDefault(); open(); }
+      if (((e.key === '/' && !typing) || (e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey))) && !document.querySelector('dialog[open]')) { e.preventDefault(); input.focus(); input.select(); }
     });
     // ?q=… préremplit la recherche : une recherche se partage par son adresse.
     const preset = new URLSearchParams(location.search).get('q');
-    if (preset) { input.value = preset; open(); }
+    if (preset) { input.value = preset; input.focus(); open(); }
   }
 
   // Extraits : le code affiché EST le DOM de la démo, jamais une copie.

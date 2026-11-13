@@ -95,7 +95,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-072 | Le catalogue applique son propre gabarit | en vigueur, complétée par D-075 et D-076 |
 | D-073 | Kanban : l'emplacement de la fiche se voit pendant le glissé | en vigueur |
 | D-074 | La liste déroulante suit le système | en vigueur |
-| D-075 | Catalogue : « Aller à » pour tout ce qui est global ; un index par page ; démonstrations vivantes | en vigueur, l'index de page remplacé par D-077 |
+| D-075 | Catalogue : « Aller à » pour tout ce qui est global ; un index par page ; démonstrations vivantes | en vigueur pour les démonstrations ; l'index de page remplacé par D-077, « Aller à » par D-083 |
 | D-076 | Les exemples s'ouvrent dans leur onglet, avec le fil d'Ariane | en vigueur |
 | D-077 | Pages du catalogue : un sommaire, puis une chose à la fois | en vigueur, complétée par D-078 |
 | D-078 | Un cran du fil d'Ariane ouvre la liste de ses voisins | en vigueur, la forme (menu) remplacée par D-079 |
@@ -103,6 +103,7 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-080 | Survol d'un contrôle : le contour se renforce, le fond ne change pas | en vigueur |
 | D-081 | Saisie : les contrôles courants qui manquaient | en vigueur |
 | D-082 | Fil d'Ariane : la rangée de voisins est la sœur du cran ; le serveur local interdit le cache | en vigueur |
+| D-083 | Catalogue : une ligne système au-dessus des onglets | en vigueur |
 
 ---
 
@@ -777,3 +778,15 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Décision 1** : la rangée (`.c-breadcrumb__row`) s'écrit juste après son cran, comme sa sœur ; le cran fermé la masque par un simple sélecteur d'adjacence. Plus aucune dépendance à une fonction récente.
 - **Décision 2** : `npm run serve` lance un serveur Node sans dépendance qui répond `Cache-Control: no-store`. Il remplace l'appel à Python (et la différence `py -3` / `python3`).
 - **Limite** : vérifié sous Chromium seulement, faute d'autre moteur dans l'environnement de travail. Derrière un hébergement statique, le cache reste celui de l'hébergeur.
+
+## D-083 — Catalogue : une ligne système au-dessus des onglets
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« je n'aime pas ce qu'on a fait de la recherche, les thèmes ne sont plus accessibles, il faut un endroit pour les notifications et les réglages ») · **Remplace** : la palette « Aller à » de D-075 comme point d'entrée du global
+- **Constat** : la palette cachait tout derrière un bouton — ni la recherche ni le thème ne se voyaient — et n'offrait aucune place aux notifications et aux réglages.
+- **Décision** : ce qui vaut pour toute l'application a sa propre ligne, sur le plan de travail, au-dessus des onglets. De gauche à droite : le logo ; la recherche, un vrai champ qui prend la largeur libre (jusqu'à 60 rem) ; puis « Notifications », le thème en sélecteur à deux segments (« Encre / Papier »), « Réglages ». Tout s'écrit en mots. Trois niveaux se lisent de haut en bas : le système, les parties, la page.
+- **Recherche** : le panneau de résultats est calé sur le champ — mêmes bords gauche et droit — et s'ouvre dessous. La touche `/` (ou Ctrl+K) place le curseur dans le champ ; Échap vide puis referme.
+- **Notifications** : le centre du système (`.c-notifs`), ouvert depuis la ligne, avec le décompte entre crochets. Dans le catalogue, il consigne les réglages changés : changer de thème ou d'accent s'exécute aussitôt et offre son annulation (toast, touche Z, centre) — la règle « annuler plutôt que confirmer » appliquée au catalogue lui-même.
+- **Réglages** : un menu ; l'accent (discret, fort, flash) y est rangé, pour ne garder visible sur la ligne que le thème.
+- **Coût assumé** : une ligne de plus, environ 48 px de hauteur. Le logo quitte la rangée d'onglets pour cette ligne.
+- **Écarté** (maquettes soumises) : une ligne d'état sous la page, façon console — la plus singulière, mais chercher en bas de l'écran est inhabituel ; des mots au bout de la rangée d'onglets — aucune hauteur perdue, mais serré dès six onglets, le défaut déjà relevé pour le champ dans la rangée.
+- **Téléphone** : la ligne se replie — le logo et les outils, puis la recherche sur toute la largeur.
