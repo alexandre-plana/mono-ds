@@ -95,8 +95,9 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-072 | Le catalogue applique son propre gabarit | en vigueur, complétée par D-075 et D-076 |
 | D-073 | Kanban : l'emplacement de la fiche se voit pendant le glissé | en vigueur |
 | D-074 | La liste déroulante suit le système | en vigueur |
-| D-075 | Catalogue : « Aller à » pour tout ce qui est global ; un index par page ; démonstrations vivantes | en vigueur |
+| D-075 | Catalogue : « Aller à » pour tout ce qui est global ; un index par page ; démonstrations vivantes | en vigueur, l'index de page remplacé par D-077 |
 | D-076 | Les exemples s'ouvrent dans leur onglet, avec le fil d'Ariane | en vigueur |
+| D-077 | Pages du catalogue : un sommaire, puis une chose à la fois | en vigueur |
 
 ---
 
@@ -711,3 +712,12 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Décision** : la page Exemples range les onze écrans en quatre familles — documents, gabarits d'application, écrans de travail, à regarder — avec une vignette de chacun, dans le thème courant. Un exemple s'ouvre dans l'onglet Exemples : le fil d'Ariane devient « Catalogue / Exemples / Dossiers » et ramène à la liste ; « Ouvrir seul » le sort dans sa propre fenêtre.
 - **Raison** : c'est le cas d'usage du fil d'Ariane — on descend d'un cran sans quitter l'onglet. L'écran affiché dans la page garde son propre plan de travail : on voit que c'est un écran, pas un morceau du catalogue.
 - **Conséquence** : le thème et l'accent choisis dans « Aller à » s'appliquent aussitôt à l'exemple affiché.
+
+## D-077 — Pages du catalogue : un sommaire, puis une chose à la fois
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire · **Remplace** : l'index de page de D-075 (le reste de D-075 tient)
+- **Constat** : l'index vertical « Dans cette page », présent en permanence à gauche du texte, était un second objet à lire en même temps que la page. Il prenait un axe et un quart de la largeur pour dire ce que l'on sait déjà une fois arrivé. Le commanditaire : « plus sobre, plus en accord avec notre philosophie ».
+- **Décision** : aucune navigation permanente dans la page. Une page s'ouvre sur son sommaire — trois axes : le numéro, la rubrique, ce qu'elle contient. On descend d'un cran et la rubrique s'affiche seule, sur toute la largeur ; quand elle compte au moins trois éléments (les composants), c'est l'élément qui s'affiche seul. Le fil d'Ariane de l'en-tête dit où l'on est et ramène — « Catalogue / Composants / Navigation / Plan » —, exactement comme pour les exemples (D-076). En pied, « Suite » et « Avant » permettent de lire dans l'ordre sans remonter.
+- **Raison** : c'est la règle du gabarit arborescent — le chemin est la navigation — et celle du vide : à l'écran, il n'y a que ce qu'on lit. Pour sauter ailleurs, « Aller à » (touche /) est toujours là.
+- **Écarté** : l'index latéral qui suit le défilement (D-075, retiré), les onglets de rubrique (première tentative de D-075), un sommaire replié dans un menu (une navigation cachée de plus).
+- **Conséquence** : un lien ou un résultat de recherche ouvre directement la bonne vue ; l'onglet retrouve la vue où on l'avait laissé.

@@ -76,45 +76,50 @@
     logoDlg.showModal();
   });
 
-  // ---- Organisation d'une page : un seul index, à gauche, qui dit toute la hiérarchie.
-  // Les rubriques y sont numérotées ; celle qu'on lit est dépliée et montre ses éléments, celui qui est à
-  // l'écran est marqué et suit le défilement. À droite, une rubrique à la fois. Un niveau = un retrait,
-  // une seule direction de lecture : pas d'onglets de page par-dessus.
+  // ---- Organisation d'une page : un sommaire, puis une chose à la fois.
+  // La page s'ouvre sur son sommaire — rubriques numérotées et, dessous, leurs éléments. On descend d'un
+  // cran : la rubrique (ou l'élément, quand la rubrique en compte au moins trois) s'affiche seule, sur toute
+  // la largeur. Le fil d'Ariane dit où l'on est et ramène ; « Suite » mène à la vue suivante. Rien d'autre
+  // à l'écran que ce qu'on lit : ni colonne d'index, ni onglets de page.
   const shell = document.querySelector('.l-shell'), sections = [...document.querySelectorAll('.cat-section[id]')], intro = document.querySelector('.cat-intro');
-  const rail = document.querySelector('.cat-rail'), index = document.getElementById('cat-nav');
+  const crumb = document.querySelector('.c-breadcrumb--head'), crumb0 = crumb?.innerHTML, pageName = crumb?.querySelector('[aria-current]')?.textContent || document.title;
   const label = (sec) => sec.dataset.title || sec.querySelector('.c-section-head span:nth-child(2)')?.textContent || sec.id;
-  const subsOf = (sec) => [...sec.querySelectorAll('.cat-sub[id]')];
   const short = (sub) => (sub.querySelector('h3')?.textContent || sub.id).split(' — ')[0];
-  const indexed = sections.length > 1 && rail && index;
-  if (indexed) {
-    rail.classList.add('cat-rail--index'); if (intro) rail.before(intro);
-    index.className = 'cat-index'; index.setAttribute('aria-label', 'Dans cette page');
-    index.innerHTML = '<div class="cat-index__title">Dans cette page</div><ol>' + sections.map((sec, i) => {
-      const subs = subsOf(sec);
-      return `<li><a class="cat-index__sec" href="#${sec.id}"><span class="cat-index__num">${String(i + 1).padStart(2, '0')}</span><span>${label(sec)}</span></a>${subs.length ? `<ol class="cat-index__subs" hidden>${subs.map((sub) => `<li><a href="#${sub.id}">${short(sub)}</a></li>`).join('')}</ol>` : ''}</li>`;
-    }).join('') + '</ol>';
-    // Au bout d'une rubrique, la suivante : on peut lire la page dans l'ordre sans revenir à l'index.
-    sections.forEach((sec, i) => { const nx = sections[i + 1]; if (!nx) return; const a = document.createElement('a'); a.className = 'cat-next'; a.href = '#' + nx.id; a.innerHTML = `<span class="t-micro">Suite</span><span>${String(i + 2).padStart(2, '0')} — ${label(nx)}</span><i class="c-icon i-arrow-right" aria-hidden="true"></i>`; sec.append(a); });
+  const num = (i) => String(i + 1).padStart(2, '0');
+  const paged = sections.length > 1 && intro;
+  const views = [];   // l'ordre de lecture : une rubrique entière, ou un élément
+  let toc = null;
+  if (paged) {
+    sections.forEach((sec, i) => {
+      sec.subs = [...sec.querySelectorAll(':scope > .cat-sub[id]')]; sec.split = sec.subs.length >= 3; sec.n = i;
+      if (sec.split) {
+        sec.subs.forEach((sub) => views.push({ el: sub, sec, name: short(sub) }));
+        sec.menu = document.createElement('nav'); sec.menu.className = 'cat-toc__subs cat-toc__subs--list'; sec.menu.setAttribute('aria-label', label(sec));
+        sec.menu.innerHTML = sec.subs.map((sub) => `<a href="#${sub.id}">${short(sub)}</a>`).join(''); sec.subs[0].before(sec.menu);
+      } else views.push({ el: sec, sec, name: label(sec) });
+    });
+    toc = document.createElement('nav'); toc.className = 'cat-toc'; toc.setAttribute('aria-label', 'Sommaire');
+    toc.innerHTML = sections.map((sec, i) => {
+      const note = sec.querySelector('.c-section-head__aside')?.textContent || '';
+      return `<div class="cat-toc__row"><span class="cat-toc__num">${num(i)}</span><a class="cat-toc__title" href="#${sec.id}">${label(sec)}</a>${sec.subs.length ? `<span class="cat-toc__subs">${sec.subs.map((sub) => `<a href="#${sub.id}">${short(sub)}</a>`).join('')}</span>` : `<span class="cat-toc__note">${note}</span>`}</div>`;
+    }).join(''); intro.after(toc);
+    views.forEach((v, i) => {
+      const prev = views[i - 1], next = views[i + 1], f = document.createElement('nav'); f.className = 'cat-next'; f.setAttribute('aria-label', 'Lire dans l’ordre');
+      f.innerHTML = (next ? `<a href="#${next.el.id}"><span class="t-micro">Suite</span><span>${next.name}</span><i class="c-icon i-arrow-right" aria-hidden="true"></i></a>` : '') + (prev ? `<a href="#${prev.el.id}"><span class="t-micro">Avant</span><span>${prev.name}</span></a>` : '');
+      v.foot = f; v.el.append(f);
+    });
   }
-  let currentSec = null;
-  const markSub = (id) => index.querySelectorAll('.cat-index__subs a').forEach((a) => (a.getAttribute('href') === '#' + id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
-  const spy = () => {
-    if (!indexed || !currentSec) return;
-    const top = shell.getBoundingClientRect().top + 96; let cur = null;
-    for (const sub of subsOf(currentSec)) { if (sub.getBoundingClientRect().top <= top) cur = sub; else break; }
-    markSub(cur ? cur.id : '');
-  };
-  if (indexed && shell) shell.addEventListener('scroll', spy, { passive: true });
   const key = 'mono-scroll:' + location.pathname;
   const go = (id, first) => {
-    const el = id ? document.getElementById(id) : null, sec = el?.closest('.cat-section') || (first ? sections[0] : null); if (!sec) return;
-    if (indexed) {
-      currentSec = sec; sections.forEach((x) => { x.hidden = x !== sec; });
-      index.querySelectorAll('.cat-index__sec').forEach((a) => { const on = a.getAttribute('href') === '#' + sec.id; on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current'); const subs = a.nextElementSibling; if (subs) subs.hidden = !on; });
-    }
-    if (first) { spy(); return; }
-    if (el && el !== sec) el.scrollIntoView({ block: 'start' }); else if (shell) shell.scrollTop = 0;
-    spy();
+    if (!paged) { if (!first && id) document.getElementById(id)?.scrollIntoView({ block: 'start' }); return; }
+    const el = id ? document.getElementById(id) : null, sec = el?.closest('.cat-section') || null;
+    const sub = sec?.split ? sec.subs.find((x) => x.contains(el)) : null, root = !sec;
+    intro.hidden = toc.hidden = !root;
+    sections.forEach((x) => { x.hidden = x !== sec; });
+    if (sec?.split) { sec.subs.forEach((x) => { x.hidden = x !== sub; }); sec.menu.hidden = !!sub; sec.classList.toggle('is-leaf', !!sub); }
+    if (crumb) crumb.innerHTML = root ? crumb0 : crumb0.replace(/<span aria-current="page">[^<]*<\/span>/, `<a href="#">${pageName}</a>`) + (sub ? `<a href="#${sec.id}">${label(sec)}</a><span aria-current="page">${short(sub)}</span>` : `<span aria-current="page">${label(sec)}</span>`);
+    if (first) return;
+    if (el && el !== sec && el !== sub) el.scrollIntoView({ block: 'start' }); else if (shell) shell.scrollTop = 0;
   };
   if (sections.length) { go(location.hash.slice(1), true); if (location.hash) requestAnimationFrame(() => go(location.hash.slice(1))); }
   addEventListener('hashchange', () => go(location.hash.slice(1)));

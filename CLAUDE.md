@@ -103,8 +103,9 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
 - Le logo (`.c-logo`, sans point `--plain` dans un écran de travail) figure dans chaque
   écran, à une extrémité : bout de la rangée d'onglets, fin des métadonnées de l'en-tête,
   ou colophon. Le catalogue lui-même suit le gabarit à onglets : pas de rail. Ce qui est global
-  (recherche, thème, accent) passe par « Aller à » (touche /), jamais par l'en-tête d'une page ; chaque
-  page a un seul index à gauche (rubriques numérotées, la courante dépliée) ; un exemple s'ouvre dans
+  (recherche, thème, accent) passe par « Aller à » (touche /), jamais par l'en-tête d'une page ; une
+  page s'ouvre sur son sommaire puis montre une rubrique ou un élément à la fois, le fil d'Ariane
+  ramène (pas d'index latéral, pas d'onglets de page) ; un exemple s'ouvre dans
   l'onglet Exemples (`exemples.html?e=nom`) avec le fil d'Ariane.
 - Le système reste en CSS pur. Les comportements (fenêtres, canevas, menus,
   console) vivent dans `catalogue/assets/` comme démonstrations ; seule la version

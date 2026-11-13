@@ -1,33 +1,27 @@
 /* Habillage du catalogue uniquement (.cat-). Ne fait PAS partie du système :
    ne pas réutiliser ces classes dans un produit. */
 html { scroll-behavior: smooth; scroll-padding-top: var(--space-6); }
-/* Pas de rail de navigation : on change de page par les onglets. La colonne de gauche est l'index de la
-   page — rubriques numérotées, celle qu'on lit dépliée — et rien d'autre. */
-.cat-rail { display: block; padding-top: var(--space-6); }
-.cat-rail--index { display: grid; grid-template-columns: 14rem minmax(0, 1fr); column-gap: var(--space-8); align-items: start; }
+/* Pas de rail, pas d'index : la page s'ouvre sur son sommaire, puis montre une chose à la fois. */
+.cat-rail { display: block; padding-top: var(--space-7); }
 .cat-nav { display: none; }
-.cat-intro { padding-top: var(--space-7); }
-.cat-main { display: flex; flex-direction: column; gap: var(--space-7); min-width: 0; max-width: 64rem; padding-bottom: var(--space-9); }
-.cat-index { position: sticky; top: var(--space-5); }
-.cat-index__title { margin-bottom: var(--space-3); padding-left: 2rem; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
-.cat-index ol { list-style: none; margin: 0; padding: 0; }
-.cat-index a { display: block; padding: var(--space-1) 0; color: var(--fg-soft); text-decoration: none; }
-.cat-index a:hover { color: var(--fg-strong); }
-.cat-index__sec { display: grid !important; grid-template-columns: 2rem minmax(0, 1fr); }
-.cat-index__num { font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-muted); align-self: baseline; }
-.cat-index__sec[aria-current] { color: var(--fg-strong); font-weight: var(--weight-medium); }
-/* Les éléments de la rubrique ouverte : même axe que le titre de la rubrique, un filet pointillé pour repère. */
-.cat-index__subs { margin: var(--space-1) 0 var(--space-3) calc(2rem - var(--space-3) - var(--stroke)) !important; border-left: var(--hairline) dotted var(--line-strong); }
-.cat-index__subs a { margin-left: calc(-1 * var(--hairline)); padding-left: var(--space-3); border-left: var(--stroke) solid transparent; font-size: var(--text-small); }
-.cat-index__subs a[aria-current] { border-left-color: var(--selected-line); color: var(--fg); }
-.cat-next { align-self: flex-start; display: inline-flex; align-items: baseline; gap: var(--space-4); margin-top: var(--space-7); color: var(--fg); text-decoration: none; }
-.cat-next > .t-micro { color: var(--fg-muted); }
+.cat-main { display: flex; flex-direction: column; gap: var(--space-7); min-width: 0; max-width: 76rem; padding-bottom: var(--space-9); }
+/* Sommaire : trois axes — le numéro, le titre, ce que la rubrique contient. Aucun filet. */
+.cat-toc { display: flex; flex-direction: column; gap: var(--space-5); margin-top: var(--space-4); }
+.cat-toc__row { display: grid; grid-template-columns: 2.5rem 15rem minmax(0, 1fr); column-gap: var(--space-5); align-items: baseline; }
+.cat-toc__num { font-size: var(--text-micro); letter-spacing: var(--track-caps); color: var(--fg-muted); }
+.cat-toc__title { color: var(--fg-strong); font-weight: var(--weight-medium); text-decoration: none; }
+.cat-toc__note { color: var(--fg-muted); font-size: var(--text-small); }
+.cat-toc__subs { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); font-size: var(--text-small); }
+.cat-toc__subs a { color: var(--fg-soft); text-decoration: none; }
+.cat-toc a:hover, .cat-toc__subs a:hover { color: var(--fg-strong); text-decoration: underline; text-underline-offset: 0.3em; }
+.cat-toc__subs--list { flex-direction: column; gap: var(--space-3); font-size: inherit; }
+.cat-toc__subs--list a { color: var(--fg); }
+.cat-next { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-8); margin-top: var(--space-8); }
+.cat-next a { display: inline-flex; align-items: baseline; gap: var(--space-4); color: var(--fg); text-decoration: none; }
+.cat-next a > .t-micro { color: var(--fg-muted); }
 .cat-next .c-icon { align-self: center; color: var(--fg-muted); }
-.cat-next:hover { color: var(--fg-strong); } .cat-next:hover .c-icon { color: var(--fg-strong); }
-@media (max-width: 900px) {
-  .cat-rail--index { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); }
-  .cat-index { position: static; } .cat-index > ol { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); } .cat-index__subs { display: none; } .cat-index__title { padding-left: 0; } .cat-index__sec { grid-template-columns: max-content max-content; column-gap: var(--space-2); }
-}
+.cat-next a:hover, .cat-next a:hover .c-icon { color: var(--fg-strong); }
+@media (max-width: 900px) { .cat-toc__row { grid-template-columns: 2.5rem minmax(0, 1fr); row-gap: var(--space-2); } .cat-toc__subs, .cat-toc__note { grid-column: 2; } }
 /* « Aller à » : la recherche, les pages et l'affichage dans une palette, ouverte d'un bouton ou de la touche /. */
 body > .c-doctabs { z-index: 30; }
 .cat-palette .cat-search { margin: 0; display: flex; flex-direction: column; height: min(38rem, 78dvh); }
@@ -152,3 +146,5 @@ button.cat-result { appearance: none; width: 100%; background: none; border-top:
 @media (max-width: 640px) { .cat-result { grid-template-columns: 1fr; } .cat-result__where { display: none; } .cat-result__text { white-space: normal; } .cat-search__help { display: none; } }
 @media (max-width: 900px) { body > .c-doctabs { flex-wrap: wrap; row-gap: var(--space-1); margin-bottom: var(--space-2); } body > .c-doctabs > .c-doctabs__spacer { display: none; } body > .c-doctabs > .c-doctabs__tools { order: -1; flex-basis: 100%; justify-content: space-between; margin-bottom: var(--space-2); } }
 .cat-search.is-browsing .cat-search__filters { display: none; }
+/* Un élément affiché seul : son titre suffit, le fil d'Ariane dit déjà la rubrique. */
+.cat-section.is-leaf > :not(.cat-sub) { display: none; }
