@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="fr" data-theme="encre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONO — Laboratoire</title>
+  <link rel="stylesheet" href="../src/mono.css">
+  <link rel="stylesheet" href="assets/catalogue.css">
+  <link rel="stylesheet" href="assets/labo.css">
+  <script src="assets/prefs.js"></script>
+</head>
+<body class="l-desk" data-root="./">
+  <div class="l-shell">
+  <div class="l-page">
+    <header class="c-masthead">
+      <nav class="c-breadcrumb c-breadcrumb--head" aria-label="Fil d'Ariane"><a href="index.html">Catalogue</a><span aria-current="page">Laboratoire</span></nav>
+      <div class="c-masthead__meta">
+        <span>Hors système</span>
+      </div>
+    </header>
+
+    <div class="l-rail cat-rail">
+      <nav id="cat-nav" class="c-nav cat-nav" aria-label="Catalogue"></nav>
+      <main class="cat-main">
+
+        <section class="cat-intro">
+          <h1 class="t-spaced t-large">Laboratoire</h1>
+          <p class="cat-lede">Des idées d'interface peu communes, essayées une par une. Rien ici ne fait partie du système : une expérience peut enfreindre une règle de MONO, c'est même parfois son objet.</p>
+          <dl class="x-research">
+            <dt>Une à la fois</dt><dd>Chaque expérience a sa rubrique et son scénario. Elles ne se combinent pas : on ne juge bien qu'une idée isolée.</dd>
+            <dt>D'abord l'état de l'art</dt><dd>Chaque expérience s'ouvre sur ce que l'on sait déjà, sources à l'appui, et dit ce qui n'est pas établi.</dd>
+            <dt>Sortir du laboratoire</dt><dd>Une idée n'entre dans le système que par une décision écrite, et réécrite avec ses rôles. Les classes <code>.x-</code> et les couleurs <code>--x-</code> restent ici.</dd>
+          </dl>
+        </section>
+
+        <section class="cat-section" id="mise-en-valeur" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">01</span><span>La mise en valeur ordonnée</span><span class="c-section-head__aside">Expérience en cours</span></h2>
+          <p><span class="t-strong">L'hypothèse.</span> Quand on arrive sur un écran, tout ce qui compte se présente en même temps, et l'œil choisit au hasard. Si l'on faisait l'inverse : ce qui compte se signale un instant, dans l'ordre de son importance — le critique d'abord, seul ; puis ce qui est à surveiller ; puis ce qui est nouveau — et retombe aussitôt en simple marque. Même chose quand on fait défiler : une ligne ne se signale qu'au moment où on la découvre, une seule fois.</p>
+
+          <div class="cat-demo">
+            <div class="x-stage" id="x1" data-colors="trois" data-order="priorite">
+              <ol class="x-steps">
+                <li class="is-on"><b>1 · Vous arrivez</b>Le critique s'allume seul, puis les lignes à surveiller, puis les nouvelles. Chacune retombe en marque.</li>
+                <li><b>2 · Vous faites défiler</b>Ce qui attend plus bas est annoncé au bord. Chaque ligne se signale quand vous la découvrez.</li>
+                <li><b>3 · Un état change</b>Une ligne devient critique sous vos yeux : elle seule se signale. Rien de ce qui est déjà vu ne rejoue.</li>
+              </ol>
+              <div class="x-bar">
+                <button class="c-button" type="button" data-replay><i class="c-icon i-refresh" aria-hidden="true"></i>Rejouer l'arrivée</button>
+                <button class="c-button" type="button" data-change>Simuler un changement</button>
+                <span class="x-bar__group"><span class="x-bar__label">Couleurs</span><span class="c-segmented" role="group" aria-label="Couleurs"><button class="c-segmented__item" type="button" data-set-colors="trois" aria-pressed="true">Trois</button><button class="c-segmented__item" type="button" data-set-colors="une" aria-pressed="false">Une seule</button></span></span>
+                <span class="x-bar__group"><span class="x-bar__label">Ordre</span><span class="c-segmented" role="group" aria-label="Ordre"><button class="c-segmented__item" type="button" data-set-order="priorite" aria-pressed="true">Par priorité</button><button class="c-segmented__item" type="button" data-set-order="ensemble" aria-pressed="false">Tout ensemble</button></span></span>
+              </div>
+              <div class="x-scroll" tabindex="0" aria-label="Relevé du matin — faire défiler">
+                <table>
+                  <thead><tr><th>Réf.</th><th>Agence</th><th>État</th><th style="text-align: right">Relevé</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+                <div class="x-below" aria-live="polite"></div>
+              </div>
+              <div class="x-read" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <dl class="x-research">
+            <dt>État de l'art</dt><dd>Le <a href="https://www.oreilly.com/library/view/ajax-design-patterns/0596101805/ch16.html">« fondu jaune »</a> des débuts d'Ajax fait déjà cela pour un changement : une teinte vive qui retombe, le temps que l'œil se pose. La pratique le recommande ; je n'ai pas trouvé d'étude contrôlée qui en mesure l'effet.</dd>
+            <dt>Couleur par priorité</dt><dd>Les salles de contrôle (<a href="https://blog.isa.org/the-high-performance-hmi">interfaces « haute performance »</a>) travaillent sur fond gris et réservent la couleur vive à l'anormal, avec une teinte par niveau d'alarme. Les sources consultées ne s'accordent pas sur les teintes ; l'ordre retenu ici — rouge, ambre, bleu froid — est un choix, pas une norme.</dd>
+            <dt>Ce qui est nouveau ici</dt><dd>L'ordre dans le temps. Les teintes ne s'allument pas ensemble : la priorité se lit d'abord par qui passe en premier. Et l'annonce au bord de ce qui attend hors de vue, dans le même ordre.</dd>
+            <dt>Ce qu'on regarde</dt><dd>Trouve-t-on le critique plus vite « par priorité » que « tout ensemble » ? Trois couleurs aident-elles, ou l'ordre et la forme (plein, à demi, contour) suffisent-ils avec une seule ? À quel moment le flash répété devient-il une gêne ?</dd>
+            <dt>Garde-fous</dt><dd>Un flash par ligne, jamais rejoué ; pas plus d'un par seconde et par niveau ; aucun flash si le système demande de réduire les animations — les marques s'affichent d'emblée. La couleur est toujours doublée d'un mot.</dd>
+            <dt>Règle enfreinte</dt><dd>« Une seule couleur ». C'est l'objet de l'essai ; le réglage « Une seule » montre la version qui resterait dans la règle.</dd>
+          </dl>
+        </section>
+
+        <section class="cat-section" id="geste-recompense" data-search="rubrique">
+          <h2 class="c-section-head"><span class="c-section-head__num">02</span><span>Le geste récompensé</span><span class="c-section-head__aside">Expérience en cours</span></h2>
+          <p><span class="t-strong">L'hypothèse.</span> Une interface sobre peut encore faire plaisir à manier. Chaque geste qui aboutit — cocher, arriver au bout d'un texte, ouvrir une rubrique, tout finir — reçoit en retour un petit mouvement net, plus généreux que le geste ne l'exige, mais bref, typographique et sans couleur. Et la récompense s'use : répétée, elle s'abrège, pour ne jamais devenir une attente.</p>
+
+          <div class="cat-demo">
+            <div class="x-stage" id="x2" data-reward="avec">
+              <div class="x-bar">
+                <span class="x-bar__group"><span class="x-bar__label">Récompenses</span><span class="c-segmented" role="group" aria-label="Récompenses"><button class="c-segmented__item" type="button" data-set-reward="avec" aria-pressed="true">Avec</button><button class="c-segmented__item" type="button" data-set-reward="sans" aria-pressed="false">Sans</button></span></span>
+                <button class="c-button" type="button" data-reset><i class="c-icon i-undo" aria-hidden="true"></i>Recommencer</button>
+                <span class="x-bar__label" data-uses aria-live="polite">0 geste</span>
+              </div>
+              <div class="x-reward">
+                <div class="x-block">
+                  <h4>Clôture du matin <span><span class="x-count">0</span> / 5</span></h4>
+                  <ul class="x-tasks">
+                    <li><label class="x-task"><input type="checkbox"><span>Relever les agences bloquées</span></label></li>
+                    <li><label class="x-task"><input type="checkbox"><span>Relancer Vizille</span></label></li>
+                    <li><label class="x-task"><input type="checkbox"><span>Valider le barème santé</span></label></li>
+                    <li><label class="x-task"><input type="checkbox"><span>Joindre le rapport du trimestre</span></label></li>
+                    <li><label class="x-task"><input type="checkbox"><span>Prévenir M. Delorme</span></label></li>
+                  </ul>
+                  <span class="x-stamp" aria-live="polite">Clôturé</span>
+                </div>
+                <div class="x-block">
+                  <h4>Note de service <span class="x-done">[ lu ]</span></h4>
+                  <div class="x-readbox" tabindex="0" aria-label="Note de service — faire défiler jusqu'au bout">
+                    <p>La reprise des contrats de Vizille est attendue pour la fin de semaine. D'ici là, les trois agences du Sud restent en attente ; aucune écriture ne doit être passée sur leurs comptes.</p>
+                    <p>Le barème santé entre en vigueur au premier du mois. Les agences reçoivent leur grille lundi ; chaque responsable confirme sa lecture avant mercredi.</p>
+                    <p>Le rapport du troisième trimestre est clos. Les écarts de plus de deux points sont commentés en annexe, agence par agence.</p>
+                    <p>Prochaine réunion de réseau : jeudi, 14 heures. Ordre du jour en pièce jointe.</p>
+                  </div>
+                  <div class="x-progress" role="progressbar" aria-label="Lecture" aria-valuemin="0" aria-valuemax="100"></div>
+                  <details class="x-fold"><summary><span>Pièces jointes</span></summary><p>Rapport T3 (PDF, 3,1 Mo) · Barème santé (CSV, 248 Ko).</p></details>
+                  <details class="x-fold"><summary><span>Destinataires</span></summary><p>M. Delorme, P. Vidal, L. Brun, S. Garcin.</p></details>
+                  <details class="x-fold"><summary><span>Historique</span></summary><p>Rédigée le 12 novembre, relue le 13.</p></details>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <dl class="x-research">
+            <dt>État de l'art</dt><dd>Le jeu vidéo appelle cela le « jus » : une réponse plus riche que le geste ne le demande (la conférence <a href="https://hn.jakechampion.name/reader/https://medium.com/@mezoistvan/juicy-ui-why-the-smallest-interactions-make-the-biggest-difference-5cb5a5ffc752">« Juice it or lose it »</a>, 2012). Les guides d'interface en font un retour d'état utile. Les chiffres de satisfaction ou de fidélité que l'on voit cités viennent de blogs sans source vérifiable : je ne les reprends pas.</dd>
+            <dt>Durées</dt><dd>Le Nielsen Norman Group situe la plupart des animations <a href="https://nngroup.com/articles/animation-duration">entre 100 et 500 ms</a> et note qu'une animation longue lasse dès qu'elle se répète. Ici : 160 à 320 ms.</dd>
+            <dt>Ce qui est nouveau ici</dt><dd>Des récompenses sans couleur ni confetti, faites de la matière du système : une case qui se pose comme un tampon, un filet qui se tire, un mot qui se compose (son interlettrage se resserre), un cachet « Clôturé ». Et l'usure : après trois gestes, la récompense dure moitié moins.</dd>
+            <dt>Les quatre gestes</dt><dd>Cocher une tâche · faire défiler la note jusqu'au bout · ouvrir une rubrique · tout cocher. Basculer sur « Sans » pour comparer le même parcours, à sec.</dd>
+            <dt>Ce qu'on regarde</dt><dd>Le parcours « avec » paraît-il plus agréable sans paraître plus lent ? L'usure se remarque-t-elle, et faut-il l'accentuer ? Quel geste ne mérite pas de récompense ?</dd>
+            <dt>Garde-fous</dt><dd>Aucun mouvement ne retarde l'action : la case est cochée tout de suite, l'animation suit. Rien ne bouge si le système demande de réduire les animations. Aucun son.</dd>
+            <dt>Règle enfreinte</dt><dd>Aucune règle écrite, mais l'esprit : MONO ne bouge presque pas. L'essai mesure jusqu'où il peut bouger sans cesser d'être lui-même.</dd>
+          </dl>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="c-colophon"><span>Mono — laboratoire</span><span>Hors système / v0.4</span></footer>
+  </div>
+  </div>
+  <script src="assets/search-index.js"></script>
+  <script src="assets/catalogue.js"></script>
+  <script src="assets/labo.js"></script>
+</body>
+</html>

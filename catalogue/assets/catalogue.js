@@ -9,6 +9,7 @@
     ['composants.html', 'Composants'],
     ['dataviz.html', 'Visualisations'],
     ['exemples.html', 'Exemples'],
+    ['laboratoire.html', 'Laboratoire'],
   ];
   const EXAMPLES = [
     ['exemples/tableau-de-bord.html', 'Tableau de bord'],

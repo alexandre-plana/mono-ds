@@ -1,0 +1,98 @@
+/* Laboratoire — expériences d'interface. RIEN ICI NE FAIT PARTIE DU SYSTÈME.
+   Les classes .x- et les couleurs --x- vivent dans cette page et n'en sortent pas : une expérience
+   peut enfreindre une règle de MONO (ici : plus d'une couleur), c'est même son objet. Pour entrer dans
+   le système, une idée passe par docs/decisions.md et se réécrit avec les rôles de tokens.css. */
+:root { --x-ink: #131415; --x-p1: var(--signal); --x-p2: #d9a13b; --x-p3: #5aa7c7; --x-on-p1: var(--on-signal); }
+:root[data-theme="papier"] { --x-p2: #c98a1b; --x-p3: #3f8fb0; }
+.x-stage { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+.x-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); }
+.x-bar__group { display: inline-flex; align-items: center; gap: var(--space-3); }
+.x-bar__label { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
+.x-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-6); }
+.x-steps li { display: grid; gap: var(--space-1); padding-top: var(--space-2); border-top: var(--hairline) solid var(--line); color: var(--fg-muted); font-size: var(--text-small); }
+.x-steps li b { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); font-weight: var(--weight-medium); color: var(--fg-soft); }
+.x-steps li.is-on { border-top: var(--stroke) solid var(--selected-line); padding-top: calc(var(--space-2) - 1px); color: var(--fg); } .x-steps li.is-on b { color: var(--fg-strong); }
+.x-research { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: var(--space-3) var(--space-5); margin: 0; max-width: 56rem; }
+.x-research dt { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); padding-top: 2px; }
+.x-research dd { margin: 0; color: var(--fg-soft); font-size: var(--text-small); line-height: var(--leading-base); }
+.x-research a { color: var(--fg); }
+@media (max-width: 700px) { .x-steps, .x-research { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-2); } .x-research dt { padding-top: var(--space-3); } }
+
+/* --- Expérience 01 : la mise en valeur ordonnée ----------------------------- */
+.x-scroll { position: relative; height: 22rem; overflow-y: auto; border: var(--hairline) solid var(--line); padding: 0 var(--space-4); }
+.x-scroll table { width: 100%; border-collapse: collapse; }
+.x-scroll th { position: sticky; top: 0; z-index: 2; background: var(--bg); text-align: left; padding: var(--space-3) var(--space-3) var(--space-2); font-weight: var(--weight-regular); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); border-bottom: var(--hairline) solid var(--line); }
+.x-scroll td { padding: var(--space-3); color: var(--fg); white-space: nowrap; }
+.x-scroll td:first-child, .x-scroll td:last-child { color: var(--fg-muted); font-size: var(--text-micro); letter-spacing: var(--track-caps); text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.x-scroll td:last-child { text-align: right; }
+.x-row[data-p="1"] { --x-c: var(--x-p1); --x-on: var(--x-on-p1); } .x-row[data-p="2"] { --x-c: var(--x-p2); --x-on: var(--x-ink); } .x-row[data-p="3"] { --x-c: var(--x-p3); --x-on: var(--x-ink); }
+.x-stage[data-colors="une"] .x-row[data-p] { --x-c: var(--x-p1); --x-on: var(--x-on-p1); }
+.x-state { display: inline-flex; align-items: center; gap: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
+.x-row[data-p] .x-state { color: var(--fg-strong); font-weight: var(--weight-medium); }
+.x-row[data-p] .x-state::before { content: ''; width: 8px; height: 8px; background: var(--x-c); }
+/* En une seule couleur, la priorité se dit encore par la forme : plein, à demi, contour. */
+.x-stage[data-colors="une"] .x-row[data-p="2"] .x-state::before { background: linear-gradient(90deg, var(--x-c) 50%, transparent 50%); outline: 1px solid var(--x-c); outline-offset: -1px; }
+.x-stage[data-colors="une"] .x-row[data-p="3"] .x-state::before { background: none; outline: 1px solid var(--x-c); outline-offset: -1px; }
+/* Tant qu'une ligne n'a pas été « vue », sa marque attend ; le flash la révèle, puis elle reste. */
+.x-row[data-p]:not(.x-seen):not(.x-flash) .x-state { opacity: 0; }
+@keyframes x-fill { 0%, 55% { background-color: var(--x-c); color: var(--x-on); } 100% { background-color: transparent; } }
+@keyframes x-ink { 0%, 55% { color: var(--x-on); } }
+@keyframes x-glyph { 0%, 55% { background: var(--x-on); outline-color: var(--x-on); } }
+.x-row.x-flash > td { animation: x-fill var(--x-dur, 1.5s) ease-out 1 both; }
+.x-row.x-flash .x-state { animation: x-ink var(--x-dur, 1.5s) ease-out 1 both; }
+.x-row.x-flash .x-state::before { animation: x-glyph var(--x-dur, 1.5s) ease-out 1 both; }
+/* Ce qui attend hors de vue s'annonce au bord, dans l'ordre de priorité. */
+.x-below { position: sticky; bottom: 0; display: flex; gap: var(--space-5); justify-content: flex-end; padding: var(--space-2) var(--space-3); background: var(--bg); border-top: var(--hairline) dotted var(--line-strong); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
+.x-below:empty { display: none; }
+.x-below span { display: inline-flex; align-items: center; gap: var(--space-2); } .x-below span::before { content: ''; width: 8px; height: 8px; background: var(--x-c); }
+.x-below [data-p="1"] { --x-c: var(--x-p1); color: var(--fg-strong); } .x-below [data-p="2"] { --x-c: var(--x-p2); } .x-below [data-p="3"] { --x-c: var(--x-p3); }
+.x-stage[data-colors="une"] .x-below [data-p] { --x-c: var(--x-p1); }
+.x-read { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); } .x-read b { color: var(--fg-strong); font-weight: var(--weight-medium); }
+.x-legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); } .x-legend .x-row { display: contents; }
+
+/* --- Expérience 02 : le geste récompensé ------------------------------------ */
+.x-reward { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-7) var(--space-8); align-items: start; }
+@media (max-width: 900px) { .x-reward { grid-template-columns: minmax(0, 1fr); } }
+.x-block { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+.x-block > h4 { margin: 0; display: flex; justify-content: space-between; align-items: baseline; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); font-weight: var(--weight-medium); color: var(--fg-strong); } .x-block > h4 span { color: var(--fg-muted); font-weight: var(--weight-regular); }
+.x-tasks { list-style: none; margin: 0; padding: 0; display: grid; }
+.x-task { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) 0; cursor: pointer; color: var(--fg); }
+.x-task input { appearance: none; flex: none; width: 0.875rem; height: 0.875rem; margin: 0; border: var(--hairline) solid var(--line-strong); display: grid; place-content: center; cursor: pointer; }
+.x-task input::before { content: ''; width: 0.375rem; height: 0.375rem; background: var(--fg-strong); transform: scale(0); }
+.x-task input:checked { border-color: var(--selected-line); } .x-task input:checked::before { transform: scale(1); }
+.x-task span { position: relative; } .x-task input:checked + span { color: var(--fg-muted); }
+.x-task span::after { content: ''; position: absolute; left: 0; right: 0; top: 55%; height: 1px; background: var(--fg-soft); transform: scaleX(0); transform-origin: left; }
+.x-task input:checked + span::after { transform: scaleX(1); }
+.x-count { font-variant-numeric: tabular-nums; display: inline-block; }
+.x-stamp { align-self: flex-start; padding: var(--space-1) var(--space-3); border: var(--stroke) solid var(--fg-strong); text-transform: uppercase; letter-spacing: var(--track-title); font-size: var(--text-micro); font-weight: var(--weight-bold); color: var(--fg-strong); opacity: 0; }
+.x-stamp.is-on { opacity: 1; }
+.x-readbox { position: relative; height: 9.5rem; overflow-y: auto; padding-right: var(--space-5); color: var(--fg-soft); font-size: var(--text-small); line-height: var(--leading-base); }
+.x-readbox p { margin: 0 0 var(--space-3); max-width: none; }
+.x-progress { height: 3px; background: linear-gradient(var(--line-strong), var(--line-strong)) 0 50% / 100% 1px no-repeat; position: relative; }
+.x-progress::before { content: ''; position: absolute; inset: 0 auto 0 0; width: calc(var(--value, 0) * 1%); background: var(--fg-soft); }
+.x-progress.is-done::before { background: var(--fg-strong); }
+.x-fold { border: 0; } .x-fold > summary { list-style: none; display: flex; align-items: baseline; gap: var(--space-3); padding: var(--space-2) 0; cursor: pointer; text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-soft); }
+.x-fold > summary::-webkit-details-marker { display: none; } .x-fold > summary::before { content: '+'; color: var(--fg-muted); width: 1ch; } .x-fold[open] > summary::before { content: '−'; }
+.x-fold[open] > summary { color: var(--fg-strong); } .x-fold > summary > span { position: relative; }
+.x-fold > summary > span::after { content: ''; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px; background: var(--fg-strong); transform: scaleX(0); transform-origin: left; }
+.x-fold[open] > summary > span::after { transform: scaleX(1); }
+.x-fold > p { margin: 0 0 var(--space-3) calc(1ch + var(--space-3)); color: var(--fg-soft); font-size: var(--text-small); max-width: none; }
+/* Les récompenses. Brèves (160 à 320 ms), typographiques, sans couleur. Elles ne jouent qu'« avec ». */
+@media (prefers-reduced-motion: no-preference) {
+  .x-stage[data-reward="avec"] .x-task input:checked::before { animation: x-tamp calc(180ms * var(--x-gain, 1)) cubic-bezier(.2, 1.6, .4, 1) 1; }
+  .x-stage[data-reward="avec"] .x-task input:checked + span::after { transition: transform calc(240ms * var(--x-gain, 1)) ease-out 60ms; }
+  .x-stage[data-reward="avec"] .x-count.is-tick { animation: x-roll calc(220ms * var(--x-gain, 1)) ease-out 1; }
+  .x-stage[data-reward="avec"] .x-stamp.is-on { animation: x-stamp 260ms cubic-bezier(.2, 1.5, .4, 1) 1; }
+  .x-stage[data-reward="avec"] .x-progress.is-done { animation: x-close 320ms ease-out 1; }
+  .x-stage[data-reward="avec"] .x-done.is-on { animation: x-set 300ms ease-out 1; }
+  .x-stage[data-reward="avec"] .x-fold[open] > summary > span { animation: x-set calc(280ms * var(--x-gain, 1)) ease-out 1; }
+  .x-stage[data-reward="avec"] .x-fold[open] > summary > span::after { transition: transform calc(260ms * var(--x-gain, 1)) ease-out 80ms; }
+  .x-stage[data-reward="avec"] .x-fold[open] > p { animation: x-rise calc(240ms * var(--x-gain, 1)) ease-out 1; }
+}
+@keyframes x-tamp { 0% { transform: scale(2.4); } 100% { transform: scale(1); } }
+@keyframes x-roll { 0% { transform: translateY(60%); opacity: 0; } 100% { transform: none; opacity: 1; } }
+@keyframes x-stamp { 0% { transform: scale(1.5); opacity: 0; } 100% { transform: none; opacity: 1; } }
+@keyframes x-close { 0% { transform: scaleY(1); } 40% { transform: scaleY(3); } 100% { transform: scaleY(1); } }
+@keyframes x-set { 0% { letter-spacing: 0.6em; opacity: .4; } 100% { opacity: 1; } }
+@keyframes x-rise { 0% { opacity: 0; transform: translateY(-4px); } 100% { opacity: 1; transform: none; } }
+.x-done { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-strong); opacity: 0; } .x-done.is-on { opacity: 1; }

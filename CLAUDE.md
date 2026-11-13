@@ -118,3 +118,7 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   Tout élément `data-search` doit porter un `id` et contenir un titre.
 - Nouvelle paire texte/fond : l'ajouter à `scripts/contrast.mjs`.
 - Les classes `.cat-` et `.w-` habillent le catalogue : ne pas les employer ailleurs.
+- `catalogue/laboratoire.html` est un espace d'essai hors système : une expérience par rubrique, jamais
+  combinées, chacune précédée de son état de l'art. Ses classes `.x-` et ses couleurs `--x-`
+  (`catalogue/assets/labo.css`) peuvent enfreindre une règle ; elles ne sortent jamais de cette page.
+  Une idée n'entre dans le système que par une décision écrite.

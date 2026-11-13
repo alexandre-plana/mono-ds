@@ -115,6 +115,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-092 | Densité des planches du bureau | remplacée par D-093 |
 | D-093 | Trois nouvelles animations d’après les références | en vigueur |
 | D-094 | Catalogue : le logo est le premier onglet | en vigueur |
+| D-095 | Composants : une rubrique « Échanges » | en vigueur |
+| D-096 | Un laboratoire, hors système | en vigueur |
 
 ---
 
@@ -886,3 +888,19 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Conséquences** : l'onglet garde son nom pour les lecteurs d'écran (« Mono — Présentation ») ; comme tout onglet, il prend le contour de sélection quand on est sur l'accueil. La fiche du logo, qui s'ouvrait d'un clic sur lui, passe dans « Réglages ».
 - **Règle générale inchangée** : le logo figure à une extrémité de l'écran ; le début de la rangée d'onglets en est une.
 - **Écarté** (maquettes soumises) : le logo à l'autre bout de la ligne système — même alignement, mais la droite se charge ; la recherche calée sur l'axe du contenu — un axe qui se déplace avec la largeur de la fenêtre.
+
+## D-095 — Composants : une rubrique « Échanges »
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Approuvée par** : le commanditaire
+- **Constat** : la conversation (D-089) était rangée dans « États & retours », faute de mieux ; ce n'est ni un état ni un retour.
+- **Décision** : une rubrique « Échanges », la septième, pour ce qui s'écrit à deux : la conversation (entre personnes, avec une IA) et la console. Elle accueillera les commentaires et le fil d'activité s'ils viennent. « Superpositions » et « Icônes » passent en huitième et neuvième.
+
+## D-096 — Un laboratoire, hors système
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire
+- **Décision** : le catalogue reçoit un onglet « Laboratoire » où l'on essaie des idées d'interface peu communes. Trois règles. **Une à la fois** : chaque expérience a sa rubrique et son scénario, elles ne se combinent pas. **D'abord l'état de l'art** : chaque expérience dit ce que l'on sait, sources à l'appui, et ce qui n'est pas établi. **Hors système** : une expérience peut enfreindre une règle de MONO ; ses classes (`.x-`) et ses couleurs (`--x-`, définies dans `catalogue/assets/labo.css`, seule exception à « aucune valeur hexadécimale hors de tokens.css ») ne sortent pas de la page.
+- **Entrer dans le système** : une idée du laboratoire n'y entre que par une décision écrite, réécrite avec les rôles de `tokens.css`.
+- **Expérience 01 — la mise en valeur ordonnée** : ce qui compte se signale un instant à l'arrivée, dans l'ordre de son importance, puis retombe en marque ; au défilement, une ligne ne se signale qu'à sa découverte, une seule fois ; ce qui attend hors de vue est annoncé au bord. Essaie trois couleurs de priorité (rouge, ambre, bleu froid) contre une seule, et l'ordre contre « tout ensemble ». Enfreint « une seule couleur ».
+- **Expérience 02 — le geste récompensé** : un geste qui aboutit reçoit un mouvement bref (160 à 320 ms), typographique, sans couleur — une case qui se pose, un filet qui se tire, un mot qui se compose, un cachet. La récompense s'use : après trois gestes, elle dure moitié moins. Se compare « avec » et « sans ».
+- **Garde-fous communs** : rien ne joue si le système demande de réduire les animations ; aucun mouvement ne retarde une action.
+- **Statut des expériences** : en cours, sans verdict. Aucune n'est dans le système.

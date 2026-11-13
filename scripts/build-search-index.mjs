@@ -17,6 +17,7 @@ const PAGES = [
   ['composition.html', 'Composition'],
   ['composants.html', 'Composants'],
   ['dataviz.html', 'Visualisations'],
+  ['laboratoire.html', 'Laboratoire'],
 ];
 const EXAMPLES = [
   ['exemples/tableau-de-bord.html', 'Tableau de bord', 'Écran de pilotage en thème encre : chiffre héros, graphique en barres, tableau, statuts. Trois axes verticaux, un bouton primaire, un seul sens pour le signal.'],
