@@ -125,7 +125,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-102 | Laboratoire, expérience 04 : l'attention arbitrée ; la bande des ateliers tient en une ligne | l'expérience fondue dans D-103 ; la bande en vigueur |
 | D-103 | Laboratoire : les expériences 03 et 04 n'en font qu'une, avec le langage visuel de la 01 | en vigueur |
 | D-104 | Laboratoire, expérience 04 : les formes du direct | en vigueur, la carte et la couleur reprises par D-105 |
-| D-105 | Expérience 04 : la carte reprise, quatre teintes, le flux qui défile | en vigueur |
+| D-105 | Expérience 04 : la carte reprise, quatre teintes, le flux qui défile | en vigueur, la couleur et le trait d'ancienne taille repris par D-106 |
+| D-106 | Expérience 04 : la teinte du système par défaut, plus de pointillés, une matrice de chaleur | en vigueur |
 
 ---
 
@@ -1002,3 +1003,11 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Quatre teintes** (réglage) : feu (vert, orange, rouge), chaud-froid, ambre (une seule teinte), encre (sans couleur). Elles s'appliquent aux cinq formes ; la forme double toujours la couleur. L'atelier enfreint donc « une seule couleur », sauf en « Encre ».
 - **Une cinquième forme, le flux qui défile** : les événements entrent par le haut ; en choisir un arrête le défilement, retient les nouveaux derrière une ligne, et montre l'événement en entier à côté — avant, après, nature, passé récent de l'agence. L'agence choisie est désignée dans la carte et sur la bande. Flèches pour parcourir, Échap pour reprendre.
 - **« Ensemble »** montre côte à côte la carte, la bande, le flux et les sédiments ; le journal qui se résume reste une forme à part.
+
+## D-106 — Expérience 04 : la teinte du système par défaut, plus de pointillés, une matrice de chaleur
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Demandée par** : le commanditaire (« respecte le système pour les couleurs ; est-ce normal qu'on ait des pointillés dans les cartes ? ; ajoute une heatmap ») · **Amende** : D-105
+- **La couleur** : les teintes de D-105 étaient des mélanges faits pour l'occasion, étrangers au système. La teinte par défaut est désormais celle du système : ses rôles de ton, par paliers nets (`--surface-2`, `--line`, `--mark`, puis `--fg-strong` dans la matrice), et `--signal` pour le seul blocage. La forme porte le sens. Les teintes feu, chaud-froid et ambre restent en option, hors système, elles aussi par paliers (30, 60, 100 %) ; « feu » reprend les couleurs de l'expérience 01.
+- **Les pointillés** : le trait tireté de l'ancienne taille, à l'intérieur des cases, se lisait comme un défaut d'affichage. Il est retiré, ainsi que les bords tiretés d'une case qui rétrécit ou passe sous 3 M. Une case a un filet plein, toujours. Le mouvement se dit autrement : le mouvement net de la dernière minute est écrit dans la case.
+- **Leçon** : deux fois de suite, une marque censée expliquer un changement de taille a été prise pour un défaut. Sur une surface qui bouge, une marque de plus est de trop ; le chiffre suffit.
+- **La matrice de chaleur**, sixième forme : une ligne par agence, une colonne par tranche de dix secondes, cinq minutes de large, le présent à droite. Le ton dit l'ampleur en quatre paliers ; pleine si l'agence a monté, en contour si elle a baissé.
