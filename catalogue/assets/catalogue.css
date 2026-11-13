@@ -136,7 +136,10 @@ button.cat-result { appearance: none; width: 100%; background: none; border-top:
 .cat-search__heading > :first-child { color: var(--fg-strong); }
 .cat-search__help { flex: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); padding: var(--space-3) var(--space-4); border-top: var(--hairline) solid var(--line); color: var(--fg-muted); text-transform: none; letter-spacing: var(--track-label); }
 .cat-result { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) max-content; column-gap: var(--space-4); align-items: baseline; padding: var(--space-2) var(--space-4) var(--space-2) calc(var(--space-4) - var(--stroke)); text-decoration: none; color: var(--fg); border-left: var(--stroke) solid transparent; }
-.cat-result:hover { background: var(--surface-2); color: var(--fg); }
+.cat-result { position: relative; }
+.cat-result:hover { color: var(--fg); }
+.cat-result:is(:hover, [aria-selected="true"])::before { content: ''; position: absolute; left: var(--space-4); right: var(--space-3); bottom: 0; height: var(--hairline); background: var(--line-strong); }
+.cat-result:is(:hover, [aria-selected="true"])::after { content: ''; position: absolute; right: calc(var(--space-3) + 1px); bottom: -3px; width: 6px; height: 6px; border-top: var(--hairline) solid var(--line-strong); border-right: var(--hairline) solid var(--line-strong); transform: rotate(45deg); }
 .cat-result[aria-selected="true"] { border-left-color: var(--selected-line); }
 .cat-result__type, .cat-result__where { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); white-space: nowrap; }
 .cat-result__main { display: flex; flex-direction: column; min-width: 0; }
@@ -148,3 +151,5 @@ button.cat-result { appearance: none; width: 100%; background: none; border-top:
 .cat-search.is-browsing .cat-search__filters { display: none; }
 /* Un élément affiché seul : son titre suffit, le fil d'Ariane dit déjà la rubrique. */
 .cat-section.is-leaf > :not(.cat-sub) { display: none; }
+/* Arriver par une ancre montre la vue depuis son en-tête, fil d'Ariane compris. */
+.cat-section, .cat-sub { scroll-margin-top: 24rem; }

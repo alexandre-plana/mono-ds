@@ -53,7 +53,7 @@ le code de chaque composant est visible dans `catalogue/composants.html`.
   zone défilante par page et par axe, jamais imbriquée. Téléphone et impression :
   défilement naturel. La barre de défilement est celle du système (4 px, carrée).
 - Le survol annonce ce que fera le clic, jamais par un fond : un filet terminé en
-  pointe de flèche (ligne ou fiche cliquable) ou une icône `.c-cue`. Le texte ne bouge pas.
+  pointe de flèche (ligne, fiche cliquable, entrée de menu) ou une icône `.c-cue`. Le texte ne bouge pas.
 - Image : un dessin du système entre tel quel (`.c-media`) ; toute image brute est
   encrée (`.c-media--raw`, ou `--raster` / `--threshold`). Jamais de photo en couleur,
   jamais de texte sur une image, un tiers de la vue au plus.
@@ -105,7 +105,7 @@ Regarder aussi l'écran dans les deux thèmes (`?theme=papier` sur les pages du 
   ou colophon. Le catalogue lui-même suit le gabarit à onglets : pas de rail. Ce qui est global
   (recherche, thème, accent) passe par « Aller à » (touche /), jamais par l'en-tête d'une page ; une
   page s'ouvre sur son sommaire puis montre une rubrique ou un élément à la fois, le fil d'Ariane
-  ramène et chacun de ses crans ouvre la liste de ses voisins (`.c-breadcrumb__seg`) — pas d'index
+  ramène et chacun de ses crans déplie ses voisins en ligne sous le fil (`.c-breadcrumb__seg`) — pas d'index
   latéral, pas d'onglets de page ; un exemple s'ouvre dans
   l'onglet Exemples (`exemples.html?e=nom`) avec le fil d'Ariane.
 - Le système reste en CSS pur. Les comportements (fenêtres, canevas, menus,

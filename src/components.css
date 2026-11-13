@@ -87,18 +87,17 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-select { appearance: none; padding-right: var(--space-6); cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, var(--fg-soft) 50%, var(--fg-soft) calc(50% + 1px), transparent calc(50% + 1px)), linear-gradient(-45deg, transparent 50%, var(--fg-soft) 50%, var(--fg-soft) calc(50% + 1px), transparent calc(50% + 1px)); background-size: 5px 5px, 5px 5px; background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%; background-repeat: no-repeat; }
 .c-select option { background: var(--surface); color: var(--fg-strong); }
 /* La liste ouverte suit le système là où le navigateur sait l'habiller (appearance: base-select) :
-   même surface et même contour qu'un menu, l'option visée au ton d'un cran, l'option choisie marquée
+   même feuille et même contour qu'un menu, l'option visée soulignée d'un filet, l'option choisie marquée
    par le contour de sélection — jamais par une couleur. Ailleurs, la liste native reste en place. */
 @supports (appearance: base-select) {
   .c-select, .c-select::picker(select) { appearance: base-select; }
   .c-select { background-image: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding-right: var(--space-3); }
   .c-select::picker-icon { content: ''; flex: none; width: 1rem; height: 1rem; background: var(--fg-soft); mask: var(--i-chevron-down) center / contain no-repeat; }
-  .c-select::picker(select) { margin-top: var(--space-1); padding: var(--space-1) 0; background: var(--surface-2); border: var(--hairline) solid var(--line-strong); border-radius: 0; box-shadow: none; color: var(--fg); }
-  .c-select option { display: flex; align-items: baseline; gap: var(--space-3); padding: 6px var(--space-3); background: none; color: var(--fg); font-size: var(--text-small); line-height: var(--leading-base); cursor: pointer; border-left: var(--stroke) solid transparent; outline: 0; }
+  .c-select::picker(select) { margin-top: var(--space-1); padding: var(--space-1) 0 var(--space-2); background: var(--bg); border: var(--hairline) solid var(--line-strong); border-radius: 0; box-shadow: none; color: var(--fg); }
+  .c-select option { display: flex; align-items: baseline; gap: var(--space-3); padding: 6px var(--space-3); background: none; color: var(--fg); font-size: var(--text-small); line-height: var(--leading-base); cursor: pointer; border-left: var(--stroke) solid transparent; border-bottom: var(--hairline) solid transparent; outline: 0; }
   .c-select option::checkmark { display: none; }
-  .c-select option:hover, .c-select option:focus-visible { background: var(--line-faint); color: var(--fg-strong); }
+  .c-select option:hover, .c-select option:focus-visible { border-bottom-color: var(--line-strong); color: var(--fg-strong); }
   .c-select option:checked { border-left-color: var(--selected-line); color: var(--fg); font-weight: var(--weight-medium); background: none; }
-  .c-select option:checked:hover, .c-select option:checked:focus-visible { background: var(--line-faint); }
   .c-select option:disabled { color: var(--fg-muted); cursor: not-allowed; }
 }
 
@@ -166,20 +165,26 @@ a.c-index__row:hover .c-index__value { color: var(--fg-strong); }
 .c-breadcrumb--head > * + *::before { margin-right: var(--space-3); }
 .c-breadcrumb--head [aria-current] { color: var(--fg-strong); }
 .c-breadcrumb [aria-current] { color: var(--fg); }
-/* Un cran du fil peut ouvrir la liste de ses voisins (même niveau, même parent) : on change de voisin
-   sans remonter. <details class="c-menu c-breadcrumb__seg"><summary>Plan<i class="c-icon i-chevron-down"></i></summary>…
-   Le premier cran reste un lien ; un cran sans voisin reste un texte. */
+/* Un cran du fil peut déplier ses voisins (même niveau, même parent) : une rangée sous le fil, dans la
+   page — rien ne flotte. On change de voisin sans remonter.
+   <details class="c-breadcrumb__seg" name="fil"><summary>Plan<i class="c-icon i-chevron-down"></i></summary>
+     <div class="c-breadcrumb__row"><a href>Menu</a><a href aria-current="true">Plan</a>…</div></details>
+   Le même name sur tous les crans : un seul déplié à la fois. Le premier cran reste un lien. */
 .c-breadcrumb { align-items: baseline; }
-.c-breadcrumb__seg { display: inline-flex; align-items: baseline; }
+.c-breadcrumb__seg { display: contents; }
+.c-breadcrumb > .c-breadcrumb__seg::before { margin-right: 0; }
 .c-breadcrumb__seg > summary { list-style: none; display: inline-flex; align-items: baseline; gap: var(--space-1); color: var(--fg-soft); cursor: pointer; transition: color var(--duration); }
 .c-breadcrumb__seg > summary::-webkit-details-marker { display: none; }
 .c-breadcrumb__seg > summary .c-icon { align-self: center; color: var(--fg-muted); }
+.c-breadcrumb__seg[open] > summary .c-icon { transform: scaleY(-1); }
 .c-breadcrumb__seg > summary:hover, .c-breadcrumb__seg[open] > summary, .c-breadcrumb__seg > summary:hover .c-icon, .c-breadcrumb__seg[open] > summary .c-icon { color: var(--fg-strong); }
 .c-breadcrumb__seg[aria-current] > summary { color: var(--fg); }
 .c-breadcrumb--head .c-breadcrumb__seg[aria-current] > summary { color: var(--fg-strong); }
-.c-breadcrumb__seg > .c-menu__list { left: auto; right: auto; margin-left: 1.5em; letter-spacing: 0; text-transform: none; max-height: min(60vh, 28rem); overflow-y: auto; }
-.c-breadcrumb--head .c-breadcrumb__seg > .c-menu__list { margin-left: 2em; }
-@media (max-width: 640px) { .c-breadcrumb { position: relative; } .c-breadcrumb .c-breadcrumb__seg { position: static; } .c-breadcrumb .c-breadcrumb__seg > .c-menu__list { left: 0; right: 0; margin-left: 0; min-width: 0; } }
+.c-breadcrumb__seg::details-content { display: contents; }
+.c-breadcrumb__row { order: 1; flex: 0 0 100%; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-6); margin-top: var(--space-2); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); }
+.c-breadcrumb__seg:not([open]) > .c-breadcrumb__row { display: none; }
+.c-breadcrumb__row a { padding-bottom: var(--space-1); border-bottom: var(--stroke) solid transparent; color: var(--fg-soft); }
+.c-breadcrumb__row a[aria-current] { border-bottom-color: var(--selected-line); color: var(--fg-strong); }
 
 .c-pagination { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-small); }
 .c-pagination a, .c-pagination span { min-width: 1.75rem; height: 1.75rem; display: grid; place-content: center; padding-inline: var(--space-1); text-decoration: none; color: var(--fg-soft); border: var(--hairline) solid transparent; }
@@ -469,11 +474,15 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 .c-menu > summary { list-style: none; }
 .c-menu > summary::-webkit-details-marker { display: none; }
 .c-menu[open] > summary.c-button { border-color: var(--fg-strong); background: var(--surface-2); }
-.c-menu__list { position: absolute; z-index: 20; top: calc(100% + var(--space-1)); left: 0; min-width: 14rem; padding: var(--space-1) 0; background: var(--surface-2); border: var(--hairline) solid var(--line-strong); display: flex; flex-direction: column; }
+.c-menu__list { position: absolute; z-index: 20; top: calc(100% + var(--space-1)); left: 0; min-width: 14rem; padding: var(--space-1) 0; background: var(--bg); border: var(--hairline) solid var(--line-strong); display: flex; flex-direction: column; }
 .c-menu--end .c-menu__list { left: auto; right: 0; }
 .c-menu__label { padding: var(--space-2) var(--space-3) var(--space-1); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); }
 .c-menu__item { appearance: none; display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-5); width: 100%; padding: 6px var(--space-3); background: none; border: 0; text-align: left; text-decoration: none; color: var(--fg); font-size: var(--text-small); line-height: var(--leading-base); white-space: nowrap; cursor: pointer; }
-.c-menu__item:hover, .c-menu__item:focus-visible { background: var(--line-faint); color: var(--fg-strong); outline-offset: -2px; }
+/* Le survol d'une entrée s'annonce comme celui d'une ligne de tableau : un filet terminé en pointe, jamais un fond. */
+.c-menu__item { position: relative; }
+.c-menu__item:hover, .c-menu__item:focus-visible { color: var(--fg-strong); outline-offset: -2px; }
+:is(.c-menu__item, .c-palette__item):is(:hover, :focus-visible, [aria-selected="true"]):not(:disabled, [aria-disabled="true"])::before { content: ''; position: absolute; left: var(--space-3); right: var(--space-2); bottom: 0; height: var(--hairline); background: var(--line-strong); }
+:is(.c-menu__item, .c-palette__item):is(:hover, :focus-visible, [aria-selected="true"]):not(:disabled, [aria-disabled="true"])::after { content: ''; position: absolute; right: calc(var(--space-2) + 1px); bottom: -3px; width: 6px; height: 6px; border-top: var(--hairline) solid var(--line-strong); border-right: var(--hairline) solid var(--line-strong); transform: rotate(45deg); }
 .c-menu__item[aria-checked="true"], .c-menu__item[aria-pressed="true"], .c-menu__item[aria-current] { border-left: var(--stroke) solid var(--selected-line); padding-left: calc(var(--space-3) - 2px); color: var(--fg); font-weight: var(--weight-medium); }
 .c-menu__item:disabled, .c-menu__item[aria-disabled="true"] { color: var(--fg-muted); cursor: not-allowed; background: none; }
 .c-menu__item--signal { color: var(--signal); }
@@ -486,7 +495,7 @@ a.c-card.c-card--boxed:hover, .c-card--action.c-card--boxed:hover { border-color
 .c-menu__sub > .c-menu__item .c-icon { color: var(--fg-muted); align-self: center; }
 .c-menu__sub > .c-menu__list { display: none; top: calc(-1 * var(--space-1) - 1px); left: calc(100% - 1px); }
 .c-menu__sub:hover > .c-menu__list, .c-menu__sub:focus-within > .c-menu__list, .c-menu__sub.is-open > .c-menu__list { display: flex; }
-.c-menu__sub:hover > .c-menu__item, .c-menu__sub:focus-within > .c-menu__item { background: var(--line-faint); color: var(--fg-strong); }
+.c-menu__sub:hover > .c-menu__item, .c-menu__sub:focus-within > .c-menu__item { color: var(--fg-strong); }
 .c-menu__sub--left > .c-menu__list { left: auto; right: calc(100% - 1px); }
 .c-menu--up .c-menu__list { top: auto; bottom: calc(100% + var(--space-1)); }
 .c-menu__sep { border: 0; height: 0; margin: var(--space-2) 0; }
@@ -707,7 +716,8 @@ a.c-doctabs__tab { text-decoration: none; }
 .c-palette__group { display: flex; justify-content: space-between; margin: var(--space-4) var(--space-5) var(--space-1); text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); line-height: var(--leading-micro); color: var(--fg-muted); }
 .c-palette__group > :first-child { color: var(--fg-soft); }
 .c-palette__item { appearance: none; width: 100%; display: grid; grid-template-columns: 5rem minmax(0, 1fr) max-content; column-gap: var(--space-4); align-items: baseline; padding: var(--space-2) var(--space-5) var(--space-2) calc(var(--space-5) - var(--stroke)); background: none; border: 0; border-left: var(--stroke) solid transparent; font: inherit; text-align: left; text-decoration: none; color: var(--fg); cursor: pointer; }
-.c-palette__item:hover { background: var(--surface-2); color: var(--fg); }
+.c-palette__item { position: relative; }
+.c-palette__item:hover { color: var(--fg); }
 .c-palette__item[aria-selected="true"] { border-left-color: var(--selected-line); }
 .c-palette__type, .c-palette__hint { text-transform: uppercase; letter-spacing: var(--track-caps); font-size: var(--text-micro); color: var(--fg-muted); white-space: nowrap; }
 .c-palette__main { min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-4); }

@@ -98,7 +98,8 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 | D-075 | Catalogue : « Aller à » pour tout ce qui est global ; un index par page ; démonstrations vivantes | en vigueur, l'index de page remplacé par D-077 |
 | D-076 | Les exemples s'ouvrent dans leur onglet, avec le fil d'Ariane | en vigueur |
 | D-077 | Pages du catalogue : un sommaire, puis une chose à la fois | en vigueur, complétée par D-078 |
-| D-078 | Un cran du fil d'Ariane ouvre la liste de ses voisins | en vigueur |
+| D-078 | Un cran du fil d'Ariane ouvre la liste de ses voisins | en vigueur, la forme (menu) remplacée par D-079 |
+| D-079 | Les voisins du fil se déplient en ligne ; un menu se survole par un filet, jamais par un fond | en vigueur |
 
 ---
 
@@ -731,3 +732,13 @@ Les principes eux-mêmes sont dans `philosophie.md` ; ici, c'est leur histoire.
 - **Et la règle « jamais les deux » ?** Elle oppose deux navigations d'application : les onglets (parties séparées) et la ligne de tête en chemin (`.c-pathnav`, arborescence). Elle tient. Ici les onglets restent la seule navigation entre les parties ; le fil ne propose des voisins qu'à l'intérieur de la page, sous le niveau de l'onglet. Le cran de l'onglet lui-même reste un simple lien — il ne double pas la rangée d'onglets.
 - **Limites** : le premier cran reste un lien ; un cran sans voisin reste un texte ; la liste d'un cran ne montre qu'un niveau.
 - **Écarté** : remettre une liste des voisins dans la page (c'est ce que D-077 a retiré).
+
+## D-079 — Les voisins du fil se déplient en ligne ; un menu se survole par un filet, jamais par un fond
+
+- **Date** : 2026-11-13 · **Statut** : en vigueur · **Signalée par** : le commanditaire (« le fil d'Ariane et le menu déroulant ne semblent pas venir du même système ») · **Remplace** : la forme retenue en D-078 (le principe — un cran donne accès à ses voisins — tient)
+- **Constat** : trois écarts entre le fil et son menu. Deux écritures (capitales espacées / bas de casse serré). Deux matières (du texte posé sur la page / une boîte pleine d'un ton plus clair). Et un survol par changement de fond, que la règle du survol (D-044) interdit — un défaut de `.c-menu` tout entier, que le fil rendait visible.
+- **Décision 1 — le fil** : plus de menu. Un cran déplie ses voisins en une rangée sous le fil, dans la page (`.c-breadcrumb__row`) : même écriture en capitales, le courant souligné du contour de sélection. Rien ne flotte. Un seul cran déplié à la fois ; dans le catalogue, la rangée reste dépliée tant qu'on navigue à ce niveau, et se replie d'un clic sur le cran ou par Échap.
+- **Décision 2 — tous les menus** : la liste d'un menu (`.c-menu__list`, liste d'un `.c-select`) est une feuille au ton de la page, bordée d'un filet. L'entrée survolée ou visée au clavier se souligne d'un filet terminé en pointe, comme une ligne de tableau ; il n'y a plus de fond. Même chose pour les entrées de « Aller à » (`.c-palette__item`). L'entrée choisie garde le contour de sélection à gauche.
+- **Limite** : dans la liste d'un `.c-select`, le filet de survol n'a pas de pointe (les options natives n'acceptent pas le dessin) ; et la rangée de voisins fait descendre le contenu d'une ligne quand on la déplie.
+- **Écarté** : une liste flottante écrite en capitales comme le fil (un second style de menu à entretenir, et trop large) ; ne corriger que le menu du fil (la cause est dans `.c-menu`).
+- **Hors de cette décision** : les boutons et le sélecteur segmenté changent encore de fond au survol. Ce sont des contrôles, pas des lignes ; à trancher à part.

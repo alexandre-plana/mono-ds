@@ -54,7 +54,7 @@
   palette.innerHTML = '<div id="cat-search" class="cat-search" role="search"></div>'; document.body.append(palette);
   palette.addEventListener('click', (e) => { if (e.target === palette) palette.close(); });
   document.addEventListener('click', (e) => { document.querySelectorAll('.c-menu[open]').forEach((m) => { if (!m.contains(e.target) || e.target.closest('.c-menu__item')) m.open = false; }); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-breadcrumb__seg[open]').forEach((m) => { m.open = false; m.querySelector('summary').focus(); }); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.querySelectorAll('.c-breadcrumb__seg[open]').forEach((m) => { m.open = false; }); });
   // Un exemple ouvert dans l'onglet Exemples suit le thème et l'accent choisis ici.
   const frame = () => document.querySelector('iframe.cat-frame')?.contentDocument?.documentElement;
   document.addEventListener('mono:theme', (e) => { const d = frame(); if (d) d.dataset.theme = e.detail; });
@@ -111,6 +111,8 @@
       v.foot = f; v.el.append(f);
     });
   }
+  // Un seul cran déplié à la fois (l'attribut name le dit déjà ; ceci couvre les navigateurs qui l'ignorent).
+  document.addEventListener('toggle', (e) => { const d = e.target; if (d.matches?.('.c-breadcrumb__seg') && d.open) d.parentElement.querySelectorAll('.c-breadcrumb__seg[open]').forEach((x) => { if (x !== d) x.open = false; }); }, true);
   // Dans une démonstration, un lien d'ancre ne fait pas quitter la vue.
   document.addEventListener('click', (e) => { if (e.target.closest('.cat-demo a[href^="#"]')) e.preventDefault(); });
   const key = 'mono-scroll:' + location.pathname;
@@ -121,11 +123,12 @@
     intro.hidden = toc.hidden = !root;
     sections.forEach((x) => { x.hidden = x !== sec; });
     if (sec?.split) { sec.subs.forEach((x) => { x.hidden = x !== sub; }); sec.menu.hidden = !!sub; sec.classList.toggle('is-leaf', !!sub); }
-    // Le fil d'Ariane ramène, et chaque cran ouvre la liste de ses voisins : on passe d'un composant au
-    // suivant, ou d'une rubrique à l'autre, sans remonter au sommaire.
-    const seg = (name, items) => `<details class="c-menu c-breadcrumb__seg"><summary>${name}<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary><div class="c-menu__list" role="menu">${items}</div></details>`;
-    const secSeg = () => seg(label(sec), sections.map((x) => `<a class="c-menu__item" role="menuitem" href="#${x.id}"${x === sec ? ' aria-current="true"' : ''}>${label(x)} <span class="c-menu__hint">${num(x.n)}</span></a>`).join(''));
-    if (crumb) { crumb.innerHTML = root ? crumb0 : crumb0.replace(/<span aria-current="page">[^<]*<\/span>/, `<a href="#">${pageName}</a>`) + secSeg() + (sub ? seg(short(sub), sec.subs.map((x) => `<a class="c-menu__item" role="menuitem" href="#${x.id}"${x === sub ? ' aria-current="true"' : ''}>${short(x)}</a>`).join('')) : ''); crumb.querySelector(':scope > :last-child')?.setAttribute('aria-current', 'page'); }
+    // Le fil d'Ariane ramène, et chaque cran déplie ses voisins en ligne sous le fil : on passe d'un
+    // composant au suivant sans remonter. La rangée reste dépliée tant qu'on navigue à ce niveau.
+    const was = crumb?.querySelector('.c-breadcrumb__seg[open]')?.dataset.level;
+    const seg = (level, name, items) => `<details class="c-breadcrumb__seg" name="fil" data-level="${level}"${was === level ? ' open' : ''}><summary>${name}<i class="c-icon i-chevron-down" aria-hidden="true"></i></summary><div class="c-breadcrumb__row">${items}</div></details>`;
+    const link = (x, name, on) => `<a href="#${x.id}"${on ? ' aria-current="true"' : ''}>${name}</a>`;
+    if (crumb) { crumb.innerHTML = root ? crumb0 : crumb0.replace(/<span aria-current="page">[^<]*<\/span>/, `<a href="#">${pageName}</a>`) + seg('rubrique', label(sec), sections.map((x) => link(x, label(x), x === sec)).join('')) + (sub ? seg('element', short(sub), sec.subs.map((x) => link(x, short(x), x === sub)).join('')) : ''); crumb.querySelector(':scope > details:last-of-type')?.setAttribute('aria-current', 'page'); }
     if (first) return;
     if (el && el !== sec && el !== sub) el.scrollIntoView({ block: 'start' }); else if (shell) shell.scrollTop = 0;
   };
